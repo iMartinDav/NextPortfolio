@@ -60,50 +60,25 @@ Designed to provide an optimal viewing experience across a wide range of devices
 
 ## Getting Started
 
-To get a local copy of this project up and running, follow these simple steps.
+Clone down this repository. You will need `node.js` and `git` installed globally on your machine.
 
-### Prerequisites
+## 🛠 Installation and Setup Instructions
 
-You will need to have the following installed:
+1. Installation: `npm install`
 
-- [Node.js](https://nodejs.org/)
-- [Git](https://git-scm.com/)
+2. In the project directory, you can run: `npm start`
 
-### Installation
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The page will reload if you make edits.
 
-1. Clone the repository.
+## Usage Instructions
 
-   ```bash
-   git clone git@github.com:iMartinDav/NextPortfolio.git
-   ```
+Open the project folder and Navigate to `/src/components/`. <br/>
+You will find all the components used and you can edit your information accordingly.
 
-````
+### Show your support
 
-2. Install dependencies.
+Give a ⭐ if you like this website!
 
-   ```bash
-   npm install
-   ```
-
-3. Run the development server.
-
-   ```bash
-   npm run dev
-   ```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
-
-### Usage Instructions
-
-Navigate to the `src/components/` folder to explore the structure of the components. You can customize the content and styles as needed to tailor the portfolio to your needs.
-
-## Show Your Support
-
-If you like this project, please consider giving it a ⭐ on GitHub!
-
-<a href="https://www.buymeacoffee.com/iMartinDav" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" height="60px" width="217px"></a>
-
-```
-
-```
-````
+<a href="https://www.buymeacoffee.com/iMartinDav" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" height= "60px" width= "217px" ></a>
