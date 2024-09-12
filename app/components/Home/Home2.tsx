@@ -51,16 +51,23 @@ function Home2() {
             </p>
           </div>
 
-          <div className="w-full md:w-1/3 lg:w-1/4 flex items-center justify-center">
-            <Tilt>
+          {/* Avatar Section */}
+          <div className="w-full md:w-1/3 lg:w-1/4 flex items-center justify-center relative">
+            <Tilt
+              className="rounded-full bg-gradient-to-br from-purple-600 to-blue-800 shadow-lg"
+              tiltMaxAngleX={15}
+              tiltMaxAngleY={15}
+            >
               <Image
                 src={myImg}
                 alt="avatar"
-                width={192} // Adjust width as needed
-                height={192} // Adjust height as needed
-                className="rounded-full object-cover"
+                width={192}
+                height={192}
+                className="rounded-full object-cover shadow-lg"
               />
             </Tilt>
+            {/* Decorative Organic Shape */}
+            <div className="absolute w-40 h-40 rounded-full bg-gradient-to-r from-purple-400 to-blue-600 opacity-20 blur-2xl -z-10"></div>
           </div>
         </div>
 

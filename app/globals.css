@@ -266,7 +266,7 @@ button:focus {
 
 .nav-link {
   padding: 0.8rem 1.2rem;
-  color: #0B0A21;
+  color: #DADADA;
   text-decoration: none;
   transition: color 0.3s ease, background-color 0.3s ease;
   position: relative;
