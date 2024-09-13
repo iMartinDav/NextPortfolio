@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <path d="M10,50 C30,20 50,80 70,50 S90,20 110,50 S130,80 150,50 S170,20 190,50" fill="none" stroke="#00BFAE" stroke-width="2">
+    <animate attributeName="d" dur="3s" repeatCount="indefinite"
+      values="M10,50 C30,20 50,80 70,50 S90,20 110,50 S130,80 150,50 S170,20 190,50;
+              M10,50 C30,80 50,20 70,50 S90,80 110,50 S130,20 150,50 S170,80 190,50;
+              M10,50 C30,20 50,80 70,50 S90,20 110,50 S130,80 150,50 S170,20 190,50" />
+  </path>
+  <path d="M10,50 C30,80 50,20 70,50 S90,80 110,50 S130,20 150,50 S170,80 190,50" fill="none" stroke="#7F00FF" stroke-width="2">
+    <animate attributeName="d" dur="3s" repeatCount="indefinite"
+      values="M10,50 C30,80 50,20 70,50 S90,80 110,50 S130,20 150,50 S170,80 190,50;
+              M10,50 C30,20 50,80 70,50 S90,20 110,50 S130,80 150,50 S170,20 190,50;
+              M10,50 C30,80 50,20 70,50 S90,80 110,50 S130,20 150,50 S170,80 190,50" />
+  </path>
+</svg>

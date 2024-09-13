@@ -27,7 +27,7 @@ const navItems: NavItem[] = [
   { href: "/project", icon: FolderKanban, label: "Projects" },
   { href: "/resume", icon: FileText, label: "Resume" },
   {
-    href: "https://platzi.com/p/iMartinDav/",
+    href: "https://www.bioinfometrics.com/",
     icon: BookOpen,
     label: "Blog",
     external: true,
