@@ -1,30 +1,126 @@
-/* globals.css */
-
-/* Tailwind Base */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Properties */
-:root {
-  --section-background-color: linear-gradient(to bottom left,
-      rgba(17, 16, 16, 0.582),
-      rgba(12, 8, 24, 0.904));
+@layer base {
+  :root {
+    scroll-behavior: smooth;
 
-  --image-gradient: linear-gradient(to bottom left,
-      rgba(17, 16, 16, 0.678),
-      rgba(12, 10, 22, 0.863));
+    /* Light Mode Colors */
+    --background: 270 100% 98%;
+    /* Very light purple with a white base */
+    --foreground: 270 10% 15%;
+    /* Darker purple for text */
 
-  --imp-text-color: #c770f0;
+    --card: 270 100% 98%;
+    /* Same as background */
+    --card-foreground: 270 10% 15%;
+
+    --popover: 270 100% 98%;
+    --popover-foreground: 270 10% 15%;
+
+    --primary: 270 20% 30%;
+    /* Muted medium purple */
+    --primary-foreground: 270 100% 98%;
+    /* Light text color for contrast */
+
+    --secondary: 270 100% 90%;
+    /* Light lavender */
+    --secondary-foreground: 270 20% 30%;
+
+    --muted: 270 100% 95%;
+    /* Muted light purple */
+    --muted-foreground: 270 10% 40%;
+    /* Softer text color for muted elements */
+
+    --accent: 270 100% 95%;
+    /* Light purple accent */
+    --accent-foreground: 270 20% 30%;
+
+    --destructive: 0 84.2% 60.2%;
+    /* Red for destructive elements */
+    --destructive-foreground: 0 0% 98%;
+    /* Light text for destructive actions */
+
+    --border: 270 20% 90%;
+    /* Light border with a hint of purple */
+    --input: 270 20% 90%;
+    /* Same as border */
+    --ring: 270 20% 30%;
+    /* Slightly darker purple ring for focus elements */
+
+    --radius: 0.5rem;
+
+    --chart-1: 12 76% 61%;
+    /* Chart colors */
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    /* Dark Mode Colors */
+    --background: 252 22% 10%;
+    /* #0B0A21 - Dark Purple */
+    --foreground: 0 0% 98%;
+    /* Light foreground color for contrast */
+
+    --card: 252 22% 10%;
+    /* Same dark purple for card background */
+    --card-foreground: 0 0% 98%;
+
+    --popover: 252 22% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 252 10% 98%;
+    /* Light text or highlight on primary elements */
+    --primary-foreground: 252 22% 10%;
+    /* Dark background for buttons etc. */
+
+    --secondary: 252 22% 15%;
+    /* Slightly lighter than the background */
+    --secondary-foreground: 0 0% 98%;
+    /* Light text color for secondary elements */
+
+    --muted: 252 22% 15%;
+    /* Muted dark purple */
+    --muted-foreground: 0 0% 63.9%;
+    /* Slightly muted text for muted elements */
+
+    --accent: 252 22% 15%;
+    /* Darker accent */
+    --accent-foreground: 0 0% 98%;
+    /* Light text for accent elements */
+
+    --destructive: 0 62.8% 30.6%;
+    /* Red for destructive actions */
+    --destructive-foreground: 0 0% 98%;
+    /* Light foreground */
+
+    --border: 252 22% 15%;
+    /* Darker purple border */
+    --input: 252 22% 15%;
+    /* Same dark border for inputs */
+    --ring: 252 22% 83.1%;
+    /* Brighter focus ring for input elements */
+
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
 }
 
-/* Custom Styles */
-.purple {
-  color: var(--imp-text-color);
-}
+@layer base {
+  * {
+    @apply border-border;
+  }
 
-button:focus {
-  box-shadow: none;
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 /* --------- */

@@ -1,26 +1,14 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
+import { Inter } from "next/font/google";
+
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 // Font definitions
-const satoshiSans = localFont({
-  src: [
-    {
-      path: "./fonts/Satoshi-Variable.woff2",
-      weight: "300 900",
-      style: "normal",
-    },
-    {
-      path: "./fonts/Satoshi-VariableItalic.woff2",
-      weight: "300 900",
-      style: "italic",
-    },
-  ],
-  variable: "--font-satoshi-sans",
-  display: "swap",
-});
+const inter = Inter({ subsets: ["latin"] });
 
 // Metadata
 export const metadata: Metadata = {
@@ -54,11 +42,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={satoshiSans.variable}>
+    <html lang="en" suppressHydrationWarning className={inter.className}>
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

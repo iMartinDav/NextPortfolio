@@ -7,6 +7,9 @@ const nextConfig = {
       },
     },
   },
+  images: {
+    domains: ["github.com"], // Add the domains you want to allow for images
+  },
 };
 
 export default nextConfig;
