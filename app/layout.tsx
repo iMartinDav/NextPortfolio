@@ -19,13 +19,13 @@ export const metadata: Metadata = {
   authors: [{ name: "Martin DAVILA" }],
   openGraph: {
     type: "website",
-    url: "https://yourwebsite.com",
+    url: "https://www.imartin.dev",
     title: "Martin DAVILA | Full Stack Bioinformatics Engineer",
     description:
       "Innovative bioinformatics solutions for cutting-edge biotech research",
     images: [
       {
-        url: "https://yourwebsite.com/og-image.jpg",
+        url: "https://www.imartin.dev/og-image.jpg",
         width: 800,
         height: 600,
         alt: "Martin DAVILA | Full Stack Bioinformatics Engineer",
@@ -43,6 +43,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.className}>
+      <script
+        defer
+        src="https://cloud.umami.is/script.js"
+        data-website-id="1cb76843-7b97-489c-8564-d2429ad9bddb"
+      ></script>
       <body>
         <ThemeProvider
           attribute="class"
