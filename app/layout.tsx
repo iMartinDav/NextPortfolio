@@ -1,5 +1,8 @@
+// app/layout.tsx or app/layout.jsx
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script"; // Importing the Script component
 
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -43,11 +46,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.className}>
-      <script
-        defer
-        src="https://cloud.umami.is/script.js"
-        data-website-id="1cb76843-7b97-489c-8564-d2429ad9bddb"
-      ></script>
+      <head>
+        {/* Umami Analytics Script */}
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="1cb76843-7b97-489c-8564-d2429ad9bddb"
+          strategy="afterInteractive" // Ensures the script loads after the page is interactive
+        />
+      </head>
       <body>
         <ThemeProvider
           attribute="class"

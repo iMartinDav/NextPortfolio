@@ -1,10 +1,7 @@
-// components/stats-chart.tsx
 "use client";
 
 import * as React from "react";
 import { Label, Pie, PieChart } from "recharts";
-import { useEffect, useState } from "react";
-
 import {
   ChartConfig,
   ChartContainer,
@@ -12,114 +9,62 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const fetchStats = async (): Promise<StatsData | null> => {
-  const baseUrl =
-    typeof window !== "undefined" ? "" : process.env.NEXT_PUBLIC_BASE_URL;
-  const res = await fetch(`${baseUrl}/api/fetch-umami-stats`);
-  const data = await res.json();
-  console.log("data is:", data);
+type StatsData = Record<string, { value: number; prev: number }>;
 
-  // Check if data and necessary properties exist
-  if (!data || !data.totaltime || !data.visits) {
-    console.error("Invalid data format:", data);
-    return null;
-  }
-
-  // Calculate average visit duration in seconds
-  const averageVisitDurationSeconds = data.totaltime.value / data.visits.value;
-
-  // Convert average visit duration to minutes
-  const averageVisitDurationMinutes = averageVisitDurationSeconds / 60;
-
-  // Store the average visit duration in minutes
-  data.totaltime.value = averageVisitDurationMinutes;
-  data.totaltime.prev = data.totaltime.prev / 60; // Assuming prev is also in seconds
-
-  return data;
-};
-
-type StatsData = {
-  pageviews: { value: number; prev: number };
-  visitors: { value: number; prev: number };
-  visits: { value: number; prev: number };
-  bounces: { value: number; prev: number };
-  totaltime: { value: number; prev: number }; // now in minutes
-};
+interface RawStatsData {
+  [key: string]: { value?: number; prev?: number };
+}
 
 const chartConfig: ChartConfig = {
-  visitor_stats: {
-    label: "Visitors",
-  },
-  pageviews: {
-    label: "Page Views",
-    color: "hsl(var(--chart-1))",
-  },
-  visitors: {
-    label: "Users",
-    color: "hsl(var(--chart-2))",
-  },
-  visits: {
-    label: "Visits",
-    color: "hsl(var(--chart-3))",
-  },
-  bounces: {
-    label: "Bounces",
-    color: "hsl(var(--chart-4))",
-  },
-  totaltime: {
-    label: "Average Time",
-    color: "hsl(var(--chart-5))",
-  },
+  pageviews: { label: "Page Views", color: "#00BFAE" },
+  visitors: { label: "Users", color: "#008F8C" },
+  visits: { label: "Visits", color: "#7F00FF" },
+  bounces: { label: "Bounces", color: "#4B0082" },
+  totaltime: { label: "Average Time", color: "#E100FF" },
 };
 
 export default function StatsChart() {
-  const [stats, setStats] = useState<StatsData | null>(null);
+  const [stats, setStats] = React.useState<StatsData | null>(null);
 
-  useEffect(() => {
-    const getStats = async () => {
-      const stats = await fetchStats();
-      setStats(stats);
-    };
-
-    getStats();
+  React.useEffect(() => {
+    fetch("/api/fetch-umami-stats")
+      .then((res) => res.json())
+      .then((data: RawStatsData) => {
+        const totalTime = data.totaltime?.value ?? 0;
+        const visits = data.visits?.value ?? 1;
+        setStats({
+          ...Object.fromEntries(
+            Object.entries(data).map(([key, stats]) => [
+              key,
+              {
+                value: stats?.value ?? 0,
+                prev: stats?.prev ?? 0,
+              },
+            ])
+          ),
+          totaltime: {
+            value: totalTime / visits / 60,
+            prev: (data.totaltime?.prev ?? 0) / 60,
+          },
+        });
+      })
+      .catch((error) => console.error("Error fetching stats:", error));
   }, []);
 
-  const chartData = React.useMemo(() => {
-    if (!stats) return [];
-    return [
-      {
-        type: "pageviews",
-        visitors: stats.pageviews.value,
-        fill: "var(--color-pageviews)",
-      },
-      {
-        type: "visitors",
-        visitors: stats.visitors.value,
-        fill: "var(--color-visitors)",
-      },
-      {
-        type: "visits",
-        visitors: stats.visits.value,
-        fill: "var(--color-visits)",
-      },
-      {
-        type: "bounces",
-        visitors: stats.bounces.value,
-        fill: "var(--color-bounces)",
-      },
-      {
-        type: "totaltime",
-        visitors: stats.totaltime.value,
-        fill: "var(--color-totaltime)",
-      },
-    ];
-  }, [stats]);
+  const chartData = React.useMemo(
+    () =>
+      stats
+        ? Object.entries(stats).map(([type, { value }]) => ({
+            type,
+            visitors: value,
+            fill: chartConfig[type as keyof typeof chartConfig]?.color,
+          }))
+        : [],
+    [stats]
+  );
 
-  if (!stats) {
-    return (
-      <div className="flex items-center justify-center h-full">Loading...</div>
-    );
-  }
+  if (!stats)
+    return <div className="flex items-center justify-center h-full" />;
 
   return (
     <ChartContainer config={chartConfig} className="">
@@ -136,33 +81,31 @@ export default function StatsChart() {
           strokeWidth={5}
         >
           <Label
-            content={({ viewBox }) => {
-              if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                return (
-                  <text
+            content={(props) => {
+              const { viewBox } = props;
+              return viewBox && "cx" in viewBox && "cy" in viewBox ? (
+                <text
+                  x={viewBox.cx}
+                  y={viewBox.cy}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                >
+                  <tspan
                     x={viewBox.cx}
                     y={viewBox.cy}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
+                    className="fill-foreground text-5xl font-bold"
                   >
-                    <tspan
-                      x={viewBox.cx}
-                      y={viewBox.cy}
-                      className="fill-foreground text-5xl font-bold"
-                    >
-                      {chartData[0].visitors}
-                    </tspan>
-                    <tspan
-                      x={viewBox.cx}
-                      y={(viewBox.cy || 0) + 24}
-                      className="fill-muted-foreground"
-                    >
-                      Visits
-                    </tspan>
-                  </text>
-                );
-              }
-              return null; // Ensure all code paths return a value
+                    {chartData[0]?.visitors}
+                  </tspan>
+                  <tspan
+                    x={viewBox.cx}
+                    y={(viewBox.cy || 0) + 24}
+                    className="fill-muted-foreground"
+                  >
+                    Visits
+                  </tspan>
+                </text>
+              ) : null;
             }}
           />
         </Pie>
