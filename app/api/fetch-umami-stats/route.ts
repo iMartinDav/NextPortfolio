@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic'; // defaults to auto
 
 const client = getClient();
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     // The website ID
     const websiteId = '1cb76843-7b97-489c-8564-d2429ad9bddb';
@@ -21,7 +21,7 @@ export async function GET(request: Request) {
       type: 'url' // Example type, change as needed
     };
 
-    const { ok, data, status, error } = await client.getWebsiteStats(websiteId, metricsData);
+    const { ok, data, status } = await client.getWebsiteStats(websiteId, metricsData);
 
     if (!ok) {
       return new Response(JSON.stringify({ error: 'Failed to fetch website metrics' }), { status: status });
