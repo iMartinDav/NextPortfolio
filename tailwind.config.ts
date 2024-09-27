@@ -115,6 +115,9 @@ const config: Config = {
           '0%': { 'offset-distance': '0%' },
           '100%': { 'offset-distance': '100%' },
         },
+        k: {
+          "0%, 33.3%": { "--k": "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -128,6 +131,7 @@ const config: Config = {
         grid: "grid 15s linear infinite",
         ripple: "ripple 3400ms ease infinite",
         'glow-move': 'move 5s linear infinite',
+        "particles": "k calc(var(--m) * 1s) linear calc(var(--m) * var(--t, 0) * 1s) infinite",
       },
     },
   },

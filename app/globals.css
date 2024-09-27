@@ -474,6 +474,79 @@
 }
 
 /* --------- */
+/* Enhanced ButtonWithParticles Styles */
+/* --------- */
+
+@keyframes customFloat {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+
+  25% {
+    transform: translateY(-10px) translateX(10px);
+  }
+
+  50% {
+    transform: translateY(0) translateX(20px);
+  }
+
+  75% {
+    transform: translateY(10px) translateX(10px);
+  }
+}
+
+.unique-particle {
+  opacity: 0.7;
+  animation: customFloat calc(var(--m, 1) * 3s) infinite;
+  animation-delay: calc(var(--t, 0) * var(--m, 1) * 3s);
+}
+
+@keyframes customGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 30px rgba(99, 179, 237, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 50px rgba(99, 179, 237, 0.8);
+  }
+}
+
+.unique-button {
+  animation: customGlow 3s infinite;
+}
+
+.unique-form-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid #a78bfa;
+  border-radius: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: transparent;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.unique-form-checkbox:checked {
+  background-color: #a78bfa;
+}
+
+.unique-form-checkbox:checked::after {
+  content: '✓';
+  font-size: 1rem;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* --------- */
 /* Home section */
 /* --------- */
 .wave {
