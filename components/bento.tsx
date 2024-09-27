@@ -284,7 +284,7 @@ const features = [
     name: "",
     description: "",
     className: "col-span-3 md:col-span-1",
-    href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/now`,
+    href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/biocode`,
     cta: "Incubating Innovations",
     background: (
       <div className="absolute h-full w-full left-0 top-0 origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[105%]">
