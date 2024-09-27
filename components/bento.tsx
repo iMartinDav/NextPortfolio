@@ -7,7 +7,6 @@ import BlurIn from "@/components/magicui/blur-in";
 import { EmailForm } from "@/components/email-form";
 import { FadeIn } from "@/components/magicui/fade-in";
 import GlobeAndStars from "@/components/globe-and-stars";
-import Hero from "@/components/hero";
 import Marquee from "@/components/magicui/marquee";
 import Technologies from "@/components/technologies";
 import Orbit from "@/components/orbit";
@@ -19,6 +18,7 @@ import { RippleCard } from "./ui/ripper-card";
 import { motion } from "framer-motion";
 import GitHubStars from "@/components/github-stars";
 import ProjectPosts from "@/components/project-posts";
+import BentoShowcase from "@/components/BentoShowcase";
 
 const features = [
   {
@@ -31,10 +31,10 @@ const features = [
     background: (
       <>
         <div
-          id="hero"
+          id="BentoShowcase"
           className="absolute right-0 top-0 h-full w-full border-none transition-all duration-300 ease-out"
         >
-          <Hero />
+          <BentoShowcase />
         </div>
       </>
     ),
