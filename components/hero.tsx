@@ -13,14 +13,14 @@ export default function Hero() {
       <div className="flex flex-col items-start justify-center h-full overflow-hidden p-6 z-50">
         <WordPullUp words="Code Meets Biotech" />
 
-        <div className="text-lg text-neutral-500 dark:text-neutral-400 lg:px-1 w-full">
+        <div className="text-xs sm:text-sm md:text-lg text-neutral-500 dark:text-neutral-400 lg:px-1 w-full">
           <BlurIn className="w-3/4 sm:w-2/3">
             Crafting smart, scalable software for science. Less bugs, more
             breakthroughs.
           </BlurIn>
 
           <FadeIn direction="down" className="my-class">
-            <div className="flex items-center gap-2 w-full lg:w-2/3 mt-6">
+            <div className="flex items-center gap-2 w-full lg:w-2/3 mt-3 sm:mt-4">
               <a
                 href={process.env.GITHUB_URL}
                 target="_blank"
@@ -28,11 +28,13 @@ export default function Hero() {
               >
                 <Button
                   variant="default"
-                  size="lg"
+                  size="sm" // Keeping it small for mobile
                   className="flex items-center gap-2 w-full group/Github"
                 >
-                  <div>View Code</div>
-                  <Github className="h-5 w-5 lg:group-hover/Github:translate-x-1 transition-all duration-300" />
+                  <div className="text-xs sm:text-sm">View Code</div>{" "}
+                  {/* Smaller text size */}
+                  <Github className="h-3 w-3 lg:group-hover/Github:translate-x-1 transition-all duration-300" />{" "}
+                  {/* Smaller icon size */}
                 </Button>
               </a>
 
@@ -43,11 +45,13 @@ export default function Hero() {
               >
                 <Button
                   variant="default"
-                  size="lg"
+                  size="sm" // Keeping it small for mobile
                   className="flex items-center gap-2 w-full group/Mail"
                 >
-                  <div>Get in Touch</div>
-                  <Mail className="h-5 w-5 lg:group-hover/Mail:translate-x-1 transition-all duration-300" />
+                  <div className="text-xs sm:text-sm">Get in Touch</div>{" "}
+                  {/* Smaller text size */}
+                  <Mail className="h-3 w-3 lg:group-hover/Mail:translate-x-1 transition-all duration-300" />{" "}
+                  {/* Smaller icon size */}
                 </Button>
               </a>
             </div>
