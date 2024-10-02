@@ -1,15 +1,7 @@
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import {
-  User,
-  Code,
-  MapPin,
-  Copy,
-  Check,
-  Linkedin,
-  Github,
-} from "lucide-react";
+import { MapPin, Copy, Check, Linkedin, Github } from "lucide-react";
 import { EvervaultCard } from "../ui/evervault-card";
 
 // Dynamically import the Globe component to disable SSR
