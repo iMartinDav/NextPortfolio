@@ -19,6 +19,7 @@ import { motion } from "framer-motion";
 import GitHubStars from "@/components/github-stars";
 import ProjectPosts from "@/components/project-posts";
 import BentoShowcase from "@/components/BentoShowcase";
+import React from "react";
 
 const features = [
   {

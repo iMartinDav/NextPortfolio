@@ -10,6 +10,7 @@ import {
   Linkedin,
   Github,
 } from "lucide-react";
+import { EvervaultCard } from "../ui/evervault-card";
 
 // Dynamically import the Globe component to disable SSR
 const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
@@ -35,13 +36,11 @@ const BentoContact = () => {
         {/* Section 1: Introduction */}
         <div className="col-span-1 xl:row-span-3 p-6 bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg border border-border">
           <div className="flex flex-col justify-center items-start">
-            <div className="w-full h-64 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
-              <User size={64} className="text-white" />
-            </div>
+            <EvervaultCard
+              text="Crafting Tomorrow's Solutions"
+              className="w-full h-48 md:h-72 lg:h-80"
+            />
             <div className="mt-4">
-              <p className="text-2xl font-bold text-foreground">
-                Crafting Tomorrow's Solutions
-              </p>
               <p className="text-muted-foreground mt-2">
                 In the ever-evolving world of bioinformatics and biotech, every
                 breakthrough starts with curiosity and innovation. Through years
@@ -55,14 +54,12 @@ const BentoContact = () => {
 
         {/* Section 2: The Bioinformatics Journey */}
         <div className="col-span-1 xl:row-span-3 p-6 bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg border border-border">
-          <div className="flex flex-col justify-center items-start">
-            <div className="w-full h-64 bg-gradient-to-r from-green-500 to-teal-500 rounded-lg flex items-center justify-center">
-              <Code size={64} className="text-white" />
-            </div>
+          <div className="flex flex-col justify-center items-start space-y-4">
+            <EvervaultCard
+              text="Innovative Solutions"
+              className="w-full h-48 md:h-72 lg:h-80"
+            />
             <div className="mt-4">
-              <p className="text-2xl font-bold text-foreground">
-                Innovative Solutions
-              </p>
               <p className="text-muted-foreground mt-2">
                 Each project undertaken is a step towards unraveling the
                 mysteries of biological systems. By integrating advanced
@@ -116,13 +113,11 @@ const BentoContact = () => {
         {/* Section 4: Journey Through Experience */}
         <div className="xl:col-span-2 xl:row-span-3 p-6 bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg border border-border">
           <div className="flex flex-col justify-center items-start">
-            <div className="w-full h-64 bg-gradient-to-r from-pink-500 to-red-500 rounded-lg flex items-center justify-center">
-              <Code size={64} className="text-white" />
-            </div>
+            <EvervaultCard
+              text="A Path of Discovery"
+              className="w-full h-32 md:h-48 lg:h-56"
+            />
             <div className="mt-4">
-              <p className="text-2xl font-bold text-foreground">
-                A Path of Discovery
-              </p>
               <p className="text-muted-foreground mt-2">
                 The journey through the realms of bioinformatics and biotech has
                 been marked by significant contributions to projects and
@@ -137,13 +132,11 @@ const BentoContact = () => {
         {/* Section 5: Invitation to Connect */}
         <div className="xl:col-span-1 xl:row-span-2 p-6 bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg border border-border">
           <div className="flex flex-col items-center">
-            <div className="w-full h-32 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center">
-              <User size={48} className="text-white" />
-            </div>
+            <EvervaultCard
+              text="Explore the Future Together"
+              className="w-full h-32 md:h-48 lg:h-56"
+            />
             <div className="space-y-2 mt-4 w-full">
-              <p className="text-lg font-medium text-foreground text-center">
-                Explore the Future Together
-              </p>
               <p className="text-muted-foreground text-center mt-2">
                 As the world of bioinformatics and biotech continues to evolve,
                 there’s always room for new partnerships and collaborative
