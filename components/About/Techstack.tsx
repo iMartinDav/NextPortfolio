@@ -5,61 +5,63 @@ import {
   DiReact,
   DiNodejs,
   DiMongodb,
-  DiPython,
   DiGit,
+  DiPython,
 } from "react-icons/di";
-import { SiPytorch, SiFirebase, SiNextdotjs } from "react-icons/si";
+import {
+  SiPytorch,
+  SiFirebase,
+  SiNextdotjs,
+  SiAstro,
+  SiPostgresql,
+  SiRuby,
+  SiFlask,
+  SiRedis,
+  SiAngular,
+  SiSwift,
+  SiLibreofficemath,
+} from "react-icons/si";
+import { BiLogoFlutter } from "react-icons/bi";
+
+interface TechItemProps {
+  icon: React.ReactNode;
+  label: string;
+  className?: string;
+}
 
 function Techstack() {
   return (
-    <div className="p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">
-        Technologies I Work With
-      </h2>
+    <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 transition duration-300">
+      
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-        <div className="flex flex-col items-center">
-          <CgCPlusPlus className="text-4xl text-blue-600 mb-2" />
-          <span className="text-gray-600">C++</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <DiJavascript1 className="text-4xl text-yellow-600 mb-2" />
-          <span className="text-gray-600">JavaScript</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <DiNodejs className="text-4xl text-green-600 mb-2" />
-          <span className="text-gray-600">Node.js</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <DiReact className="text-4xl text-blue-400 mb-2" />
-          <span className="text-gray-600">React</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <DiMongodb className="text-4xl text-green-800 mb-2" />
-          <span className="text-gray-600">MongoDB</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <SiNextdotjs className="text-4xl text-gray-800 mb-2" />
-          <span className="text-gray-600">Next.js</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <DiGit className="text-4xl text-orange-600 mb-2" />
-          <span className="text-gray-600">Git</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <SiFirebase className="text-4xl text-orange-500 mb-2" />
-          <span className="text-gray-600">Firebase</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <DiPython className="text-4xl text-blue-500 mb-2" />
-          <span className="text-gray-600">Python</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <SiPytorch className="text-4xl text-red-600 mb-2" />
-          <span className="text-gray-600">PyTorch</span>
-        </div>
+        <TechItem icon={<SiPytorch className="text-red-600" />} label="PyTorch" />
+        <TechItem icon={<DiPython className="text-blue-500" />} label="Python" />
+        <TechItem icon={<SiFlask className="text-green-600" />} label="Flask" />
+        <TechItem icon={<SiPostgresql className="text-blue-700" />} label="PostgreSQL" />
+        <TechItem icon={<DiMongodb className="text-green-800" />} label="MongoDB" />
+        <TechItem icon={<SiFirebase className="text-orange-500" />} label="Firebase" />
+        <TechItem icon={<SiRedis className="text-red-500" />} label="Redis" />
+        <TechItem icon={<DiNodejs className="text-green-600" />} label="Node.js" />
+        <TechItem icon={<DiReact className="text-blue-400" />} label="React" />
+        <TechItem icon={<SiNextdotjs className="text-gray-800" />} label="Next.js" />
+        <TechItem icon={<SiAstro className="text-gray-500" />} label="Astro" />
+        <TechItem icon={<BiLogoFlutter className="text-blue-400" />} label="Flutter" />
+        <TechItem icon={<SiRuby className="text-red-600" />} label="Ruby" />
+        <TechItem icon={<CgCPlusPlus className="text-blue-600" />} label="C++" />
+        <TechItem icon={<DiGit className="text-orange-600" />} label="Git" />
+        <TechItem icon={<SiAngular className="bg-gradient-to-br from-pink-500 via-purple-500 to-purple-600"/>} label="Angular" />
+        <TechItem icon={<SiSwift className="text-orange-400" />} label="Swift" />
+        <TechItem icon={<SiLibreofficemath className="text-blue-700" />} label="MATLAB" />
       </div>
     </div>
   );
 }
+
+const TechItem: React.FC<TechItemProps> = ({ icon, label, className = "" }) => (
+  <div className={`flex flex-col items-center ${className}`}>
+    <div className="text-4xl mb-2">{icon}</div>
+    <span className="text-gray-600 dark:text-gray-300">{label}</span>
+  </div>
+);
 
 export default Techstack;

@@ -1,3 +1,5 @@
+"use client"; // Add this line
+
 import React, { memo, useEffect, useMemo } from "react";
 import { motion, MotionProps } from "framer-motion";
 import { useTheme } from "next-themes";
@@ -16,7 +18,7 @@ const BentoBox: React.FC<BentoBoxProps> = memo(({
   hoverScale = 1.02,
   motionProps,
 }) => {
-  const { theme } = useTheme(); // Removed setTheme since it's unused
+  const { theme } = useTheme();
 
   // State to force re-render on theme change
   const [isMounted, setIsMounted] = React.useState(false);
@@ -33,7 +35,6 @@ const BentoBox: React.FC<BentoBoxProps> = memo(({
   }, [theme]);
 
   if (!isMounted) {
-    // Prevent rendering until mounted
     return null;
   }
 

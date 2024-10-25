@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
           {/* Section 2: Copyright */}
           <div className="text-center md:text-center w-full md:w-1/3">
             <h3 className="text-xs font-medium leading-snug">
-              Copyright © {year} All Rights Reserved to GPT-4
+              Copyright © {year} All Rights Reserved to GPT-o1
             </h3>
           </div>
 
