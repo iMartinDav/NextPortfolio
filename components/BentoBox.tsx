@@ -1,4 +1,4 @@
-"use client"; // Add this line
+"use client";
 
 import React, { memo, useEffect, useMemo } from "react";
 import { motion, MotionProps } from "framer-motion";
@@ -61,5 +61,8 @@ const BentoBox: React.FC<BentoBoxProps> = memo(({
     </motion.div>
   );
 });
+
+// Setting the display name
+BentoBox.displayName = "BentoBox";
 
 export default BentoBox;

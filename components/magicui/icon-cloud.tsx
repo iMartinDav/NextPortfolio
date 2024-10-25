@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useMemo, useState } from "react";
 import { useTheme } from "next-themes";
 import {
@@ -55,19 +53,15 @@ export const renderCustomIcon = (
     size: 42,
     aProps: liveLinks
       ? {
-          href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/${sanitizeSlug(
-            icon.slug
-          )}`,
+          href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/${sanitizeSlug(icon.slug)}`,
           target: "",
           rel: "noopener noreferrer",
         }
       : {
-          href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/${sanitizeSlug(
-            icon.slug
-          )}`,
+          href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/${sanitizeSlug(icon.slug)}`,
           target: undefined,
           rel: undefined,
-          onClick: (e: any) => e.preventDefault(),
+          onClick: (e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault(),
           style: { cursor: "pointer" },
         },
   });
@@ -100,7 +94,7 @@ export default function IconCloud({
   }, [data, theme, liveLinks]);
 
   return (
-    // @ts-ignore
+    // @ts-expect-error This is required because the Cloud component does not accept children as a prop, but we want to render the icons directly.
     <Cloud {...cloudProps}>
       <>{renderedIcons}</>
     </Cloud>

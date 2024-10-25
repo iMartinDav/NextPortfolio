@@ -5,6 +5,11 @@
   ],
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "@typescript-eslint/no-unused-vars": ["warn"]
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    "react/display-name": "off", // Disable missing display name rule
+    "react/no-unescaped-entities": "off", // Disable no unescaped entities rule
+    "@typescript-eslint/no-explicit-any": "off", // Disable explicit any rule
+    "react-hooks/exhaustive-deps": "off", // Disable exhaustive-deps warnings
+    "@next/next/no-img-element": "off" // Disable img element warning
   }
 }

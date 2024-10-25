@@ -4,7 +4,8 @@ export const dynamic = 'force-dynamic'; // defaults to auto
 
 const client = getClient();
 
-export async function GET() {
+
+export async function GET(): Promise<Response> { // Specify the return type
   try {
     // The website ID
     const websiteId = '1cb76843-7b97-489c-8564-d2429ad9bddb';
@@ -34,7 +35,7 @@ export async function GET() {
     console.log('Pageviews data:', data);
 
     return new Response(JSON.stringify(data), { status: 200 });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error fetching website pageviews:', error);
     return new Response(JSON.stringify({ error: 'Failed to fetch website pageviews' }), { status: 500 });
   }

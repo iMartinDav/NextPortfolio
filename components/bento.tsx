@@ -42,7 +42,7 @@ const features = [
   },
   {
     Icon: "",
-    name: "I'm Martin DAVILA",
+    name: "I&apos;m Martin DAVILA",
     description:
       "Software Sorcerer & Bioinformatics Wizard Specialist Full-stack dev with a genomic twist. Cloud architect who speaks DNA.",
     className: "col-span-3 md:col-span-1",
@@ -163,7 +163,7 @@ const features = [
     Icon: "",
     name: "AI Integrations",
     description:
-      "From predicting protein structures to optimizing pipelines, I've got AI that would make Watson jealous.",
+      "From predicting protein structures to optimizing pipelines, I&apos;ve got AI that would make Watson jealous.",
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/ai`,
     cta: "Visit AI projects",
     className: "col-span-3 md:col-span-2",

@@ -29,11 +29,11 @@ export default function Hero() {
             </h1>
 
             <h2 className="text-3xl md:text-5xl font-bold text-[#3D3C45] dark:text-[#EAEAFF] mb-6">
-              I'm <strong className="main-name">Martin DAVILA</strong>
+              I&apos;m <strong className="main-name">Martin DAVILA</strong>
             </h2>
 
             <h3 className="text-4xl md:text-6xl font-extrabold text-[#3D3C45] dark:text-[#EAEAFF] leading-tight mb-6">
-              Decoding Life's Blueprint
+              Decoding Life&apos;s Blueprint
               <span className="wave text-4xl" role="img" aria-labelledby="wave">
                 🧬
               </span>

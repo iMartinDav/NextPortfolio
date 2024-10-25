@@ -5,9 +5,8 @@ import Techstack from "./Techstack";
 import Aboutcard from "./AboutCard";
 import Toolstack from "./Toolstack";
 
-interface AboutProps {}
-
-const AboutContent: React.FC<AboutProps> = () => {
+// Option 1: If you don't need props
+const AboutContent: React.FC = () => {
   return (
     <div className="bg-lightBackground dark:bg-darkBackground text-lightText dark:text-darkText py-10 transition-colors duration-300">
       <Particle />

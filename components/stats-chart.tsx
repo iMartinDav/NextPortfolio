@@ -27,28 +27,28 @@ export default function StatsChart() {
   const [stats, setStats] = React.useState<StatsData | null>(null);
 
   React.useEffect(() => {
-    fetch("/api/fetch-umami-stats")
-      .then((res) => res.json())
-      .then((data: RawStatsData) => {
-        const totalTime = data.totaltime?.value ?? 0;
-        const visits = data.visits?.value ?? 1;
-        setStats({
-          ...Object.fromEntries(
-            Object.entries(data).map(([key, stats]) => [
-              key,
-              {
-                value: stats?.value ?? 0,
-                prev: stats?.prev ?? 0,
-              },
-            ])
-          ),
-          totaltime: {
-            value: totalTime / visits / 60,
-            prev: (data.totaltime?.prev ?? 0) / 60,
-          },
-        });
-      })
-      .catch((error) => console.error("Error fetching stats:", error));
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/fetch-umami-stats");
+        if (!res.ok) {
+          const errorBody = await res.text(); // Read the error response body
+          throw new Error(`Network response was not ok: ${res.status} ${res.statusText} - ${errorBody}`);
+        }
+
+        const data: RawStatsData = await res.json();
+        const transformedData: StatsData = Object.fromEntries(
+          Object.entries(data).map(([key, { value = 0, prev = 0 }]) => [
+            key,
+            { value, prev },
+          ])
+        );
+        setStats(transformedData);
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const chartData = React.useMemo(
@@ -56,15 +56,14 @@ export default function StatsChart() {
       stats
         ? Object.entries(stats).map(([type, { value }]) => ({
             type,
-            visitors: value,
+            visitors: value ?? 0,
             fill: chartConfig[type as keyof typeof chartConfig]?.color,
           }))
         : [],
     [stats]
   );
 
-  if (!stats)
-    return <div className="flex items-center justify-center h-full" />;
+  if (!stats) return <div className="flex items-center justify-center h-full" />;
 
   return (
     <ChartContainer config={chartConfig} className="">

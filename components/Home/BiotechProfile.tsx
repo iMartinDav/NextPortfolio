@@ -14,7 +14,8 @@ const socialLinks = [
   { href: "https://opensea.io/iMartinDav", Icon: SiCodeship, label: "OpenSea" },
 ];
 
-const GradientText: React.FC<React.PropsWithChildren<{}>> = memo(({ children }) => (
+// Changed {} to unknown
+const GradientText: React.FC<React.PropsWithChildren<unknown>> = memo(({ children }) => (
   <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-light to-purple-light">
     {children}
   </span>
@@ -24,11 +25,10 @@ const BiotechProfile: React.FC = () => {
   const { theme } = useTheme();
 
   const colors = useMemo(() => {
-
     const mutedColor = theme === "dark" ? "text-[#EAEAFF]" : "text-[#16141E]";
     const glowColorPrimary = theme === "dark" ? "rgba(0, 191, 174, 0.2)" : "rgba(0, 191, 174, 0.5)";
     const glowColorSecondary = theme === "dark" ? "rgba(127, 0, 255, 0.2)" : "rgba(127, 0, 255, 0.5)";
-    return {mutedColor, glowColorPrimary, glowColorSecondary };
+    return { mutedColor, glowColorPrimary, glowColorSecondary };
   }, [theme]);
 
   return (
@@ -48,7 +48,7 @@ const BiotechProfile: React.FC = () => {
                 speeding up biotech breakthroughs to making deployments less of
                 a headache, I try to bring a little innovation and automation
                 into everything I touch. And yeah, sleep? Not much of that, but
-                hey, that’s what coffee’s for, right? ☕
+                hey, that’s what coffee&apos;s for, right? ☕
               </p>
             </BentoBox>
 
@@ -109,7 +109,7 @@ const BiotechProfile: React.FC = () => {
             Got a tricky biology problem that needs a tech solution? I
             specialize in turning complex life science challenges into elegant
             code. From gene sequencing to protein folding, I'm here to help your
-            team make sense of the data and push research forward. Let's build
+            team make sense of the data and push research forward. Let&apos;s build
             something great together.
           </p>
           <ul className="flex justify-center space-x-6">
@@ -136,5 +136,8 @@ const BiotechProfile: React.FC = () => {
     </section>
   );
 };
+
+// Set display name for the component
+BiotechProfile.displayName = "BiotechProfile";
 
 export default BiotechProfile;
