@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
@@ -8,59 +8,41 @@ import { useTheme } from "next-themes";
 import BentoBox from "../BentoBox";
 
 const socialLinks = [
-  {
-    href: "https://twitter.com/iMartinDav",
-    Icon: RiTwitterXLine,
-    label: "Twitter",
-  },
-  {
-    href: "https://github.com/iMartinDav",
-    Icon: AiFillGithub,
-    label: "GitHub",
-  },
-  {
-    href: "https://www.linkedin.com/in/imartindav/",
-    Icon: AiFillLinkedin,
-    label: "LinkedIn",
-  },
+  { href: "https://twitter.com/iMartinDav", Icon: RiTwitterXLine, label: "Twitter" },
+  { href: "https://github.com/iMartinDav", Icon: AiFillGithub, label: "GitHub" },
+  { href: "https://www.linkedin.com/in/imartindav/", Icon: AiFillLinkedin, label: "LinkedIn" },
   { href: "https://opensea.io/iMartinDav", Icon: SiCodeship, label: "OpenSea" },
 ];
 
-const GradientText: React.FC<React.PropsWithChildren<{}>> = memo(
-  ({ children }) => (
-    <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-light to-purple-light">
-      {children}
-    </span>
-  )
-);
+const GradientText: React.FC<React.PropsWithChildren<{}>> = memo(({ children }) => (
+  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-light to-purple-light">
+    {children}
+  </span>
+));
 
 const BiotechProfile: React.FC = () => {
   const { theme } = useTheme();
 
-  const textColor = theme === "dark" ? "text-white" : "text-gray-900";
-  const mutedColor = theme === "dark" ? "text-[#EAEAFF]" : "text-[#16141E]";
-  const glowColorPrimary =
-    theme === "dark" ? "rgba(0, 191, 174, 0.2)" : "rgba(0, 191, 174, 0.5)";
-  const glowColorSecondary =
-    theme === "dark" ? "rgba(127, 0, 255, 0.2)" : "rgba(127, 0, 255, 0.5)";
+  const colors = useMemo(() => {
+
+    const mutedColor = theme === "dark" ? "text-[#EAEAFF]" : "text-[#16141E]";
+    const glowColorPrimary = theme === "dark" ? "rgba(0, 191, 174, 0.2)" : "rgba(0, 191, 174, 0.5)";
+    const glowColorSecondary = theme === "dark" ? "rgba(127, 0, 255, 0.2)" : "rgba(127, 0, 255, 0.5)";
+    return {mutedColor, glowColorPrimary, glowColorSecondary };
+  }, [theme]);
 
   return (
     <section className="py-20 min-h-[50vh] relative">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="space-y-8">
-            <BentoBox
-              className="backdrop-blur-sm bg-opacity-30"
-              glowColor={glowColorPrimary}
-            >
-              <h1
-                className={`text-4xl md:text-5xl font-bold ${textColor} mb-4`}
-              >
+            <BentoBox className="backdrop-blur-sm bg-opacity-30" glowColor={colors.glowColorPrimary}>
+              <h1 className={`text-4xl md:text-5xl font-bold mb-4`}>
                 Innovating at the <GradientText>Intersection</GradientText> of
                 <br />
                 <GradientText>Biology and Code</GradientText>
               </h1>
-              <p className={`text-xl ${mutedColor}`}>
+              <p className={`text-xl ${colors.mutedColor}`}>
                 Whether it’s wrangling CI/CD pipelines, automating workflows, or
                 making data behave, I somehow manage to get it done. From
                 speeding up biotech breakthroughs to making deployments less of
@@ -70,14 +52,9 @@ const BiotechProfile: React.FC = () => {
               </p>
             </BentoBox>
 
-            <BentoBox
-              className="backdrop-blur-sm bg-opacity-30"
-              glowColor={glowColorSecondary}
-            >
-              <h2 className={`text-2xl font-semibold ${textColor} mb-4`}>
-                Expertise
-              </h2>
-              <ul className={`grid grid-cols-2 gap-2 ${mutedColor}`}>
+            <BentoBox className="backdrop-blur-sm bg-opacity-30" glowColor={colors.glowColorSecondary}>
+              <h2 className={`text-2xl font-semibold mb-4`}>Expertise</h2>
+              <ul className={`grid grid-cols-2 gap-2 ${colors.mutedColor}`}>
                 {[
                   "Bioinformatics",
                   "Software Engineering",
@@ -127,10 +104,8 @@ const BiotechProfile: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.8 }}
           className="mt-16 text-center"
         >
-          <h2 className={`text-3xl font-bold ${textColor} mb-6`}>
-            Connect & Collaborate
-          </h2>
-          <p className={`text-xl ${mutedColor} mb-8`}>
+          <h2 className={`text-3xl font-bold mb-6`}>Connect & Collaborate</h2>
+          <p className={`text-xl mb-8`}>
             Got a tricky biology problem that needs a tech solution? I
             specialize in turning complex life science challenges into elegant
             code. From gene sequencing to protein folding, I'm here to help your
@@ -148,10 +123,10 @@ const BiotechProfile: React.FC = () => {
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-primary hover:text-secondary focus:ring-4 focus:ring-secondary/30 rounded-full p-2 block"
+                  className="text-primary text-2xl"
                   aria-label={label}
                 >
-                  <Icon className="text-4xl" />
+                  <Icon />
                 </a>
               </motion.li>
             ))}
