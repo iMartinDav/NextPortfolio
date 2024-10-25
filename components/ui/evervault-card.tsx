@@ -102,25 +102,9 @@ export const TouchButton = ({
       onClick={onClick}
       className="flex items-center justify-center p-4 bg-blue-500 text-white rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
       aria-label={label}
-      style={{ minWidth: "44px", minHeight: "44px" }} // Ensuring a larger touch target
+      style={{ minWidth: "44px", minHeight: "44px" }}
     >
       {label}
     </button>
   );
 };
-
-// Example usage of TouchButton
-const App = () => {
-  const handleClick = () => {
-    alert("Button clicked!");
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <EvervaultCard text="Hello, Touch!" />
-      <TouchButton onClick={handleClick} label="Click Me!" />
-    </div>
-  );
-};
-
-export default App;

@@ -497,12 +497,6 @@
   }
 }
 
-.unique-particle {
-  opacity: 0.7;
-  animation: customFloat calc(var(--m, 1) * 3s) infinite;
-  animation-delay: calc(var(--t, 0) * var(--m, 1) * 3s);
-}
-
 @keyframes customGlow {
 
   0%,
@@ -515,28 +509,92 @@
   }
 }
 
-.unique-button {
-  animation: customGlow 3s infinite;
+@property --k {
+  syntax: '<number>';
+  initial-value: -1;
+  inherits: true;
 }
 
-.unique-form-checkbox {
+@keyframes k {
+
+  0%,
+  33.3% {
+    --k: 1;
+  }
+}
+
+.particle {
+  --f: 1;
+  --pos-k: max(0, var(--k));
+  --neg-k: max(0, -1 * var(--k));
+  --low-c: min(1, 4 * (1 - var(--pos-k)));
+  --abs-d: max(var(--neg-k) - 0.5, 0.5 - var(--neg-k));
+  --mov-f: var(--pos-k);
+  display: grid;
+  width: 0.75em;
+  aspect-ratio: 1;
+  animation: k calc(var(--m, 1) * 1s) linear calc(var(--m, 1) * var(--t, 0) * 1s) infinite;
+  position: absolute;
+  /* Ensure particles are positioned absolutely */
+  font-size: calc(var(--d) * 0.1);
+  color: #bad9fa;
+  left: var(--x);
+  top: var(--y);
+  opacity: 0;
+  /* Initial state for opacity */
+  animation: particleMove calc(var(--m, 1) * 3s) forwards;
+  /* Updated animation for movement */
+  animation-delay: calc(var(--m, 1) * var(--t, 0) * 3s);
+}
+
+@keyframes particleMove {
+  0% {
+    transform: translate(calc(var(--x) * -1), calc(var(--y) * -1)) scale(0);
+    opacity: 1;
+    /* Start with opacity 1 for visibility */
+  }
+
+  50% {
+    opacity: 1;
+    /* Keep particles visible */
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+    /* Fade out at the end of the animation */
+  }
+}
+
+.particle::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(at 85% 85%, #bad9fa, #3e66a4 75%);
+  border-radius: 50%;
+  transform: scale(var(--f, 1));
+  opacity: 0.7;
+}
+
+input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
-  border: 2px solid #a78bfa;
-  border-radius: 0.25rem;
   width: 1.5rem;
   height: 1.5rem;
+  border: 2px solid #a78bfa;
+  border-radius: 0.25rem;
   background-color: transparent;
   display: inline-block;
   position: relative;
   cursor: pointer;
 }
 
-.unique-form-checkbox:checked {
+input[type="checkbox"]:checked {
   background-color: #a78bfa;
 }
 
-.unique-form-checkbox:checked::after {
+input[type="checkbox"]:checked::after {
   content: '✓';
   font-size: 1rem;
   color: white;
@@ -544,6 +602,43 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.particle-button {
+  position: relative;
+  padding: 1.5rem 2.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #f2fdfe;
+  background: radial-gradient(#111a39, 67.5%, #3476da);
+  border-radius: 9999px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.particle-button:hover {
+  transform: scale(1.05);
+}
+
+.particle-button:active {
+  transform: scale(0.95);
+}
+
+.button-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(#a0c2ed, 35%, transparent 70%);
+  background-size: 80% 50%;
+  background-position: 50% 0;
+  background-repeat: repeat-y;
+  opacity: 0.5;
+}
+
+.particle-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
 }
 
 /* --------- */
