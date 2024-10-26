@@ -3,12 +3,16 @@ const nextConfig = {
   experimental: {
     turbo: {
       resolveAlias: {
-        canvas: "./empty-module.ts", // or './empty-module.js'
+        canvas: "./empty-module.ts",
       },
     },
   },
+  webpack: (config) => {
+    config.resolve.alias.canvas = false;
+    return config;
+  },
   images: {
-    domains: ["github.com"], // Add the domains you want to allow for images
+    domains: ["github.com"],
   },
 };
 

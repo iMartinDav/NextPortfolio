@@ -42,7 +42,7 @@ const features = [
   },
   {
     Icon: "",
-    name: "I&apos;m Martin DAVILA",
+    name: "I'm Martin DAVILA",
     description:
       "Software Sorcerer & Bioinformatics Wizard Specialist Full-stack dev with a genomic twist. Cloud architect who speaks DNA.",
     className: "col-span-3 md:col-span-1",
