@@ -200,7 +200,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
             )}
           >
                 <TooltipProvider>
-      <div className="flex items-center divide-x divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900 rounded-lg p-1 shadow-sm">
+      <div className="flex items-center divide-x divide-gray-200 dark:divide-gray-700  rounded-lg p-1 shadow-sm">
         <div className="flex items-center space-x-1 sm:space-x-2 px-1 sm:px-2">
           <Button
             variant="ghost"
