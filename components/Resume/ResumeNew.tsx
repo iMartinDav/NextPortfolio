@@ -26,13 +26,10 @@ import { cn } from "@/lib/utils";
 import Particle from "../Particle";
 import { useMediaQuery } from './use-media-query';
 
-
-// Required styles
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import { PDFViewerProps } from './types';
 
-// Initialize worker
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
   import.meta.url,
@@ -60,8 +57,8 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
   const calculateInitialScale = useCallback(() => {
     if (typeof window === 'undefined') return 1;
     if (isMobile) return 0.5;
-    if (isTablet) return 0.7;
-    return 0.9;
+    if (isTablet) return 0.8;
+    return 1.2;
   }, [isMobile, isTablet]);
 
   useEffect(() => {
@@ -71,7 +68,6 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
-
     const handleInteraction = () => {
       setControlsVisible(true);
       clearTimeout(timeoutId);
@@ -92,14 +88,13 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
         clearTimeout(timeoutId);
       };
     }
-
     return undefined;
   }, [isMobile]);
 
   const handleZoomIn = () => setScale(prev => Math.min(prev + 0.1, 2));
   const handleZoomOut = () => setScale(prev => Math.max(prev - 0.1, 0.5));
   const handleRotate = () => setRotation(prev => (prev + 90) % 360);
-
+  
   const toggleFullScreen = useCallback(async () => {
     if (!document.fullscreenElement) {
       await document.documentElement.requestFullscreen();
@@ -174,193 +169,191 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
   };
 
   return (
-    <Card className={cn(
-      'w-full mx-auto p-4 md:p-6 flex flex-col',
-      'min-h-[calc(100vh-theme(spacing.32))]',
-      'overflow-hidden',
-      'bg-background/90',
-      'shadow-lg',
-      'flex-grow',
-    )}>
-      <Particle />
-      
-      {/* Floating Controls */}
-      <div className={cn(
-        "fixed bottom-2 md:bottom-4 left-1/2 transform -translate-x-1/2 z-10",
-        "transition-all duration-300 bg-background/95 backdrop-blur",
-        "supports-[backdrop-filter]:bg-background/60 shadow-lg rounded-full",
-        "p-1 md:p-2",
-        controlsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
-      )}>
-        <div className="flex items-center space-x-1 md:space-x-2">
-          <TooltipProvider>
-            <div className="flex items-center">
-              <Button
-                variant="outline"
-                size={isMobile ? "sm" : "icon"}
-                onClick={() => setPageNumber(prev => Math.max(prev - 1, 1))}
-                disabled={pageNumber <= 1}
-                className="h-8 w-8 md:h-10 md:w-10"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-
-              <span className="px-2 text-xs md:text-sm font-medium">
-                {pageNumber}/{numPages}
-              </span>
-
-              <Button
-                variant="outline"
-                size={isMobile ? "sm" : "icon"}
-                onClick={() => setPageNumber(prev => Math.min(prev + 1, numPages))}
-                disabled={pageNumber >= numPages}
-                className="h-8 w-8 md:h-10 md:w-10"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-
-            <div className={cn("flex items-center space-x-1 md:space-x-2",
-              isMobile ? "hidden" : "flex"
-            )}>
-              <Tooltip>
-                <TooltipTrigger asChild>
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center">
+      <div className="w-full h-full flex flex-col items-center justify-center pt-16 sm:pt-20 lg:pt-24">
+        <Particle />
+        <Card className={cn(
+          'px-2 py-8 max-w-xl mx-auto',
+          'bg-card/50 backdrop-blur-sm',
+          'shadow-xl ring-1 ring-border/10',
+          'transition-all duration-300',
+          'rounded-none sm:rounded-lg',
+          'max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl',
+          'px-2 sm:px-4 md:px-6 lg:px-8',
+          'min-h-[calc(100vh-8rem)]'
+        )}>
+          <div className={cn(
+            "fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50",
+            "bg-card/95 backdrop-blur-md",
+            "rounded-full shadow-lg border border-border/50",
+            "transition-all duration-300",
+            "px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3",
+            controlsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8 pointer-events-none"
+          )}>
+            <TooltipProvider>
+              <div className="flex items-center divide-x divide-border/30">
+                <div className="flex items-center space-x-1 sm:space-x-2 px-1 sm:px-2">
                   <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={handleZoomIn}
-                    disabled={scale >= 2}
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setPageNumber(prev => Math.max(prev - 1, 1))}
+                    disabled={pageNumber <= 1}
+                    className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full"
                   >
-                    <ZoomIn className="h-4 w-4" />
+                    <ChevronLeft className="h-4 w-4" />
                   </Button>
-                </TooltipTrigger>
-                <TooltipContent>Zoom in</TooltipContent>
-              </Tooltip>
 
-              <Tooltip>
-                <TooltipTrigger asChild>
+                  <span className="text-xs sm:text-sm font-medium min-w-[2.5rem] sm:min-w-[3rem] text-center">
+                    {pageNumber}/{numPages}
+                  </span>
+
                   <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={handleZoomOut}
-                    disabled={scale <= 0.5}
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setPageNumber(prev => Math.min(prev + 1, numPages))}
+                    disabled={pageNumber >= numPages}
+                    className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full"
                   >
-                    <ZoomOut className="h-4 w-4" />
+                    <ChevronRight className="h-4 w-4" />
                   </Button>
-                </TooltipTrigger>
-                <TooltipContent>Zoom out</TooltipContent>
-              </Tooltip>
+                </div>
 
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={handleRotate}
-                  >
-                    <RotateCw className="h-4 w-4" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>Rotate</TooltipContent>
-              </Tooltip>
+                {!isMobile && (
+                  <div className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4">
+                    <ControlButton
+                      icon={<ZoomIn className="h-4 w-4" />}
+                      onClick={handleZoomIn}
+                      disabled={scale >= 2}
+                      tooltip="Zoom in"
+                    />
+                    <ControlButton
+                      icon={<ZoomOut className="h-4 w-4" />}
+                      onClick={handleZoomOut}
+                      disabled={scale <= 0.5}
+                      tooltip="Zoom out"
+                    />
+                    <ControlButton
+                      icon={<RotateCw className="h-4 w-4" />}
+                      onClick={handleRotate}
+                      tooltip="Rotate"
+                    />
+                    <ControlButton
+                      icon={isFullScreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                      onClick={toggleFullScreen}
+                      tooltip={isFullScreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+                    />
+                  </div>
+                )}
 
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={toggleFullScreen}
-                  >
-                    {isFullScreen ? (
-                      <Minimize2 className="h-4 w-4" />
-                    ) : (
-                      <Maximize2 className="h-4 w-4" />
-                    )}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  {isFullScreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-                </TooltipContent>
-              </Tooltip>
-            </div>
+                <div className="pl-2 sm:pl-4">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={handleDownload}
+                        className="h-7 sm:h-8 md:h-9 space-x-1 sm:space-x-2 px-2 sm:px-3"
+                      >
+                        <Download className="h-4 w-4" />
+                        <span className="hidden sm:inline text-xs sm:text-sm">Download</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Download PDF</TooltipContent>
+                  </Tooltip>
+                </div>
+              </div>
+            </TooltipProvider>
+          </div>
 
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  onClick={handleDownload}
-                  className="h-8 md:h-10"
-                >
-                  <Download className="h-4 w-4" />
-                  <span className="hidden md:inline ml-2">Download</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Download PDF</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-      </div>
-
-      {/* PDF Container */}
-      <div
-    className={cn(
-      "flex-1 relative flex justify-center items-center",
-      "border rounded-none md:rounded-lg",
-      "overflow-hidden",
-      "touch-pan-x ",
-      "touch-pan-y",
-      "transition-all duration-300 ease-in-out",
-      "transform-gpu",
-      "shadow-lg",
-      "hover:shadow-xl"
-
-    )}
-    onTouchStart={handleTouchStart}
-    onTouchEnd={handleTouchEnd}
-  >
-    {isLoading && (
-      <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    )}
-        
-        <Document
-          file={pdfUrl}
-          onLoadSuccess={onDocumentLoadSuccess}
-          onLoadError={onDocumentLoadError}
-          loading={null}
-          className="max-w-full h-full flex justify-center items-center"
-          options={options}
-        >
-          <Page
-            pageNumber={pageNumber}
-            renderTextLayer={true}
-            renderAnnotationLayer={true}
-            className={cn(
-              "max-w-full h-auto",
-              "transition-all duration-200 ease-in-out",
-              isMobile ? "" : "shadow-lg hover:shadow-xl"
+          <div className={cn(
+            "w-full h-full flex items-center justify-center",
+            "touch-pan-x touch-pan-y",
+            "rounded-none sm:rounded-lg",
+            "overflow-hidden",
+            "-mx-2 sm:mx-0",
+            "relative"
+          )}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-50">
+                <div className="flex flex-col items-center space-y-3">
+                  <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-primary" />
+                  <p className="text-xs sm:text-sm text-muted-foreground">Loading PDF...</p>
+                </div>
+              </div>
             )}
-            scale={scale}
-            rotate={rotation}
-            error={
-              <div className="text-destructive p-4 text-center">
-                <p className="font-medium">Error loading page</p>
-                <p className="text-sm text-muted-foreground">
-                  Please try again or download the PDF
-                </p>
-              </div>
-            }
-            noData={
-              <div className="text-muted-foreground p-4 text-center">
-                <p>No PDF file selected</p>
-              </div>
-            }
-          />
-        </Document>
+
+            <Document
+              file={pdfUrl}
+              onLoadSuccess={onDocumentLoadSuccess}
+              onLoadError={onDocumentLoadError}
+              loading={null}
+              className="flex justify-center items-center w-full py-4 sm:py-6"
+              options={options}
+            >
+              <Page
+                pageNumber={pageNumber}
+                renderTextLayer={true}
+                renderAnnotationLayer={true}
+                className={cn(
+                  "max-w-full h-auto transition-all duration-200",
+                  "bg-white shadow-lg",
+                  !isMobile && "hover:shadow-xl",
+                  "mx-auto"
+                )}
+                scale={scale}
+                rotate={rotation}
+                error={
+                  <div className="p-4 sm:p-6 text-center">
+                    <p className="text-destructive font-medium text-sm sm:text-base">Error loading page</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                      Please try again or download the PDF
+                    </p>
+                  </div>
+                }
+                noData={
+                  <div className="p-4 sm:p-6 text-center">
+                    <p className="text-muted-foreground text-sm sm:text-base">No PDF file selected</p>
+                  </div>
+                }
+              />
+            </Document>
+          </div>
+        </Card>
       </div>
-    </Card>
+    </div>
   );
 };
+
+interface ControlButtonProps {
+  icon: React.ReactNode;
+  onClick: () => void;
+  disabled?: boolean;
+  tooltip: string;
+}
+
+const ControlButton: React.FC<ControlButtonProps> = ({
+  icon,
+  onClick,
+  disabled,
+  tooltip
+}) => (
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={onClick}
+        disabled={disabled}
+        className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full"
+      >
+        {icon}
+      </Button>
+    </TooltipTrigger>
+    <TooltipContent>{tooltip}</TooltipContent>
+  </Tooltip>
+);
 
 export default PDFViewer;

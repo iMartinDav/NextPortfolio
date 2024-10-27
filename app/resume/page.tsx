@@ -14,10 +14,8 @@ const PDFViewer = dynamic(() => import("@/components/Resume/ResumeNew"), {
 
 export default function ResumePage() {
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
-      <div className="bg-background rounded-lg shadow-lg">
+    <div>
         <PDFViewer pdfUrl="/Software_Engineer_Martin_DAVILA.pdf" />
-      </div>
     </div>
   );
 }

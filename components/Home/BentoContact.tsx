@@ -24,7 +24,7 @@ const BentoContact = () => {
       className="space-y-20 my-20 bg-background text-foreground p-4"
       id="contact"
     >
-      <div className="grid xl:grid-cols-3 xl:grid-rows-6 md:grid-cols-2 grid-cols-1 gap-5 h-full">
+      <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 h-full">
         {/* Section 1: Introduction */}
         <div className="col-span-1 xl:row-span-3 p-6 bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg border border-border">
           <div className="flex flex-col justify-center items-start">
@@ -33,7 +33,7 @@ const BentoContact = () => {
               className="w-full h-48 md:h-72 lg:h-80"
             />
             <div className="mt-4">
-              <p className="text-muted-foreground mt-2">
+              <p className="text-muted-foreground">
                 In the ever-evolving world of bioinformatics and biotech, every
                 breakthrough starts with curiosity and innovation. Through years
                 of dedication, transformative technology has been harnessed to
@@ -46,13 +46,13 @@ const BentoContact = () => {
 
         {/* Section 2: The Bioinformatics Journey */}
         <div className="col-span-1 xl:row-span-3 p-6 bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg border border-border">
-          <div className="flex flex-col justify-center items-start space-y-4">
+          <div className="flex flex-col justify-center items-start">
             <EvervaultCard
               text="Innovative Solutions"
               className="w-full h-48 md:h-72 lg:h-80"
             />
             <div className="mt-4">
-              <p className="text-muted-foreground mt-2">
+              <p className="text-muted-foreground">
                 Each project undertaken is a step towards unraveling the
                 mysteries of biological systems. By integrating advanced
                 algorithms and machine learning techniques, the mission has
@@ -110,7 +110,7 @@ const BentoContact = () => {
               className="w-full h-32 md:h-48 lg:h-56"
             />
             <div className="mt-4">
-              <p className="text-muted-foreground mt-2">
+              <p className="text-muted-foreground">
                 The journey through the realms of bioinformatics and biotech has
                 been marked by significant contributions to projects and
                 research that shape the future of healthcare and data analysis.
@@ -129,7 +129,7 @@ const BentoContact = () => {
               className="w-full h-32 md:h-48 lg:h-56"
             />
             <div className="space-y-2 mt-4 w-full">
-              <p className="text-muted-foreground text-center mt-2">
+              <p className="text-muted-foreground text-center">
                 As the world of bioinformatics and biotech continues to evolve,
                 there’s always room for new partnerships and collaborative
                 endeavors. Reach out to explore how we can drive innovation and
