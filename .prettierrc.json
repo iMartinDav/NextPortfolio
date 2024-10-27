@@ -2,5 +2,15 @@
   "arrowParens": "always",
   "singleQuote": true,
   "tabWidth": 2,
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "printWidth": 80,
+  "semi": true,
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "quoteProps": "consistent",
+  "singleAttributePerLine": true,
+  "useTabs": false,
+  "htmlWhitespaceSensitivity": "ignore",
+  "tailwindConfig": "./tailwind.config.js",
+  "endOfLine": "auto"
 }
