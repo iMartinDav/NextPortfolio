@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧬 BioTech Portfolio Platform | Next.js 15 Enterprise Solution
+# 🧬 BioTech Portfolio | Next.js 15
 
 > Modern, high-performance portfolio platform integrated with projects.imartin.dev for showcases and blog content
 
