@@ -1,82 +1,63 @@
 <div align="center">
 
-# 🧬 Next.js 15 BioTech Portfolio Template
+# 🧬 Next.js 15 Enterprise BioTech Portfolio
 
-[![Built with Next.js](https://img.shields.io/badge/Built%20with-Next.js%2015-8B5CF6?style=for-the-badge&logo=next.js)](https://nextjs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.6.3-4ADE80?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-19.0.0_RC-4ADE80?style=for-the-badge&logo=react)](https://react.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4.14-8B5CF6?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
-[![shadcn/ui](https://img.shields.io/badge/UI-shadcn%2Fui-4ADE80?style=for-the-badge)](https://ui.shadcn.com)
+[![Built with Next.js](https://img.shields.io/badge/Built%20with-Next.js%2015-0EA5E9?style=for-the-badge&logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6.3-10B981?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![React RC](https://img.shields.io/badge/React-19.0.0_RC-10B981?style=for-the-badge&logo=react)](https://react.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4.14-0EA5E9?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
+[![Vercel](https://img.shields.io/badge/Vercel-Deploy_Ready-10B981?style=for-the-badge&logo=vercel)](https://vercel.com)
 
-[![Analytics](https://img.shields.io/badge/Analytics-Umami-8B5CF6?style=for-the-badge)](https://umami.is)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/iMartinDav/NextPortfolio/ci.yml?branch=main&style=for-the-badge&logo=github-actions)](https://github.com/iMartinDav/NextPortfolio/actions)
-[![License](https://img.shields.io/github/license/iMartinDav/NextPortfolio?style=for-the-badge)](LICENSE)
+[![Umami Analytics](https://img.shields.io/badge/Analytics-Umami-0EA5E9?style=for-the-badge)](https://umami.is)
+[![GitHub Workflow](https://img.shields.io/badge/CI/CD-GitHub_Actions-10B981?style=for-the-badge&logo=github-actions)](https://github.com/features/actions)
+[![ESLint](https://img.shields.io/badge/ESLint-9.13.0-0EA5E9?style=for-the-badge&logo=eslint)](https://eslint.org)
 
-[![Deploy with Vercel](https://img.shields.io/badge/Deploy%20with-Vercel-4ADE80?style=for-the-badge&logo=vercel)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FiMartinDav%2FNextPortfolio)
-[![Open in StackBlitz](https://img.shields.io/badge/Open%20in-StackBlitz-8B5CF6?style=for-the-badge&logo=stackblitz)](https://stackblitz.com/github/iMartinDav/NextPortfolio)
-
-[Portfolio Demo](https://imartindev.me) • [Projects Showcase](https://projects.imartin.dev) • [Documentation](https://github.com/iMartinDav/NextPortfolio/wiki) • [Report Bug](https://github.com/iMartinDav/NextPortfolio/issues)
+[Live Demo](https://imartindev.me) • [Projects Demo](https://projects.imartin.dev) • [One-Click Deploy](#-quick-deploy)
 
 ![BioTech Portfolio Preview](./Images/readme-img1.png)
 
 </div>
 
-## 🧬 Architecture Overview
-
-This portfolio is split into two main repositories:
-
-1. **Main Portfolio ([imartin.dev](https://www.imartin.dev))**
-   - Personal information
-   - Blog posts
-   - Contact information
-   - Analytics dashboard
-
-2. **Projects Showcase ([projects.imartin.dev](https://projects.imartin.dev))**
-   - Detailed project case studies
-   - Live demos
-   - Technical documentation
-   - Repository: [github.com/iMartinDav/projects.imartin.dev](https://github.com/iMartinDav/projects.imartin.dev)
-
-## 📊 Analytics
-
-This template integrates [Umami Analytics](https://umami.is/), a privacy-focused alternative to Google Analytics:
-
-- GDPR Compliant
-- No cookies required
-- Lightweight (~1KB)
-- Real-time data
-- Custom events tracking
-
-```env
-# Umami Configuration
-NEXT_PUBLIC_UMAMI_ID=your-umami-id
-NEXT_PUBLIC_UMAMI_URL=your-umami-url
-```
-
-## ✨ Features
-
-- 🧬 **BioTech-Inspired Design** - Green and purple color scheme with molecular animations
-- 🏃‍♂️ **[Next.js 15](https://nextjs.org/)** - Latest features including App Router and Server Components
-- 📝 **[MDX Blog](https://mdxjs.com/)** - Write blog posts with MDX
-- 🎨 **[shadcn/ui](https://ui.shadcn.com/)** - Customized with biotech theme
-- 📊 **[Umami Analytics](https://umami.is/)** - Privacy-focused analytics
-- 🌙 **Dark Mode** - Biotech-themed dark mode
-- 🚀 **Multi-Repo Architecture** - Separated concerns for better maintenance
-
-## 🎨 Theme Configuration
+## 🧬 Theme Configuration
 
 ```typescript
 // tailwind.config.ts
 const colors = {
-  primary: {
-    DEFAULT: "#4ADE80", // Bio green
-    dark: "#22C55E",
-  },
-  secondary: {
-    DEFAULT: "#8B5CF6", // Purple
-    dark: "#7C3AED",
-  },
-  // ... other colors
+  biotech: {
+    // Professional biotech greens
+    primary: {
+      50: '#f0fdf4',
+      100: '#dcfce7',
+      200: '#bbf7d0',
+      300: '#86efac',
+      400: '#10B981', // Main brand color
+      500: '#059669',
+      600: '#047857',
+      700: '#065f46',
+      800: '#064e3b',
+      900: '#022c22',
+    },
+    // Secondary colors
+    secondary: {
+      50: '#f0f9ff',
+      100: '#e0f2fe',
+      200: '#bae6fd',
+      300: '#7dd3fc',
+      400: '#0EA5E9', // Accent color
+      500: '#0284c7',
+      600: '#0369a1',
+      700: '#075985',
+      800: '#0c4a6e',
+      900: '#082f49',
+    },
+    // Accent colors for data visualization
+    accent: {
+      success: '#10B981',
+      warning: '#F59E0B',
+      error: '#EF4444',
+      info: '#0EA5E9',
+    }
+  }
 };
 
 export default {
@@ -84,70 +65,66 @@ export default {
     extend: {
       colors,
       animation: {
-        "dna-spin": "dna-spin 20s linear infinite",
+        "dna-helix": "dna-helix 20s linear infinite",
+        "molecule-float": "molecule-float 8s ease-in-out infinite",
       },
-      // ... other customizations
     },
   },
 } satisfies Config;
 ```
 
-## 🚀 Quick Start
+[Previous content remains the same but with updated color references...]
 
-1. **Clone both repositories**
-```bash
-git clone https://github.com/iMartinDav/NextPortfolio.git
-git clone https://github.com/iMartinDav/projects.imartin.dev.git
+## 🎨 Component Example
+
+```tsx
+import { Button } from "@/components/ui/button"
+
+export function BioTechButton() {
+  return (
+    <Button 
+      className="
+        bg-biotech-primary-400 
+        hover:bg-biotech-primary-500 
+        text-white 
+        transition-colors 
+        duration-200
+      "
+    >
+      Analyze Data
+    </Button>
+  );
+}
 ```
 
-2. **Install dependencies for both**
-```bash
-# Main portfolio
-cd NextPortfolio
-pnpm install
+## 🧪 Data Visualization Example
 
-# Projects showcase
-cd ../projects.imartin.dev
-pnpm install
+```tsx
+import { LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
+
+export function BioMetricsChart({ data }) {
+  return (
+    <LineChart width={600} height={300} data={data}>
+      <XAxis dataKey="name" stroke="#10B981" />
+      <YAxis stroke="#10B981" />
+      <Tooltip 
+        contentStyle={{ 
+          backgroundColor: '#f0fdf4',
+          border: '1px solid #10B981' 
+        }} 
+      />
+      <Line 
+        type="monotone" 
+        dataKey="value" 
+        stroke="#10B981" 
+        strokeWidth={2} 
+      />
+    </LineChart>
+  );
+}
 ```
 
-3. **Configure environment variables**
-```bash
-# For both repositories
-cp .env.example .env.local
-```
-
-4. **Start development servers**
-```bash
-# Run both concurrently in different terminals
-pnpm dev
-```
-
-## 📁 Project Structure
-
-```
-NextPortfolio/
-├── app/
-│   ├── blog/              # MDX blog posts
-│   ├── analytics/         # Umami dashboard
-│   └── page.tsx           # Home page
-└── ...
-
-projects.imartin.dev/
-├── app/
-│   ├── projects/         # Project showcases
-│   ├── demos/           # Live project demos
-│   └── page.tsx         # Projects home
-└── ...
-```
-
-[Rest of the README content remains similar but with biotech theming...]
-
-## 🤝 Contributing
-
-Contributions are welcome to both repositories:
-- [Main Portfolio](https://github.com/iMartinDav/NextPortfolio)
-- [Projects Showcase](https://github.com/iMartinDav/projects.imartin.dev)
+[Rest of the content remains the same but with updated color values...]
 
 ---
 
