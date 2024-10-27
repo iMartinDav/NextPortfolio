@@ -16,7 +16,7 @@
 
 [🌐 Live Demo](https://imartin.dev) • [📚 Documentation](https://github.com/iMartinDav/NextPortfolio/wiki) • [🐛 Report Bug](https://github.com/iMartinDav/NextPortfolio/issues) • [✨ Request Feature](https://github.com/iMartinDav/NextPortfolio/issues)
 
-![BioTech Portfolio Preview](./Images/readme-img1.png)
+![BioTech Portfolio Preview](public/images/readme-img1.png)
 
 </div>
 
