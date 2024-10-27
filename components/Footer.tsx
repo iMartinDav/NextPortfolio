@@ -1,8 +1,8 @@
-import React from "react";
-import { AiFillGithub } from "react-icons/ai";
-import { FaLinkedinIn } from "react-icons/fa";
-import { SiCodeship } from "react-icons/si";
-import { RiTwitterXLine } from "react-icons/ri";
+import React from 'react';
+import { AiFillGithub } from 'react-icons/ai';
+import { FaLinkedinIn } from 'react-icons/fa';
+import { SiCodeship } from 'react-icons/si';
+import { RiTwitterXLine } from 'react-icons/ri';
 
 const Footer: React.FC = () => {
   const date = new Date();

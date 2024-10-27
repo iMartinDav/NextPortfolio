@@ -1,10 +1,10 @@
-import { cn } from "@/lib/utils";
-import { useInView, useMotionValue, useSpring } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { cn } from '@/lib/utils';
+import { useInView, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 
 interface NumberTickerProps {
   value: number;
-  direction?: "up" | "down";
+  direction?: 'up' | 'down';
   className?: string;
   delay?: number; // delay in seconds
 }
@@ -12,15 +12,15 @@ interface NumberTickerProps {
 export default function NumberTicker({
   value,
   delay = 0,
-  className,
+  className
 }: NumberTickerProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, {
     damping: 60,
-    stiffness: 100,
+    stiffness: 100
   });
-  const isInView = useInView(ref, { once: true, margin: "0px" });
+  const isInView = useInView(ref, { once: true, margin: '0px' });
 
   useEffect(() => {
     if (isInView) {
@@ -39,20 +39,20 @@ export default function NumberTicker({
   useEffect(() => {
     const handleSpringChange = (latest: number) => {
       if (ref.current) {
-        ref.current.textContent = Intl.NumberFormat("en-US", {
+        ref.current.textContent = Intl.NumberFormat('en-US', {
           minimumFractionDigits: 0,
-          maximumFractionDigits: 0,
+          maximumFractionDigits: 0
         }).format(latest);
       }
     };
 
-    const unsubscribe = springValue.on("change", handleSpringChange);
+    const unsubscribe = springValue.on('change', handleSpringChange);
 
     // Return cleanup function for the subscription
     return () => unsubscribe();
   }, [springValue]);
 
   return (
-    <span className={cn("tabular-nums text-justify", className)} ref={ref} />
+    <span className={cn('tabular-nums text-justify', className)} ref={ref} />
   );
 }

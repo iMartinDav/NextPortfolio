@@ -272,11 +272,13 @@
   z-index: 50;
   padding: 0.6rem 1.5rem;
   font-size: 1rem;
-  transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+  transition:
+    background-color 0.3s ease-out,
+    box-shadow 0.3s ease-out;
 }
 
 .navbar.scrolled {
-  background-color: #114248AA;
+  background-color: #114248aa;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -300,22 +302,26 @@
   margin-left: 0.5rem;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #0B0A21;
+  color: #0b0a21;
 }
 
 .text-glow {
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.8),
     0 0 20px rgba(255, 255, 255, 0.6);
   color: #ffffff;
 }
 
 .luxury-text {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 500;
   color: #f8f8f8;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3),
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.3),
     0 1px 5px rgba(0, 0, 0, 0.15);
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+  transition:
+    color 0.3s ease,
+    text-shadow 0.3s ease;
 }
 
 .luxury-text:hover {
@@ -335,11 +341,13 @@
 
 .navbar-toggler .bar {
   display: block;
-  background: #391C36;
+  background: #391c36;
   height: 3px;
   width: 30px;
   margin: 6px 0;
-  transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out;
+  transition:
+    transform 0.35s ease-in-out,
+    opacity 0.35s ease-in-out;
 }
 
 .navbar-toggler.active .bar:nth-child(1) {
@@ -362,9 +370,11 @@
 
 .nav-link {
   padding: 0.8rem 1.2rem;
-  color: #DADADA;
+  color: #dadada;
   text-decoration: none;
-  transition: color 0.3s ease, background-color 0.3s ease;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
   position: relative;
   border-radius: 8px;
   display: flex;
@@ -372,7 +382,7 @@
 }
 
 .nav-link:hover {
-  color: #4E2547;
+  color: #4e2547;
   background-color: rgba(78, 37, 71, 0.1);
 }
 
@@ -381,13 +391,13 @@
 }
 
 .nav-link::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   height: 3px;
   width: 0;
-  background: #4E2547;
+  background: #4e2547;
   transition: width 0.3s ease;
 }
 
@@ -398,16 +408,18 @@
 .github-button {
   display: flex;
   align-items: center;
-  background-color: #4E2547;
+  background-color: #4e2547;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 9999px;
   text-decoration: none;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .github-button:hover {
-  background-color: #391C36;
+  background-color: #391c36;
   transform: scale(1.05);
 }
 
@@ -426,7 +438,6 @@
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     opacity: 1;
@@ -441,7 +452,7 @@
   .navbar {
     padding: 1rem 2rem;
     font-size: 1.4rem;
-    background-color: #114248AA;
+    background-color: #114248aa;
   }
 
   .navbar-toggler {
@@ -455,7 +466,7 @@
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: #114248AA;
+    background-color: #114248aa;
   }
 
   .navbar-nav.flex {
@@ -464,7 +475,7 @@
 
   .nav-link {
     padding: 0.7rem 1rem;
-    color: #0B0A21;
+    color: #0b0a21;
     text-align: center;
   }
 
@@ -478,7 +489,6 @@
 /* --------- */
 
 @keyframes customFloat {
-
   0%,
   100% {
     transform: translateY(0) translateX(0);
@@ -498,7 +508,6 @@
 }
 
 @keyframes customGlow {
-
   0%,
   100% {
     box-shadow: 0 0 30px rgba(99, 179, 237, 0.5);
@@ -516,7 +525,6 @@
 }
 
 @keyframes k {
-
   0%,
   33.3% {
     --k: 1;
@@ -533,7 +541,8 @@
   display: grid;
   width: 0.75em;
   aspect-ratio: 1;
-  animation: k calc(var(--m, 1) * 1s) linear calc(var(--m, 1) * var(--t, 0) * 1s) infinite;
+  animation: k calc(var(--m, 1) * 1s) linear
+    calc(var(--m, 1) * var(--t, 0) * 1s) infinite;
   position: absolute;
   /* Ensure particles are positioned absolutely */
   font-size: calc(var(--d) * 0.1);
@@ -577,7 +586,7 @@
   opacity: 0.7;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   appearance: none;
   -webkit-appearance: none;
   width: 1.5rem;
@@ -590,11 +599,11 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
-input[type="checkbox"]:checked {
+input[type='checkbox']:checked {
   background-color: #a78bfa;
 }
 
-input[type="checkbox"]:checked::after {
+input[type='checkbox']:checked::after {
   content: '✓';
   font-size: 1rem;
   color: white;
@@ -730,7 +739,7 @@ input[type="checkbox"]:checked::after {
 }
 
 .main-name {
-  background: linear-gradient(90deg, #FBB52D, #FF8C00);
+  background: linear-gradient(90deg, #fbb52d, #ff8c00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientText 5s ease infinite;
@@ -763,7 +772,8 @@ input[type="checkbox"]:checked::after {
 }
 
 .emoji {
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji', sans-serif;
   font-style: normal;
   font-size: 1em;
   line-height: 1;
@@ -792,7 +802,7 @@ input[type="checkbox"]:checked::after {
 
 .Typewriter__cursor {
   font-size: 1em !important;
-  color: #006C65 !important;
+  color: #006c65 !important;
 }
 
 @media (max-width: 767px) {
@@ -807,7 +817,7 @@ input[type="checkbox"]:checked::after {
   }
 }
 
-@media screen and (-webkit-min-device-pixel-ratio:0) {
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
   .emoji {
     -webkit-font-smoothing: antialiased;
   }
@@ -875,11 +885,11 @@ input[type="checkbox"]:checked::after {
 }
 
 .home-social-icons::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: var(--icon-bg, #C4A484);
+  background: var(--icon-bg, #c4a484);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transform: scale(0);
   opacity: 0;
@@ -898,7 +908,7 @@ input[type="checkbox"]:checked::after {
 }
 
 .home-social-icons::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   border-radius: 50%;
@@ -979,7 +989,9 @@ footer .space-x-8 {
 }
 
 footer .transition-transform {
-  transition: transform 0.4s ease, color 0.3s ease;
+  transition:
+    transform 0.4s ease,
+    color 0.3s ease;
 }
 
 footer .transform:hover {
@@ -1128,9 +1140,11 @@ footer .transform:hover {
   top: 50%;
   left: 0;
   height: 100%;
-  background: conic-gradient(transparent 50deg,
-      #ff4874 80deg,
-      transparent 100deg);
+  background: conic-gradient(
+    transparent 50deg,
+    #ff4874 80deg,
+    transparent 100deg
+  );
   filter: blur(8px);
   border-radius: 16px;
   transform-origin: center;

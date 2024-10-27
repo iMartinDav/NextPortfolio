@@ -1,6 +1,4 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import { CgWebsite } from 'react-icons/cg';
 import { BsGithub } from 'react-icons/bs';
 
@@ -21,32 +19,43 @@ const ProjectCards: React.FC<ProjectCardProps> = ({
   demoLink,
   isBlog
 }) => {
-
   return (
-    <Card className="project-card-view">
-      <Card.Img variant="top" src={imgPath} alt="card-img" />
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+      <img className="w-full h-48 object-cover" src={imgPath} alt="card-img" />
 
-      <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        <Card.Text style={{textAlign: 'justify'}}>{description}</Card.Text>
+      <div className="p-4">
+        <h3 className="text-lg font-bold">{title}</h3>
+        <p
+          className="text-gray-700 text-sm mb-4"
+          style={{ textAlign: 'justify' }}
+        >
+          {description}
+        </p>
 
-        <Button variant="primary" href={ghLink} target="_blank">
-          <BsGithub /> &nbsp; {isBlog ? 'Blog' : 'GitHub'}
-        </Button>
-
-        {!isBlog && demoLink && (
-          <Button
-            variant="primary"
-            href={demoLink}
+        <div className="flex items-center">
+          <a
+            className="flex items-center bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+            href={ghLink}
             target="_blank"
-            style={{marginLeft: '10px'}}
+            rel="noopener noreferrer"
           >
-            <CgWebsite /> &nbsp; Demo
-          </Button>
-        )}
-      </Card.Body>
-    </Card>
+            <BsGithub className="mr-2" /> {isBlog ? 'Blog' : 'GitHub'}
+          </a>
+
+          {!isBlog && demoLink && (
+            <a
+              className="flex items-center bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition ml-2"
+              href={demoLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <CgWebsite className="mr-2" /> Demo
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
   );
-}
+};
 
 export default ProjectCards;

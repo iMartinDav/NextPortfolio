@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { wrap } from "@motionone/utils";
+import { cn } from '@/lib/utils';
+import { wrap } from '@motionone/utils';
 import {
   motion,
   useAnimationFrame,
@@ -7,9 +7,9 @@ import {
   useScroll,
   useSpring,
   useTransform,
-  useVelocity,
-} from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+  useVelocity
+} from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface VelocityScrollProps {
   text: string;
@@ -26,18 +26,18 @@ interface ParallaxProps {
 const ParallaxText: React.FC<ParallaxProps> = ({
   children,
   baseVelocity = 100,
-  className,
+  className
 }) => {
   const baseX = useMotionValue(0);
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
   const smoothVelocity = useSpring(scrollVelocity, {
     damping: 50,
-    stiffness: 400,
+    stiffness: 400
   });
 
   const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
-    clamp: false,
+    clamp: false
   });
 
   const [repetitions, setRepetitions] = useState(1);
@@ -56,8 +56,8 @@ const ParallaxText: React.FC<ParallaxProps> = ({
 
     calculateRepetitions();
 
-    window.addEventListener("resize", calculateRepetitions);
-    return () => window.removeEventListener("resize", calculateRepetitions);
+    window.addEventListener('resize', calculateRepetitions);
+    return () => window.removeEventListener('resize', calculateRepetitions);
   }, [children]);
 
   const x = useTransform(baseX, (v) => `${wrap(-100 / repetitions, 0, v)}%`);
@@ -82,10 +82,10 @@ const ParallaxText: React.FC<ParallaxProps> = ({
       className="w-full overflow-hidden whitespace-nowrap"
       ref={containerRef}
     >
-      <motion.div className={cn("inline-block", className)} style={{ x }}>
+      <motion.div className={cn('inline-block', className)} style={{ x }}>
         {Array.from({ length: repetitions }).map((_, i) => (
           <span key={i} ref={i === 0 ? textRef : null}>
-            {children}{" "}
+            {children}{' '}
           </span>
         ))}
       </motion.div>
@@ -96,7 +96,7 @@ const ParallaxText: React.FC<ParallaxProps> = ({
 export function VelocityScroll({
   text,
   default_velocity = 5,
-  className,
+  className
 }: VelocityScrollProps) {
   return (
     <section className="relative w-full">

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import {
   Home,
   User,
@@ -11,10 +11,10 @@ import {
   BookOpen,
   Github,
   Star,
-  LucideIcon,
-} from "lucide-react";
-import { FadeIn } from "@/components/magicui/fade-in";
-import ThemeToggle from "@/components/theme-toggle";
+  LucideIcon
+} from 'lucide-react';
+import { FadeIn } from '@/components/magicui/fade-in';
+import ThemeToggle from '@/components/theme-toggle';
 
 interface NavItem {
   href: string;
@@ -24,20 +24,20 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { href: "/", icon: Home, label: "Home" },
-  { href: "/about", icon: User, label: "About" },
+  { href: '/', icon: Home, label: 'Home' },
+  { href: '/about', icon: User, label: 'About' },
   {
-    href: "https://projects.imartin.dev/projects",
+    href: 'https://projects.imartin.dev/projects',
     icon: FolderKanban,
-    label: "Projects",
+    label: 'Projects'
   },
-  { href: "/resume", icon: FileText, label: "Resume" },
+  { href: '/resume', icon: FileText, label: 'Resume' },
   {
-    href: "https://www.bioinfometrics.com",
+    href: 'https://www.bioinfometrics.com',
     icon: BookOpen,
-    label: "Blog",
-    external: true,
-  },
+    label: 'Blog',
+    external: true
+  }
 ];
 
 export default function Navbar() {
@@ -46,12 +46,12 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <nav className={`navbar ${isScrolled ? "scrolled" : ""}`}>
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         <Link href="/" className="navbar-brand">
           <Image
@@ -66,14 +66,14 @@ export default function Navbar() {
         </Link>
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className={`navbar-toggler ${isMenuOpen ? "active" : ""}`}
+          className={`navbar-toggler ${isMenuOpen ? 'active' : ''}`}
           aria-label="Toggle menu"
         >
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
         </button>
-        <div className={`navbar-nav ${isMenuOpen ? "flex" : ""}`}>
+        <div className={`navbar-nav ${isMenuOpen ? 'flex' : ''}`}>
           {navItems.map((item) => (
             <NavItem key={item.href} {...item} />
           ))}
@@ -94,8 +94,8 @@ function NavItem({ href, icon: Icon, label, external = false }: NavItem) {
     <Link
       href={href}
       className="nav-link luxury-text"
-      target={external ? "_blank" : "_self"}
-      rel={external ? "noopener noreferrer" : ""}
+      target={external ? '_blank' : '_self'}
+      rel={external ? 'noopener noreferrer' : ''}
     >
       <Icon size={18} className="luxury-icon" />
       {label}

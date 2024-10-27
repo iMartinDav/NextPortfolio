@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Label, Pie, PieChart } from "recharts";
+import * as React from 'react';
+import { Label, Pie, PieChart } from 'recharts';
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+  ChartTooltipContent
+} from '@/components/ui/chart';
 
 type StatsData = Record<string, { value: number; prev: number }>;
 
@@ -16,11 +16,11 @@ interface RawStatsData {
 }
 
 const chartConfig: ChartConfig = {
-  pageviews: { label: "Page Views", color: "#00BFAE" },
-  visitors: { label: "Users", color: "#008F8C" },
-  visits: { label: "Visits", color: "#7F00FF" },
-  bounces: { label: "Bounces", color: "#4B0082" },
-  totaltime: { label: "Average Time", color: "#E100FF" },
+  pageviews: { label: 'Page Views', color: '#00BFAE' },
+  visitors: { label: 'Users', color: '#008F8C' },
+  visits: { label: 'Visits', color: '#7F00FF' },
+  bounces: { label: 'Bounces', color: '#4B0082' },
+  totaltime: { label: 'Average Time', color: '#E100FF' }
 };
 
 export default function StatsChart() {
@@ -29,22 +29,24 @@ export default function StatsChart() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/api/fetch-umami-stats");
+        const res = await fetch('/api/fetch-umami-stats');
         if (!res.ok) {
           const errorBody = await res.text(); // Read the error response body
-          throw new Error(`Network response was not ok: ${res.status} ${res.statusText} - ${errorBody}`);
+          throw new Error(
+            `Network response was not ok: ${res.status} ${res.statusText} - ${errorBody}`
+          );
         }
 
         const data: RawStatsData = await res.json();
         const transformedData: StatsData = Object.fromEntries(
           Object.entries(data).map(([key, { value = 0, prev = 0 }]) => [
             key,
-            { value, prev },
+            { value, prev }
           ])
         );
         setStats(transformedData);
       } catch (error) {
-        console.error("Error fetching stats:", error);
+        console.error('Error fetching stats:', error);
       }
     };
 
@@ -57,13 +59,14 @@ export default function StatsChart() {
         ? Object.entries(stats).map(([type, { value }]) => ({
             type,
             visitors: value ?? 0,
-            fill: chartConfig[type as keyof typeof chartConfig]?.color,
+            fill: chartConfig[type as keyof typeof chartConfig]?.color
           }))
         : [],
     [stats]
   );
 
-  if (!stats) return <div className="flex items-center justify-center h-full" />;
+  if (!stats)
+    return <div className="flex items-center justify-center h-full" />;
 
   return (
     <ChartContainer config={chartConfig} className="">
@@ -82,7 +85,7 @@ export default function StatsChart() {
           <Label
             content={(props) => {
               const { viewBox } = props;
-              return viewBox && "cx" in viewBox && "cy" in viewBox ? (
+              return viewBox && 'cx' in viewBox && 'cy' in viewBox ? (
                 <text
                   x={viewBox.cx}
                   y={viewBox.cy}

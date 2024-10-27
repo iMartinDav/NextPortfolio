@@ -1,10 +1,10 @@
 // GitHubStars.tsx
 
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { fetchStars } from "@/lib/fetchers";
-import NumberTicker from "@/components/magicui/number-ticker";
+import { useState, useEffect } from 'react';
+import { fetchStars } from '@/lib/fetchers';
+import NumberTicker from '@/components/magicui/number-ticker';
 
 const GitHubStars = () => {
   const [stars, setStars] = useState<number | null>(null);

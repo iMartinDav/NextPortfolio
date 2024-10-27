@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import Technologies from "@/components/technologies";
+import { motion } from 'framer-motion';
+import Technologies from '@/components/technologies';
 
 export default function Tech() {
   return (

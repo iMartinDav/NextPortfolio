@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { motion, Variants } from "framer-motion";
-import { cn } from "../../lib/utils";
+import { motion, Variants } from 'framer-motion';
+import { cn } from '../../lib/utils';
 
 interface WordPullUpProps {
   words: string;
@@ -18,15 +18,15 @@ export default function WordPullUp({
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-      },
-    },
+        staggerChildren: 0.2
+      }
+    }
   },
   framerProps = {
     hidden: { y: 20, opacity: 0 },
-    show: { y: 0, opacity: 1 },
+    show: { y: 0, opacity: 1 }
   },
-  className,
+  className
 }: WordPullUpProps) {
   return (
     <motion.h1
@@ -34,17 +34,17 @@ export default function WordPullUp({
       initial="hidden"
       animate="show"
       className={cn(
-        "font-display text-center text-6xl md:text-7xl lg:text-8xl font-bold leading-[5rem] tracking-tighter drop-shadow-sm",
+        'font-display text-center text-6xl md:text-7xl lg:text-8xl font-bold leading-[5rem] tracking-tighter drop-shadow-sm',
         className
       )}
     >
-      {words.split(" ").map((word, i) => (
+      {words.split(' ').map((word, i) => (
         <motion.span
           key={i}
           variants={framerProps}
-          style={{ display: "inline-block", paddingRight: "1rem" }}
+          style={{ display: 'inline-block', paddingRight: '1rem' }}
         >
-          {word === "" ? <span>&nbsp;</span> : word}
+          {word === '' ? <span>&nbsp;</span> : word}
         </motion.span>
       ))}
     </motion.h1>

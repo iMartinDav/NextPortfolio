@@ -1,5 +1,5 @@
-import { FadeIn } from "@/components/magicui/fade-in";
-import BlurIn from "@/components/magicui/blur-in";
+import { FadeIn } from '@/components/magicui/fade-in';
+import BlurIn from '@/components/magicui/blur-in';
 
 export default async function WorldwideReach() {
   return (

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import createGlobe, { COBEOptions } from "cobe";
-import { useCallback, useEffect, useRef } from "react";
-import { useSpring } from "react-spring";
+import { cn } from '@/lib/utils';
+import createGlobe, { COBEOptions } from 'cobe';
+import { useCallback, useEffect, useRef } from 'react';
+import { useSpring } from 'react-spring';
 
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,
@@ -85,13 +85,13 @@ const GLOBE_CONFIG: COBEOptions = {
     { location: [39.9042, 116.4074], size: 0.08 }, // Beijing, China
     { location: [-37.8136, 144.9631], size: 0.07 }, // Melbourne, Australia
     { location: [43.7696, 11.2558], size: 0.06 }, // Florence, Italy
-    { location: [41.9028, 12.4964], size: 0.07 }, // Rome, Italy
-  ],
+    { location: [41.9028, 12.4964], size: 0.07 } // Rome, Italy
+  ]
 };
 
 export default function Globe({
   className,
-  config = GLOBE_CONFIG,
+  config = GLOBE_CONFIG
 }: {
   className?: string;
   config?: COBEOptions;
@@ -107,13 +107,13 @@ export default function Globe({
       mass: 1,
       tension: 280,
       friction: 40,
-      precision: 0.001,
-    },
+      precision: 0.001
+    }
   }));
 
   const updatePointerInteraction = (value: any) => {
     pointerInteracting.current = value;
-    canvasRef.current!.style.cursor = value ? "grabbing" : "grab";
+    canvasRef.current!.style.cursor = value ? 'grabbing' : 'grab';
   };
 
   const updateMovement = (clientX: any) => {
@@ -141,30 +141,30 @@ export default function Globe({
   };
 
   useEffect(() => {
-    window.addEventListener("resize", onResize);
+    window.addEventListener('resize', onResize);
     onResize();
 
     const globe = createGlobe(canvasRef.current!, {
       ...config,
       width: width * 2,
       height: width * 2,
-      onRender,
+      onRender
     });
 
-    setTimeout(() => (canvasRef.current!.style.opacity = "1"));
+    setTimeout(() => (canvasRef.current!.style.opacity = '1'));
     return () => globe.destroy();
   }, []);
 
   return (
     <div
       className={cn(
-        "absolute inset-0 mx-auto aspect-[1/1] w-full max-w-[600px]",
+        'absolute inset-0 mx-auto aspect-[1/1] w-full max-w-[600px]',
         className
       )}
     >
       <canvas
         className={cn(
-          "h-full w-full opacity-0 transition-opacity duration-500"
+          'h-full w-full opacity-0 transition-opacity duration-500'
         )}
         ref={canvasRef}
         onPointerDown={(e) =>

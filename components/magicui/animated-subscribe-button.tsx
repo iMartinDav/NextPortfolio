@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { useState } from 'react';
 
 interface AnimatedSubscribeButtonProps {
   brand: string;

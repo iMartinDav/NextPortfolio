@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import MeteorShower from "@/components/magicui/meteors";
-import WordPullUp from "@/components/magicui/word-pull-up";
-import { Button } from "@/components/ui/button";
-import { FadeIn } from "@/components/magicui/fade-in";
-import { Mail, Github } from "lucide-react";
-import BlurIn from "@/components/magicui/blur-in";
+import MeteorShower from '@/components/magicui/meteors';
+import WordPullUp from '@/components/magicui/word-pull-up';
+import { Button } from '@/components/ui/button';
+import { FadeIn } from '@/components/magicui/fade-in';
+import { Mail, Github } from 'lucide-react';
+import BlurIn from '@/components/magicui/blur-in';
 
 export default function BentoShowcase() {
   return (

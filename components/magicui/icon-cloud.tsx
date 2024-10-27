@@ -1,39 +1,39 @@
-import { useEffect, useMemo, useState } from "react";
-import { useTheme } from "next-themes";
+import { useEffect, useMemo, useState } from 'react';
+import { useTheme } from 'next-themes';
 import {
   Cloud,
   fetchSimpleIcons,
   ICloud,
   renderSimpleIcon,
-  SimpleIcon,
-} from "react-icon-cloud";
+  SimpleIcon
+} from 'react-icon-cloud';
 
-import { sanitizeSlug } from "@/lib/utils";
+import { sanitizeSlug } from '@/lib/utils';
 
-export const cloudProps: Omit<ICloud, "children"> = {
+export const cloudProps: Omit<ICloud, 'children'> = {
   containerProps: {
     style: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      width: "100%",
-      paddingTop: 40,
-    },
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+      paddingTop: 40
+    }
   },
   options: {
     reverse: true,
     depth: 1,
     wheelZoom: false,
     imageScale: 2,
-    activeCursor: "pointer",
-    tooltip: "native",
+    activeCursor: 'pointer',
+    tooltip: 'native',
     initial: [0.05, -0.05],
     clickToFront: 700,
     tooltipDelay: 0,
-    outlineColour: "#0000",
+    outlineColour: '#0000',
     maxSpeed: 0.02,
-    minSpeed: 0.01,
-  },
+    minSpeed: 0.01
+  }
 };
 
 export const renderCustomIcon = (
@@ -41,9 +41,9 @@ export const renderCustomIcon = (
   theme: string,
   liveLinks: boolean
 ) => {
-  const bgHex = theme === "light" ? "#f3f2ef" : "#080510";
-  const fallbackHex = theme === "light" ? "#6e6e73" : "#ffffff";
-  const minContrastRatio = theme === "dark" ? 2 : 1.2;
+  const bgHex = theme === 'light' ? '#f3f2ef' : '#080510';
+  const fallbackHex = theme === 'light' ? '#6e6e73' : '#ffffff';
+  const minContrastRatio = theme === 'dark' ? 2 : 1.2;
 
   return renderSimpleIcon({
     icon,
@@ -54,16 +54,17 @@ export const renderCustomIcon = (
     aProps: liveLinks
       ? {
           href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/${sanitizeSlug(icon.slug)}`,
-          target: "",
-          rel: "noopener noreferrer",
+          target: '',
+          rel: 'noopener noreferrer'
         }
       : {
           href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/${sanitizeSlug(icon.slug)}`,
           target: undefined,
           rel: undefined,
-          onClick: (e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault(),
-          style: { cursor: "pointer" },
-        },
+          onClick: (e: React.MouseEvent<HTMLAnchorElement>) =>
+            e.preventDefault(),
+          style: { cursor: 'pointer' }
+        }
   });
 };
 
@@ -76,7 +77,7 @@ type IconData = Awaited<ReturnType<typeof fetchSimpleIcons>>;
 
 export default function IconCloud({
   iconSlugs,
-  liveLinks = true,
+  liveLinks = true
 }: DynamicCloudProps) {
   const [data, setData] = useState<IconData | null>(null);
   const { theme } = useTheme();
@@ -89,7 +90,7 @@ export default function IconCloud({
     if (!data) return null;
 
     return Object.values(data.simpleIcons).map((icon) =>
-      renderCustomIcon(icon, theme || "light", liveLinks)
+      renderCustomIcon(icon, theme || 'light', liveLinks)
     );
   }, [data, theme, liveLinks]);
 

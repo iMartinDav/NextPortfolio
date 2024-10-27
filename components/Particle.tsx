@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React, { useEffect, useMemo } from "react";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
+import React, { useEffect, useMemo } from 'react';
+import Particles, { initParticlesEngine } from '@tsparticles/react';
 import {
   type Container,
   type ISourceOptions,
-  MoveDirection,
-} from "@tsparticles/engine";
-import { loadSlim } from "@tsparticles/slim";
+  MoveDirection
+} from '@tsparticles/engine';
+import { loadSlim } from '@tsparticles/slim';
 
 const Particle: React.FC = () => {
   useEffect(() => {
@@ -15,7 +15,7 @@ const Particle: React.FC = () => {
       try {
         await initParticlesEngine(loadSlim);
       } catch (error) {
-        console.error("Error initializing particles engine:", error);
+        console.error('Error initializing particles engine:', error);
       }
     };
 
@@ -35,52 +35,52 @@ const Particle: React.FC = () => {
           value: 160,
           density: {
             enable: true,
-            area: 1800,
-          },
+            area: 1800
+          }
         },
         links: {
           enable: false,
-          opacity: 0.04,
+          opacity: 0.04
         },
         move: {
           direction: MoveDirection.right,
-          speed: 0.02,
+          speed: 0.02
         },
         size: {
-          value: 1,
+          value: 1
         },
         opacity: {
           value: 1,
           animation: {
             enable: true,
             speed: 1,
-            minimumValue: 0.05,
-          },
-        },
+            minimumValue: 0.05
+          }
+        }
       },
       interactivity: {
-        detectsOn: "canvas",
+        detectsOn: 'canvas',
         events: {
           onClick: {
             enable: true,
-            mode: "push",
+            mode: 'push'
           },
           onHover: {
             enable: true,
-            mode: "repulse",
-          },
+            mode: 'repulse'
+          }
         },
         modes: {
           push: {
-            quantity: 1,
+            quantity: 1
           },
           repulse: {
             distance: 100,
-            duration: 0.4,
-          },
-        },
+            duration: 0.4
+          }
+        }
       },
-      detectRetina: true,
+      detectRetina: true
     }),
     []
   );

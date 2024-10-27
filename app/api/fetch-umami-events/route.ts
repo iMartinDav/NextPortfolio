@@ -4,8 +4,8 @@ export const dynamic = 'force-dynamic'; // defaults to auto
 
 const client = getClient();
 
-
-export async function GET(): Promise<Response> { // Specify the return type
+export async function GET(): Promise<Response> {
+  // Specify the return type
   try {
     // The website ID
     const websiteId = '1cb76843-7b97-489c-8564-d2429ad9bddb';
@@ -20,7 +20,7 @@ export async function GET(): Promise<Response> { // Specify the return type
       endAt: now,
       unit: 'day', // Change to 'day' for daily data over the year
       timezone: 'Europe/Paris',
-      region: 'FR',
+      region: 'FR'
     };
 
     console.log('Fetching pageviews with data:', pageviewsData);
@@ -29,7 +29,10 @@ export async function GET(): Promise<Response> { // Specify the return type
     const { ok, data, status } = response;
 
     if (!ok) {
-      return new Response(JSON.stringify({ error: 'Failed to fetch website pageviews' }), { status });
+      return new Response(
+        JSON.stringify({ error: 'Failed to fetch website pageviews' }),
+        { status }
+      );
     }
 
     console.log('Pageviews data:', data);
@@ -37,6 +40,9 @@ export async function GET(): Promise<Response> { // Specify the return type
     return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {
     console.error('Error fetching website pageviews:', error);
-    return new Response(JSON.stringify({ error: 'Failed to fetch website pageviews' }), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: 'Failed to fetch website pageviews' }),
+      { status: 500 }
+    );
   }
 }

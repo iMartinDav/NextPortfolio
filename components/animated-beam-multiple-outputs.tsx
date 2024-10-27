@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { AnimatedBeam } from "@/components/magicui/animated-beam";
-import { IconProps } from "@radix-ui/react-icons/dist/types";
-import React, { forwardRef, useRef } from "react";
+import { cn } from '@/lib/utils';
+import { AnimatedBeam } from '@/components/magicui/animated-beam';
+import { IconProps } from '@radix-ui/react-icons/dist/types';
+import React, { forwardRef, useRef } from 'react';
 
 const Circle = forwardRef<
   HTMLDivElement,
@@ -15,7 +15,7 @@ const Circle = forwardRef<
     <div
       ref={ref}
       className={cn(
-        "z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 bg-white p-3 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)]",
+        'z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 bg-white p-3 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)]',
         className
       )}
     >
@@ -24,9 +24,9 @@ const Circle = forwardRef<
   );
 });
 
-Circle.displayName = "Circle";
+Circle.displayName = 'Circle';
 export function AnimatedBeamMultipleOutputs({
-  className,
+  className
 }: {
   className?: string;
 }) {
@@ -42,7 +42,7 @@ export function AnimatedBeamMultipleOutputs({
   return (
     <div
       className={cn(
-        "relative flex w-full max-w-[500px] lg:max-w-full items-center justify-center overflow-hidden rounded-lg border bg-background p-10 md:shadow-xl",
+        'relative flex w-full max-w-[500px] lg:max-w-full items-center justify-center overflow-hidden rounded-lg border bg-background p-10 md:shadow-xl',
         className
       )}
       ref={containerRef}
@@ -337,5 +337,5 @@ const Icons = {
         fill="#000"
       />
     </svg>
-  ),
+  )
 };

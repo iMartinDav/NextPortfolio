@@ -1,10 +1,10 @@
 // components/About/About.tsx
-import Image from "next/image";
-import Particle from "../Particle";
-import Github from "./Github";
-import Techstack from "./Techstack";
-import Aboutcard from "./AboutCard";
-import Toolstack from "./Toolstack";
+import Image from 'next/image';
+import Particle from '../Particle';
+import Github from './Github';
+import Techstack from './Techstack';
+import Aboutcard from './AboutCard';
+import Toolstack from './Toolstack';
 
 const AboutContent: React.FC = () => {
   return (

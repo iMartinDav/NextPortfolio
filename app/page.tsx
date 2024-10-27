@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Bento } from "@/components/bento";
-import BentoContact from "@/components/Home/BentoContact";
-import BiotechProfile from "@/components/Home/BiotechProfile";
-import Hero from "@/components/Home/Hero";
+import { Bento } from '@/components/bento';
+import BentoContact from '@/components/Home/BentoContact';
+import BiotechProfile from '@/components/Home/BiotechProfile';
+import Hero from '@/components/Home/Hero';
 
 export default function LandingPage() {
   return (

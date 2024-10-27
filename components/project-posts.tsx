@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { fetchProjects } from "@/lib/fetchers";
-import ProjectShowcaseVertical from "@/components/project-showcase-vertical";
-import { defaultDomains } from "@/lib/data";
+import { useState, useEffect } from 'react';
+import { fetchProjects } from '@/lib/fetchers';
+import ProjectShowcaseVertical from '@/components/project-showcase-vertical';
+import { defaultDomains } from '@/lib/data';
 
 // Define a type for the post data
 interface Post {
@@ -36,7 +36,7 @@ const ProjectPosts: React.FC = () => {
           name: post.data.title,
           body: post.data.description,
           slug: post.slug,
-          image: post.data.image,
+          image: post.data.image
         }));
         setFiles(formattedPosts.slice(0, 10));
       }

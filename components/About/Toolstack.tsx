@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import {
   SiLinux,
   SiVisualstudiocode,
   SiPostman,
   SiHeroku,
-  SiVercel,
-} from "react-icons/si";
-import { FaApple, FaDocker } from "react-icons/fa";
+  SiVercel
+} from 'react-icons/si';
+import { FaApple, FaDocker } from 'react-icons/fa';
 
 function Toolstack() {
   return (

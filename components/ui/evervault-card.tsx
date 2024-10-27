@@ -1,12 +1,12 @@
-"use client";
-import { useMotionValue, MotionValue } from "framer-motion";
-import React, { useState, useEffect } from "react";
-import { useMotionTemplate, motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+'use client';
+import { useMotionValue, MotionValue } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { useMotionTemplate, motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 export const EvervaultCard = ({
   text,
-  className,
+  className
 }: {
   text?: string;
   className?: string;
@@ -14,7 +14,7 @@ export const EvervaultCard = ({
   const mouseX = useMotionValue(0); // Initialized as MotionValue<number>
   const mouseY = useMotionValue(0); // Initialized as MotionValue<number>
 
-  const [randomString, setRandomString] = useState<string>("");
+  const [randomString, setRandomString] = useState<string>('');
 
   useEffect(() => {
     const str = generateRandomString(1500);
@@ -24,7 +24,7 @@ export const EvervaultCard = ({
   function onMouseMove({
     currentTarget,
     clientX,
-    clientY,
+    clientY
   }: React.MouseEvent<HTMLDivElement>) {
     const { left, top } = currentTarget.getBoundingClientRect();
     mouseX.set(clientX - left);
@@ -37,7 +37,7 @@ export const EvervaultCard = ({
   return (
     <div
       className={cn(
-        "p-0.5 bg-transparent aspect-square flex items-center justify-center w-full h-full relative",
+        'p-0.5 bg-transparent aspect-square flex items-center justify-center w-full h-full relative',
         className
       )}
     >
@@ -64,7 +64,7 @@ export const EvervaultCard = ({
 export function CardPattern({
   mouseX,
   mouseY,
-  randomString,
+  randomString
 }: {
   mouseX: MotionValue<number>; // Specify as MotionValue<number>
   mouseY: MotionValue<number>; // Specify as MotionValue<number>
@@ -93,9 +93,9 @@ export function CardPattern({
 }
 
 const characters =
-  "ATGGAAGGTGGTTTTTCCAGCAGTGGCTTACAAATCACATTCATTGAGCTGTCATTGTCA";
+  'ATGGAAGGTGGTTTTTCCAGCAGTGGCTTACAAATCACATTCATTGAGCTGTCATTGTCA';
 export const generateRandomString = (length: number): string => {
-  let result = "";
+  let result = '';
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
@@ -104,7 +104,7 @@ export const generateRandomString = (length: number): string => {
 
 export const TouchButton = ({
   onClick,
-  label,
+  label
 }: {
   onClick: () => void;
   label: string;
@@ -114,7 +114,7 @@ export const TouchButton = ({
       onClick={onClick}
       className="flex items-center justify-center p-4 bg-blue-500 text-white rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
       aria-label={label}
-      style={{ minWidth: "44px", minHeight: "44px" }}
+      style={{ minWidth: '44px', minHeight: '44px' }}
     >
       {label}
     </button>

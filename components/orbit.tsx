@@ -1,20 +1,20 @@
-import OrbitingCircles from "@/components/magicui/orbiting-circles";
-import { motion } from "framer-motion";
-import { SiVercel } from "react-icons/si";
-import { AiOutlineDocker } from "react-icons/ai";
-import { SiUbuntu } from "react-icons/si";
-import { FaGithub } from "react-icons/fa";
-import { SiNginx } from "react-icons/si";
-import { SiSvelte } from "react-icons/si";
-import { SiPython } from "react-icons/si";
-import { SiNextdotjs } from "react-icons/si";
-import { SiReact } from "react-icons/si";
-import { SiFastapi } from "react-icons/si";
-import { SiPocketbase } from "react-icons/si";
-import { SiTypescript } from "react-icons/si";
-import { SiJavascript } from "react-icons/si";
-import { SiOpenai } from "react-icons/si";
-import { FaLaptop } from "react-icons/fa";
+import OrbitingCircles from '@/components/magicui/orbiting-circles';
+import { motion } from 'framer-motion';
+import { SiVercel } from 'react-icons/si';
+import { AiOutlineDocker } from 'react-icons/ai';
+import { SiUbuntu } from 'react-icons/si';
+import { FaGithub } from 'react-icons/fa';
+import { SiNginx } from 'react-icons/si';
+import { SiSvelte } from 'react-icons/si';
+import { SiPython } from 'react-icons/si';
+import { SiNextdotjs } from 'react-icons/si';
+import { SiReact } from 'react-icons/si';
+import { SiFastapi } from 'react-icons/si';
+import { SiPocketbase } from 'react-icons/si';
+import { SiTypescript } from 'react-icons/si';
+import { SiJavascript } from 'react-icons/si';
+import { SiOpenai } from 'react-icons/si';
+import { FaLaptop } from 'react-icons/fa';
 
 export default function Orbit() {
   return (
@@ -162,5 +162,5 @@ const Icons = {
   javascript: () => <SiJavascript className="w-full h-full" />,
   fastapi: () => <SiFastapi className="w-full h-full" />,
   openai: () => <SiOpenai className="w-full h-full" />,
-  laptop: () => <FaLaptop className="w-full h-full" />,
+  laptop: () => <FaLaptop className="w-full h-full" />
 };

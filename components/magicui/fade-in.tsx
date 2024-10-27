@@ -1,30 +1,30 @@
-"use client";
+'use client';
 
-import { motion, Variants } from "framer-motion";
-import { useMemo, ReactNode } from "react";
+import { motion, Variants } from 'framer-motion';
+import { useMemo, ReactNode } from 'react';
 
 type FadeTextProps = {
   className?: string;
-  direction?: "up" | "down" | "left" | "right";
+  direction?: 'up' | 'down' | 'left' | 'right';
   framerProps?: Variants;
   children: ReactNode;
 };
 
 export function FadeIn({
-  direction = "up",
+  direction = 'up',
   className,
   framerProps = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { type: "spring" } },
+    show: { opacity: 1, transition: { type: 'spring' } }
   },
-  children,
+  children
 }: FadeTextProps) {
   const directionOffset = useMemo(() => {
     const map = { up: 20, down: -20, left: -20, right: 20 };
     return map[direction];
   }, [direction]);
 
-  const axis = direction === "up" || direction === "down" ? "y" : "x";
+  const axis = direction === 'up' || direction === 'down' ? 'y' : 'x';
 
   const FADE_ANIMATION_VARIANTS = useMemo(() => {
     const { hidden, show, ...rest } = framerProps as {
@@ -36,13 +36,13 @@ export function FadeIn({
       hidden: {
         ...(hidden ?? {}),
         opacity: hidden?.opacity ?? 0,
-        [axis]: hidden?.[axis] ?? directionOffset,
+        [axis]: hidden?.[axis] ?? directionOffset
       },
       show: {
         ...(show ?? {}),
         opacity: show?.opacity ?? 1,
-        [axis]: show?.[axis] ?? 0,
-      },
+        [axis]: show?.[axis] ?? 0
+      }
     };
   }, [directionOffset, axis, framerProps]);
 

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 interface SeparateAwayProps {
   upper_text: string;
@@ -18,15 +18,15 @@ export function SeparateAway({
   duration = 1.5,
   hidden_opacity = 0,
   visible_opacity = 1,
-  className,
+  className
 }: SeparateAwayProps) {
   const separate = {
     hidden: { opacity: hidden_opacity, y: 0 },
     visible: (custom: number) => ({
       opacity: visible_opacity,
       y: custom * 5,
-      transition: { duration: duration },
-    }),
+      transition: { duration: duration }
+    })
   };
 
   return (

@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import PocketBase from "pocketbase";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import PocketBase from 'pocketbase';
 
 // Initialize PocketBase client
-const pb = new PocketBase("https://projects.imartin.dev/pb");
+const pb = new PocketBase('https://projects.imartin.dev/pb');
 
 export function InputWithButton() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -17,14 +17,14 @@ export function InputWithButton() {
     e.preventDefault();
     try {
       const data = { email };
-      const record = await pb.collection("cook_form_submissions").create(data);
-      console.log("Record created:", record);
+      const record = await pb.collection('cook_form_submissions').create(data);
+      console.log('Record created:', record);
       // Optionally, reset the form
-      setEmail("");
-      alert("Email submitted successfully!");
+      setEmail('');
+      alert('Email submitted successfully!');
     } catch (error) {
-      console.error("Error creating record:", error);
-      alert("Failed to submit email. Please try again.");
+      console.error('Error creating record:', error);
+      alert('Failed to submit email. Please try again.');
     }
   };
 

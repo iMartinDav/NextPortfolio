@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import Particle from "../Particle";
-import Image from "next/image";
-import { Type } from "./Type";
-import ButtonWithParticles from "../ParticleButton"; // Import your custom button
+import React, { useEffect, useState } from 'react';
+import Particle from '../Particle';
+import Image from 'next/image';
+import { Type } from './Type';
+import ButtonWithParticles from '../ParticleButton'; // Import your custom button
 
 export default function Hero() {
   const [isClient, setIsClient] = useState(false);

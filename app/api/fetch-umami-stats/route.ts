@@ -22,7 +22,10 @@ export async function GET() {
     };
 
     // Fetch the website stats
-    const { ok, data, status } = await client.getWebsiteStats(websiteId, metricsData);
+    const { ok, data, status } = await client.getWebsiteStats(
+      websiteId,
+      metricsData
+    );
 
     if (!ok) {
       return new Response(

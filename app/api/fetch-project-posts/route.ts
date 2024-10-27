@@ -7,9 +7,10 @@ interface ProjectPost {
   // Add more fields based on the structure of your posts
 }
 
-export async function GET(): Promise<Response> { // Removed 'request' parameter
+export async function GET(): Promise<Response> {
+  // Removed 'request' parameter
   const url = `https://projects.imartin.dev/api/v1/fetchProjectsFeed.json`;
-  const headers = { "Accept": "application/json" };
+  const headers = { Accept: 'application/json' };
 
   try {
     let postsData: ProjectPost[] = []; // Change from any[] to ProjectPost[]
@@ -19,7 +20,10 @@ export async function GET(): Promise<Response> { // Removed 'request' parameter
     while (nextUrl) {
       const response: Response = await fetch(nextUrl, { headers });
       if (!response.ok) {
-        return new Response(JSON.stringify({ error: 'Failed to fetch projects feed' }), { status: response.status });
+        return new Response(
+          JSON.stringify({ error: 'Failed to fetch projects feed' }),
+          { status: response.status }
+        );
       }
 
       const posts: ProjectPost[] = await response.json(); // Specify the expected type
@@ -31,8 +35,12 @@ export async function GET(): Promise<Response> { // Removed 'request' parameter
       // Check for pagination
       const linkHeader: string | null = response.headers.get('link');
       if (linkHeader) {
-        const nextLink: string | undefined = linkHeader.split(',').find((s: string) => s.includes('rel="next"'));
-        nextUrl = nextLink ? nextLink.split(';')[0].replace('<', '').replace('>', '').trim() : null; // Use null instead of an empty string
+        const nextLink: string | undefined = linkHeader
+          .split(',')
+          .find((s: string) => s.includes('rel="next"'));
+        nextUrl = nextLink
+          ? nextLink.split(';')[0].replace('<', '').replace('>', '').trim()
+          : null; // Use null instead of an empty string
       } else {
         nextUrl = null; // Set to null when there's no next URL
       }
@@ -44,6 +52,9 @@ export async function GET(): Promise<Response> { // Removed 'request' parameter
     return new Response(JSON.stringify({ postsData }), { status: 200 });
   } catch (error) {
     console.error('Error fetching projects feed:', error);
-    return new Response(JSON.stringify({ error: 'Failed to fetch projects feed' }), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: 'Failed to fetch projects feed' }),
+      { status: 500 }
+    );
   }
 }

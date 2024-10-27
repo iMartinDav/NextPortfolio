@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import Typewriter from "typewriter-effect";
+import Typewriter from 'typewriter-effect';
 
 export const Type: React.FC = () => {
   return (
@@ -14,11 +14,11 @@ export const Type: React.FC = () => {
             '<span class="gradient-text">Software Engineer</span> <span class="emoji" aria-label="developer">👨🏻‍💻</span>',
             '<span class="gradient-text">Open Source Advocate</span>',
             '<span class="gradient-text">Web3 Enthusiast</span>',
-            '<span class="gradient-text">AI and Automation Enthusiast</span> <span class="emoji" aria-label="green heart">💚</span>',
+            '<span class="gradient-text">AI and Automation Enthusiast</span> <span class="emoji" aria-label="green heart">💚</span>'
           ],
           autoStart: true,
           loop: true,
-          deleteSpeed: 50,
+          deleteSpeed: 50
         }}
       />
     </div>

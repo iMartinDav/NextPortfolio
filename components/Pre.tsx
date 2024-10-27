@@ -12,7 +12,8 @@ const Pre: React.FC<PreProps> = ({ load }) => {
   useEffect(() => {
     const startAnimations = () => {
       if (preloaderRef.current && !animationStarted) {
-        const preloaderPaths = preloaderRef.current.querySelectorAll('#preloader path');
+        const preloaderPaths =
+          preloaderRef.current.querySelectorAll('#preloader path');
 
         preloaderPaths.forEach((path, index) => {
           animatePath(path as SVGPathElement, index);

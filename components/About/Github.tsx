@@ -1,5 +1,5 @@
-import React from "react";
-import GitHubCalendar from "react-github-calendar";
+import React from 'react';
+import GitHubCalendar from 'react-github-calendar';
 
 export default function Github() {
   return (
@@ -15,19 +15,19 @@ export default function Github() {
           fontSize={16}
           theme={{
             light: [
-              "#E100FF", // Light mode: level 0
-              "#7F00FF", // Light mode: level 1
-              "#4B0082", // Light mode: level 2
-              "#2A004C", // Light mode: level 3
-              "#1A004A", // Light mode: level 4
+              '#E100FF', // Light mode: level 0
+              '#7F00FF', // Light mode: level 1
+              '#4B0082', // Light mode: level 2
+              '#2A004C', // Light mode: level 3
+              '#1A004A' // Light mode: level 4
             ],
             dark: [
-              "#1A004A", // Dark mode: level 0
-              "#2A004C", // Dark mode: level 1
-              "#4B0082", // Dark mode: level 2
-              "#7F00FF", // Dark mode: level 3
-              "#E100FF", // Dark mode: level 4
-            ],
+              '#1A004A', // Dark mode: level 0
+              '#2A004C', // Dark mode: level 1
+              '#4B0082', // Dark mode: level 2
+              '#7F00FF', // Dark mode: level 3
+              '#E100FF' // Dark mode: level 4
+            ]
           }}
         />
       </div>

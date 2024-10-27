@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { useEffect, useId, useRef, useState, useCallback } from "react";
+import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
+import { useEffect, useId, useRef, useState, useCallback } from 'react';
 
 interface GridPatternProps {
   width?: number;
@@ -22,7 +22,7 @@ export function GridPattern({
   height = 40,
   x = -1,
   y = -1,
-  strokeDasharray = "0", // Default to "0" or appropriate value
+  strokeDasharray = '0', // Default to "0" or appropriate value
   numSquares = 50,
   className,
   maxOpacity = 0.5,
@@ -38,16 +38,19 @@ export function GridPattern({
   const getPos = () => {
     return [
       Math.floor((Math.random() * dimensions.width) / width),
-      Math.floor((Math.random() * dimensions.height) / height),
+      Math.floor((Math.random() * dimensions.height) / height)
     ];
   };
 
-  const generateSquares = useCallback((count: number) => {
-    return Array.from({ length: count }, (_, i) => ({
-      id: i,
-      pos: getPos(),
-    }));
-  }, [dimensions, width, height]);
+  const generateSquares = useCallback(
+    (count: number) => {
+      return Array.from({ length: count }, (_, i) => ({
+        id: i,
+        pos: getPos()
+      }));
+    },
+    [dimensions, width, height]
+  );
 
   const updateSquarePosition = (id: number) => {
     setSquares((currentSquares) =>
@@ -55,7 +58,7 @@ export function GridPattern({
         sq.id === id
           ? {
               ...sq,
-              pos: getPos(),
+              pos: getPos()
             }
           : sq
       )
@@ -70,10 +73,11 @@ export function GridPattern({
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) { // Change to const
+      for (const entry of entries) {
+        // Change to const
         setDimensions({
           width: entry.contentRect.width,
-          height: entry.contentRect.height,
+          height: entry.contentRect.height
         });
       }
     });
@@ -95,7 +99,7 @@ export function GridPattern({
       ref={containerRef}
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-0 h-full w-full fill-gray-400/30 stroke-gray-400/30",
+        'pointer-events-none absolute inset-0 h-full w-full fill-gray-400/30 stroke-gray-400/30',
         className
       )}
       {...props}
@@ -126,7 +130,7 @@ export function GridPattern({
               duration,
               repeat: 1,
               delay: index * 0.1,
-              repeatType: "reverse",
+              repeatType: 'reverse'
             }}
             onAnimationComplete={() => updateSquarePosition(id)}
             key={`${x}-${y}-${index}`}

@@ -34,7 +34,7 @@ const ButtonWithParticles: React.FC = () => {
         scale: 0.5 + Math.random() * 1.2,
         speed: 0.5 + Math.random() * 1.5,
         distance: distance,
-        rotation: Math.random() * 360,
+        rotation: Math.random() * 360
       };
     });
   }, []);
@@ -46,13 +46,16 @@ const ButtonWithParticles: React.FC = () => {
     return () => clearInterval(interval);
   }, [slow]);
 
-  const handleMouseMove = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setInteractionField({
-      x: ((event.clientX - rect.left) / rect.width) * 100,
-      y: ((event.clientY - rect.top) / rect.height) * 100,
-    });
-  }, []);
+  const handleMouseMove = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      const rect = event.currentTarget.getBoundingClientRect();
+      setInteractionField({
+        x: ((event.clientX - rect.left) / rect.width) * 100,
+        y: ((event.clientY - rect.top) / rect.height) * 100
+      });
+    },
+    []
+  );
 
   return (
     <div className="flex flex-col items-center space-y-6">
@@ -63,7 +66,9 @@ const ButtonWithParticles: React.FC = () => {
           onChange={(e) => setSlow(e.target.checked)}
           className="h-5 w-5 rounded-lg border-purple-400 focus:ring-purple-500 bg-purple-100"
         />
-        <span className="select-none font-semibold text-sm">✦ Stellar Time Dilation ✦</span>
+        <span className="select-none font-semibold text-sm">
+          ✦ Stellar Time Dilation ✦
+        </span>
       </label>
 
       <div className="relative flex items-center justify-center">
@@ -86,7 +91,7 @@ const ButtonWithParticles: React.FC = () => {
                 width: `${starSize}px`,
                 height: `${starSize}px`,
                 filter: 'blur(0.5px)',
-                zIndex: 10, // Asegurarse de que las estrellas estén por encima del botón
+                zIndex: 10 // Asegurarse de que las estrellas estén por encima del botón
               }}
             >
               ✦
@@ -109,7 +114,7 @@ const ButtonWithParticles: React.FC = () => {
             perspective: '1500px',
             width: 'fit-content',
             height: 'fit-content',
-            zIndex: 20, // Asegurarse de que el botón esté por encima de las estrellas
+            zIndex: 20 // Asegurarse de que el botón esté por encima de las estrellas
           }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -125,7 +130,7 @@ const ButtonWithParticles: React.FC = () => {
                   rgba(123,31,162,0.2) 30%,
                   transparent 70%
                 )
-              `,
+              `
             }}
           />
 
@@ -138,8 +143,10 @@ const ButtonWithParticles: React.FC = () => {
             const scale = isHovered ? particle.scale * 0.8 : particle.scale;
             const opacity = Math.min(1, 4 * (1 - movementFactor));
 
-            const currentX = particle.startX + (50 - particle.startX) * movementFactor;
-            const currentY = particle.startY + (50 - particle.startY) * movementFactor;
+            const currentX =
+              particle.startX + (50 - particle.startX) * movementFactor;
+            const currentY =
+              particle.startY + (50 - particle.startY) * movementFactor;
 
             return (
               <div
@@ -149,15 +156,16 @@ const ButtonWithParticles: React.FC = () => {
                   left: `${currentX}%`,
                   top: `${currentY}%`,
                   zIndex: 30, // Asegurarse de que las esferas estén por encima del botón
-                  transform: `translate(-50%, -50%) scale(${scale})`,
+                  transform: `translate(-50%, -50%) scale(${scale})`
                 }}
               >
                 <div
                   className="absolute w-3 h-3"
                   style={{
                     opacity,
-                    background: 'radial-gradient(at 85% 85%, rgba(167,139,250,0.8), rgba(123,31,162,0.6) 75%)',
-                    borderRadius: '50%',
+                    background:
+                      'radial-gradient(at 85% 85%, rgba(167,139,250,0.8), rgba(123,31,162,0.6) 75%)',
+                    borderRadius: '50%'
                   }}
                 />
               </div>
@@ -171,10 +179,14 @@ const ButtonWithParticles: React.FC = () => {
                 ${isHovered ? 'rotate-180 scale-150 text-purple-300' : 'text-blue-200'}`}
             />
             <span className="relative group text-sm">
-              <span className={`transition-all duration-500 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
+              <span
+                className={`transition-all duration-500 ${isHovered ? 'opacity-0' : 'opacity-100'}`}
+              >
                 Connect
               </span>
-              <span className={`absolute left-0 top-0 transition-all duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+              <span
+                className={`absolute left-0 top-0 transition-all duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+              >
                 ✦ Explore ✦
               </span>
             </span>
@@ -184,8 +196,15 @@ const ButtonWithParticles: React.FC = () => {
 
       <style jsx>{`
         @keyframes particle-pulse {
-          0%, 100% { transform: scale(1); opacity: 0.6; }
-          50% { transform: scale(1.3); opacity: 0.2; }
+          0%,
+          100% {
+            transform: scale(1);
+            opacity: 0.6;
+          }
+          50% {
+            transform: scale(1.3);
+            opacity: 0.2;
+          }
         }
       `}</style>
     </div>

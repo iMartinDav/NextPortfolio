@@ -1,34 +1,34 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { AnimatedBeamMultipleOutputs } from "@/components/animated-beam-multiple-outputs";
-import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
-import BlurIn from "@/components/magicui/blur-in";
-import { EmailForm } from "@/components/email-form";
-import { FadeIn } from "@/components/magicui/fade-in";
-import GlobeAndStars from "@/components/globe-and-stars";
-import Marquee from "@/components/magicui/marquee";
-import Technologies from "@/components/technologies";
-import Orbit from "@/components/orbit";
-import RetroGrid from "@/components/magicui/retro-grid";
-import StatsChart from "@/components/stats-chart";
-import { cn } from "@/lib/utils";
-import { defaultDomains } from "@/lib/data";
-import { RippleCard } from "./ui/ripper-card";
-import { motion } from "framer-motion";
-import GitHubStars from "@/components/github-stars";
-import ProjectPosts from "@/components/project-posts";
-import BentoShowcase from "@/components/BentoShowcase";
-import React from "react";
+import Image from 'next/image';
+import { AnimatedBeamMultipleOutputs } from '@/components/animated-beam-multiple-outputs';
+import { BentoCard, BentoGrid } from '@/components/magicui/bento-grid';
+import BlurIn from '@/components/magicui/blur-in';
+import { EmailForm } from '@/components/email-form';
+import { FadeIn } from '@/components/magicui/fade-in';
+import GlobeAndStars from '@/components/globe-and-stars';
+import Marquee from '@/components/magicui/marquee';
+import Technologies from '@/components/technologies';
+import Orbit from '@/components/orbit';
+import RetroGrid from '@/components/magicui/retro-grid';
+import StatsChart from '@/components/stats-chart';
+import { cn } from '@/lib/utils';
+import { defaultDomains } from '@/lib/data';
+import { RippleCard } from './ui/ripper-card';
+import { motion } from 'framer-motion';
+import GitHubStars from '@/components/github-stars';
+import ProjectPosts from '@/components/project-posts';
+import BentoShowcase from '@/components/BentoShowcase';
+import React from 'react';
 
 const features = [
   {
-    Icon: "",
-    name: "",
-    description: "",
-    href: "",
-    cta: "",
-    className: "col-span-3 md:col-span-2",
+    Icon: '',
+    name: '',
+    description: '',
+    href: '',
+    cta: '',
+    className: 'col-span-3 md:col-span-2',
     background: (
       <>
         <div
@@ -38,23 +38,23 @@ const features = [
           <BentoShowcase />
         </div>
       </>
-    ),
+    )
   },
   {
-    Icon: "",
+    Icon: '',
     name: "I'm Martin DAVILA",
     description:
-      "Software Sorcerer & Bioinformatics Wizard Specialist Full-stack dev with a genomic twist. Cloud architect who speaks DNA.",
-    className: "col-span-3 md:col-span-1",
+      'Software Sorcerer & Bioinformatics Wizard Specialist Full-stack dev with a genomic twist. Cloud architect who speaks DNA.',
+    className: 'col-span-3 md:col-span-1',
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}`,
-    cta: "Explore my digital lab",
+    cta: 'Explore my digital lab',
     background: (
       <div>
         <div className="absolute right-0 top-0 h-3/4 w-full border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_5%,#000_50%)] group-hover:scale-105">
           <BlurIn duration={0.5} className="h-full">
             <Image
               className="object-cover object-center h-full w-full"
-              src={process.env.AVATAR_URL || "/images/profile-cool.webp"}
+              src={process.env.AVATAR_URL || '/images/profile-cool.webp'}
               alt="avatar image"
               width={400}
               height={400}
@@ -69,45 +69,45 @@ const features = [
         <FadeIn
           direction="right"
           framerProps={{
-            show: { transition: { delay: 1.5 } },
+            show: { transition: { delay: 1.5 } }
           }}
         >
           <a
             href={
-              process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE == "true"
+              process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE == 'true'
                 ? `${process.env.NEXT_PUBLIC_DISCORD}`
-                : "#contact-form"
+                : '#contact-form'
             }
             className="absolute top-2 right-2 bg-background rounded-lg px-4 py-2 text-xs text-neutral-500 dark:text-neutral-300 max-w-3/4 w-fit"
           >
             <div className="flex items-center gap-2">
               <div
                 className={`w-3 h-3 rounded-full animate-pulse ${
-                  process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE == "true"
-                    ? "bg-emerald-400"
-                    : "bg-yellow-400"
+                  process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE == 'true'
+                    ? 'bg-emerald-400'
+                    : 'bg-yellow-400'
                 }`}
               ></div>
               <div className="">
-                {process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE == "true"
-                  ? "Available"
-                  : "On Engagement"}
+                {process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE == 'true'
+                  ? 'Available'
+                  : 'On Engagement'}
               </div>
             </div>
           </a>
         </FadeIn>
       </div>
-    ),
+    )
   },
 
   {
-    Icon: "",
-    name: "Tech Arsenal",
+    Icon: '',
+    name: 'Tech Arsenal',
     description:
       "From web apps to gene sequencing. Docker to PCR. I've got the tools.",
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/projects`,
-    cta: "View my experiments",
-    className: "col-span-3 md:col-span-1",
+    cta: 'View my experiments',
+    className: 'col-span-3 md:col-span-1',
     background: (
       <motion.div
         initial={{ opacity: 0 }}
@@ -123,10 +123,10 @@ const features = [
               href={`${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/${f.slug}`}
               key={idx}
               className={cn(
-                "relative w-40 h-full cursor-pointer overflow-hidden rounded-xl border p-4 hover:-translate-y-1",
-                "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
-                "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]",
-                "transform-gpu transition-all duration-300 ease-out hover:blur-none"
+                'relative w-40 h-full cursor-pointer overflow-hidden rounded-xl border p-4 hover:-translate-y-1',
+                'border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]',
+                'dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]',
+                'transform-gpu transition-all duration-300 ease-out hover:blur-none'
               )}
             >
               <div className="flex flex-row items-center gap-2">
@@ -141,32 +141,32 @@ const features = [
           ))}
         </Marquee>
       </motion.div>
-    ),
+    )
   },
   {
-    Icon: "",
-    name: "Tech Shenanigans",
+    Icon: '',
+    name: 'Tech Shenanigans',
     description:
-      "I tinker with biotech and code until, somehow, magic happens.",
-    href: "/technologies",
-    cta: "View all technologies",
-    className: "col-span-3 md:col-span-2",
+      'I tinker with biotech and code until, somehow, magic happens.',
+    href: '/technologies',
+    cta: 'View all technologies',
+    className: 'col-span-3 md:col-span-2',
     background: (
       <div className="absolute right-0 top-0 w-[80%] origin-top translate-x-0 transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_40%,#000_70%)] md:[mask-image:linear-gradient(to_top,transparent_50%,#000_70%)] group-hover:-translate-y-5 group-hover:scale-105">
         <FadeIn direction="up">
           <Technologies />
         </FadeIn>
       </div>
-    ),
+    )
   },
   {
-    Icon: "",
-    name: "AI Integrations",
+    Icon: '',
+    name: 'AI Integrations',
     description:
-      "From predicting protein structures to optimizing pipelines, I&apos;ve got AI that would make Watson jealous.",
+      'From predicting protein structures to optimizing pipelines, I&apos;ve got AI that would make Watson jealous.',
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/ai`,
-    cta: "Visit AI projects",
-    className: "col-span-3 md:col-span-2",
+    cta: 'Visit AI projects',
+    className: 'col-span-3 md:col-span-2',
     background: (
       <motion.div
         initial={{ opacity: 0 }}
@@ -175,44 +175,44 @@ const features = [
       >
         <AnimatedBeamMultipleOutputs className="absolute right-0 top-4 h-[300px] w-[600px] border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] md:[mask-image:linear-gradient(to_top,transparent_0%,#000_100%)] group-hover:scale-105" />
       </motion.div>
-    ),
+    )
   },
   {
-    Icon: "",
-    name: "Seamless Deployments",
-    description: "Push, Build, Deploy, Mutate.",
-    className: "col-span-3 md:col-span-1",
+    Icon: '',
+    name: 'Seamless Deployments',
+    description: 'Push, Build, Deploy, Mutate.',
+    className: 'col-span-3 md:col-span-1',
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/vercel`,
-    cta: "Learn more",
+    cta: 'Learn more',
     background: (
       <div className="absolute w-full h-full right-0 top-0 origin-top rounded-md transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_25%,#000_70%)] group-hover:scale-105">
         <Orbit />
       </div>
-    ),
+    )
   },
 
   {
-    Icon: "",
-    name: "Worldwide Reach",
+    Icon: '',
+    name: 'Worldwide Reach',
     description:
-      "Cloud or lab, my code spans continents. No genome left behind.",
-    className: "col-span-3 md:col-span-3",
+      'Cloud or lab, my code spans continents. No genome left behind.',
+    className: 'col-span-3 md:col-span-3',
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/vercel`,
-    cta: "Learn more",
+    cta: 'Learn more',
     background: (
       <div className="absolute w-full h-full right-0 top-0 origin-top rounded-md transition-all duration-300 ease-out  [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] md:[mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105 group-hover:-translate-y-4">
         <GlobeAndStars />
       </div>
-    ),
+    )
   },
 
   {
-    Icon: "",
-    name: "GitHub Stars",
-    description: "Star my digital organisms. Help my code evolve.",
-    className: "col-span-3 md:col-span-1",
+    Icon: '',
+    name: 'GitHub Stars',
+    description: 'Star my digital organisms. Help my code evolve.',
+    className: 'col-span-3 md:col-span-1',
     href: `${process.env.GITHUB_URL}/${process.env.REPO_NAME}`,
-    cta: "Star repository",
+    cta: 'Star repository',
     background: (
       <div className="absolute h-full w-full left-0 top-0 origin-top rounded-md transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_40%,#000_70%)] group-hover:scale-105 group-hover:-translate-y-4">
         <div className="text-7xl font-semibold w-full flex justify-center items-center h-2/3 group-hover:-translate-y-2 transition-all duration-300">
@@ -232,17 +232,17 @@ const features = [
           </a>
         </div>
       </div>
-    ),
+    )
   },
 
   {
-    Icon: "",
-    name: "Project Showcase",
+    Icon: '',
+    name: 'Project Showcase',
     description:
-      "Explore my latest creations, from optimized CI/CD pipelines to DNA sequence analysis tools. Where silicon meets cells. Peek into my tech-bio brainstorms.",
-    className: "col-span-3 md:col-span-2",
+      'Explore my latest creations, from optimized CI/CD pipelines to DNA sequence analysis tools. Where silicon meets cells. Peek into my tech-bio brainstorms.',
+    className: 'col-span-3 md:col-span-2',
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/projects`,
-    cta: "All projects",
+    cta: 'All projects',
     background: (
       <div className="absolute h-full w-full left-0 top-0 origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[102%]">
         <div className="absolute h-full w-full [mask-image:linear-gradient(to_top,transparent_20%,#000_70%)]">
@@ -255,17 +255,17 @@ const features = [
           </div>
         </div>
       </div>
-    ),
+    )
   },
 
   {
-    Icon: "",
-    name: "Daily Visitors",
+    Icon: '',
+    name: 'Daily Visitors',
     description:
-      "Watch my digital petri dish grow. Watch in real-time as curious minds explore my digital petri dish. Powered by analytics, not ATP. powered by Umami Analytics.",
-    href: "https://umami.is",
-    cta: "Umami",
-    className: "col-span-3 md:col-span-2",
+      'Watch my digital petri dish grow. Watch in real-time as curious minds explore my digital petri dish. Powered by analytics, not ATP. powered by Umami Analytics.',
+    href: 'https://umami.is',
+    cta: 'Umami',
+    className: 'col-span-3 md:col-span-2',
     background: (
       <>
         <div className="absolute h-full w-full left-0 top-0 origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[102%]">
@@ -277,16 +277,16 @@ const features = [
           </div>
         </div>
       </>
-    ),
+    )
   },
 
   {
-    Icon: "",
-    name: "",
-    description: "",
-    className: "col-span-3 md:col-span-1",
+    Icon: '',
+    name: '',
+    description: '',
+    className: 'col-span-3 md:col-span-1',
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/biocode`,
-    cta: "Incubating Innovations",
+    cta: 'Incubating Innovations',
     background: (
       <div className="absolute h-full w-full left-0 top-0 origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[105%]">
         <div className="absolute h-full w-full [mask-image:linear-gradient(to_top,transparent_20%,#000_70%)]">
@@ -295,16 +295,16 @@ const features = [
           </div>
         </div>
       </div>
-    ),
+    )
   },
 
   {
-    Icon: "",
-    name: "",
-    description: "",
-    className: "col-span-3 md:col-span-3",
-    href: "",
-    cta: "",
+    Icon: '',
+    name: '',
+    description: '',
+    className: 'col-span-3 md:col-span-3',
+    href: '',
+    cta: '',
     background: (
       <div
         id="contact-form"
@@ -333,8 +333,8 @@ const features = [
 
         <RetroGrid />
       </div>
-    ),
-  },
+    )
+  }
 ];
 
 export function Bento() {

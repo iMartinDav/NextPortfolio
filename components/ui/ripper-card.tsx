@@ -1,4 +1,4 @@
-import Ripple from "@/components/magicui/ripple";
+import Ripple from '@/components/magicui/ripple';
 
 export function RippleCard() {
   return (

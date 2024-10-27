@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties } from 'react';
 
 interface RippleProps {
   mainCircleSize?: number;
@@ -9,7 +9,7 @@ interface RippleProps {
 const Ripple = React.memo(function Ripple({
   mainCircleSize = 210,
   mainCircleOpacity = 0.24,
-  numCircles = 8,
+  numCircles = 8
 }: RippleProps) {
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-white/5 [mask-image:linear-gradient(to_bottom,white,transparent)]">
@@ -17,7 +17,7 @@ const Ripple = React.memo(function Ripple({
         const size = mainCircleSize + i * 70;
         const opacity = mainCircleOpacity - i * 0.03;
         const animationDelay = `${i * 0.06}s`;
-        const borderStyle = i === numCircles - 1 ? "dashed" : "solid";
+        const borderStyle = i === numCircles - 1 ? 'dashed' : 'solid';
         const borderOpacity = 5 + i * 5;
 
         return (
@@ -31,8 +31,8 @@ const Ripple = React.memo(function Ripple({
                 opacity: opacity,
                 animationDelay: animationDelay,
                 borderStyle: borderStyle,
-                borderWidth: "1px",
-                borderColor: `rgba(var(--foreground-rgb), ${borderOpacity / 100})`,
+                borderWidth: '1px',
+                borderColor: `rgba(var(--foreground-rgb), ${borderOpacity / 100})`
               } as CSSProperties
             }
           />
@@ -42,6 +42,6 @@ const Ripple = React.memo(function Ripple({
   );
 });
 
-Ripple.displayName = "Ripple";
+Ripple.displayName = 'Ripple';
 
 export default Ripple;

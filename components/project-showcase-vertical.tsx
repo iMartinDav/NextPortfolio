@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import Marquee from "@/components/magicui/marquee";
+import { cn } from '@/lib/utils';
+import Marquee from '@/components/magicui/marquee';
 
 interface Project {
   name: string;
@@ -16,7 +16,7 @@ const ReviewCard = ({
   name,
   body,
   slug,
-  image,
+  image
 }: {
   name: string;
   body: string;
@@ -26,11 +26,11 @@ const ReviewCard = ({
   return (
     <figure
       className={cn(
-        "relative h-40 w-full cursor-pointer overflow-hidden rounded-xl border p-4 shadow",
+        'relative h-40 w-full cursor-pointer overflow-hidden rounded-xl border p-4 shadow',
         // light styles
-        "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
+        'border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]',
         // dark styles
-        "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]"
+        'dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]'
       )}
     >
       <a href={`https://projects.imartin.dev/projects/${slug}`}>
@@ -57,7 +57,7 @@ const ReviewCard = ({
 };
 
 const ProjectShowcaseVertical = ({
-  projects,
+  projects
 }: ProjectShowcaseVerticalProps) => {
   const firstRow = projects.slice(0, 5); // Get first 5 projects
   const secondRow = projects.slice(5, 10); // Get next 5 projects

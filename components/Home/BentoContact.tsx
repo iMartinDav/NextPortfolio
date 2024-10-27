@@ -1,17 +1,17 @@
-import dynamic from "next/dynamic";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { MapPin, Copy, Check, Linkedin, Github } from "lucide-react";
-import { EvervaultCard } from "../ui/evervault-card";
+import dynamic from 'next/dynamic';
+import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { MapPin, Copy, Check, Linkedin, Github } from 'lucide-react';
+import { EvervaultCard } from '../ui/evervault-card';
 
 // Dynamically import the Globe component to disable SSR
-const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
+const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
 
 const BentoContact = () => {
   const [hasCopied, setHasCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("aldntmi@gmail.com");
+    navigator.clipboard.writeText('aldntmi@gmail.com');
     setHasCopied(true);
 
     setTimeout(() => {
@@ -79,10 +79,10 @@ const BentoContact = () => {
                   {
                     lat: 45.78,
                     lng: 4.87,
-                    text: "Lyon, France",
-                    color: "white",
-                    size: 15,
-                  },
+                    text: 'Lyon, France',
+                    color: 'white',
+                    size: 15
+                  }
                 ]}
               />
             </div>
@@ -145,7 +145,7 @@ const BentoContact = () => {
                 ) : (
                   <Copy className="mr-2" />
                 )}
-                <span>{hasCopied ? "Copied!" : "aldntmi@gmail.com"}</span>
+                <span>{hasCopied ? 'Copied!' : 'aldntmi@gmail.com'}</span>
               </Button>
               <div className="flex justify-center space-x-4 mt-4">
                 <a
