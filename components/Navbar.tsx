@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
@@ -59,7 +59,7 @@ export default function Navbar() {
     const handleRouteChange = () => {
       setIsMenuOpen(false);
     };
-    
+
     window.addEventListener('popstate', handleRouteChange);
     return () => {
       window.removeEventListener('popstate', handleRouteChange);
@@ -112,7 +112,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav 
+    <nav
       ref={navRef}
       className={`navbar ${isScrolled ? 'scrolled' : ''}`}
       role="navigation"
@@ -145,7 +145,7 @@ export default function Navbar() {
           <span className="bar"></span>
           <span className="bar"></span>
         </button>
-        <div 
+        <div
           id="navbar-nav"
           className={`navbar-nav ${isMenuOpen ? 'flex' : ''}`}
           aria-hidden={!isMenuOpen}
@@ -173,7 +173,13 @@ interface NavItemProps extends NavItem {
   onClick: () => void;
 }
 
-function NavItem({ href, icon: Icon, label, external = false, onClick }: NavItemProps) {
+function NavItem({
+  href,
+  icon: Icon,
+  label,
+  external = false,
+  onClick
+}: NavItemProps) {
   return (
     <Link
       href={href}

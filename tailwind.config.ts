@@ -68,6 +68,12 @@ const config: Config = {
         'sm': 'calc(var(--radius) - 4px)',
         'custom-lg': '1.5rem'
       },
+      scale: {
+        '98': '0.98'
+      },
+      zIndex: {
+        '9999': '9999'
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -126,6 +132,27 @@ const config: Config = {
         },
         'k': {
           '0%, 33.3%': { '--k': '1' }
+        },
+        // Add new keyframes for preloader
+        'float': {
+          '0%, 100%': {
+            transform: 'translateY(0)',
+            filter: 'brightness(1)'
+          },
+          '50%': {
+            transform: 'translateY(-8px)',
+            filter: 'brightness(1.2)'
+          }
+        },
+        'scale-fade': {
+          '0%': {
+            opacity: '1',
+            transform: 'scale(1)'
+          },
+          '100%': {
+            opacity: '0',
+            transform: 'scale(0.98)'
+          }
         }
       },
       animation: {
@@ -141,7 +168,10 @@ const config: Config = {
         'ripple': 'ripple 3400ms ease infinite',
         'glow-move': 'move 5s linear infinite',
         'particles':
-          'k calc(var(--m) * 1s) linear calc(var(--m) * var(--t, 0) * 1s) infinite'
+          'k calc(var(--m) * 1s) linear calc(var(--m) * var(--t, 0) * 1s) infinite',
+        // Add new animations for preloader
+        'float': 'float 2s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+        'scale-fade': 'scale-fade 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
       }
     }
   },
@@ -154,6 +184,13 @@ const config: Config = {
         },
         '.glow-bg': {
           background: 'radial-gradient(#fff, #f1f5f9, transparent)'
+        },
+        // Add new utilities for preloader
+        '.text-stroke-teal': {
+          '-webkit-text-stroke': '1px rgb(79, 209, 197)'
+        },
+        '.backdrop-blur-preloader': {
+          'backdrop-filter': 'blur(8px)'
         }
       });
     })
