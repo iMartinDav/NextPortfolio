@@ -91,7 +91,7 @@ const PreLoader = () => {
           <Loader2 className="h-5 w-5 animate-spin text-teal-400" />
           <div className="w-48 h-1 bg-gray-800/50 rounded-full overflow-hidden backdrop-blur-sm">
             <div
-              className="h-full bg-teal-400 transition-all duration-150 ease-out rounded-full"
+              className="h-full bg-gradient-to-r from-teal-400 via-cyan-500 to-teal-400 animate-gradient-move transition-all duration-150 ease-out rounded-full"
               style={{
                 width: `${progress}%`,
                 transition: 'width 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
@@ -121,6 +121,18 @@ const PreLoader = () => {
         }
         .animate-float {
           animation: float 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        @keyframes gradient-move {
+          0% {
+            background-position: 0% 50%;
+          }
+          100% {
+            background-position: 100% 50%;
+          }
+        }
+        .animate-gradient-move {
+          background-size: 200% 100%;
+          animation: gradient-move 2s linear infinite;
         }
       `}</style>
     </div>
