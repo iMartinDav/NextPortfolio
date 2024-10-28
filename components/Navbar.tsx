@@ -51,9 +51,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Close menu on route change
@@ -62,7 +60,6 @@ export default function Navbar() {
       setIsMenuOpen(false);
     };
     
-    // Subscribe to router events
     window.addEventListener('popstate', handleRouteChange);
     return () => {
       window.removeEventListener('popstate', handleRouteChange);
@@ -86,7 +83,7 @@ export default function Navbar() {
     };
   }, [isMenuOpen]);
 
-  // Close menu when screen size changes from mobile to desktop
+  // Close menu when screen size changes
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 767 && isMenuOpen) {
@@ -98,7 +95,7 @@ export default function Navbar() {
     return () => window.removeEventListener('resize', handleResize);
   }, [isMenuOpen]);
 
-  // Handle escape key press
+  // Handle escape key
   useEffect(() => {
     const handleEscapeKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isMenuOpen) {
@@ -109,10 +106,6 @@ export default function Navbar() {
     document.addEventListener('keydown', handleEscapeKey);
     return () => document.removeEventListener('keydown', handleEscapeKey);
   }, [isMenuOpen]);
-
-  const toggleMenu = useCallback(() => {
-    setIsMenuOpen(prev => !prev);
-  }, []);
 
   const handleNavItemClick = useCallback(() => {
     setIsMenuOpen(false);
@@ -142,7 +135,7 @@ export default function Navbar() {
           <span className="navbar-brand-name luxury-text">iMartinDav</span>
         </Link>
         <button
-          onClick={toggleMenu}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
           className={`navbar-toggler ${isMenuOpen ? 'active' : ''}`}
           aria-label="Toggle navigation menu"
           aria-expanded={isMenuOpen}
