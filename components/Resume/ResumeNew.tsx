@@ -199,79 +199,91 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                 : 'opacity-0 translate-y-8 pointer-events-none'
             )}
           >
-                <TooltipProvider>
-      <div className="flex items-center divide-x divide-gray-200 dark:divide-gray-700  rounded-lg p-1 shadow-sm">
-        <div className="flex items-center space-x-1 sm:space-x-2 px-1 sm:px-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setPageNumber((prev) => Math.max(prev - 1, 1))}
-            disabled={pageNumber <= 1}
-            className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full
+            <TooltipProvider>
+              <div className="flex items-center divide-x divide-gray-200 dark:divide-gray-700  rounded-lg p-1 shadow-sm">
+                <div className="flex items-center space-x-1 sm:space-x-2 px-1 sm:px-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() =>
+                      setPageNumber((prev) => Math.max(prev - 1, 1))
+                    }
+                    disabled={pageNumber <= 1}
+                    className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full
               bg-gray-100 dark:bg-gray-800
               hover:bg-gray-200 dark:hover:bg-gray-700
               disabled:opacity-50
               border border-gray-200 dark:border-gray-700
               text-gray-700 dark:text-gray-300"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          
-          <span className="text-xs sm:text-sm font-medium min-w-[2.5rem] sm:min-w-[3rem] text-center text-gray-900 dark:text-gray-100">
-            {pageNumber}/{numPages}
-          </span>
-          
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setPageNumber((prev) => Math.min(prev + 1, numPages))}
-            disabled={pageNumber >= numPages}
-            className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+
+                  <span className="text-xs sm:text-sm font-medium min-w-[2.5rem] sm:min-w-[3rem] text-center text-gray-900 dark:text-gray-100">
+                    {pageNumber}/{numPages}
+                  </span>
+
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() =>
+                      setPageNumber((prev) => Math.min(prev + 1, numPages))
+                    }
+                    disabled={pageNumber >= numPages}
+                    className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full
               bg-gray-100 dark:bg-gray-800
               hover:bg-gray-200 dark:hover:bg-gray-700
               disabled:opacity-50
               border border-gray-200 dark:border-gray-700
               text-gray-700 dark:text-gray-300"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
 
-        {!isMobile && (
-          <div className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4">
-            <ControlButton
-              icon={<ZoomIn className="h-4 w-4" />}
-              onClick={handleZoomIn}
-              disabled={scale >= 2}
-              tooltip="Zoom in"
-            />
-            <ControlButton
-              icon={<ZoomOut className="h-4 w-4" />}
-              onClick={handleZoomOut}
-              disabled={scale <= 0.5}
-              tooltip="Zoom out"
-            />
-            <ControlButton
-              icon={<RotateCw className="h-4 w-4" />}
-              onClick={handleRotate}
-              tooltip="Rotate"
-            />
-            <ControlButton
-              icon={isFullScreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
-              onClick={toggleFullScreen}
-              tooltip={isFullScreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-            />
-          </div>
-        )}
+                {!isMobile && (
+                  <div className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4">
+                    <ControlButton
+                      icon={<ZoomIn className="h-4 w-4" />}
+                      onClick={handleZoomIn}
+                      disabled={scale >= 2}
+                      tooltip="Zoom in"
+                    />
+                    <ControlButton
+                      icon={<ZoomOut className="h-4 w-4" />}
+                      onClick={handleZoomOut}
+                      disabled={scale <= 0.5}
+                      tooltip="Zoom out"
+                    />
+                    <ControlButton
+                      icon={<RotateCw className="h-4 w-4" />}
+                      onClick={handleRotate}
+                      tooltip="Rotate"
+                    />
+                    <ControlButton
+                      icon={
+                        isFullScreen ? (
+                          <Minimize2 className="h-4 w-4" />
+                        ) : (
+                          <Maximize2 className="h-4 w-4" />
+                        )
+                      }
+                      onClick={toggleFullScreen}
+                      tooltip={
+                        isFullScreen ? 'Exit fullscreen' : 'Enter fullscreen'
+                      }
+                    />
+                  </div>
+                )}
 
-        <div className="pl-2 sm:pl-4">
-          <Tooltip>
-            <TooltipTrigger asChild>
-            <Button
-                variant="secondary"
-                size="sm"
-                onClick={handleDownload}
-                className="h-7 sm:h-8 md:h-9 space-x-1 sm:space-x-2 px-2 sm:px-3
+                <div className="pl-2 sm:pl-4">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={handleDownload}
+                        className="h-7 sm:h-8 md:h-9 space-x-1 sm:space-x-2 px-2 sm:px-3
                   bg-[#33c7b2] dark:bg-[#2ba999]
                   hover:bg-[#2cb3a1] dark:hover:bg-[#33c7b2]
                   focus:ring-2 focus:ring-[#33c7b2]/20 dark:focus:ring-[#33c7b2]/30
@@ -284,18 +296,18 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                   disabled:pointer-events-none
                   shadow-sm
                   border border-[#2ba999]/20 dark:border-[#33c7b2]/20"
-              >
-                <Download className="h-4 w-4" />
-                <span className="hidden sm:inline text-xs sm:text-sm font-medium">
-                  Download
-                </span>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Download PDF</TooltipContent>
-          </Tooltip>
-        </div>
-      </div>
-    </TooltipProvider>
+                      >
+                        <Download className="h-4 w-4" />
+                        <span className="hidden sm:inline text-xs sm:text-sm font-medium">
+                          Download
+                        </span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Download PDF</TooltipContent>
+                  </Tooltip>
+                </div>
+              </div>
+            </TooltipProvider>
           </div>
 
           <div

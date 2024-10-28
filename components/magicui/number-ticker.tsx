@@ -53,6 +53,9 @@ export default function NumberTicker({
   }, [springValue]);
 
   return (
-    <span className={cn('tabular-nums text-justify', className)} ref={ref} />
+    <span
+      className={cn('tabular-nums text-justify', className)}
+      ref={ref}
+    />
   );
 }

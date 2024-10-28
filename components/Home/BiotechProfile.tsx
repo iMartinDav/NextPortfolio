@@ -87,7 +87,10 @@ const BiotechProfile: React.FC = () => {
                   'ML for Bioinformatics',
                   'Research'
                 ].map((item) => (
-                  <li key={item} className="flex items-center">
+                  <li
+                    key={item}
+                    className="flex items-center"
+                  >
                     <span className="mr-2 text-blue-light">✓</span>
                     {item}
                   </li>

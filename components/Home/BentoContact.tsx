@@ -95,7 +95,10 @@ const BentoContact = () => {
                 the globe, the focus remains on driving advancements that
                 influence and enhance the biotech industry worldwide.
               </p>
-              <Button variant="outline" className="w-full mt-6">
+              <Button
+                variant="outline"
+                className="w-full mt-6"
+              >
                 <MapPin className="mr-2" /> Connect
               </Button>
             </div>
@@ -153,7 +156,10 @@ const BentoContact = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Button variant="outline" size="icon">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                  >
                     <Linkedin size={20} />
                   </Button>
                 </a>
@@ -162,7 +168,10 @@ const BentoContact = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Button variant="outline" size="icon">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                  >
                     <Github size={20} />
                   </Button>
                 </a>

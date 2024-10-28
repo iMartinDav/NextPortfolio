@@ -21,7 +21,11 @@ const ProjectCards: React.FC<ProjectCardProps> = ({
 }) => {
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-      <img className="w-full h-48 object-cover" src={imgPath} alt="card-img" />
+      <img
+        className="w-full h-48 object-cover"
+        src={imgPath}
+        alt="card-img"
+      />
 
       <div className="p-4">
         <h3 className="text-lg font-bold">{title}</h3>

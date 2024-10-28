@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Particle from '../Particle';
 import Image from 'next/image';
-import { Type } from './Type';
+import Type from './Type';
 import ButtonWithParticles from '../ParticleButton'; // Import your custom button
 
 export default function Hero() {
@@ -23,7 +23,11 @@ export default function Hero() {
           <div className="w-full md:w-6/12 mb-12 md:mb-0 flex flex-col items-center md:items-start text-center md:text-left">
             <h1 className="text-4xl md:text-6xl font-extrabold text-[#3D3C45] dark:text-[#EAEAFF] leading-tight mb-6">
               Hi There!
-              <span className="wave text-4xl" role="img" aria-labelledby="wave">
+              <span
+                className="wave text-4xl"
+                role="img"
+                aria-labelledby="wave"
+              >
                 👋🏻
               </span>
             </h1>
@@ -34,7 +38,11 @@ export default function Hero() {
 
             <h3 className="text-4xl md:text-6xl font-extrabold text-[#3D3C45] dark:text-[#EAEAFF] leading-tight mb-6">
               Decoding Life&apos;s Blueprint
-              <span className="wave text-4xl" role="img" aria-labelledby="wave">
+              <span
+                className="wave text-4xl"
+                role="img"
+                aria-labelledby="wave"
+              >
                 🧬
               </span>
             </h3>

@@ -19,7 +19,10 @@ export default function BentoShowcase() {
             breakthroughs.
           </BlurIn>
 
-          <FadeIn direction="down" className="my-class">
+          <FadeIn
+            direction="down"
+            className="my-class"
+          >
             <div className="flex items-center gap-2 w-full lg:w-2/3 mt-3 sm:mt-4">
               <a
                 href="https://github.com/iMartinDav"

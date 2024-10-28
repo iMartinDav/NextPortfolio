@@ -170,9 +170,15 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
             repeatDelay: 0
           }}
         >
-          <stop stopColor={gradientStartColor} stopOpacity="0"></stop>
+          <stop
+            stopColor={gradientStartColor}
+            stopOpacity="0"
+          ></stop>
           <stop stopColor={gradientStartColor}></stop>
-          <stop offset="32.5%" stopColor={gradientStopColor}></stop>
+          <stop
+            offset="32.5%"
+            stopColor={gradientStopColor}
+          ></stop>
           <stop
             offset="100%"
             stopColor={gradientStopColor}

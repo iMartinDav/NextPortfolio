@@ -64,9 +64,16 @@ const ProjectShowcaseVertical = ({
 
   return (
     <div className="relative flex h-full w-full flex-row items-center justify-center overflow-hidden rounded-lg border bg-background sm:px-2 md:shadow-xl">
-      <Marquee pauseOnHover vertical className="[--duration:60s] w-full">
+      <Marquee
+        pauseOnHover
+        vertical
+        className="[--duration:60s] w-full"
+      >
         {firstRow.map((project) => (
-          <ReviewCard key={project.slug} {...project} />
+          <ReviewCard
+            key={project.slug}
+            {...project}
+          />
         ))}
       </Marquee>
       <Marquee
@@ -76,7 +83,10 @@ const ProjectShowcaseVertical = ({
         className="[--duration:60s] w-full"
       >
         {secondRow.map((project) => (
-          <ReviewCard key={project.slug} {...project} />
+          <ReviewCard
+            key={project.slug}
+            {...project}
+          />
         ))}
       </Marquee>
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-white dark:from-background"></div>

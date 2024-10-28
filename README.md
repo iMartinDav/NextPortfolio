@@ -21,6 +21,7 @@
 </div>
 
 ## 📋 Table of Contents
+
 - [About](#about)
 - [Repository Structure](#repository-structure)
 - [Key Features](#key-features)
@@ -52,6 +53,7 @@ The projects and blog sections in this portfolio link directly to [`projects.ima
 ## 🎯 Key Features
 
 ### 💻 Core Platform Features
+
 - **Advanced UI Components**
   - Radix UI primitives for accessibility
   - Framer Motion animations
@@ -61,6 +63,7 @@ The projects and blog sections in this portfolio link directly to [`projects.ima
   - Parallax scrolling effects
 
 ### 🔗 Integration Features
+
 - Seamless integration with projects.imartin.dev
 - Dynamic project showcase loading
 - Integrated blog feed
@@ -69,6 +72,7 @@ The projects and blog sections in this portfolio link directly to [`projects.ima
 - Cross-platform analytics
 
 ### ⚡ Performance Optimizations
+
 - Next.js 15 App Router implementation
 - Turbopack for lightning-fast builds
 - React Server Components
@@ -76,6 +80,7 @@ The projects and blog sections in this portfolio link directly to [`projects.ima
 - Response time < 100ms
 
 ### 📊 Analytics & Monitoring
+
 - Privacy-focused Umami Analytics
 - Real-time dashboard
 - Custom event tracking
@@ -86,34 +91,34 @@ The projects and blog sections in this portfolio link directly to [`projects.ima
 ```typescript
 const techStack = {
   core: {
-    framework: "Next.js 15.0.1 (with Turbopack)",
-    runtime: "React 19.0.0 RC",
-    language: "TypeScript 5.6.3",
-    styling: "TailwindCSS 3.4.14",
+    framework: 'Next.js 15.0.1 (with Turbopack)',
+    runtime: 'React 19.0.0 RC',
+    language: 'TypeScript 5.6.3',
+    styling: 'TailwindCSS 3.4.14'
   },
   features: {
     ui: [
-      "Radix UI Primitives",
-      "Framer Motion",
-      "React Globe.GL",
-      "TSParticles",
+      'Radix UI Primitives',
+      'Framer Motion',
+      'React Globe.GL',
+      'TSParticles'
     ],
-    forms: ["React Hook Form", "Zod Validation"],
-    pdf: ["@react-pdf/renderer", "PSPDFKit"],
-    visualization: ["Recharts", "React GitHub Calendar"],
+    forms: ['React Hook Form', 'Zod Validation'],
+    pdf: ['@react-pdf/renderer', 'PSPDFKit'],
+    visualization: ['Recharts', 'React GitHub Calendar'],
     effects: [
-      "React Parallax Tilt",
-      "React Scroll Parallax",
-      "Typewriter Effect",
-    ],
+      'React Parallax Tilt',
+      'React Scroll Parallax',
+      'Typewriter Effect'
+    ]
   },
-  analytics: "Umami",
-  deployment: "Vercel",
+  analytics: 'Umami',
+  deployment: 'Vercel',
   quality: {
-    linting: "ESLint 9",
-    formatting: "Prettier 3",
-    commitChecks: "Husky + Commitlint",
-  },
+    linting: 'ESLint 9',
+    formatting: 'Prettier 3',
+    commitChecks: 'Husky + Commitlint'
+  }
 };
 ```
 
@@ -122,7 +127,7 @@ const techStack = {
 ### One-Click Vercel Deployment
 
 1. Click the deploy button below:
-   
+
    [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/iMartinDav/NextPortfolio)
 
 2. Configure environment variables:

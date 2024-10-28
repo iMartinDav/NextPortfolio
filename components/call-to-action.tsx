@@ -5,20 +5,29 @@ import { Button } from '@/components/ui/button';
 export async function CallToAction() {
   return (
     <div className="h-full w-full max-w-[32rem] items-center justify-center overflow-hidden pt-8 px-6">
-      <BoxReveal boxColor={'#5046e6'} duration={0.5}>
+      <BoxReveal
+        boxColor={'#5046e6'}
+        duration={0.5}
+      >
         <p className="text-[3.5rem] font-semibold">
           Magic UI<span className="text-[#5046e6]">.</span>
         </p>
       </BoxReveal>
 
-      <BoxReveal boxColor={'#5046e6'} duration={0.5}>
+      <BoxReveal
+        boxColor={'#5046e6'}
+        duration={0.5}
+      >
         <h2 className="mt-[.5rem] text-[1rem]">
           UI library for{' '}
           <span className="text-[#5046e6]">Design Engineers</span>
         </h2>
       </BoxReveal>
 
-      <BoxReveal boxColor={'#5046e6'} duration={0.5}>
+      <BoxReveal
+        boxColor={'#5046e6'}
+        duration={0.5}
+      >
         <div className="mt-[1.5rem]">
           <p>
             -&gt; 20+ free and open-source animated components built with
@@ -33,7 +42,10 @@ export async function CallToAction() {
         </div>
       </BoxReveal>
 
-      <BoxReveal boxColor={'#5046e6'} duration={0.5}>
+      <BoxReveal
+        boxColor={'#5046e6'}
+        duration={0.5}
+      >
         <Button className="mt-[1.6rem] bg-[#5046e6]">Explore</Button>
       </BoxReveal>
     </div>

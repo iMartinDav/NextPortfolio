@@ -51,7 +51,10 @@ const features = [
     background: (
       <div>
         <div className="absolute right-0 top-0 h-3/4 w-full border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_5%,#000_50%)] group-hover:scale-105">
-          <BlurIn duration={0.5} className="h-full">
+          <BlurIn
+            duration={0.5}
+            className="h-full"
+          >
             <Image
               className="object-cover object-center h-full w-full"
               src={process.env.AVATAR_URL || '/images/profile-cool.webp'}
@@ -313,7 +316,10 @@ const features = [
         <div className="absolute inset-0 z-50 flex justify-center items-center gap-5 p-5">
           <div className="max-w-sm w-full flex flex-col gap-2">
             <div className="text-5xl md:text-6xl font-semibold text-neutral-700 dark:text-neutral-300 w-full flex justify-start">
-              <BlurIn duration={0.5} className="h-full">
+              <BlurIn
+                duration={0.5}
+                className="h-full"
+              >
                 Connect.
               </BlurIn>
             </div>
@@ -342,7 +348,10 @@ export function Bento() {
     <>
       <BentoGrid>
         {features.map((feature, idx) => (
-          <BentoCard key={idx} {...feature} />
+          <BentoCard
+            key={idx}
+            {...feature}
+          />
         ))}
       </BentoGrid>
     </>

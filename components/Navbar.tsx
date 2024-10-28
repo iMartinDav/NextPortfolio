@@ -53,7 +53,10 @@ export default function Navbar() {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
-        <Link href="/" className="navbar-brand">
+        <Link
+          href="/"
+          className="navbar-brand"
+        >
           <Image
             className="dark"
             src="/logo.png"
@@ -75,7 +78,10 @@ export default function Navbar() {
         </button>
         <div className={`navbar-nav ${isMenuOpen ? 'flex' : ''}`}>
           {navItems.map((item) => (
-            <NavItem key={item.href} {...item} />
+            <NavItem
+              key={item.href}
+              {...item}
+            />
           ))}
           <GithubButton />
         </div>
@@ -97,7 +103,10 @@ function NavItem({ href, icon: Icon, label, external = false }: NavItem) {
       target={external ? '_blank' : '_self'}
       rel={external ? 'noopener noreferrer' : ''}
     >
-      <Icon size={18} className="luxury-icon" />
+      <Icon
+        size={18}
+        className="luxury-icon"
+      />
       {label}
     </Link>
   );
@@ -112,7 +121,10 @@ function GithubButton() {
       rel="noopener noreferrer"
     >
       <Github size={20} />
-      <Star size={16} className="github-star" />
+      <Star
+        size={16}
+        className="github-star"
+      />
       <span className="github-star-text"></span>
     </a>
   );

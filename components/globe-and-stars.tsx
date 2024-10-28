@@ -15,7 +15,13 @@ export default function GlobeAndStars() {
 
   return (
     <div className="">
-      <Particles className="" quantity={150} ease={80} color={color} refresh />
+      <Particles
+        className=""
+        quantity={150}
+        ease={80}
+        color={color}
+        refresh
+      />
       <Globe />
     </div>
   );

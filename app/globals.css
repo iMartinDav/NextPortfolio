@@ -741,86 +741,11 @@ input[type='checkbox']:checked::after {
 .main-name {
   background: linear-gradient(90deg, #fbb52d, #ff8c00);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientText 5s ease infinite;
   display: inline;
   font-weight: 600;
-}
-
-@keyframes gradientText {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.gradient-text {
-  background: linear-gradient(90deg, #019c92, #004d4f);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientText 5s ease infinite;
-  display: inline-block;
-  font-weight: 600;
-}
-
-.emoji {
-  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    'Noto Color Emoji', sans-serif;
-  font-style: normal;
-  font-size: 1em;
-  line-height: 1;
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: 0.2em;
-  background: none;
-  -webkit-background-clip: unset;
-  -webkit-text-fill-color: unset;
-  color: inherit;
-}
-
-@keyframes gradientText {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.Typewriter__cursor {
-  font-size: 1em !important;
-  color: #006c65 !important;
-}
-
-@media (max-width: 767px) {
-  .Typewriter__wrapper {
-    font-size: 1.4em !important;
-    font-weight: 500 !important;
-    position: absolute !important;
-  }
-
-  .Typewriter__cursor {
-    display: none !important;
-  }
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  .emoji {
-    -webkit-font-smoothing: antialiased;
-  }
 }
 
 .myAvtar {

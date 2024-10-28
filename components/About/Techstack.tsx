@@ -34,7 +34,10 @@ function Techstack() {
           icon={<DiPython className="text-blue-500" />}
           label="Python"
         />
-        <TechItem icon={<SiFlask className="text-green-600" />} label="Flask" />
+        <TechItem
+          icon={<SiFlask className="text-green-600" />}
+          label="Flask"
+        />
         <TechItem
           icon={<SiPostgresql className="text-blue-700" />}
           label="PostgreSQL"
@@ -47,27 +50,42 @@ function Techstack() {
           icon={<SiFirebase className="text-orange-500" />}
           label="Firebase"
         />
-        <TechItem icon={<SiRedis className="text-red-500" />} label="Redis" />
+        <TechItem
+          icon={<SiRedis className="text-red-500" />}
+          label="Redis"
+        />
         <TechItem
           icon={<DiNodejs className="text-green-600" />}
           label="Node.js"
         />
-        <TechItem icon={<DiReact className="text-blue-400" />} label="React" />
+        <TechItem
+          icon={<DiReact className="text-blue-400" />}
+          label="React"
+        />
         <TechItem
           icon={<SiNextdotjs className="text-gray-800" />}
           label="Next.js"
         />
-        <TechItem icon={<SiAstro className="text-gray-500" />} label="Astro" />
+        <TechItem
+          icon={<SiAstro className="text-gray-500" />}
+          label="Astro"
+        />
         <TechItem
           icon={<BiLogoFlutter className="text-blue-400" />}
           label="Flutter"
         />
-        <TechItem icon={<SiRuby className="text-red-600" />} label="Ruby" />
+        <TechItem
+          icon={<SiRuby className="text-red-600" />}
+          label="Ruby"
+        />
         <TechItem
           icon={<CgCPlusPlus className="text-blue-600" />}
           label="C++"
         />
-        <TechItem icon={<DiGit className="text-orange-600" />} label="Git" />
+        <TechItem
+          icon={<DiGit className="text-orange-600" />}
+          label="Git"
+        />
         <TechItem
           icon={
             <SiAngular className="bg-gradient-to-br from-pink-500 via-purple-500 to-purple-600" />

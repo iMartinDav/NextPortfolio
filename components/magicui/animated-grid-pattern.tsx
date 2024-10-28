@@ -120,8 +120,16 @@ export function GridPattern({
           />
         </pattern>
       </defs>
-      <rect width="100%" height="100%" fill={`url(#${id})`} />
-      <svg x={x} y={y} className="overflow-visible">
+      <rect
+        width="100%"
+        height="100%"
+        fill={`url(#${id})`}
+      />
+      <svg
+        x={x}
+        y={y}
+        className="overflow-visible"
+      >
         {squares.map(({ pos: [x, y], id }, index) => (
           <motion.rect
             initial={{ opacity: 0 }}

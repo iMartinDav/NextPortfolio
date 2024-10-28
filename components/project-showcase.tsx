@@ -52,14 +52,27 @@ const ProjectShowcase = ({ projects }: ProjectShowcaseProps) => {
 
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background py-20 md:shadow-xl">
-      <Marquee pauseOnHover className="[--duration:20s]">
+      <Marquee
+        pauseOnHover
+        className="[--duration:20s]"
+      >
         {firstRow.map((project) => (
-          <ReviewCard key={project.slug} {...project} />
+          <ReviewCard
+            key={project.slug}
+            {...project}
+          />
         ))}
       </Marquee>
-      <Marquee reverse pauseOnHover className="[--duration:20s]">
+      <Marquee
+        reverse
+        pauseOnHover
+        className="[--duration:20s]"
+      >
         {secondRow.map((project) => (
-          <ReviewCard key={project.slug} {...project} />
+          <ReviewCard
+            key={project.slug}
+            {...project}
+          />
         ))}
       </Marquee>
       <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-background"></div>

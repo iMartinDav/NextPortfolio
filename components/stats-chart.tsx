@@ -69,7 +69,10 @@ export default function StatsChart() {
     return <div className="flex items-center justify-center h-full" />;
 
   return (
-    <ChartContainer config={chartConfig} className="">
+    <ChartContainer
+      config={chartConfig}
+      className=""
+    >
       <PieChart>
         <ChartTooltip
           cursor={false}

@@ -72,14 +72,14 @@ const ButtonWithParticles: React.FC = () => {
       </label>
 
       <div className="relative flex items-center justify-center">
-        {/* Capa de las Estrellas (internas) */}
+        {/* Layer of Stars (internal) */}
         {particles.map((particle, index) => {
           if (particle.type !== 'star') return null;
 
           const progress = ((time + particle.delay) * particle.speed) % 1;
-          const opacity = Math.sin(progress * Math.PI * 2); // Parpadeo de las estrellas
+          const opacity = Math.sin(progress * Math.PI * 2); // Twinkling of the stars
 
-          const starSize = 8; // Tamaño de las estrellas
+          const starSize = 8; // Size of the stars
           return (
             <div
               key={`particle-${index}`}
@@ -91,7 +91,7 @@ const ButtonWithParticles: React.FC = () => {
                 width: `${starSize}px`,
                 height: `${starSize}px`,
                 filter: 'blur(0.5px)',
-                zIndex: 10 // Asegurarse de que las estrellas estén por encima del botón
+                zIndex: 10 // Ensure the stars are above the button
               }}
             >
               ✦
@@ -99,7 +99,7 @@ const ButtonWithParticles: React.FC = () => {
           );
         })}
 
-        {/* Capa del Botón */}
+        {/* Button Layer */}
         <button
           className={`
             relative py-6 px-12 text-lg font-bold text-white
@@ -114,7 +114,7 @@ const ButtonWithParticles: React.FC = () => {
             perspective: '1500px',
             width: 'fit-content',
             height: 'fit-content',
-            zIndex: 20 // Asegurarse de que el botón esté por encima de las estrellas
+            zIndex: 20 // Ensure the button is above the stars
           }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -134,7 +134,7 @@ const ButtonWithParticles: React.FC = () => {
             }}
           />
 
-          {/* Capa de las Esferas (Glow Particles) que vienen desde afuera */}
+          {/* Layer of Spheres (Glow Particles) coming from outside */}
           {particles.map((particle, index) => {
             if (particle.type !== 'glow') return null;
 
@@ -155,7 +155,7 @@ const ButtonWithParticles: React.FC = () => {
                 style={{
                   left: `${currentX}%`,
                   top: `${currentY}%`,
-                  zIndex: 30, // Asegurarse de que las esferas estén por encima del botón
+                  zIndex: 30, // Ensure the spheres are above the button
                   transform: `translate(-50%, -50%) scale(${scale})`
                 }}
               >
@@ -172,7 +172,7 @@ const ButtonWithParticles: React.FC = () => {
             );
           })}
 
-          {/* Texto sobre el botón */}
+          {/* Text over the button */}
           <div className="relative z-40 flex items-center justify-center space-x-2">
             <Sparkles
               className={`w-5 h-5 transition-all duration-1000 
