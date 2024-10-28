@@ -1,8 +1,9 @@
-'use client';
+"use client"
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import {
   Home,
   User,
@@ -43,19 +44,92 @@ const navItems: NavItem[] = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
+  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Close menu on route change
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setIsMenuOpen(false);
+    };
+    
+    // Subscribe to router events
+    window.addEventListener('popstate', handleRouteChange);
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange);
+    };
+  }, [router]);
+
+  // Handle clicks outside navbar
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
+  // Close menu when screen size changes from mobile to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 767 && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMenuOpen]);
+
+  // Handle escape key press
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => document.removeEventListener('keydown', handleEscapeKey);
+  }, [isMenuOpen]);
+
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen(prev => !prev);
+  }, []);
+
+  const handleNavItemClick = useCallback(() => {
+    setIsMenuOpen(false);
   }, []);
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+    <nav 
+      ref={navRef}
+      className={`navbar ${isScrolled ? 'scrolled' : ''}`}
+      role="navigation"
+      aria-label="Main navigation"
+    >
       <div className="navbar-container">
         <Link
           href="/"
           className="navbar-brand"
+          onClick={handleNavItemClick}
         >
           <Image
             className="dark"
@@ -68,22 +142,29 @@ export default function Navbar() {
           <span className="navbar-brand-name luxury-text">iMartinDav</span>
         </Link>
         <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          onClick={toggleMenu}
           className={`navbar-toggler ${isMenuOpen ? 'active' : ''}`}
-          aria-label="Toggle menu"
+          aria-label="Toggle navigation menu"
+          aria-expanded={isMenuOpen}
+          aria-controls="navbar-nav"
         >
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
         </button>
-        <div className={`navbar-nav ${isMenuOpen ? 'flex' : ''}`}>
+        <div 
+          id="navbar-nav"
+          className={`navbar-nav ${isMenuOpen ? 'flex' : ''}`}
+          aria-hidden={!isMenuOpen}
+        >
           {navItems.map((item) => (
             <NavItem
               key={item.href}
               {...item}
+              onClick={handleNavItemClick}
             />
           ))}
-          <GithubButton />
+          <GithubButton onClick={handleNavItemClick} />
         </div>
         <div className="navbar-extra">
           <FadeIn direction="down">
@@ -95,13 +176,18 @@ export default function Navbar() {
   );
 }
 
-function NavItem({ href, icon: Icon, label, external = false }: NavItem) {
+interface NavItemProps extends NavItem {
+  onClick: () => void;
+}
+
+function NavItem({ href, icon: Icon, label, external = false, onClick }: NavItemProps) {
   return (
     <Link
       href={href}
       className="nav-link luxury-text"
       target={external ? '_blank' : '_self'}
       rel={external ? 'noopener noreferrer' : ''}
+      onClick={onClick}
     >
       <Icon
         size={18}
@@ -112,13 +198,18 @@ function NavItem({ href, icon: Icon, label, external = false }: NavItem) {
   );
 }
 
-function GithubButton() {
+interface GithubButtonProps {
+  onClick: () => void;
+}
+
+function GithubButton({ onClick }: GithubButtonProps) {
   return (
     <a
       href="https://github.com/iMartinDav"
       className="github-button"
       target="_blank"
       rel="noopener noreferrer"
+      onClick={onClick}
     >
       <Github size={20} />
       <Star
