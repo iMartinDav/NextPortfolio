@@ -20,36 +20,36 @@ const config: Config = {
     },
     extend: {
       colors: {
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        primary: {
+        'border': 'hsl(var(--border))',
+        'input': 'hsl(var(--input))',
+        'ring': 'hsl(var(--ring))',
+        'background': 'hsl(var(--background))',
+        'foreground': 'hsl(var(--foreground))',
+        'primary': {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))'
         },
-        secondary: {
+        'secondary': {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))'
         },
-        destructive: {
+        'destructive': {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))'
         },
-        muted: {
+        'muted': {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))'
         },
-        accent: {
+        'accent': {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))'
         },
-        popover: {
+        'popover': {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))'
         },
-        card: {
+        'card': {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
         },
@@ -63,9 +63,9 @@ const config: Config = {
         'purple-dark': '#4B0082'
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        'lg': 'var(--radius)',
+        'md': 'calc(var(--radius) - 2px)',
+        'sm': 'calc(var(--radius) - 4px)',
         'custom-lg': '1.5rem'
       },
       keyframes: {
@@ -83,10 +83,10 @@ const config: Config = {
           '65%, 85%': { transform: 'translateZ(0) rotate(270deg)' },
           '100%': { transform: 'translateZ(0) rotate(360deg)' }
         },
-        slide: {
+        'slide': {
           to: { transform: 'translate(calc(100cqw - 100%), 0)' }
         },
-        marquee: {
+        'marquee': {
           from: { transform: 'translateX(0)' },
           to: { transform: 'translateX(calc(-100% - var(--gap)))' }
         },
@@ -94,7 +94,7 @@ const config: Config = {
           from: { transform: 'translateY(0)' },
           to: { transform: 'translateY(calc(-100% - var(--gap)))' }
         },
-        meteor: {
+        'meteor': {
           '0%': { transform: 'rotate(215deg) translateX(0)', opacity: '1' },
           '70%': { opacity: '1' },
           '100%': {
@@ -102,7 +102,7 @@ const config: Config = {
             opacity: '0'
           }
         },
-        orbit: {
+        'orbit': {
           '0%': {
             transform:
               'rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg)'
@@ -112,19 +112,19 @@ const config: Config = {
               'rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)'
           }
         },
-        grid: {
+        'grid': {
           '0%': { transform: 'translateY(-50%)' },
           '100%': { transform: 'translateY(0)' }
         },
-        ripple: {
+        'ripple': {
           '0%, 100%': { transform: 'translate(-50%, -50%) scale(1)' },
           '50%': { transform: 'translate(-50%, -50%) scale(0.9)' }
         },
-        move: {
+        'move': {
           '0%': { 'offset-distance': '0%' },
           '100%': { 'offset-distance': '100%' }
         },
-        k: {
+        'k': {
           '0%, 33.3%': { '--k': '1' }
         }
       },
@@ -132,15 +132,15 @@ const config: Config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'spin-around': 'spin-around calc(var(--speed) * 2) infinite linear',
-        slide: 'slide var(--speed) ease-in-out infinite alternate',
-        marquee: 'marquee var(--duration) linear infinite',
+        'slide': 'slide var(--speed) ease-in-out infinite alternate',
+        'marquee': 'marquee var(--duration) linear infinite',
         'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
-        meteor: 'meteor 5s linear infinite',
-        orbit: 'orbit calc(var(--duration)*1s) linear infinite',
-        grid: 'grid 15s linear infinite',
-        ripple: 'ripple 3400ms ease infinite',
+        'meteor': 'meteor 5s linear infinite',
+        'orbit': 'orbit calc(var(--duration)*1s) linear infinite',
+        'grid': 'grid 15s linear infinite',
+        'ripple': 'ripple 3400ms ease infinite',
         'glow-move': 'move 5s linear infinite',
-        particles:
+        'particles':
           'k calc(var(--m) * 1s) linear calc(var(--m) * var(--t, 0) * 1s) infinite'
       }
     }

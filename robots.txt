@@ -1,0 +1,44 @@
+# robots.txt for https://www.imartin.dev/
+# Last updated: 2024-10-29
+
+# Global rules
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /_next/        # Prevent crawling of Next.js internal files
+Disallow: /draft/        # Prevent crawling of draft content
+Disallow: /preview/      # Prevent crawling of preview content
+Disallow: /*?           # Prevent crawling of URLs with query parameters
+Disallow: /*&           # Prevent crawling of URLs with additional parameters
+Disallow: /assets/temp/  # Prevent crawling of temporary assets
+Disallow: /debug/        # Prevent crawling of debug pages
+
+# Prevent media crawling bots
+User-agent: Googlebot-Image
+User-agent: Googlebot-Video
+User-agent: YandexImages
+Allow: /assets/images/
+Allow: /public/images/
+Disallow: /
+
+# Rate limiting for intensive crawlers
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+# Specify paths that should be crawled
+Allow: /blog/
+Allow: /projects/
+Allow: /about/
+Allow: /contact/
+Allow: /sitemap.xml
+Allow: /robots.txt
+Allow: /favicon.ico
+
+# Sitemaps
+Sitemap: https://www.imartin.dev/sitemap.xml
+Sitemap: https://www.imartin.dev/blog-sitemap.xml
+
+# Host preference
+Host: www.imartin.dev

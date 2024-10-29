@@ -41,7 +41,7 @@ export default function BentoShowcase() {
               </a>
 
               <a
-                href="mailto:aldntmi@gmail.com"
+                href="mailto:martin@bioinfometrics.com"
                 target="_blank"
                 className="flex-1"
               >

@@ -11,7 +11,7 @@ const BentoContact = () => {
   const [hasCopied, setHasCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText('aldntmi@gmail.com');
+    navigator.clipboard.writeText('martin@bioinfometrics.com');
     setHasCopied(true);
 
     setTimeout(() => {
@@ -148,7 +148,9 @@ const BentoContact = () => {
                 ) : (
                   <Copy className="mr-2" />
                 )}
-                <span>{hasCopied ? 'Copied!' : 'aldntmi@gmail.com'}</span>
+                <span>
+                  {hasCopied ? 'Copied!' : 'martin@bioinfometrics.com'}
+                </span>
               </Button>
               <div className="flex justify-center space-x-4 mt-4">
                 <a
