@@ -1,44 +1,34 @@
-import { getClient } from '@umami/api-client';
-
-export const dynamic = 'force-dynamic'; // Defaults to auto
-
-const client = getClient();
+// app/api/fetch-umami-stats/route.ts
+import { getClient } from "@umami/api-client";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    // The website ID
-    const websiteId = '1cb76843-7b97-489c-8564-d2429ad9bddb';
+    const client = getClient({
+      apiEndpoint: process.env.NEXT_PUBLIC_UMAMI_BASE_URL,
+    });
 
-    // Get the current time and the Unix epoch time in milliseconds
-    const now = Date.now();
-    const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
-    const startAt = now - oneWeekInMilliseconds; // 7 days ago
-
-    // Prepare the data object for getWebsiteMetrics
-    const metricsData = {
-      startAt: startAt,
-      endAt: now,
-      type: 'url' // Example type, change as needed
-    };
-
-    // Fetch the website stats
-    const { ok, data, status } = await client.getWebsiteStats(
-      websiteId,
-      metricsData
+    const response = await client.getWebsiteStats(
+      process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID as string,
+      {
+        startAt: Date.now() - 24 * 60 * 60 * 1000,
+        endAt: Date.now(),
+      }
     );
 
-    if (!ok) {
-      return new Response(
-        JSON.stringify({ error: 'Failed to fetch website metrics' }),
-        { status: status }
-      );
+    if (!response.ok || !response.data) {
+      throw new Error("Failed to fetch Umami stats");
     }
 
-    return new Response(JSON.stringify(data), { status: 200 });
+    const data = response.data;
+    data.totalTime.value /= 60;
+    data.totalTime.prev /= 60;
+
+    return NextResponse.json(data);
   } catch (error) {
-    console.error('Error fetching website metrics:', error);
-    return new Response(
-      JSON.stringify({ error: 'Failed to fetch website metrics' }),
+    console.error("Error fetching Umami stats:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch analytics data" },
       { status: 500 }
     );
   }
