@@ -78,9 +78,7 @@ export default function Navbar() {
       document.addEventListener('mousedown', handleClickOutside);
     }
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isMenuOpen]);
 
   // Close menu when screen size changes
@@ -130,7 +128,7 @@ export default function Navbar() {
             alt="logo"
             width={60}
             height={60}
-            priority
+            priority // Keep this if this logo is critical for initial loading
           />
           <span className="navbar-brand-name luxury-text">iMartinDav</span>
         </Link>

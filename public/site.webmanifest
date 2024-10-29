@@ -1,0 +1,21 @@
+{
+    "name": "Martin DAVILA | Full Stack Bioinformatics Engineer",
+    "short_name": "Martin DAVILA",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "description": "Martin Davila specializes in bioinformatics solutions for advancing biotechnology research.",
+    "icons": [
+      {
+        "src": "/favicon-32x32.png",
+        "sizes": "32x32",
+        "type": "image/png"
+      }
+    ],
+    "dir": "ltr",
+    "lang": "en",
+    "scope": "/",
+    "related_applications": [],
+    "prefer_related_applications": false
+  }

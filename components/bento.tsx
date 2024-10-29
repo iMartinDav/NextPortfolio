@@ -61,7 +61,6 @@ const features = [
               alt="avatar image"
               width={400}
               height={400}
-              priority
               quality={90}
               placeholder="blur"
               blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgNDAwIDQwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2QzZDNkMyIvPjwvc3ZnPg=="
