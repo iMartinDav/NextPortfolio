@@ -100,29 +100,29 @@ const BiotechProfile: React.FC = () => {
           </div>
 
           <div className="relative w-80 h-80 mx-auto">
-  <div className="absolute inset-0 flex items-center justify-center">
-    <Image
-      src="/dna-helix.svg"
-      width={300}
-      height={150}
-      alt="DNA Helix"
-      className="w-full h-full object-contain"
-    />
-  </div>
-  <motion.div
-    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
-    whileHover={{ scale: 1.1 }}
-    transition={{ type: 'spring', stiffness: 300, damping: 10 }}
-  >
-    <Image
-      src="/avatar.svg"
-      alt="avatar"
-      width={200}
-      height={200}
-      className="rounded-full border-4 border-secondary shadow-lg"
-    />
-  </motion.div>
-</div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Image
+                src="/dna-helix.svg"
+                width={300}
+                height={150}
+                alt="DNA Helix"
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <motion.div
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+              whileHover={{ scale: 1.1 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+            >
+              <Image
+                src="/avatar.svg"
+                alt="avatar"
+                width={200}
+                height={200}
+                className="rounded-full border-4 border-secondary shadow-lg"
+              />
+            </motion.div>
+          </div>
         </div>
 
         <motion.div

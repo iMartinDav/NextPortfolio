@@ -1,216 +1,136 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Label, Pie, PieChart, Cell, ResponsiveContainer } from "recharts";
-import { AlertCircle, LoaderCircle } from "lucide-react";
+import * as React from 'react';
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  CardTitle
+} from '@/components/ui/card';
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent
+} from '@/components/ui/chart';
 
-// Types
-interface MetricValue {
-  value: number;
-  prev: number;
+export const description = 'An interactive bar chart for Umami analytics';
+
+// Define the type for the chart data
+interface ChartDataItem {
+  date: string;
+  views: number;
 }
 
-interface StatsData {
-  pageviews: MetricValue;
-  visitors: MetricValue;
-  visits: MetricValue;
-  bounces: MetricValue;
-  totalTime: MetricValue;
-}
-
-interface ChartDataPoint {
-  type: string;
-  visitors: number;
-  fill: string;
-  percentChange: number;
-}
-
-// Constants
-const COLORS = {
-  pageviews: "hsl(230, 95%, 65%)",
-  visitors: "hsl(280, 95%, 65%)",
-  visits: "hsl(330, 95%, 65%)",
-  bounces: "hsl(30, 95%, 65%)",
-  totalTime: "hsl(180, 95%, 65%)",
-};
-
-const METRIC_LABELS = {
-  pageviews: "Page Views",
-  visitors: "Unique Visitors",
-  visits: "Total Visits",
-  bounces: "Bounce Rate",
-  totalTime: "Avg. Time (min)",
-};
-
-// Utility functions
-const calculatePercentChange = (current: number, previous: number): number => {
-  if (previous === 0) return 0;
-  return ((current - previous) / previous) * 100;
-};
-
-const formatDuration = (minutes: number): string => {
-  if (minutes < 1) return `${Math.round(minutes * 60)}s`;
-  if (minutes < 60) return `${Math.round(minutes)}m`;
-  return `${Math.round(minutes / 60)}h ${Math.round(minutes % 60)}m`;
-};
-
-const formatMetricValue = (key: string, value: number): string => {
-  if (key === "totalTime") return formatDuration(value);
-  if (key === "bounces") return `${value.toFixed(1)}%`;
-  return value.toLocaleString();
-};
+const chartConfig = {
+  views: {
+    label: 'Page Views'
+  }
+} satisfies ChartConfig;
 
 export default function StatsChart() {
-  const [stats, setStats] = React.useState<StatsData | null>(null);
-  const [error, setError] = React.useState<string | null>(null);
-  const [loading, setLoading] = React.useState(true);
+  const [chartData, setChartData] = React.useState<ChartDataItem[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [error, setError] = React.useState<Error | null>(null);
 
-  const fetchStats = React.useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("/api/fetch-umami-stats");
-      if (!response.ok) {
-        throw new Error("Failed to fetch analytics data");
-      }
-      const data = await response.json();
-      setStats(data);
-      setError(null);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  // Use environment variables for Umami
+  const websiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
+  const umamiBaseUrl = process.env.NEXT_PUBLIC_UMAMI_BASE_URL;
 
   React.useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        setLoading(true);
+        
+        // Calculate timestamps for the past 7 days
+        const endAt = Date.now();
+        const startAt = endAt - 7 * 24 * 60 * 60 * 1000; // 7 days ago
+
+        const response = await fetch(
+          `${umamiBaseUrl}/api/websites/${websiteId}/stats?startAt=${startAt}&endAt=${endAt}`
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        
+        const data = await response.json();
+        
+        // Format the data to match the chart's requirements
+        const formattedData: ChartDataItem[] = [
+          { date: 'Page Views', views: data.pageviews.value },
+          { date: 'Previous Page Views', views: data.pageviews.prev },
+          { date: 'Visitors', views: data.visitors.value },
+          { date: 'Previous Visitors', views: data.visitors.prev },
+          { date: 'Visits', views: data.visits.value },
+          { date: 'Previous Visits', views: data.visits.prev },
+          { date: 'Bounces', views: data.bounces.value },
+          { date: 'Previous Bounces', views: data.bounces.prev },
+          { date: 'Total Time', views: data.totaltime.value },
+          { date: 'Previous Total Time', views: data.totaltime.prev },
+        ];
+
+        setChartData(formattedData);
+      } catch (error) {
+        setError(error instanceof Error ? error : new Error('Unknown error'));
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchStats();
-    const interval = setInterval(fetchStats, 5 * 60 * 1000); // Refresh every 5 minutes
-    return () => clearInterval(interval);
-  }, [fetchStats]);
+  }, [websiteId, umamiBaseUrl]);
 
-  const chartData: ChartDataPoint[] = React.useMemo(() => {
-    if (!stats) return [];
-    
-    return Object.entries(stats).map(([key, value]) => ({
-      type: key,
-      visitors: value.value,
-      fill: COLORS[key as keyof typeof COLORS],
-      percentChange: calculatePercentChange(value.value, value.prev),
-    }));
-  }, [stats]);
-
-  if (loading) {
-    return (
-      <Card className="w-full">
-        <CardContent className="flex items-center justify-center h-64">
-          <LoaderCircle className="w-8 h-8 animate-spin text-muted-foreground" />
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (error) {
-    return (
-      <Card className="w-full">
-        <CardContent className="p-6">
-          <div className="flex items-center gap-2 text-destructive">
-            <AlertCircle className="h-5 w-5" />
-            <p className="text-sm font-medium">{error}</p>
-          </div>
-          <button 
-            onClick={() => fetchStats()} 
-            className="mt-4 text-sm text-muted-foreground hover:text-foreground underline"
-          >
-            Try again
-          </button>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (!stats) return null;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Website Analytics</CardTitle>
+    <Card>
+      <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
+        <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
+          <CardTitle>Bar Chart - Umami Analytics</CardTitle>
+          <CardDescription>
+            Showing total visitors for the last 7 days
+          </CardDescription>
+        </div>
       </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-          {Object.entries(stats).map(([key, data]) => (
-            <div
-              key={key}
-              className="p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors"
-            >
-              <h3 className="text-sm font-medium text-muted-foreground">
-                {METRIC_LABELS[key as keyof typeof METRIC_LABELS]}
-              </h3>
-              <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-2xl font-bold">
-                  {formatMetricValue(key, data.value)}
-                </span>
-                <span
-                  className={`text-sm ${
-                    data.value >= data.prev ? "text-green-500" : "text-red-500"
-                  }`}
-                >
-                  {calculatePercentChange(data.value, data.prev).toFixed(1)}%
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="h-[400px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={chartData}
-                dataKey="visitors"
-                nameKey="type"
-                innerRadius="60%"
-                outerRadius="80%"
-                paddingAngle={2}
-              >
-                {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.fill} />
-                ))}
-                <Label
-                  content={({ viewBox }) => (
-                    <text
-                      x={(viewBox as any)?.cx ?? 0}
-                      y={(viewBox as any)?.cy ?? 0}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                    >
-                      <tspan
-                        x={(viewBox as any).cx}
-                        y={(viewBox as any)?.cy}
-                        className="text-3xl font-bold fill-foreground"
-                      >
-                        {stats.visits.value.toLocaleString()}
-                      </tspan>
-                      <tspan
-                        x={(viewBox as any)?.cx}
-                        y={(viewBox as any)?.cy + 25}
-                        className="text-sm fill-muted-foreground"
-                      >
-                        Total Visits
-                      </tspan>
-                    </text>
-                  )}
+      <CardContent className="px-2 sm:p-6">
+        <ChartContainer
+          config={chartConfig}
+          className="aspect-auto h-[250px] w-full"
+        >
+          <BarChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              left: 12,
+              right: 12
+            }}
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="date"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              minTickGap={32}
+            />
+            <ChartTooltip
+              content={
+                <ChartTooltipContent
+                  className="w-[150px]"
+                  nameKey="views"
                 />
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+              }
+            />
+            <Bar
+              dataKey="views"
+              fill={`var(--color-views)`}
+            />
+          </BarChart>
+        </ChartContainer>
       </CardContent>
     </Card>
   );

@@ -138,10 +138,10 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id=GTM-PFT9XVXM'+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-PFT9XVXM');`
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id=GTM-PFT9XVXM'+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PFT9XVXM');`
           }}
         />
 
@@ -157,7 +157,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
 
-        {/* Cookie cookie-script.com */}
+        {/* Cookie Script */}
         <Script
           src="//cdn.cookie-script.com/s/27a1e4f6bdc2bd98f6d922cb116a0b70.js"
           strategy="afterInteractive"
@@ -165,13 +165,15 @@ export default function RootLayout({
           charSet="UTF-8"
         />
 
-        {/* Analytics tracking with Umami */}
-        <Script
-          src="https://cloud.umami.is/script.js"
-          data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
-          strategy="afterInteractive"
-          async
-        />
+        {/* Umami Analytics Script */}
+        {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
+          <Script
+            src="https://cloud.umami.is/script.js"
+            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+            strategy="afterInteractive"
+            async
+          />
+        )}
       </head>
       <body>
         {/* Google Tag Manager - Body */}
