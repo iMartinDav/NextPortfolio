@@ -1,137 +1,287 @@
-'use client';
+import React from 'react';
+import { BarChart, Bar, CartesianGrid, XAxis } from 'recharts';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { TrendingDown, TrendingUp, Clock } from 'lucide-react';
 
-import * as React from 'react';
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card';
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent
-} from '@/components/ui/chart';
-
-export const description = 'An interactive bar chart for Umami analytics';
-
-// Define the type for the chart data
-interface ChartDataItem {
-  date: string;
-  views: number;
+interface PageviewData {
+  x: string;
+  y: number;
 }
 
-const chartConfig = {
-  views: {
-    label: 'Page Views'
-  }
-} satisfies ChartConfig;
+interface StatsData {
+  pageviews: { value: number; prev: number };
+  visitors: { value: number; prev: number };
+  visits: { value: number; prev: number };
+  bounces: { value: number; prev: number };
+  totaltime: { value: number; prev: number };
+}
 
-export default function StatsChart() {
-  const [chartData, setChartData] = React.useState<ChartDataItem[]>([]);
-  const [loading, setLoading] = React.useState<boolean>(true);
-  const [error, setError] = React.useState<Error | null>(null);
+interface ChartData {
+  date: string;
+  pageviews: number;
+  visitors: number;
+}
 
-  // Use environment variables for Umami
-  const websiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
-  const umamiBaseUrl = process.env.NEXT_PUBLIC_UMAMI_BASE_URL;
+interface ChartConfigItem {
+  label: string;
+  color: string;
+}
 
+interface ChartConfig {
+  [key: string]: ChartConfigItem;
+}
+
+interface MetricCardProps {
+  title: string;
+  value: number;
+  prevValue: number;
+  icon: React.ReactNode;
+  format?: 'number' | 'time';
+}
+
+const formatTime = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  return `${hours}h ${minutes}m`;
+};
+
+const StatsChart: React.FC = () => {
+  const [data, setData] = React.useState<ChartData[]>([]);
+  const [stats, setStats] = React.useState<StatsData | null>(null);
+  const [activeMetric, setActiveMetric] = React.useState<'pageviews' | 'visitors'>('pageviews');
+  const [isLoading, setIsLoading] = React.useState(true);
+  
   React.useEffect(() => {
-    const fetchStats = async () => {
+    const fetchData = async () => {
+      const endDate = new Date();
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() - 7);
+      
       try {
-        setLoading(true);
-        
-        // Calculate timestamps for the past 7 days
-        const endAt = Date.now();
-        const startAt = endAt - 7 * 24 * 60 * 60 * 1000; // 7 days ago
+        const controller = new AbortController();
+        const signal = controller.signal;
 
-        const response = await fetch(
-          `${umamiBaseUrl}/api/websites/${websiteId}/stats?startAt=${startAt}&endAt=${endAt}`
+        const requestOptions = {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Cache-Control': 'no-cache',
+          },
+          signal,
+          mode: 'cors' as RequestMode,
+        };
+        
+        const pageviewsResponse = await fetch(
+          `https://cloud.umami.is/share/XaGIKEcmjDG5Inp2/imartin.dev/pageviews?` +
+          `startAt=${startDate.getTime()}&` +
+          `endAt=${endDate.getTime()}&` +
+          `unit=day&timezone=${encodeURIComponent(Intl.DateTimeFormat().resolvedOptions().timeZone)}`,
+          requestOptions
         );
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
+        
+        if (!pageviewsResponse.ok) {
+          throw new Error(`HTTP error! status: ${pageviewsResponse.status}`);
         }
         
-        const data = await response.json();
+        const pageviewsData = await pageviewsResponse.json() as { pageviews: PageviewData[], sessions: PageviewData[] };
         
-        // Format the data to match the chart's requirements
-        const formattedData: ChartDataItem[] = [
-          { date: 'Page Views', views: data.pageviews.value },
-          { date: 'Previous Page Views', views: data.pageviews.prev },
-          { date: 'Visitors', views: data.visitors.value },
-          { date: 'Previous Visitors', views: data.visitors.prev },
-          { date: 'Visits', views: data.visits.value },
-          { date: 'Previous Visits', views: data.visits.prev },
-          { date: 'Bounces', views: data.bounces.value },
-          { date: 'Previous Bounces', views: data.bounces.prev },
-          { date: 'Total Time', views: data.totaltime.value },
-          { date: 'Previous Total Time', views: data.totaltime.prev },
-        ];
-
-        setChartData(formattedData);
+        const statsResponse = await fetch(
+          `https://cloud.umami.is/share/XaGIKEcmjDG5Inp2/imartin.dev/stats?` +
+          `startAt=${startDate.getTime()}&` +
+          `endAt=${endDate.getTime()}`,
+          requestOptions
+        );
+        
+        if (!statsResponse.ok) {
+          throw new Error(`HTTP error! status: ${statsResponse.status}`);
+        }
+        
+        const statsData = await statsResponse.json() as StatsData;
+        setStats(statsData);
+        
+        const transformedData = pageviewsData.pageviews.map(item => ({
+          date: item.x,
+          pageviews: item.y,
+          visitors: pageviewsData.sessions.find(s => s.x === item.x)?.y || 0
+        }));
+        
+        setData(transformedData);
+        
+        return () => {
+          controller.abort();
+        };
       } catch (error) {
-        setError(error instanceof Error ? error : new Error('Unknown error'));
+        console.error('Error fetching data:', error instanceof Error ? error.message : 'An unknown error occurred');
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
+      return undefined;
     };
+    
+    fetchData();
+  }, []);
+  
+  const chartConfig: ChartConfig = {
+    pageviews: {
+      label: 'Page Views',
+      color: 'hsl(var(--chart-1))'
+    },
+    visitors: {
+      label: 'Unique Visitors',
+      color: 'hsl(var(--chart-2))'
+    }
+  };
 
-    fetchStats();
-  }, [websiteId, umamiBaseUrl]);
+  const getPercentageChange = (current: number, previous: number): number => {
+    if (!previous) return 0;
+    return ((current - previous) / previous) * 100;
+  };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
+  const MetricCard: React.FC<MetricCardProps> = ({ title, value, prevValue, icon, format = 'number' }) => {
+    const percentChange = getPercentageChange(value, prevValue);
+    const isPositive = percentChange >= 0;
+    
+    return (
+      <div className="flex flex-col gap-1 rounded-lg border p-4">
+        <div className="flex items-center justify-between">
+          <span className="text-sm text-muted-foreground">{title}</span>
+          {icon}
+        </div>
+        <div className="flex items-baseline gap-2">
+          <span className="text-2xl font-bold">
+            {format === 'time' ? formatTime(value) : value?.toLocaleString()}
+          </span>
+          <span className={`flex items-center text-sm ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
+            {isPositive ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
+            {Math.abs(percentChange).toFixed(1)}%
+          </span>
+        </div>
+      </div>
+    );
+  };
+  
   return (
     <Card>
-      <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
-        <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Bar Chart - Umami Analytics</CardTitle>
-          <CardDescription>
-            Showing total visitors for the last 7 days
-          </CardDescription>
+      <CardHeader className="border-b p-6">
+        <div className="flex flex-col gap-2">
+          <CardTitle>Umami Analytics</CardTitle>
+          <CardDescription>Last 7 days of traffic</CardDescription>
         </div>
       </CardHeader>
-      <CardContent className="px-2 sm:p-6">
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-[250px] w-full"
-        >
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              minTickGap={32}
-            />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  className="w-[150px]"
-                  nameKey="views"
+      
+      {isLoading && (
+        <div className="flex items-center justify-center p-6">
+          <div className="text-sm text-muted-foreground">Loading analytics data...</div>
+        </div>
+      )}
+      
+      {!isLoading && stats && (
+        <div className="grid gap-4 p-6 sm:grid-cols-2 lg:grid-cols-3">
+          <MetricCard
+            title="Page Views"
+            value={stats.pageviews.value}
+            prevValue={stats.pageviews.prev}
+            icon={<TrendingUp className="h-4 w-4 text-muted-foreground" />}
+          />
+          <MetricCard
+            title="Unique Visitors"
+            value={stats.visitors.value}
+            prevValue={stats.visitors.prev}
+            icon={<TrendingUp className="h-4 w-4 text-muted-foreground" />}
+          />
+          <MetricCard
+            title="Total Sessions"
+            value={stats.visits.value}
+            prevValue={stats.visits.prev}
+            icon={<TrendingUp className="h-4 w-4 text-muted-foreground" />}
+          />
+          <MetricCard
+            title="Bounce Rate"
+            value={Math.round((stats.bounces.value / stats.visits.value) * 100)}
+            prevValue={Math.round((stats.bounces.prev / stats.visits.prev) * 100)}
+            icon={<TrendingDown className="h-4 w-4 text-muted-foreground" />}
+          />
+          <MetricCard
+            title="Time on Site"
+            value={stats.totaltime.value}
+            prevValue={stats.totaltime.prev}
+            icon={<Clock className="h-4 w-4 text-muted-foreground" />}
+            format="time"
+          />
+        </div>
+      )}
+      
+      {!isLoading && data.length > 0 && (
+        <CardContent className="border-t px-2 sm:p-6">
+          <div className="mb-4 flex gap-4">
+            {(Object.entries(chartConfig) as [keyof typeof chartConfig, ChartConfigItem][]).map(([key, config]) => (
+              <button
+                key={key}
+                data-active={activeMetric === key}
+                className="relative flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium data-[active=true]:bg-muted"
+                onClick={() => setActiveMetric(key as 'pageviews' | 'visitors')}
+              >
+                <div
+                  className="h-2 w-2 rounded-full"
+                  style={{ backgroundColor: config.color }}
                 />
-              }
-            />
-            <Bar
-              dataKey="views"
-              fill={`var(--color-views)`}
-            />
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
+                {config.label}
+              </button>
+            ))}
+          </div>
+          
+          <ChartContainer
+            config={chartConfig}
+            className="aspect-auto h-[250px] w-full"
+          >
+            <BarChart
+              data={data}
+              margin={{
+                left: 12,
+                right: 12,
+              }}
+            >
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="date"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                minTickGap={32}
+                tickFormatter={(value: string) => {
+                  const date = new Date(value);
+                  return date.toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric"
+                  });
+                }}
+              />
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent
+                    className="w-[150px]"
+                    nameKey={activeMetric}
+                    labelFormatter={(value: string) => {
+                      return new Date(value).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric"
+                      });
+                    }}
+                  />
+                }
+              />
+              <Bar
+                dataKey={activeMetric}
+                fill={`var(--color-${activeMetric})`}
+              />
+            </BarChart>
+          </ChartContainer>
+        </CardContent>
+      )}
     </Card>
   );
-}
+};
+
+export default StatsChart;
