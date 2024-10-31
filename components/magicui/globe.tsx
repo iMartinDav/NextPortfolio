@@ -1,8 +1,10 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import createGlobe, { COBEOptions } from 'cobe';
 import { useCallback, useEffect, useRef } from 'react';
+
+import { cn } from '@/lib/utils';
+
+import createGlobe, { COBEOptions } from 'cobe';
 import { useSpring } from 'react-spring';
 
 const GLOBE_CONFIG: COBEOptions = {
@@ -160,8 +162,7 @@ export default function Globe({
       className={cn(
         'absolute inset-0 mx-auto aspect-[1/1] w-full max-w-[600px]',
         className
-      )}
-    >
+      )}>
       <canvas
         className={cn(
           'h-full w-full opacity-0 transition-opacity duration-500'

@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils';
 import Marquee from '@/components/magicui/marquee';
+import { cn } from '@/lib/utils';
 
 interface Project {
   name: string;
@@ -31,24 +31,23 @@ const ReviewCard = ({
         'border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]',
         // dark styles
         'dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]'
-      )}
-    >
+      )}>
       <a href={`https://projects.imartin.dev/projects/${slug}`}>
-        <div className="flex flex-row items-center gap-2">
-          <div className="flex flex-col">
-            <div className="flex items-start gap-2">
+        <div className='flex flex-row items-center gap-2'>
+          <div className='flex flex-col'>
+            <div className='flex items-start gap-2'>
               <img
                 src={`https://projects.imartin.dev/${image}`}
                 alt={name}
-                className="w-8 h-8 rounded-lg object-cover shadow"
+                className='h-8 w-8 rounded-lg object-cover shadow'
               />
-              <figcaption className="text-lg font-medium dark:text-white">
+              <figcaption className='text-lg font-medium dark:text-white'>
                 {name}
               </figcaption>
             </div>
           </div>
         </div>
-        <blockquote className="mt-2 text-sm line-clamp-4 dark:text-white font-thin">
+        <blockquote className='mt-2 line-clamp-4 text-sm font-thin dark:text-white'>
           {body}
         </blockquote>
       </a>
@@ -63,12 +62,11 @@ const ProjectShowcaseVertical = ({
   const secondRow = projects.slice(5, 10); // Get next 5 projects
 
   return (
-    <div className="relative flex h-full w-full flex-row items-center justify-center overflow-hidden rounded-lg border bg-background sm:px-2 md:shadow-xl">
+    <div className='relative flex h-full w-full flex-row items-center justify-center overflow-hidden rounded-lg border bg-background sm:px-2 md:shadow-xl'>
       <Marquee
         pauseOnHover
         vertical
-        className="[--duration:60s] w-full"
-      >
+        className='w-full [--duration:60s]'>
         {firstRow.map((project) => (
           <ReviewCard
             key={project.slug}
@@ -80,8 +78,7 @@ const ProjectShowcaseVertical = ({
         reverse
         pauseOnHover
         vertical
-        className="[--duration:60s] w-full"
-      >
+        className='w-full [--duration:60s]'>
         {secondRow.map((project) => (
           <ReviewCard
             key={project.slug}
@@ -89,8 +86,8 @@ const ProjectShowcaseVertical = ({
           />
         ))}
       </Marquee>
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-white dark:from-background"></div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white dark:from-background"></div>
+      <div className='pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-white dark:from-background'></div>
+      <div className='pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white dark:from-background'></div>
     </div>
   );
 };

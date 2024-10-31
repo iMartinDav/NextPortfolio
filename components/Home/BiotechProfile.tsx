@@ -1,11 +1,14 @@
 import React, { memo, useMemo } from 'react';
+
 import Image from 'next/image';
+
+import { useTheme } from 'next-themes';
+
+import BentoBox from '../BentoBox';
 import { motion } from 'framer-motion';
 import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 import { RiTwitterXLine } from 'react-icons/ri';
 import { SiCodeship } from 'react-icons/si';
-import { useTheme } from 'next-themes';
-import BentoBox from '../BentoBox';
 
 const socialLinks = [
   {
@@ -29,7 +32,7 @@ const socialLinks = [
 // Changed {} to unknown
 const GradientText: React.FC<React.PropsWithChildren<unknown>> = memo(
   ({ children }) => (
-    <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-light to-purple-light">
+    <span className='bg-gradient-to-r from-blue-light to-purple-light bg-clip-text text-transparent'>
       {children}
     </span>
   )
@@ -48,15 +51,14 @@ const BiotechProfile: React.FC = () => {
   }, [theme]);
 
   return (
-    <section className="py-20 min-h-[50vh] relative">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className="space-y-8">
+    <section className='relative min-h-[50vh] py-20'>
+      <div className='container mx-auto px-6'>
+        <div className='grid grid-cols-1 gap-12 lg:grid-cols-2'>
+          <div className='space-y-8'>
             <BentoBox
-              className="backdrop-blur-sm bg-opacity-30"
-              glowColor={colors.glowColorPrimary}
-            >
-              <h1 className={`text-4xl md:text-5xl font-bold mb-4`}>
+              className='bg-opacity-30 backdrop-blur-sm'
+              glowColor={colors.glowColorPrimary}>
+              <h1 className={`mb-4 text-4xl font-bold md:text-5xl`}>
                 Innovating at the <GradientText>Intersection</GradientText> of
                 <br />
                 <GradientText>Biology and Code</GradientText>
@@ -72,10 +74,9 @@ const BiotechProfile: React.FC = () => {
             </BentoBox>
 
             <BentoBox
-              className="backdrop-blur-sm bg-opacity-30"
-              glowColor={colors.glowColorSecondary}
-            >
-              <h2 className={`text-2xl font-semibold mb-4`}>Expertise</h2>
+              className='bg-opacity-30 backdrop-blur-sm'
+              glowColor={colors.glowColorSecondary}>
+              <h2 className={`mb-4 text-2xl font-semibold`}>Expertise</h2>
               <ul className={`grid grid-cols-2 gap-2 ${colors.mutedColor}`}>
                 {[
                   'Bioinformatics',
@@ -89,9 +90,8 @@ const BiotechProfile: React.FC = () => {
                 ].map((item) => (
                   <li
                     key={item}
-                    className="flex items-center"
-                  >
-                    <span className="mr-2 text-blue-light">✓</span>
+                    className='flex items-center'>
+                    <span className='mr-2 text-blue-light'>✓</span>
                     {item}
                   </li>
                 ))}
@@ -99,27 +99,26 @@ const BiotechProfile: React.FC = () => {
             </BentoBox>
           </div>
 
-          <div className="relative w-80 h-80 mx-auto">
-            <div className="absolute inset-0 flex items-center justify-center">
+          <div className='relative mx-auto h-80 w-80'>
+            <div className='absolute inset-0 flex items-center justify-center'>
               <Image
-                src="/dna-helix.svg"
+                src='/dna-helix.svg'
                 width={300}
                 height={150}
-                alt="DNA Helix"
-                className="w-full h-full object-contain"
+                alt='DNA Helix'
+                className='h-full w-full object-contain'
               />
             </div>
             <motion.div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+              className='absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform'
               whileHover={{ scale: 1.1 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 10 }}
-            >
+              transition={{ type: 'spring', stiffness: 300, damping: 10 }}>
               <Image
-                src="/avatar.svg"
-                alt="avatar"
+                src='/avatar.svg'
+                alt='avatar'
                 width={200}
                 height={200}
-                className="rounded-full border-4 border-secondary shadow-lg"
+                className='rounded-full border-4 border-secondary shadow-lg'
               />
             </motion.div>
           </div>
@@ -129,30 +128,27 @@ const BiotechProfile: React.FC = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.8 }}
-          className="mt-16 text-center"
-        >
-          <h2 className={`text-3xl font-bold mb-6`}>Connect & Collaborate</h2>
-          <p className={`text-xl mb-8`}>
+          className='mt-16 text-center'>
+          <h2 className={`mb-6 text-3xl font-bold`}>Connect & Collaborate</h2>
+          <p className={`mb-8 text-xl`}>
             Got a tricky biology problem that needs a tech solution? I
             specialize in turning complex life science challenges into elegant
             code. From gene sequencing to protein folding, I'm here to help your
             team make sense of the data and push research forward. Let&apos;s
             build something great together.
           </p>
-          <ul className="flex justify-center space-x-6">
+          <ul className='flex justify-center space-x-6'>
             {socialLinks.map(({ href, Icon, label }) => (
               <motion.li
                 key={href}
                 whileHover={{ scale: 1.1, rotate: 3 }}
-                whileTap={{ scale: 0.95 }}
-              >
+                whileTap={{ scale: 0.95 }}>
                 <a
                   href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-primary text-2xl"
-                  aria-label={label}
-                >
+                  target='_blank'
+                  rel='noreferrer'
+                  className='text-2xl text-primary'
+                  aria-label={label}>
                   <Icon />
                 </a>
               </motion.li>

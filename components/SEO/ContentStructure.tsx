@@ -11,16 +11,16 @@ export function ContentStructure({
   description
 }: ContentStructureProps) {
   return (
-    <article className="content-wrapper">
+    <article className='content-wrapper'>
       <header>
-        <h1 className="text-4xl font-bold">{heading}</h1>
+        <h1 className='text-4xl font-bold'>{heading}</h1>
         {description && (
-          <p className="text-xl mt-4 text-gray-600 dark:text-gray-300">
+          <p className='mt-4 text-xl text-gray-600 dark:text-gray-300'>
             {description}
           </p>
         )}
       </header>
-      <div className="mt-8 prose dark:prose-dark max-w-none">{children}</div>
+      <div className='prose dark:prose-dark mt-8 max-w-none'>{children}</div>
     </article>
   );
 }

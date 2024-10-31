@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
-import './globals.css';
+
+import Footer from '@/components/Footer';
+import Navbar from '@/components/Navbar';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+
+import './globals.css';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -129,10 +131,9 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="en"
+      lang='en'
       suppressHydrationWarning
-      className={inter.className}
-    >
+      className={inter.className}>
       <head>
         {/* Google Tag Manager - Head */}
         <script
@@ -147,30 +148,30 @@ export default function RootLayout({
 
         {/* Preconnect to analytics domains */}
         <link
-          rel="preconnect"
-          href="https://cloud.umami.is"
+          rel='preconnect'
+          href='https://cloud.umami.is'
         />
 
         {/* Inject JSON-LD structured data */}
         <script
-          type="application/ld+json"
+          type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
 
         {/* Cookie Script */}
         <Script
-          src="//cdn.cookie-script.com/s/27a1e4f6bdc2bd98f6d922cb116a0b70.js"
-          strategy="afterInteractive"
-          type="text/javascript"
-          charSet="UTF-8"
+          src='//cdn.cookie-script.com/s/27a1e4f6bdc2bd98f6d922cb116a0b70.js'
+          strategy='afterInteractive'
+          type='text/javascript'
+          charSet='UTF-8'
         />
 
         {/* Umami Analytics Script */}
         {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
           <Script
-            src="https://cloud.umami.is/script.js"
+            src='https://cloud.umami.is/script.js'
             data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
-            strategy="afterInteractive"
+            strategy='afterInteractive'
             async
           />
         )}
@@ -179,32 +180,29 @@ export default function RootLayout({
         {/* Google Tag Manager - Body */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-PFT9XVXM"
-            height="0"
-            width="0"
+            src='https://www.googletagmanager.com/ns.html?id=GTM-PFT9XVXM'
+            height='0'
+            width='0'
             style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
 
         <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
+          attribute='class'
+          defaultTheme='dark'
           enableSystem
-          disableTransitionOnChange
-        >
+          disableTransitionOnChange>
           {/* Accessibility: skip to main content */}
           <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:p-4"
-          >
+            href='#main-content'
+            className='sr-only focus:not-sr-only focus:absolute focus:p-4'>
             Skip to main content
           </a>
 
           <Navbar />
           <main
-            id="main-content"
-            className="min-h-screen"
-          >
+            id='main-content'
+            className='min-h-screen'>
             {children}
           </main>
           <Footer />

@@ -1,8 +1,7 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { useState } from 'react';
+
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -13,10 +12,12 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
-import PocketBase from 'pocketbase';
-import { SendHorizonal, LoaderCircle } from 'lucide-react';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useState } from 'react';
+import { LoaderCircle, SendHorizonal } from 'lucide-react';
+import PocketBase from 'pocketbase';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 // Initialize PocketBase client
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL);
@@ -49,12 +50,12 @@ export function EmailForm() {
         title: 'Email submitted successfully!',
         description: (
           <>
-            <pre className="my-2 w-full rounded-md bg-background p-4">
-              <code className="text-neutral-500 dark:text-neutral-300">
+            <pre className='my-2 w-full rounded-md bg-background p-4'>
+              <code className='text-neutral-500 dark:text-neutral-300'>
                 {record.email}
               </code>
             </pre>
-            <p className="font-semibold text-lg">
+            <p className='text-lg font-semibold'>
               We&apos;ll be in touch soon.
             </p>
           </>
@@ -77,22 +78,21 @@ export function EmailForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full"
-      >
-        <div className="flex items-center gap-2 w-full">
+        className='w-full'>
+        <div className='flex w-full items-center gap-2'>
           <FormField
             control={form.control}
-            name="email"
+            name='email'
             render={({ field }) => (
-              <FormItem className="w-full relative">
-                <FormControl className="w-full">
+              <FormItem className='relative w-full'>
+                <FormControl className='w-full'>
                   <Input
-                    className="w-full border-neutral-500 text-base" // Ensure font size is at least 16px
-                    placeholder="email@domain.com"
+                    className='w-full border-neutral-500 text-base' // Ensure font size is at least 16px
+                    placeholder='email@domain.com'
                     {...field}
                   />
                 </FormControl>
-                <div className="absolute -bottom-6 z-[-1]">
+                <div className='absolute -bottom-6 z-[-1]'>
                   <FormMessage />
                 </div>
               </FormItem>
@@ -100,20 +100,20 @@ export function EmailForm() {
           />
 
           <Button
-            type="submit"
-            variant="default"
-            className="flex items-center gap-2 w-fit text-base group/Button"
+            type='submit'
+            variant='default'
+            className='group/Button flex w-fit items-center gap-2 text-base'
             disabled={isLoading} // Disable button when loading
           >
             {isLoading ? (
-              <div className="flex items-center gap-2">
+              <div className='flex items-center gap-2'>
                 <div>Send</div>
-                <LoaderCircle className="h-5 w-5 animate-spin" />
+                <LoaderCircle className='h-5 w-5 animate-spin' />
               </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className='flex items-center gap-2'>
                 <div>Send</div>
-                <SendHorizonal className="h-5 w-5 md:group-hover/Button:translate-x-[2px] transition-all duration-300" />
+                <SendHorizonal className='h-5 w-5 transition-all duration-300 md:group-hover/Button:translate-x-[2px]' />
               </div>
             )}
           </Button>

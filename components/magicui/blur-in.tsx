@@ -1,7 +1,10 @@
 'use client';
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
+
 import { ReactNode } from 'react';
+
+import { cn } from '@/lib/utils';
+
+import { motion } from 'framer-motion';
 
 interface BlurIntProps {
   children: ReactNode;
@@ -27,12 +30,11 @@ const BlurIn = ({
 
   return (
     <motion.h1
-      initial="hidden"
-      animate="visible"
+      initial='hidden'
+      animate='visible'
       transition={{ duration }}
       variants={combinedVariants}
-      className={cn(className, '')}
-    >
+      className={cn(className, '')}>
       {children}
     </motion.h1>
   );

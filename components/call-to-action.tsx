@@ -1,41 +1,37 @@
 import BoxReveal from '@/components/magicui/box-reveal';
-
 import { Button } from '@/components/ui/button';
 
 export async function CallToAction() {
   return (
-    <div className="h-full w-full max-w-[32rem] items-center justify-center overflow-hidden pt-8 px-6">
+    <div className='h-full w-full max-w-[32rem] items-center justify-center overflow-hidden px-6 pt-8'>
       <BoxReveal
         boxColor={'#5046e6'}
-        duration={0.5}
-      >
-        <p className="text-[3.5rem] font-semibold">
-          Magic UI<span className="text-[#5046e6]">.</span>
+        duration={0.5}>
+        <p className='text-[3.5rem] font-semibold'>
+          Magic UI<span className='text-[#5046e6]'>.</span>
         </p>
       </BoxReveal>
 
       <BoxReveal
         boxColor={'#5046e6'}
-        duration={0.5}
-      >
-        <h2 className="mt-[.5rem] text-[1rem]">
+        duration={0.5}>
+        <h2 className='mt-[.5rem] text-[1rem]'>
           UI library for{' '}
-          <span className="text-[#5046e6]">Design Engineers</span>
+          <span className='text-[#5046e6]'>Design Engineers</span>
         </h2>
       </BoxReveal>
 
       <BoxReveal
         boxColor={'#5046e6'}
-        duration={0.5}
-      >
-        <div className="mt-[1.5rem]">
+        duration={0.5}>
+        <div className='mt-[1.5rem]'>
           <p>
             -&gt; 20+ free and open-source animated components built with
-            <span className="font-semibold text-[#5046e6]"> React</span>,
-            <span className="font-semibold text-[#5046e6]"> Typescript</span>,
-            <span className="font-semibold text-[#5046e6]"> Tailwind CSS</span>,
+            <span className='font-semibold text-[#5046e6]'> React</span>,
+            <span className='font-semibold text-[#5046e6]'> Typescript</span>,
+            <span className='font-semibold text-[#5046e6]'> Tailwind CSS</span>,
             and
-            <span className="font-semibold text-[#5046e6]"> Framer Motion</span>
+            <span className='font-semibold text-[#5046e6]'> Framer Motion</span>
             . <br />
             -&gt; 100% open-source, and customizable. <br />
           </p>
@@ -44,9 +40,8 @@ export async function CallToAction() {
 
       <BoxReveal
         boxColor={'#5046e6'}
-        duration={0.5}
-      >
-        <Button className="mt-[1.6rem] bg-[#5046e6]">Explore</Button>
+        duration={0.5}>
+        <Button className='mt-[1.6rem] bg-[#5046e6]'>Explore</Button>
       </BoxReveal>
     </div>
   );

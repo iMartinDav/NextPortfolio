@@ -260,8 +260,7 @@ const Particles: React.FC<ParticlesProps> = ({
   return (
     <div
       ref={canvasContainerRef}
-      className={`relative overflow-hidden ${className}`}
-    >
+      className={`relative overflow-hidden ${className}`}>
       <canvas ref={canvasRef} />
     </div>
   );

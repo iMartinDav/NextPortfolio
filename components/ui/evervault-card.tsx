@@ -1,8 +1,11 @@
 'use client';
-import { useMotionValue, MotionValue } from 'framer-motion';
-import React, { useState, useEffect } from 'react';
-import { useMotionTemplate, motion } from 'framer-motion';
+
+import React, { useEffect, useState } from 'react';
+
 import { cn } from '@/lib/utils';
+
+import { MotionValue, useMotionValue } from 'framer-motion';
+import { motion, useMotionTemplate } from 'framer-motion';
 
 export const EvervaultCard = ({
   text,
@@ -37,23 +40,21 @@ export const EvervaultCard = ({
   return (
     <div
       className={cn(
-        'p-0.5 bg-transparent aspect-square flex items-center justify-center w-full h-full relative',
+        'relative flex aspect-square h-full w-full items-center justify-center bg-transparent p-0.5',
         className
-      )}
-    >
+      )}>
       <div
         onMouseMove={onMouseMove}
-        className="group/card rounded-3xl w-full relative overflow-hidden bg-transparent flex items-center justify-center h-full"
-      >
+        className='group/card relative flex h-full w-full items-center justify-center overflow-hidden rounded-3xl bg-transparent'>
         <CardPattern
           mouseX={mouseX}
           mouseY={mouseY}
           randomString={randomString}
         />
-        <div className="relative z-10 flex items-center justify-center">
-          <div className="relative h-44 w-44 rounded-full flex items-center justify-center text-white font-bold text-xl lg:text-3xl">
-            <div className="absolute w-full h-full bg-white/[0.8] dark:bg-black/[0.8] blur-sm rounded-full" />
-            <span className="dark:text-white text-black z-20">{text}</span>
+        <div className='relative z-10 flex items-center justify-center'>
+          <div className='relative flex h-44 w-44 items-center justify-center rounded-full text-xl font-bold text-white lg:text-3xl'>
+            <div className='absolute h-full w-full rounded-full bg-white/[0.8] blur-sm dark:bg-black/[0.8]' />
+            <span className='z-20 text-black dark:text-white'>{text}</span>
           </div>
         </div>
       </div>
@@ -74,17 +75,16 @@ export function CardPattern({
   const style = { maskImage, WebkitMaskImage: maskImage };
 
   return (
-    <div className="pointer-events-none">
-      <div className="absolute inset-0 rounded-2xl [mask-image:linear-gradient(white,transparent)] group-hover/card:opacity-50"></div>
+    <div className='pointer-events-none'>
+      <div className='absolute inset-0 rounded-2xl [mask-image:linear-gradient(white,transparent)] group-hover/card:opacity-50'></div>
       <motion.div
-        className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#00BFAE] to-[#4B0082] opacity-0 group-hover/card:opacity-100 backdrop-blur-xl transition duration-500"
+        className='absolute inset-0 rounded-2xl bg-gradient-to-r from-[#00BFAE] to-[#4B0082] opacity-0 backdrop-blur-xl transition duration-500 group-hover/card:opacity-100'
         style={style}
       />
       <motion.div
-        className="absolute inset-0 rounded-2xl opacity-0 mix-blend-overlay group-hover/card:opacity-100"
-        style={style}
-      >
-        <p className="absolute inset-x-0 text-xs h-full break-words whitespace-pre-wrap text-white font-mono font-bold transition duration-500">
+        className='absolute inset-0 rounded-2xl opacity-0 mix-blend-overlay group-hover/card:opacity-100'
+        style={style}>
+        <p className='absolute inset-x-0 h-full whitespace-pre-wrap break-words font-mono text-xs font-bold text-white transition duration-500'>
           {randomString}
         </p>
       </motion.div>
@@ -112,10 +112,9 @@ export const TouchButton = ({
   return (
     <button
       onClick={onClick}
-      className="flex items-center justify-center p-4 bg-blue-500 text-white rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+      className='flex transform items-center justify-center rounded-lg bg-blue-500 p-4 text-white shadow-lg transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 active:scale-95'
       aria-label={label}
-      style={{ minWidth: '44px', minHeight: '44px' }}
-    >
+      style={{ minWidth: '44px', minHeight: '44px' }}>
       {label}
     </button>
   );

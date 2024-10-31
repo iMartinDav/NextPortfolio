@@ -2,11 +2,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Bento } from '@/components/bento';
+
 import BentoContact from '@/components/Home/BentoContact';
 import BiotechProfile from '@/components/Home/BiotechProfile';
 import Hero from '@/components/Home/Hero';
 import PreLoader from '@/components/Pre';
+import { Bento } from '@/components/bento';
+
+// app/page.tsx
+
+// app/page.tsx
 
 export default function LandingPage() {
   const [showLoader, setShowLoader] = useState(true);
@@ -36,14 +41,13 @@ export default function LandingPage() {
     <>
       {showLoader && <PreLoader />}
       <section
-        className={`min-h-screen flex flex-col justify-between transition-opacity duration-300 ${
+        className={`flex min-h-screen flex-col justify-between transition-opacity duration-300 ${
           contentReady ? 'opacity-100' : 'opacity-0'
-        }`}
-      >
+        }`}>
         <Hero />
-        <div className="w-full flex items-center justify-center max-w-5xl mx-auto">
-          <div className="flex flex-col items-center overflow-hidden">
-            <div className="w-full py-2 px-2 lg:py-10 lg:px-4">
+        <div className='mx-auto flex w-full max-w-5xl items-center justify-center'>
+          <div className='flex flex-col items-center overflow-hidden'>
+            <div className='w-full px-2 py-2 lg:px-4 lg:py-10'>
               <Bento />
               <BentoContact />
               <BiotechProfile />

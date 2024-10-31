@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
+
 import { useTheme } from 'next-themes';
-import {
-  Cloud,
-  fetchSimpleIcons,
-  ICloud,
-  renderSimpleIcon,
-  SimpleIcon
-} from 'react-icon-cloud';
 
 import { sanitizeSlug } from '@/lib/utils';
+
+import {
+  Cloud,
+  ICloud,
+  SimpleIcon,
+  fetchSimpleIcons,
+  renderSimpleIcon
+} from 'react-icon-cloud';
 
 export const cloudProps: Omit<ICloud, 'children'> = {
   containerProps: {

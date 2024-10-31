@@ -1,15 +1,16 @@
 import React from 'react';
+
 import GitHubCalendar from 'react-github-calendar';
 
 export default function Github() {
   return (
-    <div className="flex flex-col items-center pb-10">
-      <h1 className="text-2xl font-bold mb-5 text-gray-900 dark:text-gray-100">
-        Days I <span className="text-purple-600">Code</span>
+    <div className='flex flex-col items-center pb-10'>
+      <h1 className='mb-5 text-2xl font-bold text-gray-900 dark:text-gray-100'>
+        Days I <span className='text-purple-600'>Code</span>
       </h1>
-      <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg w-full max-w-3xl">
+      <div className='w-full max-w-3xl rounded-lg bg-white p-4 shadow-lg dark:bg-gray-800'>
         <GitHubCalendar
-          username="iMartinDav"
+          username='iMartinDav'
           blockSize={15}
           blockMargin={5}
           fontSize={16}

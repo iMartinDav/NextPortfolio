@@ -9,8 +9,8 @@ export async function GET() {
     const response = await fetch(UMAMI_API_URL, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${UMAMI_API_KEY}`,
-      },
+        Authorization: `Bearer ${UMAMI_API_KEY}`
+      }
     });
 
     if (!response.ok) {
@@ -21,7 +21,10 @@ export async function GET() {
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json(
-      { message: error instanceof Error ? error.message : 'An unknown error occurred' },
+      {
+        message:
+          error instanceof Error ? error.message : 'An unknown error occurred'
+      },
       { status: 500 }
     );
   }

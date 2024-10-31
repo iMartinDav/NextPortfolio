@@ -1,16 +1,16 @@
-import { FadeIn } from '@/components/magicui/fade-in';
 import BlurIn from '@/components/magicui/blur-in';
+import { FadeIn } from '@/components/magicui/fade-in';
 
 export default async function WorldwideReach() {
   return (
-    <div className="mt-10 w-full max-w-2xl mx-auto px-6">
+    <div className='mx-auto mt-10 w-full max-w-2xl px-6'>
       <BlurIn duration={0.5}>
-        <FadeIn direction="up">
-          <div className="flex flex-col items-start">
-            <div className="text-4xl font-bold text-center">
+        <FadeIn direction='up'>
+          <div className='flex flex-col items-start'>
+            <div className='text-center text-4xl font-bold'>
               Worldwide Reach
             </div>
-            <div className="font-thin">
+            <div className='font-thin'>
               Click on a deployment to see the project.
             </div>
           </div>
@@ -18,16 +18,16 @@ export default async function WorldwideReach() {
       </BlurIn>
 
       <BlurIn duration={0.5}>
-        <FadeIn direction="down">
-          <section className="mt-10">
-            <div className="text-2xl font-bold">Cloud</div>
+        <FadeIn direction='down'>
+          <section className='mt-10'>
+            <div className='text-2xl font-bold'>Cloud</div>
 
             <div>
               Cloud deployments are the most common way to deploy a project.
               include AWS, Google Cloud, and Azure.
             </div>
 
-            <ul className="list-disc ml-10 mt-2">
+            <ul className='ml-10 mt-2 list-disc'>
               <li>Vercel</li>
               <li>AWS</li>
               <li>Azure</li>
@@ -37,8 +37,8 @@ export default async function WorldwideReach() {
             </ul>
           </section>
 
-          <section className="mt-5">
-            <div className="text-2xl font-bold">Edge</div>
+          <section className='mt-5'>
+            <div className='text-2xl font-bold'>Edge</div>
 
             <div>
               Edge deployments leverage distributed computing to bring data and
@@ -51,8 +51,8 @@ export default async function WorldwideReach() {
             </div>
           </section>
 
-          <section className="mt-5">
-            <div className="text-2xl font-bold">On-Prem</div>
+          <section className='mt-5'>
+            <div className='text-2xl font-bold'>On-Prem</div>
 
             <div>
               On-premises deployments are hosted locally on a company&apos;s own

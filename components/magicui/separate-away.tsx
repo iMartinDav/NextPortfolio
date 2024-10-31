@@ -1,6 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+
 import { motion } from 'framer-motion';
 
 interface SeparateAwayProps {
@@ -34,19 +35,17 @@ export function SeparateAway({
       <motion.h1
         custom={-1}
         variants={separate}
-        initial="hidden"
-        animate="visible"
-        className={cn(className)}
-      >
+        initial='hidden'
+        animate='visible'
+        className={cn(className)}>
         {upper_text}
       </motion.h1>
       <motion.h1
         custom={1}
         variants={separate}
-        initial="hidden"
-        animate="visible"
-        className={cn(className)}
-      >
+        initial='hidden'
+        animate='visible'
+        className={cn(className)}>
         {lower_text}
       </motion.h1>
     </div>

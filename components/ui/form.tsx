@@ -1,6 +1,11 @@
 import * as React from 'react';
+
+import { FadeIn } from '@/components/magicui/fade-in';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
+
 import {
   Controller,
   ControllerProps,
@@ -9,10 +14,6 @@ import {
   FormProvider,
   useFormContext
 } from 'react-hook-form';
-
-import { cn } from '@/lib/utils';
-import { Label } from '@/components/ui/label';
-import { FadeIn } from '@/components/magicui/fade-in';
 
 const Form = FormProvider;
 
@@ -159,15 +160,13 @@ const FormMessage = React.forwardRef<
 
   return (
     <FadeIn
-      direction="down"
-      className="h-full"
-    >
+      direction='down'
+      className='h-full'>
       <p
         ref={ref}
         id={formMessageId}
         className={cn('text-sm font-medium text-destructive', className)}
-        {...props}
-      >
+        {...props}>
         {body}
       </p>
     </FadeIn>

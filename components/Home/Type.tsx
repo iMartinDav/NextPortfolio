@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useMemo } from 'react';
-import Typewriter from 'typewriter-effect';
+import React, { useEffect, useMemo, useRef } from 'react';
+
 import { cn } from '@/lib/utils';
+
+import Typewriter from 'typewriter-effect';
 
 const ANIMATION_SETTINGS = {
   DELETE_SPEED: 30,
@@ -181,9 +183,8 @@ const TypewriterEffect: React.FC = () => {
         'relative w-full text-center',
         'text-xl md:text-2xl lg:text-3xl xl:text-4xl',
         'font-medium leading-relaxed'
-      )}
-    >
-      <div className="relative z-10">
+      )}>
+      <div className='relative z-10'>
         <style>
           {`
             .Typewriter__cursor {
@@ -207,7 +208,7 @@ const TypewriterEffect: React.FC = () => {
       </div>
 
       <div
-        aria-hidden="true"
+        aria-hidden='true'
         className={cn(
           'absolute inset-0 -z-10 opacity-25',
           'pointer-events-none blur-3xl'

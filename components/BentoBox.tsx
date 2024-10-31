@@ -1,8 +1,10 @@
 'use client';
 
 import React, { memo, useEffect, useMemo } from 'react';
-import { motion, MotionProps } from 'framer-motion';
+
 import { useTheme } from 'next-themes';
+
+import { MotionProps, motion } from 'framer-motion';
 
 interface BentoBoxProps extends React.PropsWithChildren {
   className?: string;
@@ -43,22 +45,20 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
 
     return (
       <motion.div
-        className={`relative ${styles.foregroundColor} rounded-3xl p-1 shadow-lg overflow-hidden ${className} ${styles.borderColor} border-opacity-30 border-[1px]`}
+        className={`relative ${styles.foregroundColor} overflow-hidden rounded-3xl p-1 shadow-lg ${className} ${styles.borderColor} border-[1px] border-opacity-30`}
         whileHover={{ scale: hoverScale }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        {...motionProps}
-      >
+        {...motionProps}>
         <div
-          className="absolute inset-0 w-[200px] h-[200px] animate-glow-move offset-path-rect rotate-45"
+          className='absolute inset-0 h-[200px] w-[200px] rotate-45 animate-glow-move offset-path-rect'
           style={{
             background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`
           }}
         />
         <div
-          className={`relative z-10 ${styles.foregroundColor} rounded-3xl p-4 border border-opacity-50 ${styles.borderColor} shadow-inner`}
-        >
+          className={`relative z-10 ${styles.foregroundColor} rounded-3xl border border-opacity-50 p-4 ${styles.borderColor} shadow-inner`}>
           {children}
         </div>
       </motion.div>

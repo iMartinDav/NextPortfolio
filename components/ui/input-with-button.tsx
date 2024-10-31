@@ -1,6 +1,8 @@
 import { useState } from 'react';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+
 import PocketBase from 'pocketbase';
 
 // Initialize PocketBase client
@@ -31,16 +33,15 @@ export function InputWithButton() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-full max-w-sm items-center space-x-2"
-    >
+      className='flex w-full max-w-sm items-center space-x-2'>
       <Input
-        type="email"
-        placeholder="Email"
+        type='email'
+        placeholder='Email'
         value={email}
         onChange={handleInputChange}
-        className="border-neutral-500"
+        className='border-neutral-500'
       />
-      <Button type="submit">Send</Button>
+      <Button type='submit'>Send</Button>
     </form>
   );
 }

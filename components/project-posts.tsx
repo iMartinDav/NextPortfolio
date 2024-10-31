@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { fetchProjects } from '@/lib/fetchers';
+import { useEffect, useState } from 'react';
+
 import ProjectShowcaseVertical from '@/components/project-showcase-vertical';
 import { defaultDomains } from '@/lib/data';
+import { fetchProjects } from '@/lib/fetchers';
 
 // Define a type for the post data
 interface Post {

@@ -1,20 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
+import React, { useCallback, useEffect, useState } from 'react';
+
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import {
-  ChevronLeft,
-  ChevronRight,
-  Download,
-  Loader2,
-  ZoomIn,
-  ZoomOut,
-  RotateCw,
-  Maximize2,
-  Minimize2
-} from 'lucide-react';
 import {
   Tooltip,
   TooltipContent,
@@ -23,12 +12,24 @@ import {
 } from '@/components/ui/tooltip';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
-import Particle from '../Particle';
-import { useMediaQuery } from './use-media-query';
 
+import Particle from '../Particle';
+import { PDFViewerProps } from './types';
+import { useMediaQuery } from './use-media-query';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  Loader2,
+  Maximize2,
+  Minimize2,
+  RotateCw,
+  ZoomIn,
+  ZoomOut
+} from 'lucide-react';
+import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-import { PDFViewerProps } from './types';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -172,12 +173,12 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center">
-      <div className="w-full h-full flex flex-col items-center justify-center pt-16 sm:pt-20 lg:pt-24">
+    <div className='flex min-h-screen flex-col items-center justify-center bg-background'>
+      <div className='flex h-full w-full flex-col items-center justify-center pt-16 sm:pt-20 lg:pt-24'>
         <Particle />
         <Card
           className={cn(
-            'px-2 py-8 max-w-xl mx-auto',
+            'mx-auto max-w-xl px-2 py-8',
             'bg-card/50 backdrop-blur-sm',
             'shadow-xl ring-1 ring-border/10',
             'transition-all duration-300',
@@ -185,87 +186,73 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
             'max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl',
             'px-2 sm:px-4 md:px-6 lg:px-8',
             'min-h-[calc(100vh-8rem)]'
-          )}
-        >
+          )}>
           <div
             className={cn(
-              'fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50',
+              'fixed bottom-4 left-1/2 z-50 -translate-x-1/2 sm:bottom-6',
               'bg-card/95 backdrop-blur-md',
-              'rounded-full shadow-lg border border-border/50',
+              'rounded-full border border-border/50 shadow-lg',
               'transition-all duration-300',
               'px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3',
               controlsVisible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-8 pointer-events-none'
-            )}
-          >
+                ? 'translate-y-0 opacity-100'
+                : 'pointer-events-none translate-y-8 opacity-0'
+            )}>
             <TooltipProvider>
-              <div className="flex items-center divide-x divide-gray-200 dark:divide-gray-700  rounded-lg p-1 shadow-sm">
-                <div className="flex items-center space-x-1 sm:space-x-2 px-1 sm:px-2">
+              <div className='flex items-center divide-x divide-gray-200 rounded-lg p-1 shadow-sm dark:divide-gray-700'>
+                <div className='flex items-center space-x-1 px-1 sm:space-x-2 sm:px-2'>
                   <Button
-                    variant="ghost"
-                    size="sm"
+                    variant='ghost'
+                    size='sm'
                     onClick={() =>
                       setPageNumber((prev) => Math.max(prev - 1, 1))
                     }
                     disabled={pageNumber <= 1}
-                    className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full
-              bg-gray-100 dark:bg-gray-800
-              hover:bg-gray-200 dark:hover:bg-gray-700
-              disabled:opacity-50
-              border border-gray-200 dark:border-gray-700
-              text-gray-700 dark:text-gray-300"
-                  >
-                    <ChevronLeft className="h-4 w-4" />
+                    className='h-7 w-7 rounded-full border border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 sm:h-8 sm:w-8 md:h-9 md:w-9'>
+                    <ChevronLeft className='h-4 w-4' />
                   </Button>
 
-                  <span className="text-xs sm:text-sm font-medium min-w-[2.5rem] sm:min-w-[3rem] text-center text-gray-900 dark:text-gray-100">
+                  <span className='min-w-[2.5rem] text-center text-xs font-medium text-gray-900 dark:text-gray-100 sm:min-w-[3rem] sm:text-sm'>
                     {pageNumber}/{numPages}
                   </span>
 
                   <Button
-                    variant="ghost"
-                    size="sm"
+                    variant='ghost'
+                    size='sm'
                     onClick={() =>
                       setPageNumber((prev) => Math.min(prev + 1, numPages))
                     }
                     disabled={pageNumber >= numPages}
-                    className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full
-              bg-gray-100 dark:bg-gray-800
-              hover:bg-gray-200 dark:hover:bg-gray-700
-              disabled:opacity-50
-              border border-gray-200 dark:border-gray-700
-              text-gray-700 dark:text-gray-300"
-                  >
-                    <ChevronRight className="h-4 w-4" />
+                    className='h-7 w-7 rounded-full border border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 sm:h-8 sm:w-8 md:h-9 md:w-9'>
+                    <ChevronRight className='h-4 w-4' />
                   </Button>
                 </div>
 
                 {!isMobile && (
-                  <div className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4">
+                  <div className='flex items-center space-x-1 px-2 sm:space-x-2 sm:px-4'>
                     <ControlButton
-                      icon={<ZoomIn className="h-4 w-4" />}
+                      icon={<ZoomIn className='h-4 w-4' />}
                       onClick={handleZoomIn}
                       disabled={scale >= 2}
-                      tooltip="Zoom in"
+                      tooltip='Zoom in'
                     />
                     <ControlButton
-                      icon={<ZoomOut className="h-4 w-4" />}
+                      icon={<ZoomOut className='h-4 w-4' />}
                       onClick={handleZoomOut}
                       disabled={scale <= 0.5}
-                      tooltip="Zoom out"
+                      tooltip='Zoom out'
                     />
                     <ControlButton
-                      icon={<RotateCw className="h-4 w-4" />}
+                      icon={<RotateCw className='h-4 w-4' />}
                       onClick={handleRotate}
-                      tooltip="Rotate"
+                      tooltip='Rotate'
                     />
                     <ControlButton
                       icon={
                         isFullScreen ? (
-                          <Minimize2 className="h-4 w-4" />
+                          <Minimize2 className='h-4 w-4' />
                         ) : (
-                          <Maximize2 className="h-4 w-4" />
+                          <Maximize2 className='h-4 w-4' />
                         )
                       }
                       onClick={toggleFullScreen}
@@ -276,29 +263,16 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                   </div>
                 )}
 
-                <div className="pl-2 sm:pl-4">
+                <div className='pl-2 sm:pl-4'>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
-                        variant="secondary"
-                        size="sm"
+                        variant='secondary'
+                        size='sm'
                         onClick={handleDownload}
-                        className="h-7 sm:h-8 md:h-9 space-x-1 sm:space-x-2 px-2 sm:px-3
-                  bg-[#33c7b2] dark:bg-[#2ba999]
-                  hover:bg-[#2cb3a1] dark:hover:bg-[#33c7b2]
-                  focus:ring-2 focus:ring-[#33c7b2]/20 dark:focus:ring-[#33c7b2]/30
-                  active:bg-[#2ba999] dark:active:bg-[#2cb3a1]
-                  text-white
-                  transition-colors duration-150
-                  font-medium
-                  rounded-md
-                  disabled:opacity-50
-                  disabled:pointer-events-none
-                  shadow-sm
-                  border border-[#2ba999]/20 dark:border-[#33c7b2]/20"
-                      >
-                        <Download className="h-4 w-4" />
-                        <span className="hidden sm:inline text-xs sm:text-sm font-medium">
+                        className='h-7 space-x-1 rounded-md border border-[#2ba999]/20 bg-[#33c7b2] px-2 font-medium text-white shadow-sm transition-colors duration-150 hover:bg-[#2cb3a1] focus:ring-2 focus:ring-[#33c7b2]/20 active:bg-[#2ba999] disabled:pointer-events-none disabled:opacity-50 dark:border-[#33c7b2]/20 dark:bg-[#2ba999] dark:hover:bg-[#33c7b2] dark:focus:ring-[#33c7b2]/30 dark:active:bg-[#2cb3a1] sm:h-8 sm:space-x-2 sm:px-3 md:h-9'>
+                        <Download className='h-4 w-4' />
+                        <span className='hidden text-xs font-medium sm:inline sm:text-sm'>
                           Download
                         </span>
                       </Button>
@@ -312,7 +286,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
 
           <div
             className={cn(
-              'w-full h-full flex items-center justify-center',
+              'flex h-full w-full items-center justify-center',
               'touch-pan-x touch-pan-y',
               'rounded-none sm:rounded-lg',
               'overflow-hidden',
@@ -320,13 +294,12 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
               'relative'
             )}
             onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
+            onTouchEnd={handleTouchEnd}>
             {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-50">
-                <div className="flex flex-col items-center space-y-3">
-                  <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-primary" />
-                  <p className="text-xs sm:text-sm text-muted-foreground">
+              <div className='absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm'>
+                <div className='flex flex-col items-center space-y-3'>
+                  <Loader2 className='h-6 w-6 animate-spin text-primary sm:h-8 sm:w-8' />
+                  <p className='text-xs text-muted-foreground sm:text-sm'>
                     Loading PDF...
                   </p>
                 </div>
@@ -338,15 +311,14 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
               onLoadSuccess={onDocumentLoadSuccess}
               onLoadError={onDocumentLoadError}
               loading={null}
-              className="flex justify-center items-center w-full py-4 sm:py-6"
-              options={options}
-            >
+              className='flex w-full items-center justify-center py-4 sm:py-6'
+              options={options}>
               <Page
                 pageNumber={pageNumber}
                 renderTextLayer={true}
                 renderAnnotationLayer={true}
                 className={cn(
-                  'max-w-full h-auto transition-all duration-200',
+                  'h-auto max-w-full transition-all duration-200',
                   'bg-white shadow-lg',
                   !isMobile && 'hover:shadow-xl',
                   'mx-auto'
@@ -354,18 +326,18 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                 scale={scale}
                 rotate={rotation}
                 error={
-                  <div className="p-4 sm:p-6 text-center">
-                    <p className="text-destructive font-medium text-sm sm:text-base">
+                  <div className='p-4 text-center sm:p-6'>
+                    <p className='text-sm font-medium text-destructive sm:text-base'>
                       Error loading page
                     </p>
-                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                    <p className='mt-1 text-xs text-muted-foreground sm:text-sm'>
                       Please try again or download the PDF
                     </p>
                   </div>
                 }
                 noData={
-                  <div className="p-4 sm:p-6 text-center">
-                    <p className="text-muted-foreground text-sm sm:text-base">
+                  <div className='p-4 text-center sm:p-6'>
+                    <p className='text-sm text-muted-foreground sm:text-base'>
                       No PDF file selected
                     </p>
                   </div>
@@ -395,12 +367,11 @@ const ControlButton: React.FC<ControlButtonProps> = ({
   <Tooltip>
     <TooltipTrigger asChild>
       <Button
-        variant="ghost"
-        size="sm"
+        variant='ghost'
+        size='sm'
         onClick={onClick}
         disabled={disabled}
-        className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full"
-      >
+        className='h-7 w-7 rounded-full sm:h-8 sm:w-8 md:h-9 md:w-9'>
         {icon}
       </Button>
     </TooltipTrigger>

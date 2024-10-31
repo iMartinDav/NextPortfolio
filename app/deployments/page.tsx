@@ -1,14 +1,14 @@
-import { FadeIn } from '@/components/magicui/fade-in';
 import BlurIn from '@/components/magicui/blur-in';
+import { FadeIn } from '@/components/magicui/fade-in';
 
 export default async function DeploymentsPage() {
   return (
-    <div className="mt-10 w-full max-w-2xl mx-auto px-6">
+    <div className='mx-auto mt-10 w-full max-w-2xl px-6'>
       <BlurIn duration={0.5}>
-        <FadeIn direction="up">
-          <div className="flex flex-col items-start">
-            <div className="text-4xl font-bold text-center">Deployments</div>
-            <div className="font-thin">
+        <FadeIn direction='up'>
+          <div className='flex flex-col items-start'>
+            <div className='text-center text-4xl font-bold'>Deployments</div>
+            <div className='font-thin'>
               Click on a deployment to see the project.
             </div>
           </div>
@@ -16,9 +16,9 @@ export default async function DeploymentsPage() {
       </BlurIn>
 
       <BlurIn duration={0.5}>
-        <FadeIn direction="down">
-          <section className="mt-10">
-            <div className="text-2xl font-bold">Cloud</div>
+        <FadeIn direction='down'>
+          <section className='mt-10'>
+            <div className='text-2xl font-bold'>Cloud</div>
 
             <div>
               Cloud deployments are the most common way to deploy a project.
@@ -30,8 +30,8 @@ export default async function DeploymentsPage() {
             </div>
           </section>
 
-          <section className="mt-5">
-            <div className="text-2xl font-bold">Edge</div>
+          <section className='mt-5'>
+            <div className='text-2xl font-bold'>Edge</div>
 
             <div>
               Lorem sint est ipsum excepteur in Lorem occaecat labore
@@ -42,8 +42,8 @@ export default async function DeploymentsPage() {
             </div>
           </section>
 
-          <section className="mt-5">
-            <div className="text-2xl font-bold">On-Prem</div>
+          <section className='mt-5'>
+            <div className='text-2xl font-bold'>On-Prem</div>
 
             <div>
               Lorem sint est ipsum excepteur in Lorem occaecat labore

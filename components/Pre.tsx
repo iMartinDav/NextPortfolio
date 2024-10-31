@@ -1,5 +1,6 @@
 // components/Pre.tsx
 import React, { useEffect, useState } from 'react';
+
 import { Loader2 } from 'lucide-react';
 
 const PreLoader = () => {
@@ -46,59 +47,56 @@ const PreLoader = () => {
   return (
     <div
       className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 transition-all duration-300 ${
-        isExiting ? 'opacity-0 scale-98' : 'opacity-100 scale-100'
+        isExiting ? 'scale-98 opacity-0' : 'scale-100 opacity-100'
       }`}
       style={{
         position: 'fixed',
         isolation: 'isolate',
         backdropFilter: 'blur(8px)'
-      }}
-    >
-      <div className="fixed inset-0 bg-black/80" />
-      <div className="relative flex flex-col items-center gap-6 z-10">
-        <div className="relative">
-          <div className="flex space-x-1">
+      }}>
+      <div className='fixed inset-0 bg-black/80' />
+      <div className='relative z-10 flex flex-col items-center gap-6'>
+        <div className='relative'>
+          <div className='flex space-x-1'>
             {text.split('').map((char, index) => (
               <div
                 key={index}
-                className="animate-float"
+                className='animate-float'
                 style={{
                   animationDelay: `${index * 0.05}s`, // Faster letter animations
                   animationDuration: '2s' // Shorter animation duration
-                }}
-              >
+                }}>
                 <span
-                  className="text-6xl md:text-8xl font-light tracking-wider text-transparent relative"
+                  className='relative text-6xl font-light tracking-wider text-transparent md:text-8xl'
                   style={{
                     WebkitTextStroke: '1px rgb(79, 209, 197)',
                     filter: 'drop-shadow(0 0 12px rgba(79, 209, 197, 0.7))'
-                  }}
-                >
+                  }}>
                   {char}
                 </span>
               </div>
             ))}
           </div>
-          <div className="absolute inset-0 -z-10">
+          <div className='absolute inset-0 -z-10'>
             <div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-teal-500/30 to-transparent blur-2xl animate-pulse"
+              className='absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-teal-500/30 to-transparent blur-2xl'
               style={{ animationDuration: '2s' }}
             />
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-3 w-full">
-          <Loader2 className="h-5 w-5 animate-spin text-teal-400" />
-          <div className="w-48 h-1 bg-gray-800/50 rounded-full overflow-hidden backdrop-blur-sm">
+        <div className='flex w-full flex-col items-center gap-3'>
+          <Loader2 className='h-5 w-5 animate-spin text-teal-400' />
+          <div className='h-1 w-48 overflow-hidden rounded-full bg-gray-800/50 backdrop-blur-sm'>
             <div
-              className="h-full bg-gradient-to-r from-teal-400 via-cyan-500 to-teal-400 animate-gradient-move transition-all duration-150 ease-out rounded-full"
+              className='animate-gradient-move h-full rounded-full bg-gradient-to-r from-teal-400 via-cyan-500 to-teal-400 transition-all duration-150 ease-out'
               style={{
                 width: `${progress}%`,
                 transition: 'width 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
               }}
             />
           </div>
-          <span className="text-teal-400 text-sm font-medium">
+          <span className='text-sm font-medium text-teal-400'>
             {Math.round(progress)}%
           </span>
         </div>
@@ -106,8 +104,7 @@ const PreLoader = () => {
 
       <style
         jsx
-        global
-      >{`
+        global>{`
         @keyframes float {
           0%,
           100% {

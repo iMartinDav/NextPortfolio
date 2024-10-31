@@ -1,21 +1,24 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import Link from 'next/link';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import {
-  Home,
-  User,
-  FolderKanban,
-  FileText,
-  BookOpen,
-  Github,
-  Star,
-  LucideIcon
-} from 'lucide-react';
+
 import { FadeIn } from '@/components/magicui/fade-in';
 import ThemeToggle from '@/components/theme-toggle';
+
+import {
+  BookOpen,
+  FileText,
+  FolderKanban,
+  Github,
+  Home,
+  LucideIcon,
+  Star,
+  User
+} from 'lucide-react';
 
 interface NavItem {
   href: string;
@@ -113,41 +116,37 @@ export default function Navbar() {
     <nav
       ref={navRef}
       className={`navbar ${isScrolled ? 'scrolled' : ''}`}
-      role="navigation"
-      aria-label="Main navigation"
-    >
-      <div className="navbar-container">
+      role='navigation'
+      aria-label='Main navigation'>
+      <div className='navbar-container'>
         <Link
-          href="/"
-          className="navbar-brand"
-          onClick={handleNavItemClick}
-        >
+          href='/'
+          className='navbar-brand'
+          onClick={handleNavItemClick}>
           <Image
-            className="dark"
-            src="/logo.png"
-            alt="logo"
+            className='dark'
+            src='/logo.png'
+            alt='logo'
             width={60}
             height={60}
             priority // Keep this if this logo is critical for initial loading
           />
-          <span className="navbar-brand-name luxury-text">iMartinDav</span>
+          <span className='navbar-brand-name luxury-text'>iMartinDav</span>
         </Link>
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className={`navbar-toggler ${isMenuOpen ? 'active' : ''}`}
-          aria-label="Toggle navigation menu"
+          aria-label='Toggle navigation menu'
           aria-expanded={isMenuOpen}
-          aria-controls="navbar-nav"
-        >
-          <span className="bar"></span>
-          <span className="bar"></span>
-          <span className="bar"></span>
+          aria-controls='navbar-nav'>
+          <span className='bar'></span>
+          <span className='bar'></span>
+          <span className='bar'></span>
         </button>
         <div
-          id="navbar-nav"
+          id='navbar-nav'
           className={`navbar-nav ${isMenuOpen ? 'flex' : ''}`}
-          aria-hidden={!isMenuOpen}
-        >
+          aria-hidden={!isMenuOpen}>
           {navItems.map((item) => (
             <NavItem
               key={item.href}
@@ -157,8 +156,8 @@ export default function Navbar() {
           ))}
           <GithubButton onClick={handleNavItemClick} />
         </div>
-        <div className="navbar-extra">
-          <FadeIn direction="down">
+        <div className='navbar-extra'>
+          <FadeIn direction='down'>
             <ThemeToggle />
           </FadeIn>
         </div>
@@ -181,14 +180,13 @@ function NavItem({
   return (
     <Link
       href={href}
-      className="nav-link luxury-text"
+      className='nav-link luxury-text'
       target={external ? '_blank' : '_self'}
       rel={external ? 'noopener noreferrer' : ''}
-      onClick={onClick}
-    >
+      onClick={onClick}>
       <Icon
         size={18}
-        className="luxury-icon"
+        className='luxury-icon'
       />
       {label}
     </Link>
@@ -202,18 +200,17 @@ interface GithubButtonProps {
 function GithubButton({ onClick }: GithubButtonProps) {
   return (
     <a
-      href="https://github.com/iMartinDav"
-      className="github-button"
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={onClick}
-    >
+      href='https://github.com/iMartinDav'
+      className='github-button'
+      target='_blank'
+      rel='noopener noreferrer'
+      onClick={onClick}>
       <Github size={20} />
       <Star
         size={16}
-        className="github-star"
+        className='github-star'
       />
-      <span className="github-star-text"></span>
+      <span className='github-star-text'></span>
     </a>
   );
 }

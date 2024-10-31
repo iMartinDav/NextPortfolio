@@ -1,5 +1,6 @@
-import { cn } from '@/lib/utils';
 import React, { CSSProperties } from 'react';
+
+import { cn } from '@/lib/utils';
 
 export interface ShimmerButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -44,19 +45,17 @@ const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonProps>(
           className
         )}
         ref={ref}
-        {...props}
-      >
+        {...props}>
         {/* spark container */}
         <div
           className={cn(
             '-z-30 blur-[2px]',
             'absolute inset-0 overflow-visible [container-type:size]'
-          )}
-        >
+          )}>
           {/* spark */}
-          <div className="absolute inset-0 h-[100cqh] animate-slide [aspect-ratio:1] [border-radius:0] [mask:none]">
+          <div className='absolute inset-0 h-[100cqh] animate-slide [aspect-ratio:1] [border-radius:0] [mask:none]'>
             {/* spark before */}
-            <div className="animate-spin-around absolute inset-[-100%] w-auto rotate-0 [background:conic-gradient(from_calc(270deg-(var(--spread)*0.5)),transparent_0,var(--shimmer-color)_var(--spread),transparent_var(--spread))] [translate:0_0]" />
+            <div className='absolute inset-[-100%] w-auto rotate-0 animate-spin-around [background:conic-gradient(from_calc(270deg-(var(--spread)*0.5)),transparent_0,var(--shimmer-color)_var(--spread),transparent_var(--spread))] [translate:0_0]' />
           </div>
         </div>
         {children}

@@ -27,7 +27,7 @@ export default function MetaTags({ metadata, breadcrumbs }: MetaTagsProps) {
   return (
     <Head>
       {/* Dynamic heading structure for better SEO */}
-      <script type="application/ld+json">
+      <script type='application/ld+json'>
         {JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'WebPage',

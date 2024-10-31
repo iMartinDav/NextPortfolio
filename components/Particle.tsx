@@ -1,14 +1,16 @@
 'use client';
 
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
-import Particles, { initParticlesEngine } from '@tsparticles/react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+
+import { useTheme } from 'next-themes';
+
 import {
   type Container,
   type ISourceOptions,
   MoveDirection
 } from '@tsparticles/engine';
+import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
-import { useTheme } from 'next-themes';
 
 interface ParticleProps {
   className?: string;
@@ -241,7 +243,7 @@ const ParticleBackground: React.FC<ParticleProps> = ({
 
   return (
     <Particles
-      id="tsparticles"
+      id='tsparticles'
       particlesLoaded={handleParticlesLoaded}
       options={particleOptions}
       className={className}

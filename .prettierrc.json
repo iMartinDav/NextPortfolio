@@ -16,17 +16,17 @@
     "useTabs": false,
     "endOfLine": "auto",
     "plugins": [
-        "@trivago/prettier-plugin-sort-imports"
+      "@trivago/prettier-plugin-sort-imports",
+      "prettier-plugin-tailwindcss"
     ],
     "importOrder": [
-        "^react$",
-        "^next(/.*)?$",
-        "next-themes",
-        "@/*",
-        "<THIRD_PARTY_MODULES>"
+      "^react$",
+      "^next(/.*)?$",
+      "next-themes",
+      "@/*",
+      "<THIRD_PARTY_MODULES>"
     ],
     "importOrderSeparation": true,
     "importOrderSortSpecifiers": true,
-    "tailwindConfig": "./tailwind.config.js",
     "singleAttributePerLine": true
-}
+  }

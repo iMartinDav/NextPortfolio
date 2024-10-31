@@ -1,8 +1,11 @@
-import dynamic from 'next/dynamic';
-import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { MapPin, Copy, Check, Linkedin, Github } from 'lucide-react';
+
+import dynamic from 'next/dynamic';
+
+import { Button } from '@/components/ui/button';
+
 import { EvervaultCard } from '../ui/evervault-card';
+import { Check, Copy, Github, Linkedin, MapPin } from 'lucide-react';
 
 // Dynamically import the Globe component to disable SSR
 const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
@@ -21,19 +24,18 @@ const BentoContact = () => {
 
   return (
     <section
-      className="space-y-20 my-20 bg-background text-foreground p-4"
-      id="contact"
-    >
-      <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 h-full">
+      className='my-20 space-y-20 bg-background p-4 text-foreground'
+      id='contact'>
+      <div className='grid h-full grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
         {/* Section 1: Introduction */}
-        <div className="col-span-1 xl:row-span-3 p-6 bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg border border-border">
-          <div className="flex flex-col justify-center items-start">
+        <div className='col-span-1 rounded-lg border border-border bg-card bg-opacity-50 p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:row-span-3'>
+          <div className='flex flex-col items-start justify-center'>
             <EvervaultCard
               text="Crafting Tomorrow's Solutions"
-              className="w-full h-48 md:h-72 lg:h-80"
+              className='h-48 w-full md:h-72 lg:h-80'
             />
-            <div className="mt-4">
-              <p className="text-muted-foreground">
+            <div className='mt-4'>
+              <p className='text-muted-foreground'>
                 In the ever-evolving world of bioinformatics and biotech, every
                 breakthrough starts with curiosity and innovation. Through years
                 of dedication, transformative technology has been harnessed to
@@ -45,14 +47,14 @@ const BentoContact = () => {
         </div>
 
         {/* Section 2: The Bioinformatics Journey */}
-        <div className="col-span-1 xl:row-span-3 p-6 bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg border border-border">
-          <div className="flex flex-col justify-center items-start">
+        <div className='col-span-1 rounded-lg border border-border bg-card bg-opacity-50 p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:row-span-3'>
+          <div className='flex flex-col items-start justify-center'>
             <EvervaultCard
-              text="Innovative Solutions"
-              className="w-full h-48 md:h-72 lg:h-80"
+              text='Innovative Solutions'
+              className='h-48 w-full md:h-72 lg:h-80'
             />
-            <div className="mt-4">
-              <p className="text-muted-foreground">
+            <div className='mt-4'>
+              <p className='text-muted-foreground'>
                 Each project undertaken is a step towards unraveling the
                 mysteries of biological systems. By integrating advanced
                 algorithms and machine learning techniques, the mission has
@@ -64,17 +66,17 @@ const BentoContact = () => {
         </div>
 
         {/* Section 3: Global Impact */}
-        <div className="col-span-1 xl:row-span-4 p-6 bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg border border-border">
-          <div className="flex flex-col justify-center items-center">
-            <div className="w-full h-80">
+        <div className='col-span-1 rounded-lg border border-border bg-card bg-opacity-50 p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:row-span-4'>
+          <div className='flex flex-col items-center justify-center'>
+            <div className='h-80 w-full'>
               <Globe
                 height={326}
                 width={326}
-                backgroundColor="rgba(0, 0, 0, 0)"
+                backgroundColor='rgba(0, 0, 0, 0)'
                 showAtmosphere
                 showGraticules
-                globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
-                bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+                globeImageUrl='//unpkg.com/three-globe/example/img/earth-night.jpg'
+                bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
                 labelsData={[
                   {
                     lat: 45.78,
@@ -86,34 +88,33 @@ const BentoContact = () => {
                 ]}
               />
             </div>
-            <div className="mt-4 text-center">
-              <p className="text-2xl font-bold text-foreground">
+            <div className='mt-4 text-center'>
+              <p className='text-2xl font-bold text-foreground'>
                 A Global Network of Innovation
               </p>
-              <p className="text-muted-foreground mt-2">
+              <p className='mt-2 text-muted-foreground'>
                 Collaboration knows no boundaries. From Lyon to every corner of
                 the globe, the focus remains on driving advancements that
                 influence and enhance the biotech industry worldwide.
               </p>
               <Button
-                variant="outline"
-                className="w-full mt-6"
-              >
-                <MapPin className="mr-2" /> Connect
+                variant='outline'
+                className='mt-6 w-full'>
+                <MapPin className='mr-2' /> Connect
               </Button>
             </div>
           </div>
         </div>
 
         {/* Section 4: Journey Through Experience */}
-        <div className="xl:col-span-2 xl:row-span-3 p-6 bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg border border-border">
-          <div className="flex flex-col justify-center items-start">
+        <div className='rounded-lg border border-border bg-card bg-opacity-50 p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:col-span-2 xl:row-span-3'>
+          <div className='flex flex-col items-start justify-center'>
             <EvervaultCard
-              text="A Path of Discovery"
-              className="w-full h-32 md:h-48 lg:h-56"
+              text='A Path of Discovery'
+              className='h-32 w-full md:h-48 lg:h-56'
             />
-            <div className="mt-4">
-              <p className="text-muted-foreground">
+            <div className='mt-4'>
+              <p className='text-muted-foreground'>
                 The journey through the realms of bioinformatics and biotech has
                 been marked by significant contributions to projects and
                 research that shape the future of healthcare and data analysis.
@@ -125,55 +126,50 @@ const BentoContact = () => {
         </div>
 
         {/* Section 5: Invitation to Connect */}
-        <div className="xl:col-span-1 xl:row-span-2 p-6 bg-card bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg border border-border">
-          <div className="flex flex-col items-center">
+        <div className='rounded-lg border border-border bg-card bg-opacity-50 p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:col-span-1 xl:row-span-2'>
+          <div className='flex flex-col items-center'>
             <EvervaultCard
-              text="Explore the Future Together"
-              className="w-full h-32 md:h-48 lg:h-56"
+              text='Explore the Future Together'
+              className='h-32 w-full md:h-48 lg:h-56'
             />
-            <div className="space-y-2 mt-4 w-full">
-              <p className="text-muted-foreground text-center">
+            <div className='mt-4 w-full space-y-2'>
+              <p className='text-center text-muted-foreground'>
                 As the world of bioinformatics and biotech continues to evolve,
                 there’s always room for new partnerships and collaborative
                 endeavors. Reach out to explore how we can drive innovation and
                 make an impact together.
               </p>
               <Button
-                className="w-full flex justify-center items-center"
-                variant="outline"
-                onClick={handleCopy}
-              >
+                className='flex w-full items-center justify-center'
+                variant='outline'
+                onClick={handleCopy}>
                 {hasCopied ? (
-                  <Check className="mr-2" />
+                  <Check className='mr-2' />
                 ) : (
-                  <Copy className="mr-2" />
+                  <Copy className='mr-2' />
                 )}
                 <span>
                   {hasCopied ? 'Copied!' : 'martin@bioinfometrics.com'}
                 </span>
               </Button>
-              <div className="flex justify-center space-x-4 mt-4">
+              <div className='mt-4 flex justify-center space-x-4'>
                 <a
-                  href="https://linkedin.com/in/imartindav"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                  href='https://linkedin.com/in/imartindav'
+                  target='_blank'
+                  rel='noopener noreferrer'>
                   <Button
-                    variant="outline"
-                    size="icon"
-                  >
+                    variant='outline'
+                    size='icon'>
                     <Linkedin size={20} />
                   </Button>
                 </a>
                 <a
-                  href="https://github.com/imartindav"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                  href='https://github.com/imartindav'
+                  target='_blank'
+                  rel='noopener noreferrer'>
                   <Button
-                    variant="outline"
-                    size="icon"
-                  >
+                    variant='outline'
+                    size='icon'>
                     <Github size={20} />
                   </Button>
                 </a>

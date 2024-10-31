@@ -1,5 +1,8 @@
+import React, { useEffect, useRef, useState } from 'react';
+
 import { cn } from '@/lib/utils';
 import { wrap } from '@motionone/utils';
+
 import {
   motion,
   useAnimationFrame,
@@ -9,7 +12,6 @@ import {
   useTransform,
   useVelocity
 } from 'framer-motion';
-import React, { useEffect, useRef, useState } from 'react';
 
 interface VelocityScrollProps {
   text: string;
@@ -79,18 +81,15 @@ const ParallaxText: React.FC<ParallaxProps> = ({
 
   return (
     <div
-      className="w-full overflow-hidden whitespace-nowrap"
-      ref={containerRef}
-    >
+      className='w-full overflow-hidden whitespace-nowrap'
+      ref={containerRef}>
       <motion.div
         className={cn('inline-block', className)}
-        style={{ x }}
-      >
+        style={{ x }}>
         {Array.from({ length: repetitions }).map((_, i) => (
           <span
             key={i}
-            ref={i === 0 ? textRef : null}
-          >
+            ref={i === 0 ? textRef : null}>
             {children}{' '}
           </span>
         ))}
@@ -105,17 +104,15 @@ export function VelocityScroll({
   className
 }: VelocityScrollProps) {
   return (
-    <section className="relative w-full">
+    <section className='relative w-full'>
       <ParallaxText
         baseVelocity={default_velocity}
-        className={className}
-      >
+        className={className}>
         {text}
       </ParallaxText>
       <ParallaxText
         baseVelocity={-default_velocity}
-        className={className}
-      >
+        className={className}>
         {text}
       </ParallaxText>
     </section>

@@ -1,6 +1,8 @@
-import { cn } from '@/lib/utils';
-import { useInView, useMotionValue, useSpring } from 'framer-motion';
 import { useEffect, useRef } from 'react';
+
+import { cn } from '@/lib/utils';
+
+import { useInView, useMotionValue, useSpring } from 'framer-motion';
 
 interface NumberTickerProps {
   value: number;
@@ -54,7 +56,7 @@ export default function NumberTicker({
 
   return (
     <span
-      className={cn('tabular-nums text-justify', className)}
+      className={cn('text-justify tabular-nums', className)}
       ref={ref}
     />
   );

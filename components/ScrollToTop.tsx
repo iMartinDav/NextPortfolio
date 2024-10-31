@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
-import { useRouter } from 'next/router'; // Import Next.js router
+
+import { useRouter } from 'next/router';
+
+// Import Next.js router
 
 function ScrollToTop() {
   const router = useRouter();

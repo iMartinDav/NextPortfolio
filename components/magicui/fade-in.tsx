@@ -1,7 +1,8 @@
 'use client';
 
-import { motion, Variants } from 'framer-motion';
-import { useMemo, ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
+
+import { Variants, motion } from 'framer-motion';
 
 type FadeTextProps = {
   className?: string;
@@ -48,11 +49,10 @@ export function FadeIn({
 
   return (
     <motion.div
-      initial="hidden"
-      animate="show"
+      initial='hidden'
+      animate='show'
       viewport={{ once: true }}
-      variants={FADE_ANIMATION_VARIANTS}
-    >
+      variants={FADE_ANIMATION_VARIANTS}>
       <motion.span className={className}>{children}</motion.span>
     </motion.div>
   );

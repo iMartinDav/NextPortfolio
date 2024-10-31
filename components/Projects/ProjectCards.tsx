@@ -1,6 +1,7 @@
 import React from 'react';
-import { CgWebsite } from 'react-icons/cg';
+
 import { BsGithub } from 'react-icons/bs';
+import { CgWebsite } from 'react-icons/cg';
 
 interface ProjectCardProps {
   imgPath: string;
@@ -20,40 +21,37 @@ const ProjectCards: React.FC<ProjectCardProps> = ({
   isBlog
 }) => {
   return (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className='overflow-hidden rounded-lg bg-white shadow-lg'>
       <img
-        className="w-full h-48 object-cover"
+        className='h-48 w-full object-cover'
         src={imgPath}
-        alt="card-img"
+        alt='card-img'
       />
 
-      <div className="p-4">
-        <h3 className="text-lg font-bold">{title}</h3>
+      <div className='p-4'>
+        <h3 className='text-lg font-bold'>{title}</h3>
         <p
-          className="text-gray-700 text-sm mb-4"
-          style={{ textAlign: 'justify' }}
-        >
+          className='mb-4 text-sm text-gray-700'
+          style={{ textAlign: 'justify' }}>
           {description}
         </p>
 
-        <div className="flex items-center">
+        <div className='flex items-center'>
           <a
-            className="flex items-center bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+            className='flex items-center rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600'
             href={ghLink}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <BsGithub className="mr-2" /> {isBlog ? 'Blog' : 'GitHub'}
+            target='_blank'
+            rel='noopener noreferrer'>
+            <BsGithub className='mr-2' /> {isBlog ? 'Blog' : 'GitHub'}
           </a>
 
           {!isBlog && demoLink && (
             <a
-              className="flex items-center bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition ml-2"
+              className='ml-2 flex items-center rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600'
               href={demoLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <CgWebsite className="mr-2" /> Demo
+              target='_blank'
+              rel='noopener noreferrer'>
+              <CgWebsite className='mr-2' /> Demo
             </a>
           )}
         </div>
