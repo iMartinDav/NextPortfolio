@@ -6,10 +6,6 @@ import { useEffect, useState } from 'react';
 import NumberTicker from '@/components/magicui/number-ticker';
 import { fetchStars } from '@/lib/fetchers';
 
-// GitHubStars.tsx
-
-// GitHubStars.tsx
-
 const GitHubStars = () => {
   const [stars, setStars] = useState<number | null>(null);
 
