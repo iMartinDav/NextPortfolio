@@ -15,6 +15,10 @@ import { Bento } from '@/components/bento';
 
 // app/page.tsx
 
+// app/page.tsx
+
+// app/page.tsx
+
 export default function LandingPage() {
   const [showLoader, setShowLoader] = useState(true);
   const [contentReady, setContentReady] = useState(false);

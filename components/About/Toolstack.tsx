@@ -1,13 +1,8 @@
 import React from 'react';
 
 import { FaApple, FaDocker } from 'react-icons/fa';
-import {
-  SiHeroku,
-  SiLinux,
-  SiPostman,
-  SiVercel,
-  SiVisualstudiocode
-} from 'react-icons/si';
+import { SiHeroku, SiLinux, SiPostman, SiVercel } from 'react-icons/si';
+import { VscCode } from 'react-icons/vsc';
 
 function Toolstack() {
   return (
@@ -21,7 +16,7 @@ function Toolstack() {
         <p className='mt-2 text-gray-700 dark:text-gray-300'>Linux</p>
       </div>
       <div className='flex h-16 w-16 flex-col items-center'>
-        <SiVisualstudiocode className='text-4xl text-gray-800 dark:text-gray-200' />
+        <VscCode className='text-4xl text-gray-800 dark:text-gray-200' />
         <p className='mt-2 text-gray-700 dark:text-gray-300'>VS Code</p>
       </div>
       <div className='flex h-16 w-16 flex-col items-center'>
