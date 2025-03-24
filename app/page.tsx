@@ -9,15 +9,23 @@ import Hero from '@/components/Home/Hero';
 import PreLoader from '@/components/Pre';
 import { Bento } from '@/components/bento';
 
-// app/page.tsx
+// Create a ThemeAwareWrapper to prevent hydration mismatches
+import type { ReactNode } from 'react';
 
-// app/page.tsx
-
-// app/page.tsx
-
-// app/page.tsx
-
-// app/page.tsx
+function ThemeAwareWrapper({ children }: { children: ReactNode }) {
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  // Return a completely hidden placeholder during SSR to prevent hydration mismatches
+  if (!mounted) {
+    return <div style={{ visibility: 'hidden', height: '100vh' }}>{children}</div>;
+  }
+  
+  return <>{children}</>;
+}
 
 export default function LandingPage() {
   const [showLoader, setShowLoader] = useState(true);
@@ -41,26 +49,28 @@ export default function LandingPage() {
       clearTimeout(timer);
       document.body.style.overflow = 'auto';
     };
-  }, []);
+  }, [showLoader]); // Added showLoader as a dependency
 
   return (
     <>
       {showLoader && <PreLoader />}
-      <section
-        className={`flex min-h-screen flex-col justify-between transition-opacity duration-300 ${
-          contentReady ? 'opacity-100' : 'opacity-0'
-        }`}>
-        <Hero />
-        <div className='mx-auto flex w-full max-w-5xl items-center justify-center'>
-          <div className='flex flex-col items-center overflow-hidden'>
-            <div className='w-full px-2 py-2 lg:px-4 lg:py-10'>
-              <Bento />
-              <BentoContact />
-              <BiotechProfile />
+      <ThemeAwareWrapper>
+        <section
+          className={`flex min-h-screen flex-col justify-between transition-opacity duration-300 ${
+            contentReady ? 'opacity-100' : 'opacity-0'
+          }`}>
+          <Hero />
+          <div className='mx-auto flex w-full max-w-5xl items-center justify-center'>
+            <div className='flex flex-col items-center overflow-hidden'>
+              <div className='w-full px-2 py-2 lg:px-4 lg:py-10'>
+                <Bento />
+                <BentoContact />
+                <BiotechProfile />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ThemeAwareWrapper>
     </>
   );
 }

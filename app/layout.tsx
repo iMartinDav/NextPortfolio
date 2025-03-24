@@ -137,6 +137,7 @@ export default function RootLayout({
       <head>
         {/* Google Tag Manager - Head */}
         <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -155,6 +156,7 @@ export default function RootLayout({
         {/* Inject JSON-LD structured data */}
         <script
           type='application/ld+json'
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
 
@@ -184,6 +186,7 @@ export default function RootLayout({
             height='0'
             width='0'
             style={{ display: 'none', visibility: 'hidden' }}
+            title='Google Tag Manager'
           />
         </noscript>
 

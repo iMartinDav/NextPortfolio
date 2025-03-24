@@ -76,7 +76,7 @@ const features = [
           }}>
           <a
             href={
-              process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE == 'true'
+              process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE === 'true'
                 ? `${process.env.NEXT_PUBLIC_DISCORD}`
                 : '#contact-form'
             }
@@ -84,12 +84,12 @@ const features = [
             <div className='flex items-center gap-2'>
               <div
                 className={`h-3 w-3 animate-pulse rounded-full ${
-                  process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE == 'true'
+                  process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE === 'true'
                     ? 'bg-emerald-400'
                     : 'bg-yellow-400'
-                }`}></div>
+                }`} />
               <div className=''>
-                {process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE == 'true'
+                {process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE === 'true'
                   ? 'Available'
                   : 'On Engagement'}
               </div>
@@ -119,6 +119,7 @@ const features = [
           {defaultDomains.map((f, idx) => (
             <a
               href={`${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/${f.slug}`}
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               key={idx}
               className={cn(
                 'relative h-full w-40 cursor-pointer overflow-hidden rounded-xl border p-4 hover:-translate-y-1',
@@ -207,13 +208,13 @@ const features = [
     name: 'GitHub Stars',
     description: 'Star my digital organisms. Help my code evolve.',
     className: 'col-span-3 md:col-span-1',
-    href: `${process.env.GITHUB_URL}/${process.env.REPO_NAME}`,
+    href: 'https://github.com/iMartinDav/NextPortfolio',
     cta: 'Star repository',
     background: (
       <div className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_40%,#000_70%)] group-hover:-translate-y-4 group-hover:scale-105'>
         <div className='flex h-2/3 w-full items-center justify-center text-7xl font-semibold transition-all duration-300 group-hover:-translate-y-2'>
           <a
-            href={`${process.env.GITHUB_URL}/${process.env.REPO_NAME}`}
+            href="https://github.com/iMartinDav/NextPortfolio"
             className='flex items-center gap-2 rounded-lg border border-gray-950/[.1] bg-gray-950/[.01] p-5 shadow-xl hover:bg-gray-950/[.05] dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]'>
             <GitHubStars />
             <Image
@@ -265,7 +266,7 @@ const features = [
       <>
         <div className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[102%]'>
           <div className='absolute h-full w-full [mask-image:linear-gradient(to_top,transparent_20%,#000_70%)]'>
-            <div className='absolute h-full w-full [mask-image:linear-gradient(to_bottom,transparent_2%,#000_10%)]'></div>
+            <div className='absolute h-full w-full [mask-image:linear-gradient(to_bottom,transparent_2%,#000_10%)]' />
             <div className='sm:-translate-y-5'>
               <StatsChart />
             </div>
@@ -339,6 +340,7 @@ export function Bento() {
       <BentoGrid>
         {features.map((feature, idx) => (
           <BentoCard
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             key={idx}
             {...feature}
           />

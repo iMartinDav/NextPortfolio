@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import BlurIn from '@/components/magicui/blur-in';
 import { Button } from '@/components/ui/button';
@@ -35,6 +35,7 @@ const BentoCard = ({
   name?: string;
   className?: string;
   background?: ReactNode;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   Icon?: any;
   description?: string;
   href?: string;
@@ -75,7 +76,7 @@ const BentoCard = ({
       className={cn(
         'pointer-events-none absolute bottom-0 flex w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'
       )}>
-      {href !== '' ? (
+      {href && href !== '' ? (
         <Button
           variant='ghost'
           asChild

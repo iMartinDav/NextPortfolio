@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 
 import { BiLogoFlutter } from 'react-icons/bi';
 import { CgCPlusPlus } from 'react-icons/cg';
@@ -6,6 +6,7 @@ import { DiGit, DiMongodb, DiNodejs, DiPython, DiReact } from 'react-icons/di';
 import {
   SiAngular,
   SiAstro,
+  SiFastapi,
   SiFirebase,
   SiFlask,
   SiLibreofficemath,
@@ -40,6 +41,10 @@ function Techstack() {
           label='Flask'
         />
         <TechItem
+          icon={<SiFastapi className='text-teal-500' />}
+          label='FastAPI'
+        />
+        <TechItem
           icon={<SiPostgresql className='text-blue-700' />}
           label='PostgreSQL'
         />
@@ -64,7 +69,7 @@ function Techstack() {
           label='React'
         />
         <TechItem
-          icon={<SiNextdotjs className='text-gray-800' />}
+          icon={<SiNextdotjs className='text-black dark:text-white' />}
           label='Next.js'
         />
         <TechItem

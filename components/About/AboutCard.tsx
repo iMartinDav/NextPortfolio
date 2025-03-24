@@ -4,8 +4,6 @@ import BentoBox from '../BentoBox';
 import { GiCroissant, GiSpaceship } from 'react-icons/gi';
 import { TbPokeball } from 'react-icons/tb';
 
-// Adjust the path to BentoBox if necessary
-
 function AboutCard() {
   return (
     <BentoBox className='mx-auto max-w-md rounded-lg bg-white bg-opacity-30 shadow-lg backdrop-blur-sm transition duration-300 dark:bg-gray-800'>

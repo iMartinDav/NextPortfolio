@@ -1,18 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
-
 import { useTheme } from 'next-themes';
-
 import { sanitizeSlug } from '@/lib/utils';
+import dynamic from 'next/dynamic';
 
-import {
-  Cloud,
-  ICloud,
-  SimpleIcon,
-  fetchSimpleIcons,
-  renderSimpleIcon
-} from 'react-icon-cloud';
+import type { ICloud, SimpleIcon } from 'react-icon-cloud';
+import { fetchSimpleIcons, renderSimpleIcon } from 'react-icon-cloud';
 
+// Import Cloud component dynamically with SSR disabled
+const Cloud = dynamic(
+  () => import('react-icon-cloud').then((mod) => mod.Cloud),
+  { ssr: false }
+);
+
+// Use a consistent ID for the cloud container
 export const cloudProps: Omit<ICloud, 'children'> = {
+  id: 'tech-cloud', // Adding a fixed ID
   containerProps: {
     style: {
       display: 'flex',
@@ -97,9 +99,9 @@ export default function IconCloud({
   }, [data, theme, liveLinks]);
 
   return (
-    // @ts-expect-error This is required because the Cloud component does not accept children as a prop, but we want to render the icons directly.
+    // @ts-expect-error This is required because the Cloud component expects ReactFragment but we need to render our icons directly
     <Cloud {...cloudProps}>
-      <>{renderedIcons}</>
+      {renderedIcons}
     </Cloud>
   );
 }
