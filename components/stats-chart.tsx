@@ -326,6 +326,11 @@ export const StatsChart: React.FC = () => {
                 {lastUpdated && (
                   <span className="text-xs text-muted-foreground">
                     Last updated: {lastUpdated.toLocaleTimeString()}
+                    {!isRealData && (
+                      <span className="ml-2 rounded-full bg-amber-100 text-amber-800 px-2 py-0.5 text-[10px] font-medium">
+                        SIMULATED DATA
+                      </span>
+                    )}
                   </span>
                 )}
               </div>
