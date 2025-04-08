@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import { FadeIn } from '@/components/magicui/fade-in';
 import ThemeToggle from '@/components/theme-toggle';
@@ -48,7 +47,6 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   // Handle scroll effect
   useEffect(() => {
