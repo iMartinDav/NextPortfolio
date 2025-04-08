@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 
 import { AiFillGithub } from 'react-icons/ai';
 import { FaLinkedinIn } from 'react-icons/fa';
@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
           {/* Section 2: Copyright */}
           <div className='w-full text-center md:w-1/3 md:text-center'>
             <h3 className='text-xs font-medium leading-snug'>
-              Copyright © {year} All Rights Reserved to GPT-o1
+              Copyright © {year} All Rights Reserved to GPT-4o
             </h3>
           </div>
 
