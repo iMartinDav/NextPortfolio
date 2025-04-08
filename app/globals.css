@@ -227,13 +227,12 @@
 
 .navbar-toggler .bar {
   display: block;
-  background: #391c36;
-  height: 3px;
-  width: 30px;
-  margin: 6px 0;
-  transition:
-    transform 0.35s ease-in-out,
-    opacity 0.35s ease-in-out;
+  background: #f2f2f2;
+  height: 2px;
+  width: 24px;
+  margin: 5px 0;
+  transition: all 0.35s ease-in-out;
+  border-radius: 2px;
 }
 
 .navbar-toggler.active .bar:nth-child(1) {
@@ -336,9 +335,8 @@
 
 @media (max-width: 767px) {
   .navbar {
-    padding: 1rem 2rem;
-    font-size: 1.4rem;
-    background-color: #114248aa;
+    padding: 0.4rem 1rem;
+    font-size: 0.95rem;
   }
 
   .navbar-toggler {
@@ -349,24 +347,39 @@
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #114248aa;
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2.4rem);
+    background-color: rgba(17, 66, 72, 0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 14px;
+    padding: 1rem;
+    box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.3);
   }
 
   .navbar-nav.flex {
     display: flex;
+    gap: 0.5rem;
   }
 
   .nav-link {
     padding: 0.7rem 1rem;
-    color: #0b0a21;
+    color: #f2f2f2;
     text-align: center;
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
   }
 
   .github-button {
-    margin-top: 1rem;
+    margin: 0.5rem 0;
+    width: 100%;
+    justify-content: center;
   }
 }
 
