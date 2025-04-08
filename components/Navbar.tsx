@@ -15,10 +15,10 @@ import {
   FolderKanban,
   Github,
   Home,
-  LucideIcon,
   Star,
   User
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 interface NavItem {
   href: string;
@@ -67,7 +67,7 @@ export default function Navbar() {
     return () => {
       window.removeEventListener('popstate', handleRouteChange);
     };
-  }, [router]);
+  }, []);
 
   // Handle clicks outside navbar
   useEffect(() => {
@@ -116,7 +116,6 @@ export default function Navbar() {
     <nav
       ref={navRef}
       className={`navbar ${isScrolled ? 'scrolled' : ''}`}
-      role='navigation'
       aria-label='Main navigation'>
       <div className='navbar-container'>
         <Link
@@ -134,14 +133,15 @@ export default function Navbar() {
           <span className='navbar-brand-name luxury-text'>iMartinDav</span>
         </Link>
         <button
+          type='button'
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className={`navbar-toggler ${isMenuOpen ? 'active' : ''}`}
           aria-label='Toggle navigation menu'
           aria-expanded={isMenuOpen}
           aria-controls='navbar-nav'>
-          <span className='bar'></span>
-          <span className='bar'></span>
-          <span className='bar'></span>
+          <span className='bar' />
+          <span className='bar' />
+          <span className='bar' />
         </button>
         <div
           id='navbar-nav'
@@ -210,7 +210,7 @@ function GithubButton({ onClick }: GithubButtonProps) {
         size={16}
         className='github-star'
       />
-      <span className='github-star-text'></span>
+      <span className='github-star-text' />
     </a>
   );
 }

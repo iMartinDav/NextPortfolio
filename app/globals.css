@@ -153,16 +153,19 @@
   top: 0;
   width: 100%;
   z-index: 50;
-  padding: 0.6rem 1.5rem;
-  font-size: 1rem;
-  transition:
-    background-color 0.3s ease-out,
-    box-shadow 0.3s ease-out;
+  padding: 0.4rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease-in-out;
 }
 
 .navbar.scrolled {
-  background-color: #114248aa;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: rgba(17, 66, 72, 0.85);
+  backdrop-filter: blur(8px);
+  margin: 0.4rem 1.2rem;
+  width: calc(100% - 2.4rem);
+  border-radius: 14px;
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.3);
+  padding: 0.3rem 1.2rem;
 }
 
 .navbar-container {
