@@ -147,7 +147,7 @@ const config: Config = {
   },
   plugins: [
     require('tailwindcss-animate'),
-    plugin(function ({ addUtilities }) {
+    plugin(({ addUtilities }) => {
       addUtilities({
         '.offset-path-rect': {
           'offset-path': 'rect(0% auto 100% auto)'

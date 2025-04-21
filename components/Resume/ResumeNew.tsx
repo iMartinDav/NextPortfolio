@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import type React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -14,7 +15,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 
 import Particle from '../Particle';
-import { PDFViewerProps } from './types';
+import type { PDFViewerProps } from './types';
 import { useMediaQuery } from './use-media-query';
 import {
   ChevronLeft,
@@ -25,7 +26,10 @@ import {
   Minimize2,
   RotateCw,
   ZoomIn,
-  ZoomOut
+  ZoomOut,
+  Menu,
+  Settings2,
+  X
 } from 'lucide-react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -55,17 +59,39 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const isTablet = useMediaQuery('(min-width: 769px) and (max-width: 1024px)');
 
+  const [showMobileControls, setShowMobileControls] = useState<boolean>(false);
+  const [pinchStartDistance, setPinchStartDistance] = useState<number | null>(null);
+  const [initialScale, setInitialScale] = useState<number>(1);
+
   const calculateInitialScale = useCallback(() => {
     if (typeof window === 'undefined') return 1;
-    if (isMobile) return 0.5;
-    if (isTablet) return 0.8;
+    // More granular mobile scaling based on screen width
+    if (window.innerWidth < 375) return 0.45; // Smaller phones
+    if (window.innerWidth < 480) return 0.55; // Regular phones
+    if (isMobile) return 0.65; // Larger phones
+    if (isTablet) return 0.85; // Better tablet scaling
     return 1.2;
   }, [isMobile, isTablet]);
+
+  // Handle orientation changes for mobile devices
+  useEffect(() => {
+    const handleResize = () => {
+      setScale(calculateInitialScale());
+    };
+    
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, [calculateInitialScale]);
 
   useEffect(() => {
     const newScale = calculateInitialScale();
     setScale(newScale);
-  }, [isMobile, isTablet, calculateInitialScale]);
+  }, [calculateInitialScale]);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -74,9 +100,14 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(
         () => {
+          // Keep controls visible on mobile if user is interacting with document
+          if (isMobile && isLoading) {
+            setControlsVisible(true);
+            return;
+          }
           setControlsVisible(false);
         },
-        isMobile ? 2000 : 3000
+        isMobile ? 3500 : 3000 // Longer visibility on mobile
       );
     };
 
@@ -84,16 +115,23 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
       window.addEventListener('mousemove', handleInteraction);
       window.addEventListener('scroll', handleInteraction);
       window.addEventListener('touchmove', handleInteraction);
+      window.addEventListener('touchstart', handleInteraction);
+      // Reset visibility on page change
+      setControlsVisible(true);
+      
+      // Always trigger the timeout when component mounts
+      handleInteraction();
 
       return () => {
         window.removeEventListener('mousemove', handleInteraction);
         window.removeEventListener('scroll', handleInteraction);
         window.removeEventListener('touchmove', handleInteraction);
+        window.removeEventListener('touchstart', handleInteraction);
         clearTimeout(timeoutId);
       };
     }
     return undefined;
-  }, [isMobile]);
+  }, [isMobile, isLoading]);
 
   const handleZoomIn = () => setScale((prev) => Math.min(prev + 0.1, 2));
   const handleZoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.5));
@@ -156,6 +194,42 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
     setTouchStart(null);
   };
 
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length !== 2 || pinchStartDistance === null) return;
+    
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    const scaleFactor = distance / pinchStartDistance;
+    const newScale = initialScale * scaleFactor;
+    
+    // Limit scale between reasonable bounds
+    if (newScale >= 0.5 && newScale <= 2.5) {
+      setScale(newScale);
+    }
+  }, [pinchStartDistance, initialScale]);
+
+  const handlePinchStart = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length !== 2) return;
+    
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    setPinchStartDistance(distance);
+    setInitialScale(scale);
+  }, [scale]);
+
+  const handlePinchEnd = useCallback(() => {
+    setPinchStartDistance(null);
+  }, []);
+
+  const toggleMobileControls = useCallback(() => {
+    setShowMobileControls(prev => !prev);
+    setControlsVisible(true);
+  }, []);
+
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
     setIsLoading(false);
@@ -176,13 +250,104 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
     <div className='flex min-h-screen flex-col items-center justify-center bg-background'>
       <div className='flex h-full w-full flex-col items-center justify-center pt-16 sm:pt-20 lg:pt-24'>
         <Particle />
+        
+        {/* Mobile-specific floating action button */}
+        {isMobile && (
+          <Button
+            variant="secondary"
+            size="icon"
+            className={cn(
+              'fixed right-4 bottom-16 z-50 rounded-full',
+              'h-10 w-10 shadow-lg',
+              'bg-primary text-primary-foreground',
+              'transition-all duration-300',
+              !controlsVisible && 'opacity-70'
+            )}
+            onClick={toggleMobileControls}
+          >
+            {showMobileControls ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+        )}
+        
+        {/* Mobile controls panel with TooltipProvider wrapper */}
+        <TooltipProvider>
+          {isMobile && showMobileControls && (
+            <div className={cn(
+              'fixed bottom-28 right-4 z-50',
+              'bg-card/95 backdrop-blur-md',
+              'rounded-lg border border-border/40 shadow-lg',
+              'p-3', // Increase padding for larger touch targets
+              'flex flex-col space-y-3', // Increase spacing between buttons
+              'transition-all duration-300',
+              controlsVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+            )}>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleZoomIn}
+                disabled={scale >= 2}
+                className="h-10 w-10 rounded-full"
+                aria-label="Zoom in"
+              >
+                <ZoomIn className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleZoomOut}
+                disabled={scale <= 0.5}
+                className="h-10 w-10 rounded-full"
+                aria-label="Zoom out"
+              >
+                <ZoomOut className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleRotate}
+                className="h-10 w-10 rounded-full"
+                aria-label="Rotate"
+              >
+                <RotateCw className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={toggleFullScreen}
+                className="h-10 w-10 rounded-full"
+                aria-label={isFullScreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+              >
+                {isFullScreen ? <Minimize2 className="h-5 w-5" /> : <Maximize2 className="h-5 w-5" />}
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleDownload}
+                className="h-10 w-10 rounded-full"
+                aria-label="Download PDF"
+              >
+                <Download className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setScale(calculateInitialScale())}
+                className="h-10 w-10 rounded-full"
+                aria-label="Reset view"
+              >
+                <Settings2 className="h-5 w-5" />
+              </Button>
+            </div>
+          )}
+        </TooltipProvider>
+        
         <Card
           className={cn(
             'mx-auto max-w-xl px-2 py-8',
             'bg-card/50 backdrop-blur-sm',
             'shadow-xl ring-1 ring-border/10',
             'transition-all duration-300',
-            'rounded-none sm:rounded-lg',
+            'rounded-lg', // Always apply rounded corners regardless of screen size
             'max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl',
             'px-2 sm:px-4 md:px-6 lg:px-8',
             'min-h-[calc(100vh-8rem)]'
@@ -196,7 +361,8 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
               'px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3',
               controlsVisible
                 ? 'translate-y-0 opacity-100'
-                : 'pointer-events-none translate-y-8 opacity-0'
+                : 'pointer-events-none translate-y-8 opacity-0',
+              isMobile && 'w-[calc(100%-32px)] max-w-[320px]' // Limit width on mobile
             )}>
             <TooltipProvider>
               <div className='flex items-center divide-x divide-gray-200 rounded-lg p-1 shadow-sm dark:divide-gray-700'>
@@ -290,11 +456,18 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
               'touch-pan-x touch-pan-y',
               'rounded-none sm:rounded-lg',
               'overflow-hidden',
-              '-mx-2 sm:mx-0',
+              'mx-auto', // Change from -mx-2 sm:mx-0 to ensure equal margins
               'relative'
             )}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}>
+            onTouchStart={(e) => {
+              handleTouchStart(e);
+              handlePinchStart(e);
+            }}
+            onTouchEnd={(e) => {
+              handleTouchEnd(e);
+              handlePinchEnd();
+            }}
+            onTouchMove={handleTouchMove}>
             {isLoading && (
               <div className='absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm'>
                 <div className='flex flex-col items-center space-y-3'>
@@ -321,7 +494,8 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                   'h-auto max-w-full transition-all duration-200',
                   'bg-white shadow-lg',
                   !isMobile && 'hover:shadow-xl',
-                  'mx-auto'
+                  'mx-auto', // Ensure the page is centered within the Document container
+                  isMobile && 'px-0' // Remove any horizontal padding on mobile
                 )}
                 scale={scale}
                 rotate={rotation}

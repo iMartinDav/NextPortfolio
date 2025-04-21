@@ -1,5 +1,5 @@
 {
-  "ignores": ["node_modules/", "build/"],
+  "ignorePatterns": ["node_modules/", "build/"],
 
   "extends": [
     "next/core-web-vitals",

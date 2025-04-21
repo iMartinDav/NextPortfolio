@@ -71,36 +71,65 @@ const ChartContainer = React.forwardRef<
 ChartContainer.displayName = 'Chart';
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
-  const colorConfig = Object.entries(config).filter(
-    ([_, config]) => config.theme || config.color
+  // Memoize the color configuration to prevent unnecessary processing
+  const colorConfig = React.useMemo(() => 
+    Object.entries(config).filter(([, config]) => config.theme || config.color),
+    [config]
   );
 
-  if (!colorConfig.length) {
-    return null;
-  }
+  // Create memoized style rules for each theme
+  const styleRules = React.useMemo(() => {
+    if (!colorConfig.length) return [];
+    
+    return Object.entries(THEMES).map(([theme, prefix]) => {
+      const themeStyles = colorConfig
+        .map(([key, itemConfig]) => {
+          const color =
+            itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
+            itemConfig.color;
+          return color ? `--color-${key}: ${color};` : null;
+        })
+        .filter(Boolean)
+        .join('\n');
 
-  return (
-    <style
-      dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
-      itemConfig.color;
-    return color ? `  --color-${key}: ${color};` : null;
-  })
-  .join('\n')}
-}
-`
-          )
-          .join('\n')
-      }}
-    />
-  );
+      return `${prefix} [data-chart=${id}] { ${themeStyles} }`;
+    });
+  }, [colorConfig, id]);
+
+  // Create a stable styleId reference for cleanup
+  const styleId = React.useMemo(() => `chart-style-${id}`, [id]);
+
+  // Use a React useEffect to add styles to the DOM safely
+  React.useEffect(() => {
+    // Skip effect if there are no style rules
+    if (styleRules.length === 0) {
+      return;
+    }
+    
+    // Remove any existing style element with this ID before adding a new one
+    const existingStyle = document.head.querySelector(`[data-chart-styles="${styleId}"]`);
+    if (existingStyle) {
+      document.head.removeChild(existingStyle);
+    }
+    
+    // Create style element
+    const styleElement = document.createElement('style');
+    styleElement.setAttribute('data-chart-styles', styleId);
+    styleElement.textContent = styleRules.join('\n');
+    
+    // Add to document head
+    document.head.appendChild(styleElement);
+    
+    // Clean up on unmount
+    return () => {
+      const styleToRemove = document.head.querySelector(`[data-chart-styles="${styleId}"]`);
+      if (styleToRemove) {
+        document.head.removeChild(styleToRemove);
+      }
+    };
+  }, [styleRules, styleId]);
+
+  return null;
 };
 
 const ChartTooltip = RechartsPrimitive.Tooltip;
