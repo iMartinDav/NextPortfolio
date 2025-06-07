@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useTheme } from 'next-themes';
-import { sanitizeSlug } from '@/lib/utils';
+
 import dynamic from 'next/dynamic';
+
+import { useTheme } from 'next-themes';
+
+import { sanitizeSlug } from '@/lib/utils';
 
 import type { ICloud, SimpleIcon } from 'react-icon-cloud';
 import { fetchSimpleIcons, renderSimpleIcon } from 'react-icon-cloud';
@@ -100,8 +103,6 @@ export default function IconCloud({
 
   return (
     // @ts-expect-error This is required because the Cloud component expects ReactFragment but we need to render our icons directly
-    <Cloud {...cloudProps}>
-      {renderedIcons}
-    </Cloud>
+    <Cloud {...cloudProps}>{renderedIcons}</Cloud>
   );
 }

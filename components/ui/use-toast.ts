@@ -18,10 +18,10 @@ type ToasterToast = ToastProps & {
 
 // Action types as const object for better maintainability
 const TOAST_ACTIONS = {
-  ADD_TOAST: "ADD_TOAST",
-  UPDATE_TOAST: "UPDATE_TOAST",
-  DISMISS_TOAST: "DISMISS_TOAST",
-  REMOVE_TOAST: "REMOVE_TOAST",
+  ADD_TOAST: 'ADD_TOAST',
+  UPDATE_TOAST: 'UPDATE_TOAST',
+  DISMISS_TOAST: 'DISMISS_TOAST',
+  REMOVE_TOAST: 'REMOVE_TOAST'
 } as const;
 
 // Type for all possible actions, using the TOAST_ACTIONS constant
@@ -173,11 +173,11 @@ function toast({ ...props }: Toast) {
       type: TOAST_ACTIONS.UPDATE_TOAST,
       toast: { ...props, id }
     });
-    
-  const dismiss = () => 
-    dispatch({ 
-      type: TOAST_ACTIONS.DISMISS_TOAST, 
-      toastId: id 
+
+  const dismiss = () =>
+    dispatch({
+      type: TOAST_ACTIONS.DISMISS_TOAST,
+      toastId: id
     });
 
   dispatch({
@@ -208,7 +208,7 @@ function useToast() {
   React.useEffect(() => {
     // Subscribe to state changes
     listeners.push(setState);
-    
+
     // Cleanup listener on component unmount
     return () => {
       const index = listeners.indexOf(setState);
@@ -228,10 +228,11 @@ function useToast() {
   return {
     ...state,
     toast,
-    dismiss: (toastId?: string) => dispatch({ 
-      type: TOAST_ACTIONS.DISMISS_TOAST, 
-      toastId 
-    })
+    dismiss: (toastId?: string) =>
+      dispatch({
+        type: TOAST_ACTIONS.DISMISS_TOAST,
+        toastId
+      })
   };
 }
 

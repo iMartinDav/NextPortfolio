@@ -72,15 +72,18 @@ ChartContainer.displayName = 'Chart';
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   // Memoize the color configuration to prevent unnecessary processing
-  const colorConfig = React.useMemo(() => 
-    Object.entries(config).filter(([, config]) => config.theme || config.color),
+  const colorConfig = React.useMemo(
+    () =>
+      Object.entries(config).filter(
+        ([, config]) => config.theme || config.color
+      ),
     [config]
   );
 
   // Create memoized style rules for each theme
   const styleRules = React.useMemo(() => {
     if (!colorConfig.length) return [];
-    
+
     return Object.entries(THEMES).map(([theme, prefix]) => {
       const themeStyles = colorConfig
         .map(([key, itemConfig]) => {
@@ -105,24 +108,28 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     if (styleRules.length === 0) {
       return;
     }
-    
+
     // Remove any existing style element with this ID before adding a new one
-    const existingStyle = document.head.querySelector(`[data-chart-styles="${styleId}"]`);
+    const existingStyle = document.head.querySelector(
+      `[data-chart-styles="${styleId}"]`
+    );
     if (existingStyle) {
       document.head.removeChild(existingStyle);
     }
-    
+
     // Create style element
     const styleElement = document.createElement('style');
     styleElement.setAttribute('data-chart-styles', styleId);
     styleElement.textContent = styleRules.join('\n');
-    
+
     // Add to document head
     document.head.appendChild(styleElement);
-    
+
     // Clean up on unmount
     return () => {
-      const styleToRemove = document.head.querySelector(`[data-chart-styles="${styleId}"]`);
+      const styleToRemove = document.head.querySelector(
+        `[data-chart-styles="${styleId}"]`
+      );
       if (styleToRemove) {
         document.head.removeChild(styleToRemove);
       }

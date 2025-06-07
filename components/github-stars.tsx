@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
 import NumberTicker from '@/components/magicui/number-ticker';
 import { fetchStars } from '@/lib/fetchers';
 

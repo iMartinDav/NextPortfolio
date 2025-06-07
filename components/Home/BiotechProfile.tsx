@@ -1,13 +1,16 @@
 import type React from 'react';
-import { memo, useMemo, useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
+
 import Image from 'next/image';
+
 import { useTheme } from 'next-themes';
+
 import BentoBox from '../BentoBox';
 import { motion } from 'framer-motion';
+import type { IconType } from 'react-icons';
 import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 import { RiTwitterXLine } from 'react-icons/ri';
 import { SiCodeship } from 'react-icons/si';
-import type { IconType } from 'react-icons';
 
 // Define proper types
 interface SocialLink {
@@ -52,13 +55,11 @@ interface GradientTextProps {
   children: React.ReactNode;
 }
 
-const GradientText: React.FC<GradientTextProps> = memo(
-  ({ children }) => (
-    <span className='bg-gradient-to-r from-blue-light to-purple-light bg-clip-text text-transparent'>
-      {children}
-    </span>
-  )
-);
+const GradientText: React.FC<GradientTextProps> = memo(({ children }) => (
+  <span className='bg-gradient-to-r from-blue-light to-purple-light bg-clip-text text-transparent'>
+    {children}
+  </span>
+));
 GradientText.displayName = 'GradientText';
 
 interface ThemeColors {
@@ -89,8 +90,12 @@ const BiotechProfile: React.FC = () => {
     const isDark = resolvedTheme === 'dark';
     return {
       mutedColor: isDark ? 'text-[#EAEAFF]' : 'text-[#16141E]',
-      glowColorPrimary: isDark ? 'rgba(0, 191, 174, 0.2)' : 'rgba(0, 191, 174, 0.5)',
-      glowColorSecondary: isDark ? 'rgba(127, 0, 255, 0.2)' : 'rgba(127, 0, 255, 0.5)'
+      glowColorPrimary: isDark
+        ? 'rgba(0, 191, 174, 0.2)'
+        : 'rgba(0, 191, 174, 0.5)',
+      glowColorSecondary: isDark
+        ? 'rgba(127, 0, 255, 0.2)'
+        : 'rgba(127, 0, 255, 0.5)'
     };
   }, [resolvedTheme, mounted]);
 
@@ -114,31 +119,40 @@ const BiotechProfile: React.FC = () => {
             <BentoBox
               className='bg-opacity-30 backdrop-blur-sm'
               glowColor={colors.glowColorPrimary}>
-              <h1 className="mb-4 text-4xl font-bold md:text-5xl">
+              <h1 className='mb-4 text-4xl font-bold md:text-5xl'>
                 Innovating at the <GradientText>Intersection</GradientText> of
                 <br />
                 <GradientText>Biology and Code</GradientText>
               </h1>
-              <p suppressHydrationWarning className={`text-xl ${colors.mutedColor}`}>
-                Whether it&apos;s wrangling CI/CD pipelines, automating workflows, or
-                making data behave, I somehow manage to get it done. From
-                speeding up biotech breakthroughs to making deployments less of
-                a headache, I try to bring a little innovation and automation
-                into everything I touch. And yeah, sleep? Not much of that, but
-                hey, that&apos;s what coffee&apos;s for, right? ☕
+              <p
+                suppressHydrationWarning
+                className={`text-xl ${colors.mutedColor}`}>
+                Whether it&apos;s wrangling CI/CD pipelines, automating
+                workflows, or making data behave, I somehow manage to get it
+                done. From speeding up biotech breakthroughs to making
+                deployments less of a headache, I try to bring a little
+                innovation and automation into everything I touch. And yeah,
+                sleep? Not much of that, but hey, that&apos;s what coffee&apos;s
+                for, right? ☕
               </p>
             </BentoBox>
 
             <BentoBox
               className='bg-opacity-30 backdrop-blur-sm'
               glowColor={colors.glowColorSecondary}>
-              <h2 className="mb-4 text-2xl font-semibold">Expertise</h2>
-              <ul suppressHydrationWarning className={`grid grid-cols-2 gap-2 ${colors.mutedColor}`}>
+              <h2 className='mb-4 text-2xl font-semibold'>Expertise</h2>
+              <ul
+                suppressHydrationWarning
+                className={`grid grid-cols-2 gap-2 ${colors.mutedColor}`}>
                 {EXPERTISE_ITEMS.map((item) => (
                   <li
                     key={item}
                     className='flex items-center'>
-                    <span className='mr-2 text-blue-light' aria-hidden="true">✓</span>
+                    <span
+                      className='mr-2 text-blue-light'
+                      aria-hidden='true'>
+                      ✓
+                    </span>
                     {item}
                   </li>
                 ))}
@@ -154,7 +168,7 @@ const BiotechProfile: React.FC = () => {
                 height={150}
                 alt='DNA Helix'
                 className='h-full w-full object-contain'
-                loading="eager"
+                loading='eager'
               />
             </div>
             <motion.div
@@ -176,13 +190,13 @@ const BiotechProfile: React.FC = () => {
         <motion.div
           {...fadeInAnimation}
           className='mt-16 text-center'>
-          <h2 className="mb-6 text-3xl font-bold">Connect & Collaborate</h2>
+          <h2 className='mb-6 text-3xl font-bold'>Connect & Collaborate</h2>
           <p className='mb-8 text-xl'>
             Got a tricky biology problem that needs a tech solution? I
             specialize in turning complex life science challenges into elegant
-            code. From gene sequencing to protein folding, I&apos;m here to help your
-            team make sense of the data and push research forward. Let&apos;s
-            build something great together.
+            code. From gene sequencing to protein folding, I&apos;m here to help
+            your team make sense of the data and push research forward.
+            Let&apos;s build something great together.
           </p>
           <ul className='flex justify-center space-x-6'>
             {SOCIAL_LINKS.map(({ href, Icon, label }) => (
@@ -194,9 +208,9 @@ const BiotechProfile: React.FC = () => {
                   href={href}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='block p-2 text-2xl text-primary hover:text-blue-light transition-colors'
+                  className='block p-2 text-2xl text-primary transition-colors hover:text-blue-light'
                   aria-label={label}>
-                  <Icon aria-hidden="true" />
+                  <Icon aria-hidden='true' />
                 </a>
               </motion.li>
             ))}

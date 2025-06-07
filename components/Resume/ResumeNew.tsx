@@ -23,13 +23,13 @@ import {
   Download,
   Loader2,
   Maximize2,
+  Menu,
   Minimize2,
   RotateCw,
-  ZoomIn,
-  ZoomOut,
-  Menu,
   Settings2,
-  X
+  X,
+  ZoomIn,
+  ZoomOut
 } from 'lucide-react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -60,7 +60,9 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
   const isTablet = useMediaQuery('(min-width: 769px) and (max-width: 1024px)');
 
   const [showMobileControls, setShowMobileControls] = useState<boolean>(false);
-  const [pinchStartDistance, setPinchStartDistance] = useState<number | null>(null);
+  const [pinchStartDistance, setPinchStartDistance] = useState<number | null>(
+    null
+  );
   const [initialScale, setInitialScale] = useState<number>(1);
 
   const calculateInitialScale = useCallback(() => {
@@ -78,10 +80,10 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
     const handleResize = () => {
       setScale(calculateInitialScale());
     };
-    
+
     window.addEventListener('resize', handleResize);
     window.addEventListener('orientationchange', handleResize);
-    
+
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('orientationchange', handleResize);
@@ -118,7 +120,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
       window.addEventListener('touchstart', handleInteraction);
       // Reset visibility on page change
       setControlsVisible(true);
-      
+
       // Always trigger the timeout when component mounts
       handleInteraction();
 
@@ -194,39 +196,45 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
     setTouchStart(null);
   };
 
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (e.touches.length !== 2 || pinchStartDistance === null) return;
-    
-    const dx = e.touches[0].clientX - e.touches[1].clientX;
-    const dy = e.touches[0].clientY - e.touches[1].clientY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    
-    const scaleFactor = distance / pinchStartDistance;
-    const newScale = initialScale * scaleFactor;
-    
-    // Limit scale between reasonable bounds
-    if (newScale >= 0.5 && newScale <= 2.5) {
-      setScale(newScale);
-    }
-  }, [pinchStartDistance, initialScale]);
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      if (e.touches.length !== 2 || pinchStartDistance === null) return;
 
-  const handlePinchStart = useCallback((e: React.TouchEvent) => {
-    if (e.touches.length !== 2) return;
-    
-    const dx = e.touches[0].clientX - e.touches[1].clientX;
-    const dy = e.touches[0].clientY - e.touches[1].clientY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    
-    setPinchStartDistance(distance);
-    setInitialScale(scale);
-  }, [scale]);
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      const scaleFactor = distance / pinchStartDistance;
+      const newScale = initialScale * scaleFactor;
+
+      // Limit scale between reasonable bounds
+      if (newScale >= 0.5 && newScale <= 2.5) {
+        setScale(newScale);
+      }
+    },
+    [pinchStartDistance, initialScale]
+  );
+
+  const handlePinchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (e.touches.length !== 2) return;
+
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      setPinchStartDistance(distance);
+      setInitialScale(scale);
+    },
+    [scale]
+  );
 
   const handlePinchEnd = useCallback(() => {
     setPinchStartDistance(null);
   }, []);
 
   const toggleMobileControls = useCallback(() => {
-    setShowMobileControls(prev => !prev);
+    setShowMobileControls((prev) => !prev);
     setControlsVisible(true);
   }, []);
 
@@ -250,97 +258,103 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
     <div className='flex min-h-screen flex-col items-center justify-center bg-background'>
       <div className='flex h-full w-full flex-col items-center justify-center pt-16 sm:pt-20 lg:pt-24'>
         <Particle />
-        
+
         {/* Mobile-specific floating action button */}
         {isMobile && (
           <Button
-            variant="secondary"
-            size="icon"
+            variant='secondary'
+            size='icon'
             className={cn(
-              'fixed right-4 bottom-16 z-50 rounded-full',
+              'fixed bottom-16 right-4 z-50 rounded-full',
               'h-10 w-10 shadow-lg',
               'bg-primary text-primary-foreground',
               'transition-all duration-300',
               !controlsVisible && 'opacity-70'
             )}
-            onClick={toggleMobileControls}
-          >
-            {showMobileControls ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            onClick={toggleMobileControls}>
+            {showMobileControls ? (
+              <X className='h-5 w-5' />
+            ) : (
+              <Menu className='h-5 w-5' />
+            )}
           </Button>
         )}
-        
+
         {/* Mobile controls panel with TooltipProvider wrapper */}
         <TooltipProvider>
           {isMobile && showMobileControls && (
-            <div className={cn(
-              'fixed bottom-28 right-4 z-50',
-              'bg-card/95 backdrop-blur-md',
-              'rounded-lg border border-border/40 shadow-lg',
-              'p-3', // Increase padding for larger touch targets
-              'flex flex-col space-y-3', // Increase spacing between buttons
-              'transition-all duration-300',
-              controlsVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-            )}>
+            <div
+              className={cn(
+                'fixed bottom-28 right-4 z-50',
+                'bg-card/95 backdrop-blur-md',
+                'rounded-lg border border-border/40 shadow-lg',
+                'p-3', // Increase padding for larger touch targets
+                'flex flex-col space-y-3', // Increase spacing between buttons
+                'transition-all duration-300',
+                controlsVisible
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-8 opacity-0'
+              )}>
               <Button
-                variant="outline"
-                size="icon"
+                variant='outline'
+                size='icon'
                 onClick={handleZoomIn}
                 disabled={scale >= 2}
-                className="h-10 w-10 rounded-full"
-                aria-label="Zoom in"
-              >
-                <ZoomIn className="h-5 w-5" />
+                className='h-10 w-10 rounded-full'
+                aria-label='Zoom in'>
+                <ZoomIn className='h-5 w-5' />
               </Button>
               <Button
-                variant="outline"
-                size="icon"
+                variant='outline'
+                size='icon'
                 onClick={handleZoomOut}
                 disabled={scale <= 0.5}
-                className="h-10 w-10 rounded-full"
-                aria-label="Zoom out"
-              >
-                <ZoomOut className="h-5 w-5" />
+                className='h-10 w-10 rounded-full'
+                aria-label='Zoom out'>
+                <ZoomOut className='h-5 w-5' />
               </Button>
               <Button
-                variant="outline"
-                size="icon"
+                variant='outline'
+                size='icon'
                 onClick={handleRotate}
-                className="h-10 w-10 rounded-full"
-                aria-label="Rotate"
-              >
-                <RotateCw className="h-5 w-5" />
+                className='h-10 w-10 rounded-full'
+                aria-label='Rotate'>
+                <RotateCw className='h-5 w-5' />
               </Button>
               <Button
-                variant="outline"
-                size="icon"
+                variant='outline'
+                size='icon'
                 onClick={toggleFullScreen}
-                className="h-10 w-10 rounded-full"
-                aria-label={isFullScreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-              >
-                {isFullScreen ? <Minimize2 className="h-5 w-5" /> : <Maximize2 className="h-5 w-5" />}
+                className='h-10 w-10 rounded-full'
+                aria-label={
+                  isFullScreen ? 'Exit fullscreen' : 'Enter fullscreen'
+                }>
+                {isFullScreen ? (
+                  <Minimize2 className='h-5 w-5' />
+                ) : (
+                  <Maximize2 className='h-5 w-5' />
+                )}
               </Button>
               <Button
-                variant="outline"
-                size="icon"
+                variant='outline'
+                size='icon'
                 onClick={handleDownload}
-                className="h-10 w-10 rounded-full"
-                aria-label="Download PDF"
-              >
-                <Download className="h-5 w-5" />
+                className='h-10 w-10 rounded-full'
+                aria-label='Download PDF'>
+                <Download className='h-5 w-5' />
               </Button>
               <Button
-                variant="outline"
-                size="icon"
+                variant='outline'
+                size='icon'
                 onClick={() => setScale(calculateInitialScale())}
-                className="h-10 w-10 rounded-full"
-                aria-label="Reset view"
-              >
-                <Settings2 className="h-5 w-5" />
+                className='h-10 w-10 rounded-full'
+                aria-label='Reset view'>
+                <Settings2 className='h-5 w-5' />
               </Button>
             </div>
           )}
         </TooltipProvider>
-        
+
         <Card
           className={cn(
             'mx-auto max-w-xl px-2 py-8',

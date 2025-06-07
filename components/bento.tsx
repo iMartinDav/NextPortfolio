@@ -87,7 +87,8 @@ const features = [
                   process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE === 'true'
                     ? 'bg-emerald-400'
                     : 'bg-yellow-400'
-                }`} />
+                }`}
+              />
               <div className=''>
                 {process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE === 'true'
                   ? 'Available'
@@ -214,7 +215,7 @@ const features = [
       <div className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_40%,#000_70%)] group-hover:-translate-y-4 group-hover:scale-105'>
         <div className='flex h-2/3 w-full items-center justify-center text-7xl font-semibold transition-all duration-300 group-hover:-translate-y-2'>
           <a
-            href="https://github.com/iMartinDav/NextPortfolio"
+            href='https://github.com/iMartinDav/NextPortfolio'
             className='flex items-center gap-2 rounded-lg border border-gray-950/[.1] bg-gray-950/[.01] p-5 shadow-xl hover:bg-gray-950/[.05] dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]'>
             <GitHubStars />
             <Image

@@ -2,6 +2,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+// Create a ThemeAwareWrapper to prevent hydration mismatches
+import type { ReactNode } from 'react';
 
 import BentoContact from '@/components/Home/BentoContact';
 import BiotechProfile from '@/components/Home/BiotechProfile';
@@ -9,21 +11,22 @@ import Hero from '@/components/Home/Hero';
 import PreLoader from '@/components/Pre';
 import { Bento } from '@/components/bento';
 
-// Create a ThemeAwareWrapper to prevent hydration mismatches
-import type { ReactNode } from 'react';
+// app/page.tsx
 
 function ThemeAwareWrapper({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);
-  
+
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   // Return a completely hidden placeholder during SSR to prevent hydration mismatches
   if (!mounted) {
-    return <div style={{ visibility: 'hidden', height: '100vh' }}>{children}</div>;
+    return (
+      <div style={{ visibility: 'hidden', height: '100vh' }}>{children}</div>
+    );
   }
-  
+
   return <>{children}</>;
 }
 

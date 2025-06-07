@@ -25,7 +25,7 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
   }) => {
     const { theme, resolvedTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
-    
+
     // Effect to set mounted state
     useEffect(() => {
       setMounted(true);

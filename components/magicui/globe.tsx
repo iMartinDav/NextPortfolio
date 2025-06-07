@@ -132,8 +132,8 @@ export default function Globe({
 
   // Fix the type and dependencies in onRender
   const onRender = useCallback(
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-      (state: Record<string, any>) => {
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    (state: Record<string, any>) => {
       if (!pointerInteracting.current) phi += 0.0025;
       state.phi = phi + r.get();
       state.width = widthRef.current * 2;
@@ -166,7 +166,7 @@ export default function Globe({
         canvasRef.current.style.opacity = '1';
       }
     });
-    
+
     return () => {
       window.removeEventListener('resize', onResize);
       globe.destroy();
