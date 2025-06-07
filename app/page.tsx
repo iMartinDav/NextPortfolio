@@ -13,6 +13,10 @@ import { Bento } from '@/components/bento';
 
 // app/page.tsx
 
+// app/page.tsx
+
+// app/page.tsx
+
 function ThemeAwareWrapper({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
