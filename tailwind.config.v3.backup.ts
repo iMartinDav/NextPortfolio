@@ -8,7 +8,7 @@ import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
-  darkMode: ['class'],
+  darkMode: 'class',
   content: [
     './pages/**/*.{ts,tsx,mdx}',
     './components/**/*.{ts,tsx,mdx}',
@@ -28,7 +28,7 @@ const config: Config = {
       colors: {
         'border': 'hsl(var(--border))',
         'input': 'hsl(var(--input))',
-        'ring': 'hsl(var(--ring))',
+        'ring-3': 'hsl(var(--ring))',
         'background': 'hsl(var(--background))',
         'foreground': 'hsl(var(--foreground))',
         'primary': {

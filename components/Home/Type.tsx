@@ -12,18 +12,18 @@ const ANIMATION_SETTINGS = {
 
 const THEME_GRADIENTS = {
   primary: {
-    pokemon: 'bg-gradient-to-r from-purple-700 via-pink-500 to-purple-500',
+    pokemon: 'bg-linear-to-r from-purple-700 via-pink-500 to-purple-500',
     bioinformatics:
-      'bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500',
-    research: 'bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-400',
-    dna: 'bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-400',
-    protein: 'bg-gradient-to-r from-green-500 via-emerald-400 to-teal-500',
-    cell: 'bg-gradient-to-r from-blue-500 via-violet-400 to-purple-500',
-    genome: 'bg-gradient-to-r from-fuchsia-600 via-purple-500 to-pink-500',
-    biotech: 'bg-gradient-to-r from-emerald-500 via-cyan-400 to-green-500',
-    analysis: 'bg-gradient-to-r from-blue-600 via-indigo-500 to-violet-500',
-    software: 'bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500',
-    compbio: 'bg-gradient-to-r from-green-600 via-blue-500 to-purple-500'
+      'bg-linear-to-r from-purple-600 via-indigo-500 to-blue-500',
+    research: 'bg-linear-to-r from-blue-600 via-cyan-500 to-blue-400',
+    dna: 'bg-linear-to-r from-emerald-600 via-teal-500 to-cyan-400',
+    protein: 'bg-linear-to-r from-green-500 via-emerald-400 to-teal-500',
+    cell: 'bg-linear-to-r from-blue-500 via-violet-400 to-purple-500',
+    genome: 'bg-linear-to-r from-fuchsia-600 via-purple-500 to-pink-500',
+    biotech: 'bg-linear-to-r from-emerald-500 via-cyan-400 to-green-500',
+    analysis: 'bg-linear-to-r from-blue-600 via-indigo-500 to-violet-500',
+    software: 'bg-linear-to-r from-cyan-500 via-blue-500 to-indigo-500',
+    compbio: 'bg-linear-to-r from-green-600 via-blue-500 to-purple-500'
   }
 } as const;
 

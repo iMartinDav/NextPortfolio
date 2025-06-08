@@ -46,7 +46,7 @@ const PreLoader = () => {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 transition-all duration-300 ${
+      className={`fixed inset-0 z-9999 flex items-center justify-center bg-black/95 transition-all duration-300 ${
         isExiting ? 'scale-98 opacity-0' : 'scale-100 opacity-100'
       }`}
       style={{
@@ -79,7 +79,7 @@ const PreLoader = () => {
           </div>
           <div className='absolute inset-0 -z-10'>
             <div
-              className='absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-teal-500/30 to-transparent blur-2xl'
+              className='absolute inset-0 animate-pulse bg-linear-to-r from-transparent via-teal-500/30 to-transparent blur-2xl'
               style={{ animationDuration: '2s' }}
             />
           </div>
@@ -87,9 +87,9 @@ const PreLoader = () => {
 
         <div className='flex w-full flex-col items-center gap-3'>
           <Loader2 className='h-5 w-5 animate-spin text-teal-400' />
-          <div className='h-1 w-48 overflow-hidden rounded-full bg-gray-800/50 backdrop-blur-sm'>
+          <div className='h-1 w-48 overflow-hidden rounded-full bg-gray-800/50 backdrop-blur-xs'>
             <div
-              className='animate-gradient-move h-full rounded-full bg-gradient-to-r from-teal-400 via-cyan-500 to-teal-400 transition-all duration-150 ease-out'
+              className='animate-gradient-move h-full rounded-full bg-linear-to-r from-teal-400 via-cyan-500 to-teal-400 transition-all duration-150 ease-out'
               style={{
                 width: `${progress}%`,
                 transition: 'width 0.2s cubic-bezier(0.4, 0, 0.2, 1)'

@@ -47,7 +47,7 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
     return (
       <motion.div
         suppressHydrationWarning
-        className={`relative ${styles.foregroundColor} overflow-hidden rounded-3xl p-1 shadow-lg ${className} ${styles.borderColor} border-[1px] border-opacity-30`}
+        className={`relative ${styles.foregroundColor} overflow-hidden rounded-3xl p-1 shadow-lg ${className} ${styles.borderColor} border border-opacity-30`}
         whileHover={{ scale: hoverScale }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

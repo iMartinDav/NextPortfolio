@@ -56,7 +56,7 @@ interface GradientTextProps {
 }
 
 const GradientText: React.FC<GradientTextProps> = memo(({ children }) => (
-  <span className='bg-gradient-to-r from-blue-light to-purple-light bg-clip-text text-transparent'>
+  <span className='bg-linear-to-r from-blue-light to-purple-light bg-clip-text text-transparent'>
     {children}
   </span>
 ));
@@ -117,7 +117,7 @@ const BiotechProfile: React.FC = () => {
         <div className='grid grid-cols-1 gap-12 lg:grid-cols-2'>
           <div className='space-y-8'>
             <BentoBox
-              className='bg-opacity-30 backdrop-blur-sm'
+              className='bg-opacity-30 backdrop-blur-xs'
               glowColor={colors.glowColorPrimary}>
               <h1 className='mb-4 text-4xl font-bold md:text-5xl'>
                 Innovating at the <GradientText>Intersection</GradientText> of
@@ -138,7 +138,7 @@ const BiotechProfile: React.FC = () => {
             </BentoBox>
 
             <BentoBox
-              className='bg-opacity-30 backdrop-blur-sm'
+              className='bg-opacity-30 backdrop-blur-xs'
               glowColor={colors.glowColorSecondary}>
               <h2 className='mb-4 text-2xl font-semibold'>Expertise</h2>
               <ul

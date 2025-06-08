@@ -67,7 +67,7 @@ const BentoCard = ({
           {name}
         </div>
       </div>
-      <p className='w-full text-neutral-500 dark:text-neutral-400 dark:drop-shadow'>
+      <p className='w-full text-neutral-500 dark:text-neutral-400 dark:drop-shadow-sm'>
         {description}
       </p>
     </div>
@@ -91,7 +91,7 @@ const BentoCard = ({
         ''
       )}
     </div>
-    <div className='pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/[.03] group-hover:dark:bg-neutral-800/10' />
+    <div className='pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/[.03] dark:group-hover:bg-neutral-800/10' />
   </BlurIn>
 );
 

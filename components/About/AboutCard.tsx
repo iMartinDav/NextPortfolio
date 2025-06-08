@@ -6,7 +6,7 @@ import { TbPokeball } from 'react-icons/tb';
 
 function AboutCard() {
   return (
-    <BentoBox className='mx-auto max-w-md rounded-lg bg-white bg-opacity-30 shadow-lg backdrop-blur-sm transition duration-300 dark:bg-gray-800'>
+    <BentoBox className='mx-auto max-w-md rounded-lg bg-white bg-opacity-30 shadow-lg backdrop-blur-xs transition duration-300 dark:bg-gray-800'>
       <p className='mb-6 text-justify text-gray-800 dark:text-gray-200'>
         Hello, I am{' '}
         <span className='font-bold text-purple-700 dark:text-purple-400'>

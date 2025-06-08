@@ -20,7 +20,7 @@ export default function Hero() {
   }
 
   return (
-    <section className='relative flex min-h-screen items-center overflow-hidden bg-gradient-to-r from-[#EAEAFF] via-[#C8B6FF] to-[#7F00FF] dark:from-[#16141E] dark:via-[#0B0A21] dark:to-[#1D2A34]'>
+    <section className='relative flex min-h-screen items-center overflow-hidden bg-linear-to-r from-[#EAEAFF] via-[#C8B6FF] to-[#7F00FF] dark:from-[#16141E] dark:via-[#0B0A21] dark:to-[#1D2A34]'>
       <Particle />
       <div className='container relative mx-auto px-6 py-20 md:py-32'>
         <div className='flex flex-col-reverse items-center md:flex-row'>

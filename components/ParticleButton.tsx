@@ -101,7 +101,7 @@ const ButtonWithParticles: React.FC = () => {
 
         {/* Button Layer */}
         <button
-          className={`relative transform overflow-hidden rounded-full bg-gradient-to-r from-indigo-800 via-purple-800 to-blue-800 px-12 py-6 text-lg font-bold text-white shadow-[0_0_50px_rgba(147,51,234,0.6)] transition-all duration-500 hover:scale-105 hover:shadow-[0_0_80px_rgba(147,51,234,0.8)] active:scale-95`}
+          className={`relative transform overflow-hidden rounded-full bg-linear-to-r from-indigo-800 via-purple-800 to-blue-800 px-12 py-6 text-lg font-bold text-white shadow-[0_0_50px_rgba(147,51,234,0.6)] transition-all duration-500 hover:scale-105 hover:shadow-[0_0_80px_rgba(147,51,234,0.8)] active:scale-95`}
           style={{
             perspective: '1500px',
             width: 'fit-content',

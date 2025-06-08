@@ -358,7 +358,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
         <Card
           className={cn(
             'mx-auto max-w-xl px-2 py-8',
-            'bg-card/50 backdrop-blur-sm',
+            'bg-card/50 backdrop-blur-xs',
             'shadow-xl ring-1 ring-border/10',
             'transition-all duration-300',
             'rounded-lg', // Always apply rounded corners regardless of screen size
@@ -379,7 +379,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
               isMobile && 'w-[calc(100%-32px)] max-w-[320px]' // Limit width on mobile
             )}>
             <TooltipProvider>
-              <div className='flex items-center divide-x divide-gray-200 rounded-lg p-1 shadow-sm dark:divide-gray-700'>
+              <div className='flex items-center divide-x divide-gray-200 rounded-lg p-1 shadow-xs dark:divide-gray-700'>
                 <div className='flex items-center space-x-1 px-1 sm:space-x-2 sm:px-2'>
                   <Button
                     variant='ghost'
@@ -392,7 +392,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                     <ChevronLeft className='h-4 w-4' />
                   </Button>
 
-                  <span className='min-w-[2.5rem] text-center text-xs font-medium text-gray-900 dark:text-gray-100 sm:min-w-[3rem] sm:text-sm'>
+                  <span className='min-w-10 text-center text-xs font-medium text-gray-900 dark:text-gray-100 sm:min-w-12 sm:text-sm'>
                     {pageNumber}/{numPages}
                   </span>
 
@@ -450,7 +450,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                         variant='secondary'
                         size='sm'
                         onClick={handleDownload}
-                        className='h-7 space-x-1 rounded-md border border-[#2ba999]/20 bg-[#33c7b2] px-2 font-medium text-white shadow-sm transition-colors duration-150 hover:bg-[#2cb3a1] focus:ring-2 focus:ring-[#33c7b2]/20 active:bg-[#2ba999] disabled:pointer-events-none disabled:opacity-50 dark:border-[#33c7b2]/20 dark:bg-[#2ba999] dark:hover:bg-[#33c7b2] dark:focus:ring-[#33c7b2]/30 dark:active:bg-[#2cb3a1] sm:h-8 sm:space-x-2 sm:px-3 md:h-9'>
+                        className='h-7 space-x-1 rounded-md border border-[#2ba999]/20 bg-[#33c7b2] px-2 font-medium text-white shadow-xs transition-colors duration-150 hover:bg-[#2cb3a1] focus:ring-2 focus:ring-[#33c7b2]/20 active:bg-[#2ba999] disabled:pointer-events-none disabled:opacity-50 dark:border-[#33c7b2]/20 dark:bg-[#2ba999] dark:hover:bg-[#33c7b2] dark:focus:ring-[#33c7b2]/30 dark:active:bg-[#2cb3a1] sm:h-8 sm:space-x-2 sm:px-3 md:h-9'>
                         <Download className='h-4 w-4' />
                         <span className='hidden text-xs font-medium sm:inline sm:text-sm'>
                           Download
@@ -483,7 +483,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
             }}
             onTouchMove={handleTouchMove}>
             {isLoading && (
-              <div className='absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm'>
+              <div className='absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-xs'>
                 <div className='flex flex-col items-center space-y-3'>
                   <Loader2 className='h-6 w-6 animate-spin text-primary sm:h-8 sm:w-8' />
                   <p className='text-xs text-muted-foreground sm:text-sm'>

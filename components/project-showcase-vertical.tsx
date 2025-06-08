@@ -26,7 +26,7 @@ const ReviewCard = ({
   return (
     <figure
       className={cn(
-        'relative h-40 w-full cursor-pointer overflow-hidden rounded-xl border p-4 shadow',
+        'relative h-40 w-full cursor-pointer overflow-hidden rounded-xl border p-4 shadow-sm',
         // light styles
         'border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]',
         // dark styles
@@ -39,7 +39,7 @@ const ReviewCard = ({
               <img
                 src={`https://projects.imartin.dev/${image}`}
                 alt={name}
-                className='h-8 w-8 rounded-lg object-cover shadow'
+                className='h-8 w-8 rounded-lg object-cover shadow-sm'
               />
               <figcaption className='text-lg font-medium dark:text-white'>
                 {name}
@@ -86,8 +86,8 @@ const ProjectShowcaseVertical = ({
           />
         ))}
       </Marquee>
-      <div className='pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-white dark:from-background'></div>
-      <div className='pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white dark:from-background'></div>
+      <div className='pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-linear-to-b from-white dark:from-background'></div>
+      <div className='pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-white dark:from-background'></div>
     </div>
   );
 };

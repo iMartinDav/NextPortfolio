@@ -52,7 +52,7 @@ const features = [
     cta: 'Explore my digital lab',
     background: (
       <div>
-        <div className='absolute right-0 top-0 h-3/4 w-full border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_5%,#000_50%)] group-hover:scale-105'>
+        <div className='absolute right-0 top-0 h-3/4 w-full border-none transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_5%,#000_50%)] group-hover:scale-105'>
           <BlurIn
             duration={0.5}
             className='h-full'>
@@ -115,7 +115,7 @@ const features = [
         animate={{ opacity: 1 }}
         transition={{ duration: 2.5 }}>
         <Marquee
-          className='absolute top-10 h-2/3 w-full [--duration:40s] [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)]'
+          className='absolute top-10 h-2/3 w-full [--duration:40s] mask-[linear-gradient(to_top,transparent_10%,#000_100%)]'
           pauseOnHover>
           {defaultDomains.map((f, idx) => (
             <a
@@ -151,7 +151,7 @@ const features = [
     cta: 'View all technologies',
     className: 'col-span-3 md:col-span-2',
     background: (
-      <div className='absolute right-0 top-0 w-[80%] origin-top translate-x-0 transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_40%,#000_70%)] group-hover:-translate-y-5 group-hover:scale-105 md:[mask-image:linear-gradient(to_top,transparent_50%,#000_70%)]'>
+      <div className='absolute right-0 top-0 w-[80%] origin-top translate-x-0 transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_40%,#000_70%)] group-hover:-translate-y-5 group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_50%,#000_70%)]'>
         <FadeIn direction='up'>
           <Technologies />
         </FadeIn>
@@ -171,7 +171,7 @@ const features = [
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5 }}>
-        <AnimatedBeamMultipleOutputs className='absolute right-0 top-4 h-[300px] w-[600px] border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105 md:[mask-image:linear-gradient(to_top,transparent_0%,#000_100%)]' />
+        <AnimatedBeamMultipleOutputs className='absolute right-0 top-4 h-[300px] w-[600px] border-none transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_0%,#000_100%)]' />
       </motion.div>
     )
   },
@@ -183,7 +183,7 @@ const features = [
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/vercel`,
     cta: 'Learn more',
     background: (
-      <div className='absolute right-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_25%,#000_70%)] group-hover:scale-105'>
+      <div className='absolute right-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_25%,#000_70%)] group-hover:scale-105'>
         <Orbit />
       </div>
     )
@@ -198,7 +198,7 @@ const features = [
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/vercel`,
     cta: 'Learn more',
     background: (
-      <div className='absolute right-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:-translate-y-4 group-hover:scale-105 md:[mask-image:linear-gradient(to_top,transparent_10%,#000_100%)]'>
+      <div className='absolute right-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:-translate-y-4 group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_10%,#000_100%)]'>
         <GlobeAndStars />
       </div>
     )
@@ -212,7 +212,7 @@ const features = [
     href: 'https://github.com/iMartinDav/NextPortfolio',
     cta: 'Star repository',
     background: (
-      <div className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_40%,#000_70%)] group-hover:-translate-y-4 group-hover:scale-105'>
+      <div className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_40%,#000_70%)] group-hover:-translate-y-4 group-hover:scale-105'>
         <div className='flex h-2/3 w-full items-center justify-center text-7xl font-semibold transition-all duration-300 group-hover:-translate-y-2'>
           <a
             href='https://github.com/iMartinDav/NextPortfolio'
@@ -221,7 +221,7 @@ const features = [
             <Image
               src='/images/githubstar.webp'
               alt='GitHub logo'
-              className='h-14 w-14 drop-shadow'
+              className='h-14 w-14 drop-shadow-sm'
               width={56}
               height={56}
               priority
@@ -242,8 +242,8 @@ const features = [
     cta: 'All projects',
     background: (
       <div className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[102%]'>
-        <div className='absolute h-full w-full [mask-image:linear-gradient(to_top,transparent_20%,#000_70%)]'>
-          <div className='absolute h-full w-full [mask-image:linear-gradient(to_bottom,transparent_2%,#000_10%)]'>
+        <div className='absolute h-full w-full mask-[linear-gradient(to_top,transparent_20%,#000_70%)]'>
+          <div className='absolute h-full w-full mask-[linear-gradient(to_bottom,transparent_2%,#000_10%)]'>
             <div className='flex h-2/3 w-full items-center justify-center text-7xl font-semibold transition-all duration-300'>
               <div className='flex items-center gap-2'>
                 <ProjectPosts />
@@ -266,8 +266,8 @@ const features = [
     background: (
       <>
         <div className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[102%]'>
-          <div className='absolute h-full w-full [mask-image:linear-gradient(to_top,transparent_20%,#000_70%)]'>
-            <div className='absolute h-full w-full [mask-image:linear-gradient(to_bottom,transparent_2%,#000_10%)]' />
+          <div className='absolute h-full w-full mask-[linear-gradient(to_top,transparent_20%,#000_70%)]'>
+            <div className='absolute h-full w-full mask-[linear-gradient(to_bottom,transparent_2%,#000_10%)]' />
             <div className='sm:-translate-y-5'>
               <StatsChart />
             </div>
@@ -286,8 +286,8 @@ const features = [
     cta: 'Incubating Innovations',
     background: (
       <div className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[105%]'>
-        <div className='absolute h-full w-full [mask-image:linear-gradient(to_top,transparent_20%,#000_70%)]'>
-          <div className='absolute h-full w-full [mask-image:linear-gradient(to_bottom,transparent_2%,#000_10%)]'>
+        <div className='absolute h-full w-full mask-[linear-gradient(to_top,transparent_20%,#000_70%)]'>
+          <div className='absolute h-full w-full mask-[linear-gradient(to_bottom,transparent_2%,#000_10%)]'>
             <RippleCard />
           </div>
         </div>
@@ -305,7 +305,7 @@ const features = [
     background: (
       <div
         id='contact-form'
-        className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_0%,#000_0%)]'>
+        className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_0%,#000_0%)]'>
         <div className='absolute inset-0 z-50 flex items-center justify-center gap-5 p-5'>
           <div className='flex w-full max-w-sm flex-col gap-2'>
             <div className='flex w-full justify-start text-5xl font-semibold text-neutral-700 dark:text-neutral-300 md:text-6xl'>

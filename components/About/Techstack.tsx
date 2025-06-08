@@ -94,7 +94,7 @@ function Techstack() {
         />
         <TechItem
           icon={
-            <SiAngular className='bg-gradient-to-br from-pink-500 via-purple-500 to-purple-600' />
+            <SiAngular className='bg-linear-to-br from-pink-500 via-purple-500 to-purple-600' />
           }
           label='Angular'
         />

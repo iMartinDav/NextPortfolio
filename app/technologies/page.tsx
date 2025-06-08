@@ -8,7 +8,7 @@ export default function Tech() {
   return (
     <div className='flex min-h-screen flex-col'>
       {/* Main content should take full width, centered */}
-      <div className='mx-auto flex w-full max-w-2xl flex-grow flex-col items-center justify-center p-6'>
+      <div className='mx-auto flex w-full max-w-2xl grow flex-col items-center justify-center p-6'>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -225,7 +225,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className='flex flex-col gap-1 rounded-lg border p-4 transition-shadow hover:shadow-sm'>
+      className='flex flex-col gap-1 rounded-lg border p-4 transition-shadow hover:shadow-xs'>
       <div className='flex items-center justify-between'>
         <span className='text-sm text-muted-foreground'>{title}</span>
         <span className='text-muted-foreground'>{icon}</span>
@@ -443,7 +443,7 @@ export const StatsChart: React.FC = () => {
 
       {/* Loading state */}
       {isLoading && (
-        <div className='absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm'>
+        <div className='absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-xs'>
           <div className='h-8 w-8 animate-spin rounded-full border-2 border-current border-t-transparent text-primary' />
         </div>
       )}
