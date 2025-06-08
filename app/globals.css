@@ -1,4 +1,4 @@
-/* Import custom animations for Tailwind v4 compatibility */
+@config "../tailwind.config.ts";
 @import './animations.css';
 
 @tailwind base;
