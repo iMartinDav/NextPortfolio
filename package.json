@@ -9,7 +9,9 @@
     "lint": "next lint",
     "lint:fix": "eslint --fix \"./**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write \"./**/*.{js,jsx,ts,tsx}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "validate-v4": "node scripts/validate-v4-migration.js",
+    "v4-status": "./scripts/v4-status-report.sh"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

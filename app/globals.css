@@ -1,3 +1,6 @@
+/* Import custom animations for Tailwind v4 compatibility */
+@import './animations.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
