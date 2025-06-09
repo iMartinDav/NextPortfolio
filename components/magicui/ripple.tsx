@@ -8,32 +8,30 @@ interface RippleProps {
 }
 
 const Ripple = React.memo(function Ripple({
-  mainCircleSize = 210,
   mainCircleOpacity = 0.24,
-  numCircles = 8
+  numCircles = 6
 }: RippleProps) {
   return (
-    <div className='absolute inset-0 flex items-center justify-center bg-white/5 mask-[linear-gradient(to_bottom,white,transparent)]'>
+    <div className='absolute inset-0 flex items-center justify-center'>
       {Array.from({ length: numCircles }, (_, i) => {
-        const size = mainCircleSize + i * 70;
-        const opacity = mainCircleOpacity - i * 0.03;
-        const animationDelay = `${i * 0.06}s`;
-        const borderStyle = i === numCircles - 1 ? 'dashed' : 'solid';
-        const borderOpacity = 5 + i * 5;
+        const animationDelay = `${i * 1.5}s`;
+        const opacity = Math.max(mainCircleOpacity - i * 0.04, 0.02);
 
         return (
           <div
-            key={i}
-            className={`absolute left-1/2 top-1/2 translate-x-1/2 translate-y-1/2 animate-ripple rounded-full border bg-foreground/25 shadow-xl [--i:${i}]`}
+            key={`ripple-${i}-${numCircles}`}
+            className='absolute animate-ripple rounded-full border border-foreground/30 pointer-events-none'
             style={
               {
-                width: `${size}px`,
-                height: `${size}px`,
+                width: '20px',
+                height: '20px',
+                left: '50%',
+                top: '50%',
+                marginLeft: '-10px',
+                marginTop: '-10px',
                 opacity: opacity,
                 animationDelay: animationDelay,
-                borderStyle: borderStyle,
-                borderWidth: '1px',
-                borderColor: `rgba(var(--foreground-rgb), ${borderOpacity / 100})`
+                borderWidth: '3px'
               } as CSSProperties
             }
           />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -20,9 +20,18 @@ export default function Hero() {
   }
 
   return (
-    <section className='relative flex min-h-screen items-center overflow-hidden bg-linear-to-r from-[#EAEAFF] via-[#C8B6FF] to-[#7F00FF] dark:from-[#16141E] dark:via-[#0B0A21] dark:to-[#1D2A34]'>
-      <Particle />
-      <div className='container relative mx-auto px-6 py-20 md:py-32'>
+    <section className='relative flex min-h-screen items-center overflow-hidden bg-gradient-to-r from-[#EAEAFF] via-[#C8B6FF] to-[#7F00FF] dark:from-[#16141E] dark:via-[#0B0A21] dark:to-[#1D2A34]'>
+      {/* Particles Layer - Behind content but visible */}
+      <div className='absolute inset-0 z-0'>
+        <Particle
+          className='absolute inset-0 z-0'
+          lightModeColor='#33c7b2'
+          darkModeColor='#ffffff'
+        />
+      </div>
+
+      {/* Content Layer - Above particles */}
+      <div className='container relative z-10 mx-auto px-6 py-20 md:py-32'>
         <div className='flex flex-col-reverse items-center md:flex-row'>
           <div className='mb-12 flex w-full flex-col items-center text-center md:mb-0 md:w-6/12 md:items-start md:text-left'>
             <h1 className='mb-6 text-4xl font-extrabold leading-tight text-[#3D3C45] dark:text-[#EAEAFF] md:text-6xl'>

@@ -11,7 +11,12 @@ import { Github, Mail } from 'lucide-react';
 export default function BentoShowcase() {
   return (
     <div className='relative mx-auto flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl'>
-      <div className='z-50 flex h-full flex-col items-start justify-center overflow-hidden p-6'>
+      {/* Meteor Effect - positioned behind content */}
+      <div className='absolute inset-0 z-0'>
+        <MeteorShower number={20} />
+      </div>
+
+      <div className='relative z-10 flex h-full flex-col items-start justify-center p-6'>
         <WordPullUp words='Code Meets Biotech' />
 
         <div className='w-full text-xs text-neutral-500 dark:text-neutral-400 sm:text-sm md:text-lg lg:px-1'>
@@ -41,6 +46,7 @@ export default function BentoShowcase() {
               <a
                 href='mailto:martin@bioinfometrics.com'
                 target='_blank'
+                rel='noreferrer'
                 className='flex-1'>
                 <Button
                   variant='default'
@@ -54,7 +60,6 @@ export default function BentoShowcase() {
           </FadeIn>
         </div>
       </div>
-      <MeteorShower />
     </div>
   );
 }

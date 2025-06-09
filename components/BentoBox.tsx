@@ -5,8 +5,8 @@ import { memo, useEffect, useMemo, useState } from 'react';
 
 import { useTheme } from 'next-themes';
 
-import { motion } from 'framer-motion';
 import type { MotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface BentoBoxProps extends React.PropsWithChildren {
   className?: string;
@@ -35,34 +35,64 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
     const currentTheme = mounted ? resolvedTheme || theme : 'light'; // Default to light for SSR
 
     const styles = useMemo(() => {
-      const borderColor =
-        currentTheme === 'dark' ? 'border-gray-700' : 'border-gray-300';
-      const foregroundColor =
-        currentTheme === 'dark' ? 'bg-foreground-dark' : 'bg-foreground-light';
-      return { borderColor, foregroundColor };
-    }, [currentTheme]);
+      const isDark = currentTheme === 'dark';
+
+      // Proper background colors for each theme
+      const cardBackground = isDark
+        ? 'bg-gray-900/80 backdrop-blur-sm'
+        : 'bg-white/90 backdrop-blur-sm';
+
+      const borderBackground = isDark
+        ? 'bg-gray-900'
+        : 'bg-white';
+
+      // Enhanced glow colors for better visibility in both themes
+      const enhancedGlowColor = isDark
+        ? glowColor
+        : glowColor.includes('rgba')
+          ? glowColor.replace(/[\d.]+\)$/, '0.9)')  // Increase opacity for light mode
+          : 'rgba(59, 130, 246, 0.9)'; // Fallback bright color for light mode
+
+      return { cardBackground, borderBackground, enhancedGlowColor, isDark };
+    }, [currentTheme, glowColor]);
 
     // Render a simple version during SSR that matches initial client render
     // This avoids the hydration mismatch
     return (
       <motion.div
         suppressHydrationWarning
-        className={`relative ${styles.foregroundColor} overflow-hidden rounded-3xl p-1 shadow-lg ${className} ${styles.borderColor} border border-opacity-30`}
+        className={`group relative overflow-hidden rounded-3xl p-1 shadow-lg ${className}`}
         whileHover={{ scale: hoverScale }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         {...motionProps}>
+
+        {/* Animated Border Glow Effect */}
+        <div className="absolute inset-0 rounded-3xl opacity-95">
+          <div
+            className="absolute inset-0 rounded-3xl animate-border-glow"
+            style={{
+              background: `conic-gradient(from 0deg, transparent 10%, ${styles.enhancedGlowColor} 20%, transparent 35%, ${styles.enhancedGlowColor} 50%, transparent 65%, ${styles.enhancedGlowColor} 80%, transparent 95%)`,
+              padding: '4px'
+            }}
+          />
+          <div className={`absolute inset-[4px] rounded-3xl ${styles.borderBackground} shadow-lg`} />
+        </div>
+
+        {/* Inner Glow Effect */}
         <div
           suppressHydrationWarning
-          className='absolute inset-0 h-[200px] w-[200px] rotate-45 animate-glow-move offset-path-rect'
+          className='absolute inset-0 h-[200px] w-[200px] rotate-45 animate-glow-move offset-path-rect opacity-20'
           style={{
-            background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`
+            background: `radial-gradient(circle, ${styles.enhancedGlowColor} 0%, transparent 70%)`
           }}
         />
+
+        {/* Content Container */}
         <div
           suppressHydrationWarning
-          className={`relative z-10 ${styles.foregroundColor} rounded-3xl border border-opacity-50 p-4 ${styles.borderColor} shadow-inner`}>
+          className={`relative z-10 rounded-3xl p-4 shadow-inner ${styles.cardBackground}`}>
           {children}
         </div>
       </motion.div>

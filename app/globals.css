@@ -54,7 +54,8 @@
   --animate-meteor: meteor 5s linear infinite;
   --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
   --animate-grid: grid 15s linear infinite;
-  --animate-ripple: ripple 3400ms ease infinite;
+  --animate-ripple: ripple 6s ease-out infinite;
+  --animate-border-glow: border-glow 8s linear infinite;
   --animate-glow-move: move 5s linear infinite;
   --animate-particles: k calc(var(--m) * 1s) linear
     calc(var(--m) * var(--t, 0) * 1s) infinite;
@@ -143,12 +144,13 @@
     }
   }
   @keyframes ripple {
-    0%,
-    100% {
-      transform: translate(-50%, -50%) scale(1);
+    0% {
+      transform: scale(0);
+      opacity: 1;
     }
-    50% {
-      transform: translate(-50%, -50%) scale(0.9);
+    100% {
+      transform: scale(20);
+      opacity: 0;
     }
   }
   @keyframes move {
@@ -581,6 +583,11 @@
 /* Enhanced ButtonWithParticles Styles */
 /* --------- */
 
+/* Custom meteor rotation utility */
+.meteor-rotate {
+  transform: rotate(215deg);
+}
+
 @keyframes customFloat {
   0%,
   100% {
@@ -795,11 +802,14 @@ input[type='checkbox']:checked::after {
 }
 
 #tsparticles {
-  position: fixed !important;
+  position: absolute !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
-  width: 100%;
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  mix-blend-mode: normal !important;
 }
 
 .home-header {
@@ -867,39 +877,56 @@ footer {
   font-family: 'Inter', sans-serif;
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
-  padding: 2rem 1rem;
+  padding: 0.75rem 1rem;
   transition: padding 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+footer a {
+  pointer-events: auto;
+  cursor: pointer;
+  position: relative;
+  z-index: 20;
+}
+
+footer ul {
+  pointer-events: auto;
+}
+
+footer li {
+  pointer-events: auto;
 }
 
 footer h3 {
   margin: 0;
-  font-size: 1.75rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
 footer .text-xl {
-  font-size: 1.5rem;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 
 footer .text-lg {
-  font-size: 1.125rem;
+  font-size: 0.75rem;
   font-weight: 400;
 }
 
 footer .space-y-8 {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
 }
 
 footer .space-x-6,
 footer .space-x-8 {
   display: flex;
-  gap: 1.5rem;
+  gap: 0.75rem;
 }
 
 footer .space-x-8 {
-  gap: 2rem;
+  gap: 1rem;
 }
 
 footer .transition-transform {
@@ -909,29 +936,29 @@ footer .transition-transform {
 }
 
 footer .transform:hover {
-  transform: scale(1.25);
+  transform: scale(1.1);
   color: #fbbf24;
   /* Gold color on hover for icons */
 }
 
 @media (max-width: 767px) {
   footer {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
   }
 
   footer h3 {
-    font-size: 1.5rem;
+    font-size: 0.75rem;
   }
 
   footer .text-xl {
-    font-size: 1.375rem;
+    font-size: 0.75rem;
   }
 }
 
 @media (min-width: 768px) {
   footer {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 }
