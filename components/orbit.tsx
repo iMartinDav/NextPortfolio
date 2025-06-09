@@ -2,32 +2,45 @@ import OrbitingCircles from '@/components/magicui/orbiting-circles';
 
 import { AiOutlineDocker } from 'react-icons/ai';
 import { FaGithub, FaLaptop } from 'react-icons/fa';
-import { SiFastapi, SiJavascript, SiNextdotjs, SiNginx, SiOpenai, SiPocketbase, SiPython, SiReact, SiSvelte, SiTypescript, SiUbuntu, SiVercel } from 'react-icons/si';
+import {
+  SiFastapi,
+  SiJavascript,
+  SiNextdotjs,
+  SiNginx,
+  SiOpenai,
+  SiPocketbase,
+  SiPython,
+  SiReact,
+  SiSvelte,
+  SiTypescript,
+  SiUbuntu,
+  SiVercel
+} from 'react-icons/si';
 
 export default function Orbit() {
   return (
-    <div className='relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20 md:shadow-xl'>
+    <div className='relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 via-white to-blue-50/30 md:shadow-xl dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20'>
       {/* Clean background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:24px_24px] opacity-20" />
+      <div className='absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:24px_24px] opacity-20' />
 
       {/* Orbit paths - simple dashed circles */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className='pointer-events-none absolute inset-0'>
         {[50, 100, 150, 200].map((radius) => (
           <div
             key={radius}
-            className="absolute top-1/2 left-1/2 border border-dashed border-blue-400/30 rounded-full"
+            className='absolute top-1/2 left-1/2 rounded-full border border-dashed border-blue-400/30'
             style={{
               width: `${radius * 2}px`,
               height: `${radius * 2}px`,
               marginLeft: `-${radius}px`,
-              marginTop: `-${radius}px`,
+              marginTop: `-${radius}px`
             }}
           />
         ))}
       </div>
 
       {/* Center GitHub icon */}
-      <div className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-lg">
+      <div className='relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-lg dark:bg-gray-800'>
         <Icons.gitHub />
       </div>
 
@@ -35,7 +48,7 @@ export default function Orbit() {
 
       {/* Inner orbit (50px) - React at 0°, Next.js at 180° */}
       <OrbitingCircles
-        className='h-8 w-8 border-none bg-white dark:bg-gray-800 shadow-lg'
+        className='h-8 w-8 border-none bg-white shadow-lg dark:bg-gray-800'
         duration={20}
         delay={0}
         radius={50}>
@@ -43,7 +56,7 @@ export default function Orbit() {
       </OrbitingCircles>
 
       <OrbitingCircles
-        className='h-8 w-8 border-none bg-white dark:bg-gray-800 shadow-lg'
+        className='h-8 w-8 border-none bg-white shadow-lg dark:bg-gray-800'
         duration={20}
         delay={-10}
         radius={50}>
@@ -52,7 +65,7 @@ export default function Orbit() {
 
       {/* Second orbit (100px) - TypeScript at 0°, Python at 180°, reverse direction */}
       <OrbitingCircles
-        className='h-8 w-8 border-none bg-white dark:bg-gray-800 shadow-lg'
+        className='h-8 w-8 border-none bg-white shadow-lg dark:bg-gray-800'
         duration={30}
         delay={0}
         radius={100}
@@ -61,7 +74,7 @@ export default function Orbit() {
       </OrbitingCircles>
 
       <OrbitingCircles
-        className='h-8 w-8 border-none bg-white dark:bg-gray-800 shadow-lg'
+        className='h-8 w-8 border-none bg-white shadow-lg dark:bg-gray-800'
         duration={30}
         delay={-15}
         radius={100}
@@ -71,7 +84,7 @@ export default function Orbit() {
 
       {/* Third orbit (150px) - Docker at 0°, Vercel at 180° */}
       <OrbitingCircles
-        className='h-8 w-8 border-none bg-white dark:bg-gray-800 shadow-lg'
+        className='h-8 w-8 border-none bg-white shadow-lg dark:bg-gray-800'
         duration={40}
         delay={0}
         radius={150}>
@@ -79,7 +92,7 @@ export default function Orbit() {
       </OrbitingCircles>
 
       <OrbitingCircles
-        className='h-8 w-8 border-none bg-white dark:bg-gray-800 shadow-lg'
+        className='h-8 w-8 border-none bg-white shadow-lg dark:bg-gray-800'
         duration={40}
         delay={-20}
         radius={150}>
@@ -88,7 +101,7 @@ export default function Orbit() {
 
       {/* Outer orbit (200px) - OpenAI at 0°, FastAPI at 180°, reverse direction */}
       <OrbitingCircles
-        className='h-8 w-8 border-none bg-white dark:bg-gray-800 shadow-lg'
+        className='h-8 w-8 border-none bg-white shadow-lg dark:bg-gray-800'
         duration={50}
         delay={0}
         radius={200}
@@ -97,7 +110,7 @@ export default function Orbit() {
       </OrbitingCircles>
 
       <OrbitingCircles
-        className='h-8 w-8 border-none bg-white dark:bg-gray-800 shadow-lg'
+        className='h-8 w-8 border-none bg-white shadow-lg dark:bg-gray-800'
         duration={50}
         delay={-25}
         radius={200}

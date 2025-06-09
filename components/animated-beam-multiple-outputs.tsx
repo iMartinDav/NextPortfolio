@@ -23,6 +23,8 @@ import { IconProps } from '@radix-ui/react-icons/dist/types';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 const Circle = forwardRef<
   HTMLDivElement,
   { className?: string; children?: React.ReactNode }
@@ -57,7 +59,7 @@ export function AnimatedBeamMultipleOutputs({
   return (
     <div
       className={cn(
-        'relative flex w-full max-w-[500px] items-center justify-center overflow-hidden rounded-lg border bg-background p-10 md:shadow-xl lg:max-w-full',
+        'bg-background relative flex w-full max-w-[500px] items-center justify-center overflow-hidden rounded-lg border p-10 md:shadow-xl lg:max-w-full',
         className
       )}
       ref={containerRef}>

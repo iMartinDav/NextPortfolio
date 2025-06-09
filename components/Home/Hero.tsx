@@ -31,10 +31,10 @@ export default function Hero() {
       </div>
 
       {/* Content Layer - Above particles */}
-      <div className='container relative z-10 mx-auto px-6 py-20 md:py-32'>
+      <div className='relative z-10 container mx-auto px-6 py-20 md:py-32'>
         <div className='flex flex-col-reverse items-center md:flex-row'>
           <div className='mb-12 flex w-full flex-col items-center text-center md:mb-0 md:w-6/12 md:items-start md:text-left'>
-            <h1 className='mb-6 text-4xl font-extrabold leading-tight text-[#3D3C45] dark:text-[#EAEAFF] md:text-6xl'>
+            <h1 className='mb-6 text-4xl leading-tight font-extrabold text-[#3D3C45] md:text-6xl dark:text-[#EAEAFF]'>
               Hi There!
               <span
                 className='wave text-4xl'
@@ -44,11 +44,11 @@ export default function Hero() {
               </span>
             </h1>
 
-            <h2 className='mb-6 text-3xl font-bold text-[#3D3C45] dark:text-[#EAEAFF] md:text-5xl'>
+            <h2 className='mb-6 text-3xl font-bold text-[#3D3C45] md:text-5xl dark:text-[#EAEAFF]'>
               I&apos;m <strong className='main-name'>Martin DAVILA</strong>
             </h2>
 
-            <h3 className='mb-6 text-4xl font-extrabold leading-tight text-[#3D3C45] dark:text-[#EAEAFF] md:text-6xl'>
+            <h3 className='mb-6 text-4xl leading-tight font-extrabold text-[#3D3C45] md:text-6xl dark:text-[#EAEAFF]'>
               Decoding Life&apos;s Blueprint
               <span
                 className='wave text-4xl'
@@ -74,7 +74,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className='mb-12 mt-10 flex justify-center md:mt-20 md:justify-end'>
+        <div className='mt-10 mb-12 flex justify-center md:mt-20 md:justify-end'>
           <a
             href='#contact'
             className='transform transition-transform hover:scale-105'>

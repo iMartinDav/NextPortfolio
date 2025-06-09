@@ -24,11 +24,11 @@ const BentoContact = () => {
 
   return (
     <section
-      className='my-20 space-y-20 bg-background p-4 text-foreground'
+      className='bg-background text-foreground my-20 space-y-20 p-4'
       id='contact'>
       <div className='grid h-full grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
         {/* Section 1: Introduction */}
-        <div className='col-span-1 rounded-lg border border-border bg-card bg-opacity-50 p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:row-span-3'>
+        <div className='border-border bg-card bg-opacity-50 col-span-1 rounded-lg border p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:row-span-3'>
           <div className='flex flex-col items-start justify-center'>
             <EvervaultCard
               text="Crafting Tomorrow's Solutions"
@@ -47,7 +47,7 @@ const BentoContact = () => {
         </div>
 
         {/* Section 2: The Bioinformatics Journey */}
-        <div className='col-span-1 rounded-lg border border-border bg-card bg-opacity-50 p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:row-span-3'>
+        <div className='border-border bg-card bg-opacity-50 col-span-1 rounded-lg border p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:row-span-3'>
           <div className='flex flex-col items-start justify-center'>
             <EvervaultCard
               text='Innovative Solutions'
@@ -66,7 +66,7 @@ const BentoContact = () => {
         </div>
 
         {/* Section 3: Global Impact */}
-        <div className='col-span-1 rounded-lg border border-border bg-card bg-opacity-50 p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:row-span-4'>
+        <div className='border-border bg-card bg-opacity-50 col-span-1 rounded-lg border p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:row-span-4'>
           <div className='flex flex-col items-center justify-center'>
             <div className='h-80 w-full'>
               <Globe
@@ -89,10 +89,10 @@ const BentoContact = () => {
               />
             </div>
             <div className='mt-4 text-center'>
-              <p className='text-2xl font-bold text-foreground'>
+              <p className='text-foreground text-2xl font-bold'>
                 A Global Network of Innovation
               </p>
-              <p className='mt-2 text-muted-foreground'>
+              <p className='text-muted-foreground mt-2'>
                 Collaboration knows no boundaries. From Lyon to every corner of
                 the globe, the focus remains on driving advancements that
                 influence and enhance the biotech industry worldwide.
@@ -107,7 +107,7 @@ const BentoContact = () => {
         </div>
 
         {/* Section 4: Journey Through Experience */}
-        <div className='rounded-lg border border-border bg-card bg-opacity-50 p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:col-span-2 xl:row-span-3'>
+        <div className='border-border bg-card bg-opacity-50 rounded-lg border p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:col-span-2 xl:row-span-3'>
           <div className='flex flex-col items-start justify-center'>
             <EvervaultCard
               text='A Path of Discovery'
@@ -126,14 +126,14 @@ const BentoContact = () => {
         </div>
 
         {/* Section 5: Invitation to Connect */}
-        <div className='rounded-lg border border-border bg-card bg-opacity-50 p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:col-span-1 xl:row-span-2'>
+        <div className='border-border bg-card bg-opacity-50 rounded-lg border p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:col-span-1 xl:row-span-2'>
           <div className='flex flex-col items-center'>
             <EvervaultCard
               text='Explore the Future Together'
               className='h-32 w-full md:h-48 lg:h-56'
             />
             <div className='mt-4 w-full space-y-2'>
-              <p className='text-center text-muted-foreground'>
+              <p className='text-muted-foreground text-center'>
                 As the world of bioinformatics and biotech continues to evolve,
                 there’s always room for new partnerships and collaborative
                 endeavors. Reach out to explore how we can drive innovation and

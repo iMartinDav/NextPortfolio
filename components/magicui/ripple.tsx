@@ -20,7 +20,7 @@ const Ripple = React.memo(function Ripple({
         return (
           <div
             key={`ripple-${i}-${numCircles}`}
-            className='absolute animate-ripple rounded-full border border-foreground/30 pointer-events-none'
+            className='animate-ripple border-foreground/30 pointer-events-none absolute rounded-full border'
             style={
               {
                 width: '20px',

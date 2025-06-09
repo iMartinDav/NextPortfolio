@@ -84,7 +84,7 @@ export function CardPattern({
       <motion.div
         className='absolute inset-0 rounded-2xl opacity-0 mix-blend-overlay group-hover/card:opacity-100'
         style={style}>
-        <p className='absolute inset-x-0 h-full whitespace-pre-wrap break-words font-mono text-xs font-bold text-white transition duration-500'>
+        <p className='absolute inset-x-0 h-full font-mono text-xs font-bold break-words whitespace-pre-wrap text-white transition duration-500'>
           {randomString}
         </p>
       </motion.div>
@@ -112,7 +112,7 @@ export const TouchButton = ({
   return (
     <button
       onClick={onClick}
-      className='flex transform items-center justify-center rounded-lg bg-blue-500 p-4 text-white shadow-lg transition-transform hover:scale-105 focus:outline-hidden focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 active:scale-95'
+      className='focus:ring-opacity-50 flex transform items-center justify-center rounded-lg bg-blue-500 p-4 text-white shadow-lg transition-transform hover:scale-105 focus:ring-2 focus:ring-blue-400 focus:outline-hidden active:scale-95'
       aria-label={label}
       style={{ minWidth: '44px', minHeight: '44px' }}>
       {label}

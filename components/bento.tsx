@@ -36,7 +36,7 @@ const features = [
       <>
         <div
           id='BentoShowcase'
-          className='absolute right-0 top-0 h-full w-full border-none transition-all duration-300 ease-out'>
+          className='absolute top-0 right-0 h-full w-full border-none transition-all duration-300 ease-out'>
           <BentoShowcase />
         </div>
       </>
@@ -52,7 +52,7 @@ const features = [
     cta: 'Explore my digital lab',
     background: (
       <div>
-        <div className='absolute right-0 top-0 h-3/4 w-full border-none transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_5%,#000_50%)] group-hover:scale-105'>
+        <div className='absolute top-0 right-0 h-3/4 w-full border-none mask-[linear-gradient(to_top,transparent_5%,#000_50%)] transition-all duration-300 ease-out group-hover:scale-105'>
           <BlurIn
             duration={0.5}
             className='h-full'>
@@ -80,7 +80,7 @@ const features = [
                 ? `${process.env.NEXT_PUBLIC_DISCORD}`
                 : '#contact-form'
             }
-            className='max-w-3/4 absolute right-2 top-2 w-fit rounded-lg bg-background px-4 py-2 text-xs text-neutral-500 dark:text-neutral-300'>
+            className='bg-background absolute top-2 right-2 w-fit max-w-3/4 rounded-lg px-4 py-2 text-xs text-neutral-500 dark:text-neutral-300'>
             <div className='flex items-center gap-2'>
               <div
                 className={`h-3 w-3 animate-pulse rounded-full ${
@@ -115,7 +115,7 @@ const features = [
         animate={{ opacity: 1 }}
         transition={{ duration: 2.5 }}>
         <Marquee
-          className='absolute top-10 h-2/3 w-full [--duration:40s] mask-[linear-gradient(to_top,transparent_10%,#000_100%)]'
+          className='absolute top-10 h-2/3 w-full mask-[linear-gradient(to_top,transparent_10%,#000_100%)] [--duration:40s]'
           pauseOnHover>
           {defaultDomains.map((f, idx) => (
             <a
@@ -151,7 +151,7 @@ const features = [
     cta: 'View all technologies',
     className: 'col-span-3 md:col-span-2',
     background: (
-      <div className='absolute right-0 top-0 w-[80%] origin-top translate-x-0 transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_40%,#000_70%)] group-hover:-translate-y-5 group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_50%,#000_70%)]'>
+      <div className='absolute top-0 right-0 w-[80%] origin-top translate-x-0 mask-[linear-gradient(to_top,transparent_40%,#000_70%)] transition-all duration-300 ease-out group-hover:-translate-y-5 group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_50%,#000_70%)]'>
         <FadeIn direction='up'>
           <Technologies />
         </FadeIn>
@@ -171,7 +171,7 @@ const features = [
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5 }}>
-        <AnimatedBeamMultipleOutputs className='absolute right-0 top-4 h-[300px] w-[600px] border-none transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_0%,#000_100%)]' />
+        <AnimatedBeamMultipleOutputs className='absolute top-4 right-0 h-[300px] w-[600px] border-none mask-[linear-gradient(to_top,transparent_10%,#000_100%)] transition-all duration-300 ease-out group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_0%,#000_100%)]' />
       </motion.div>
     )
   },
@@ -183,7 +183,7 @@ const features = [
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/vercel`,
     cta: 'Learn more',
     background: (
-      <div className='absolute right-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_25%,#000_70%)] group-hover:scale-105'>
+      <div className='absolute top-0 right-0 h-full w-full origin-top rounded-md mask-[linear-gradient(to_top,transparent_25%,#000_70%)] transition-all duration-300 ease-out group-hover:scale-105'>
         <Orbit />
       </div>
     )
@@ -198,7 +198,7 @@ const features = [
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/vercel`,
     cta: 'Learn more',
     background: (
-      <div className='absolute right-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:-translate-y-4 group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_10%,#000_100%)]'>
+      <div className='absolute top-0 right-0 h-full w-full origin-top rounded-md mask-[linear-gradient(to_top,transparent_20%,#000_100%)] transition-all duration-300 ease-out group-hover:-translate-y-4 group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_10%,#000_100%)]'>
         <GlobeAndStars />
       </div>
     )
@@ -212,7 +212,7 @@ const features = [
     href: 'https://github.com/iMartinDav/NextPortfolio',
     cta: 'Star repository',
     background: (
-      <div className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_40%,#000_70%)] group-hover:-translate-y-4 group-hover:scale-105'>
+      <div className='absolute top-0 left-0 h-full w-full origin-top rounded-md mask-[linear-gradient(to_top,transparent_40%,#000_70%)] transition-all duration-300 ease-out group-hover:-translate-y-4 group-hover:scale-105'>
         <div className='flex h-2/3 w-full items-center justify-center text-7xl font-semibold transition-all duration-300 group-hover:-translate-y-2'>
           <a
             href='https://github.com/iMartinDav/NextPortfolio'
@@ -241,7 +241,7 @@ const features = [
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/projects`,
     cta: 'All projects',
     background: (
-      <div className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[102%]'>
+      <div className='absolute top-0 left-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[102%]'>
         <div className='absolute h-full w-full mask-[linear-gradient(to_top,transparent_20%,#000_70%)]'>
           <div className='absolute h-full w-full mask-[linear-gradient(to_bottom,transparent_2%,#000_10%)]'>
             <div className='flex h-2/3 w-full items-center justify-center text-7xl font-semibold transition-all duration-300'>
@@ -265,7 +265,7 @@ const features = [
     className: 'col-span-3 md:col-span-2',
     background: (
       <>
-        <div className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[102%]'>
+        <div className='absolute top-0 left-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[102%]'>
           <div className='absolute h-full w-full mask-[linear-gradient(to_top,transparent_20%,#000_70%)]'>
             <div className='absolute h-full w-full mask-[linear-gradient(to_bottom,transparent_2%,#000_10%)]' />
             <div className='sm:-translate-y-5'>
@@ -285,7 +285,7 @@ const features = [
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/biocode`,
     cta: 'Incubating Innovations',
     background: (
-      <div className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[105%]'>
+      <div className='absolute top-0 left-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[105%]'>
         <div className='absolute h-full w-full mask-[linear-gradient(to_top,transparent_20%,#000_70%)]'>
           <div className='absolute h-full w-full mask-[linear-gradient(to_bottom,transparent_2%,#000_10%)]'>
             <RippleCard />
@@ -305,10 +305,10 @@ const features = [
     background: (
       <div
         id='contact-form'
-        className='absolute left-0 top-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out mask-[linear-gradient(to_top,transparent_0%,#000_0%)]'>
+        className='absolute top-0 left-0 h-full w-full origin-top rounded-md mask-[linear-gradient(to_top,transparent_0%,#000_0%)] transition-all duration-300 ease-out'>
         <div className='absolute inset-0 z-50 flex items-center justify-center gap-5 p-5'>
           <div className='flex w-full max-w-sm flex-col gap-2'>
-            <div className='flex w-full justify-start text-5xl font-semibold text-neutral-700 dark:text-neutral-300 md:text-6xl'>
+            <div className='flex w-full justify-start text-5xl font-semibold text-neutral-700 md:text-6xl dark:text-neutral-300'>
               <BlurIn
                 duration={0.5}
                 className='h-full'>

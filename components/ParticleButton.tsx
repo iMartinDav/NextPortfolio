@@ -67,7 +67,7 @@ const ButtonWithParticles: React.FC = () => {
           onChange={(e) => setSlow(e.target.checked)}
           className='h-5 w-5 rounded-lg border-purple-400 bg-purple-100 focus:ring-purple-500'
         />
-        <span className='select-none text-sm font-semibold'>
+        <span className='text-sm font-semibold select-none'>
           ✦ Stellar Time Dilation ✦
         </span>
       </label>
@@ -165,7 +165,7 @@ const ButtonWithParticles: React.FC = () => {
           {/* Text over the button */}
           <div className='relative z-40 flex items-center justify-center space-x-2'>
             <Sparkles
-              className={`h-5 w-5 transition-all duration-1000 ${isHovered ? 'rotate-180 scale-150 text-purple-300' : 'text-blue-200'}`}
+              className={`h-5 w-5 transition-all duration-1000 ${isHovered ? 'scale-150 rotate-180 text-purple-300' : 'text-blue-200'}`}
             />
             <span className='group relative text-sm'>
               <span
@@ -173,7 +173,7 @@ const ButtonWithParticles: React.FC = () => {
                 Connect
               </span>
               <span
-                className={`absolute left-0 top-0 transition-all duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                className={`absolute top-0 left-0 transition-all duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
                 ✦ Explore ✦
               </span>
             </span>

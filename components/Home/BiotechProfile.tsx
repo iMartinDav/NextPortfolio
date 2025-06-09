@@ -56,7 +56,7 @@ interface GradientTextProps {
 }
 
 const GradientText: React.FC<GradientTextProps> = memo(({ children }) => (
-  <span className='bg-linear-to-r from-blue-light to-purple-light bg-clip-text text-transparent'>
+  <span className='from-blue-light to-purple-light bg-linear-to-r bg-clip-text text-transparent'>
     {children}
   </span>
 ));
@@ -149,7 +149,7 @@ const BiotechProfile: React.FC = () => {
                     key={item}
                     className='flex items-center'>
                     <span
-                      className='mr-2 text-blue-light'
+                      className='text-blue-light mr-2'
                       aria-hidden='true'>
                       ✓
                     </span>
@@ -172,7 +172,7 @@ const BiotechProfile: React.FC = () => {
               />
             </div>
             <motion.div
-              className='absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform'
+              className='absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform'
               whileHover={{ scale: 1.1 }}
               transition={{ type: 'spring', stiffness: 300, damping: 10 }}>
               <Image
@@ -180,7 +180,7 @@ const BiotechProfile: React.FC = () => {
                 alt='Profile photo of Martin Davila'
                 width={200}
                 height={200}
-                className='rounded-full border-4 border-secondary shadow-lg'
+                className='border-secondary rounded-full border-4 shadow-lg'
                 priority={true}
               />
             </motion.div>
@@ -208,7 +208,7 @@ const BiotechProfile: React.FC = () => {
                   href={href}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='block p-2 text-2xl text-primary transition-colors hover:text-blue-light'
+                  className='text-primary hover:text-blue-light block p-2 text-2xl transition-colors'
                   aria-label={label}>
                   <Icon aria-hidden='true' />
                 </a>

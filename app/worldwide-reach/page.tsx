@@ -27,7 +27,7 @@ export default async function WorldwideReach() {
               include AWS, Google Cloud, and Azure.
             </div>
 
-            <ul className='ml-10 mt-2 list-disc'>
+            <ul className='mt-2 ml-10 list-disc'>
               <li>Vercel</li>
               <li>AWS</li>
               <li>Azure</li>

@@ -23,38 +23,34 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
     hoverScale = 1.02,
     motionProps
   }) => {
-    const { theme, resolvedTheme } = useTheme();
+    const { resolvedTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
 
-    // Effect to set mounted state
+    // Effect to set mounted state - only runs once
     useEffect(() => {
       setMounted(true);
     }, []);
 
-    // Use a consistent theme value that works in both server and client
-    const currentTheme = mounted ? resolvedTheme || theme : 'light'; // Default to light for SSR
+    // Use a stable theme value to prevent infinite re-renders
+    const isDark = mounted ? resolvedTheme === 'dark' : false;
 
     const styles = useMemo(() => {
-      const isDark = currentTheme === 'dark';
-
       // Proper background colors for each theme
       const cardBackground = isDark
         ? 'bg-gray-900/80 backdrop-blur-sm'
         : 'bg-white/90 backdrop-blur-sm';
 
-      const borderBackground = isDark
-        ? 'bg-gray-900'
-        : 'bg-white';
+      const borderBackground = isDark ? 'bg-gray-900' : 'bg-white';
 
       // Enhanced glow colors for better visibility in both themes
       const enhancedGlowColor = isDark
         ? glowColor
         : glowColor.includes('rgba')
-          ? glowColor.replace(/[\d.]+\)$/, '0.9)')  // Increase opacity for light mode
+          ? glowColor.replace(/[\d.]+\)$/, '0.9)') // Increase opacity for light mode
           : 'rgba(59, 130, 246, 0.9)'; // Fallback bright color for light mode
 
       return { cardBackground, borderBackground, enhancedGlowColor, isDark };
-    }, [currentTheme, glowColor]);
+    }, [isDark, glowColor]);
 
     // Render a simple version during SSR that matches initial client render
     // This avoids the hydration mismatch
@@ -67,23 +63,24 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         {...motionProps}>
-
         {/* Animated Border Glow Effect */}
-        <div className="absolute inset-0 rounded-3xl opacity-95">
+        <div className='absolute inset-0 rounded-3xl opacity-95'>
           <div
-            className="absolute inset-0 rounded-3xl animate-border-glow"
+            className='animate-border-glow absolute inset-0 rounded-3xl'
             style={{
               background: `conic-gradient(from 0deg, transparent 10%, ${styles.enhancedGlowColor} 20%, transparent 35%, ${styles.enhancedGlowColor} 50%, transparent 65%, ${styles.enhancedGlowColor} 80%, transparent 95%)`,
               padding: '4px'
             }}
           />
-          <div className={`absolute inset-[4px] rounded-3xl ${styles.borderBackground} shadow-lg`} />
+          <div
+            className={`absolute inset-[4px] rounded-3xl ${styles.borderBackground} shadow-lg`}
+          />
         </div>
 
         {/* Inner Glow Effect */}
         <div
           suppressHydrationWarning
-          className='absolute inset-0 h-[200px] w-[200px] rotate-45 animate-glow-move offset-path-rect opacity-20'
+          className='animate-glow-move offset-path-rect absolute inset-0 h-[200px] w-[200px] rotate-45 opacity-20'
           style={{
             background: `radial-gradient(circle, ${styles.enhancedGlowColor} 0%, transparent 70%)`
           }}

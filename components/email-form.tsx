@@ -50,7 +50,7 @@ export function EmailForm() {
         title: 'Email submitted successfully!',
         description: (
           <>
-            <pre className='my-2 w-full rounded-md bg-background p-4'>
+            <pre className='bg-background my-2 w-full rounded-md p-4'>
               <code className='text-neutral-500 dark:text-neutral-300'>
                 {record.email}
               </code>

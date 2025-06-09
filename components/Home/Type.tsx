@@ -13,8 +13,7 @@ const ANIMATION_SETTINGS = {
 const THEME_GRADIENTS = {
   primary: {
     pokemon: 'bg-linear-to-r from-purple-700 via-pink-500 to-purple-500',
-    bioinformatics:
-      'bg-linear-to-r from-purple-600 via-indigo-500 to-blue-500',
+    bioinformatics: 'bg-linear-to-r from-purple-600 via-indigo-500 to-blue-500',
     research: 'bg-linear-to-r from-blue-600 via-cyan-500 to-blue-400',
     dna: 'bg-linear-to-r from-emerald-600 via-teal-500 to-cyan-400',
     protein: 'bg-linear-to-r from-green-500 via-emerald-400 to-teal-500',
@@ -182,7 +181,7 @@ const TypewriterEffect: React.FC = () => {
       className={cn(
         'relative w-full text-center',
         'text-xl md:text-2xl lg:text-3xl xl:text-4xl',
-        'font-medium leading-relaxed'
+        'leading-relaxed font-medium'
       )}>
       <div className='relative z-10'>
         <style>

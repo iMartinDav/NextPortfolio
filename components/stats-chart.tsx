@@ -227,7 +227,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
       transition={{ duration: 0.3 }}
       className='flex flex-col gap-1 rounded-lg border p-4 transition-shadow hover:shadow-xs'>
       <div className='flex items-center justify-between'>
-        <span className='text-sm text-muted-foreground'>{title}</span>
+        <span className='text-muted-foreground text-sm'>{title}</span>
         <span className='text-muted-foreground'>{icon}</span>
       </div>
       <div className='flex items-baseline gap-2'>
@@ -277,12 +277,12 @@ export const StatsChart: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <div className='flex flex-col items-center justify-center px-4 py-12 text-center'>
-          <ChartIcon className='mb-4 h-10 w-10 text-muted-foreground' />
-          {error && <p className='mb-4 text-muted-foreground'>{error}</p>}
+          <ChartIcon className='text-muted-foreground mb-4 h-10 w-10' />
+          {error && <p className='text-muted-foreground mb-4'>{error}</p>}
           <button
             type='button'
             onClick={resetAndRetry}
-            className='rounded bg-primary px-4 py-2 text-sm text-white hover:bg-primary/90'>
+            className='bg-primary hover:bg-primary/90 rounded px-4 py-2 text-sm text-white'>
             Retry
           </button>
         </div>
@@ -346,7 +346,7 @@ export const StatsChart: React.FC = () => {
 
       {/* Chart section */}
       {data.length > 0 && (
-        <CardContent className='border-t px-2 pb-2 pt-6 sm:p-6'>
+        <CardContent className='border-t px-2 pt-6 pb-2 sm:p-6'>
           <div className='mb-6'>
             <div className='mb-4 flex flex-wrap items-center justify-between gap-4'>
               <div className='flex gap-2'>
@@ -372,7 +372,7 @@ export const StatsChart: React.FC = () => {
 
               <div className='flex items-center gap-2'>
                 {lastUpdated && (
-                  <span className='text-xs text-muted-foreground'>
+                  <span className='text-muted-foreground text-xs'>
                     Last updated: {lastUpdated.toLocaleTimeString()}
                     {!isRealData && (
                       <span className='ml-2 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-medium text-amber-800'>
@@ -409,7 +409,7 @@ export const StatsChart: React.FC = () => {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
                       return (
-                        <div className='rounded-md border bg-background p-2 text-sm shadow-md'>
+                        <div className='bg-background rounded-md border p-2 text-sm shadow-md'>
                           <p className='font-medium'>
                             {new Date(data.date).toLocaleDateString('en-US', {
                               weekday: 'short',
@@ -417,9 +417,9 @@ export const StatsChart: React.FC = () => {
                               day: 'numeric'
                             })}
                           </p>
-                          <p className='mt-1 text-xs text-muted-foreground'>
+                          <p className='text-muted-foreground mt-1 text-xs'>
                             {currentMetric.label}:{' '}
-                            <span className='font-medium text-foreground'>
+                            <span className='text-foreground font-medium'>
                               {data[activeMetric]}
                             </span>
                           </p>
@@ -443,8 +443,8 @@ export const StatsChart: React.FC = () => {
 
       {/* Loading state */}
       {isLoading && (
-        <div className='absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-xs'>
-          <div className='h-8 w-8 animate-spin rounded-full border-2 border-current border-t-transparent text-primary' />
+        <div className='bg-background/50 absolute inset-0 flex items-center justify-center backdrop-blur-xs'>
+          <div className='text-primary h-8 w-8 animate-spin rounded-full border-2 border-current border-t-transparent' />
         </div>
       )}
     </Card>

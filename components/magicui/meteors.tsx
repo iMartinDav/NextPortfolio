@@ -48,7 +48,7 @@ export const Meteors = ({ number = 20 }: MeteorsProps) => {
         <span
           key={`${style.left}-${style.animationDelay}-${style.animationDuration}`}
           className={clsx(
-            'pointer-events-none absolute h-0.5 w-0.5 animate-meteor rounded-[9999px] bg-slate-400 shadow-[0_0_0_1px_#ffffff20]'
+            'animate-meteor pointer-events-none absolute h-0.5 w-0.5 rounded-[9999px] bg-slate-400 shadow-[0_0_0_1px_#ffffff20]'
           )}
           style={style}>
           {/* Meteor Tail */}

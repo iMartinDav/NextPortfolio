@@ -6,34 +6,34 @@ import { useCallback, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger
 } from '@/components/ui/tooltip';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 
-import Particle from '../Particle';
-import type { PDFViewerProps } from './types';
-import { useMediaQuery } from './use-media-query';
 import {
-  ChevronLeft,
-  ChevronRight,
-  Download,
-  Loader2,
-  Maximize2,
-  Menu,
-  Minimize2,
-  RotateCw,
-  Settings2,
-  X,
-  ZoomIn,
-  ZoomOut
+    ChevronLeft,
+    ChevronRight,
+    Download,
+    Loader2,
+    Maximize2,
+    Menu,
+    Minimize2,
+    RotateCw,
+    Settings2,
+    X,
+    ZoomIn,
+    ZoomOut
 } from 'lucide-react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+import Particle from '../Particle';
+import type { PDFViewerProps } from './types';
+import { useMediaQuery } from './use-media-query';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -255,9 +255,9 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
   };
 
   return (
-    <div className='flex min-h-screen flex-col items-center justify-center bg-background'>
+    <div className='bg-background flex min-h-screen flex-col items-center justify-center'>
       <div className='flex h-full w-full flex-col items-center justify-center pt-16 sm:pt-20 lg:pt-24'>
-        <Particle />
+        <Particle className='absolute inset-0 -z-10' />
 
         {/* Mobile-specific floating action button */}
         {isMobile && (
@@ -265,7 +265,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
             variant='secondary'
             size='icon'
             className={cn(
-              'fixed bottom-16 right-4 z-50 rounded-full',
+              'fixed right-4 bottom-16 z-50 rounded-full',
               'h-10 w-10 shadow-lg',
               'bg-primary text-primary-foreground',
               'transition-all duration-300',
@@ -285,9 +285,9 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
           {isMobile && showMobileControls && (
             <div
               className={cn(
-                'fixed bottom-28 right-4 z-50',
+                'fixed right-4 bottom-28 z-50',
                 'bg-card/95 backdrop-blur-md',
-                'rounded-lg border border-border/40 shadow-lg',
+                'border-border/40 rounded-lg border shadow-lg',
                 'p-3', // Increase padding for larger touch targets
                 'flex flex-col space-y-3', // Increase spacing between buttons
                 'transition-all duration-300',
@@ -357,9 +357,9 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
 
         <Card
           className={cn(
-            'mx-auto max-w-xl px-2 py-8',
+            'relative z-10 mx-auto max-w-xl px-2 py-8',
             'bg-card/50 backdrop-blur-xs',
-            'shadow-xl ring-1 ring-border/10',
+            'ring-border/10 shadow-xl ring-1',
             'transition-all duration-300',
             'rounded-lg', // Always apply rounded corners regardless of screen size
             'max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl',
@@ -370,7 +370,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
             className={cn(
               'fixed bottom-4 left-1/2 z-50 -translate-x-1/2 sm:bottom-6',
               'bg-card/95 backdrop-blur-md',
-              'rounded-full border border-border/50 shadow-lg',
+              'border-border/50 rounded-full border shadow-lg',
               'transition-all duration-300',
               'px-2 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-3',
               controlsVisible
@@ -388,11 +388,11 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                       setPageNumber((prev) => Math.max(prev - 1, 1))
                     }
                     disabled={pageNumber <= 1}
-                    className='h-7 w-7 rounded-full border border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 sm:h-8 sm:w-8 md:h-9 md:w-9'>
+                    className='h-7 w-7 rounded-full border border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 sm:h-8 sm:w-8 md:h-9 md:w-9 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'>
                     <ChevronLeft className='h-4 w-4' />
                   </Button>
 
-                  <span className='min-w-10 text-center text-xs font-medium text-gray-900 dark:text-gray-100 sm:min-w-12 sm:text-sm'>
+                  <span className='min-w-10 text-center text-xs font-medium text-gray-900 sm:min-w-12 sm:text-sm dark:text-gray-100'>
                     {pageNumber}/{numPages}
                   </span>
 
@@ -403,7 +403,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                       setPageNumber((prev) => Math.min(prev + 1, numPages))
                     }
                     disabled={pageNumber >= numPages}
-                    className='h-7 w-7 rounded-full border border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 sm:h-8 sm:w-8 md:h-9 md:w-9'>
+                    className='h-7 w-7 rounded-full border border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 sm:h-8 sm:w-8 md:h-9 md:w-9 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'>
                     <ChevronRight className='h-4 w-4' />
                   </Button>
                 </div>
@@ -450,7 +450,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                         variant='secondary'
                         size='sm'
                         onClick={handleDownload}
-                        className='h-7 space-x-1 rounded-md border border-[#2ba999]/20 bg-[#33c7b2] px-2 font-medium text-white shadow-xs transition-colors duration-150 hover:bg-[#2cb3a1] focus:ring-2 focus:ring-[#33c7b2]/20 active:bg-[#2ba999] disabled:pointer-events-none disabled:opacity-50 dark:border-[#33c7b2]/20 dark:bg-[#2ba999] dark:hover:bg-[#33c7b2] dark:focus:ring-[#33c7b2]/30 dark:active:bg-[#2cb3a1] sm:h-8 sm:space-x-2 sm:px-3 md:h-9'>
+                        className='h-7 space-x-1 rounded-md border border-[#2ba999]/20 bg-[#33c7b2] px-2 font-medium text-white shadow-xs transition-colors duration-150 hover:bg-[#2cb3a1] focus:ring-2 focus:ring-[#33c7b2]/20 active:bg-[#2ba999] disabled:pointer-events-none disabled:opacity-50 sm:h-8 sm:space-x-2 sm:px-3 md:h-9 dark:border-[#33c7b2]/20 dark:bg-[#2ba999] dark:hover:bg-[#33c7b2] dark:focus:ring-[#33c7b2]/30 dark:active:bg-[#2cb3a1]'>
                         <Download className='h-4 w-4' />
                         <span className='hidden text-xs font-medium sm:inline sm:text-sm'>
                           Download
@@ -483,10 +483,10 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
             }}
             onTouchMove={handleTouchMove}>
             {isLoading && (
-              <div className='absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-xs'>
+              <div className='bg-background/80 absolute inset-0 z-50 flex items-center justify-center backdrop-blur-xs'>
                 <div className='flex flex-col items-center space-y-3'>
-                  <Loader2 className='h-6 w-6 animate-spin text-primary sm:h-8 sm:w-8' />
-                  <p className='text-xs text-muted-foreground sm:text-sm'>
+                  <Loader2 className='text-primary h-6 w-6 animate-spin sm:h-8 sm:w-8' />
+                  <p className='text-muted-foreground text-xs sm:text-sm'>
                     Loading PDF...
                   </p>
                 </div>
@@ -515,17 +515,17 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                 rotate={rotation}
                 error={
                   <div className='p-4 text-center sm:p-6'>
-                    <p className='text-sm font-medium text-destructive sm:text-base'>
+                    <p className='text-destructive text-sm font-medium sm:text-base'>
                       Error loading page
                     </p>
-                    <p className='mt-1 text-xs text-muted-foreground sm:text-sm'>
+                    <p className='text-muted-foreground mt-1 text-xs sm:text-sm'>
                       Please try again or download the PDF
                     </p>
                   </div>
                 }
                 noData={
                   <div className='p-4 text-center sm:p-6'>
-                    <p className='text-sm text-muted-foreground sm:text-base'>
+                    <p className='text-muted-foreground text-sm sm:text-base'>
                       No PDF file selected
                     </p>
                   </div>

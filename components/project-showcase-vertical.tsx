@@ -62,7 +62,7 @@ const ProjectShowcaseVertical = ({
   const secondRow = projects.slice(5, 10); // Get next 5 projects
 
   return (
-    <div className='relative flex h-full w-full flex-row items-center justify-center overflow-hidden rounded-lg border bg-background sm:px-2 md:shadow-xl'>
+    <div className='bg-background relative flex h-full w-full flex-row items-center justify-center overflow-hidden rounded-lg border sm:px-2 md:shadow-xl'>
       <Marquee
         pauseOnHover
         vertical
@@ -86,8 +86,8 @@ const ProjectShowcaseVertical = ({
           />
         ))}
       </Marquee>
-      <div className='pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-linear-to-b from-white dark:from-background'></div>
-      <div className='pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-white dark:from-background'></div>
+      <div className='dark:from-background pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-linear-to-b from-white'></div>
+      <div className='dark:from-background pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-white'></div>
     </div>
   );
 };

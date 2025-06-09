@@ -6,7 +6,7 @@ import { TbPokeball } from 'react-icons/tb';
 
 function AboutCard() {
   return (
-    <BentoBox className='mx-auto max-w-md rounded-lg bg-white bg-opacity-30 shadow-lg backdrop-blur-xs transition duration-300 dark:bg-gray-800'>
+    <BentoBox className='bg-opacity-30 mx-auto max-w-md rounded-lg bg-white shadow-lg backdrop-blur-xs transition duration-300 dark:bg-gray-800'>
       <p className='mb-6 text-justify text-gray-800 dark:text-gray-200'>
         Hello, I am{' '}
         <span className='font-bold text-purple-700 dark:text-purple-400'>
@@ -38,7 +38,7 @@ function AboutCard() {
           Traveling: Experiencing the wonders of the world
         </li>
       </ul>
-      <p className='mb-4 italic text-gray-700 dark:text-gray-400'>
+      <p className='mb-4 text-gray-700 italic dark:text-gray-400'>
         &quot;The true power of coding lies not in its technicality, but in its
         capacity to uplift and empower. Harness your skills to create positive
         change and together, we can pave the way for a brighter, more innovative
