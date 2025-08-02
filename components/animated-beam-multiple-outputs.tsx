@@ -269,6 +269,7 @@ const Icons = {
       height='10rem'
       viewBox='0 0 256 256'
       {...props}>
+      <title>Bitcoin logo</title>
       <defs>
         <linearGradient
           id='logosBitcoin0'
