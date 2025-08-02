@@ -133,11 +133,13 @@ export default function RootLayout({
     <html
       lang='en'
       suppressHydrationWarning
-      className={inter.className}>
+      className={inter.className}
+      data-scroll-behavior="smooth">
       <head>
         {/* Google Tag Manager - Head */}
+        {/* biome-ignore lint/nursery/useUniqueElementIds: Next.js Script components with inline content require static string IDs */}
         <Script
-          id='google-analytics'
+          id="google-analytics"
           strategy='afterInteractive'>
           {`
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -158,7 +160,7 @@ export default function RootLayout({
         {/* Inject JSON-LD structured data */}
         <script
           type='application/ld+json'
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data injection is safe
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
 
@@ -205,6 +207,7 @@ export default function RootLayout({
           </a>
 
           <Navbar />
+          {/* biome-ignore lint/nursery/useUniqueElementIds: main-content is a semantic landmark ID needed for skip links */}
           <main
             id='main-content'
             className='min-h-screen'>

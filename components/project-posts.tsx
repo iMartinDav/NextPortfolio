@@ -31,15 +31,23 @@ const ProjectPosts: React.FC = () => {
 
   useEffect(() => {
     const getPosts = async () => {
-      const postsData: FetchProjectsResponse | null = await fetchProjects();
-      if (postsData && postsData.postsData) {
-        const formattedPosts: Post[] = postsData.postsData.map((post) => ({
-          name: post.data.title,
-          body: post.data.description,
-          slug: post.slug,
-          image: post.data.image
-        }));
-        setFiles(formattedPosts.slice(0, 10));
+      try {
+        const postsData: FetchProjectsResponse | null = await fetchProjects();
+        if (postsData?.postsData && Array.isArray(postsData.postsData)) {
+          const formattedPosts: Post[] = postsData.postsData.map((post) => ({
+            name: post.data.title,
+            body: post.data.description,
+            slug: post.slug,
+            image: post.data.image
+          }));
+          setFiles(formattedPosts.slice(0, 10));
+        } else {
+          console.warn('No valid project data received, using default domains');
+          // Keep using defaultDomains as fallback
+        }
+      } catch (error) {
+        console.error('Error processing project posts:', error);
+        // Keep using defaultDomains as fallback
       }
     };
 

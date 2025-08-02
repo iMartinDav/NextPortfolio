@@ -1,14 +1,12 @@
-import React from 'react';
-
 import IconCloud from '@/components/magicui/icon-cloud';
 
 const slugs = [
-  'amazonaws',
+  'amazonwebservices',
   'apache',
   'apple',
   'archlinux',
   'astro',
-  'azuredevops',
+  'nextflow',
   'bitcoin',
   'digitalocean',
   'django',
@@ -26,7 +24,7 @@ const slugs = [
   'javascript',
   'kalilinux',
   'linux',
-  'linode',
+  'akamai',
   'mongodb',
   'mysql',
   'nextdotjs',
@@ -46,7 +44,6 @@ const slugs = [
   'square',
   'stripe',
   'svelte',
-  'sveltekit',
   'tailwindcss',
   'tensorflow',
   'typescript',
