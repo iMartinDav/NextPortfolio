@@ -9,9 +9,9 @@ import Toolstack from './Toolstack';
 
 const AboutContent: React.FC = () => {
   return (
-    <div className='bg-lightBackground dark:bg-darkBackground text-lightText dark:text-darkText py-10 transition-colors duration-300 relative'>
+    <div className='bg-lightBackground dark:bg-darkBackground text-lightText dark:text-darkText relative py-10 transition-colors duration-300'>
       <Particle className='absolute inset-0 -z-10' />
-      <div className='container mx-auto px-4 relative z-10'>
+      <div className='relative z-10 container mx-auto px-4'>
         <div className='flex flex-col items-center md:flex-row md:space-x-8'>
           <div className='w-full px-4 py-8 md:w-7/12'>
             <h1 className='mt-16 mb-6 text-center text-3xl leading-tight font-bold md:mt-0 md:text-left md:text-4xl'>

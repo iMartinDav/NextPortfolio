@@ -1,7 +1,5 @@
 'use client';
 
-import React from 'react';
-
 import Image from 'next/image';
 
 import BentoShowcase from '@/components/BentoShowcase';
@@ -120,12 +118,12 @@ const features = [
           {defaultDomains.map((f, idx) => (
             <a
               href={`${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/${f.slug}`}
-              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+              // biome-ignore lint/suspicious/noArrayIndexKey: using index as key for tags
               key={idx}
               className={cn(
                 'relative h-full w-40 cursor-pointer overflow-hidden rounded-xl border p-4 hover:-translate-y-1',
-                'border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]',
-                'dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]',
+                'border-gray-950/10 bg-gray-950/1 hover:bg-gray-950/5',
+                'dark:border-gray-50/10 dark:bg-gray-50/10 dark:hover:bg-gray-50/15',
                 'transform-gpu transition-all duration-300 ease-out hover:blur-none'
               )}>
               <div className='flex flex-row items-center gap-2'>
@@ -171,7 +169,7 @@ const features = [
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5 }}>
-        <AnimatedBeamMultipleOutputs className='absolute top-4 right-0 h-[300px] w-[600px] border-none mask-[linear-gradient(to_top,transparent_10%,#000_100%)] transition-all duration-300 ease-out group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_0%,#000_100%)]' />
+        <AnimatedBeamMultipleOutputs className='absolute top-4 right-0 h-75 w-150 border-none mask-[linear-gradient(to_top,transparent_10%,#000_100%)] transition-all duration-300 ease-out group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_0%,#000_100%)]' />
       </motion.div>
     )
   },
@@ -216,7 +214,7 @@ const features = [
         <div className='flex h-2/3 w-full items-center justify-center text-7xl font-semibold transition-all duration-300 group-hover:-translate-y-2'>
           <a
             href='https://github.com/iMartinDav/NextPortfolio'
-            className='flex items-center gap-2 rounded-lg border border-gray-950/[.1] bg-gray-950/[.01] p-5 shadow-xl hover:bg-gray-950/[.05] dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]'>
+            className='flex items-center gap-2 rounded-lg border border-gray-950/10 bg-gray-950/1 p-5 shadow-xl hover:bg-gray-950/5 dark:border-gray-50/10 dark:bg-gray-50/10 dark:hover:bg-gray-50/15'>
             <GitHubStars />
             <Image
               src='/images/githubstar.webp'
@@ -337,16 +335,14 @@ const features = [
 
 export function Bento() {
   return (
-    <>
-      <BentoGrid>
-        {features.map((feature, idx) => (
-          <BentoCard
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-            key={idx}
-            {...feature}
-          />
-        ))}
-      </BentoGrid>
-    </>
+    <BentoGrid>
+      {features.map((feature, idx) => (
+        <BentoCard
+          // biome-ignore lint/suspicious/noArrayIndexKey: using index as key for features
+          key={idx}
+          {...feature}
+        />
+      ))}
+    </BentoGrid>
   );
 }

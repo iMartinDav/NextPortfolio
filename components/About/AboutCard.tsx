@@ -1,5 +1,3 @@
-import React from 'react';
-
 import BentoBox from '../BentoBox';
 import { GiCroissant, GiSpaceship } from 'react-icons/gi';
 import { TbPokeball } from 'react-icons/tb';

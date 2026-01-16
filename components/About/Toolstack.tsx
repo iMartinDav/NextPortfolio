@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { FaApple, FaDocker } from 'react-icons/fa';
 import { SiHeroku, SiLinux, SiPostman, SiVercel } from 'react-icons/si';
 import { VscCode } from 'react-icons/vsc';

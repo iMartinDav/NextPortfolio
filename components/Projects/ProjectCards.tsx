@@ -1,4 +1,4 @@
-import React from 'react';
+import Image from 'next/image';
 
 import { BsGithub } from 'react-icons/bs';
 import { CgWebsite } from 'react-icons/cg';
@@ -21,9 +21,10 @@ const ProjectCards: React.FC<ProjectCardProps> = ({
   isBlog
 }) => {
   return (
-    <div className='overflow-hidden rounded-lg bg-white shadow-lg'>
-      <img
-        className='h-48 w-full object-cover'
+    <div className='relative overflow-hidden rounded-lg bg-white shadow-lg'>
+      <Image
+        fill
+        className='object-cover'
         src={imgPath}
         alt='card-img'
       />

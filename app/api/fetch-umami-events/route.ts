@@ -5,8 +5,10 @@ export async function GET() {
   try {
     // Get environment variables with fallback
     const apiToken = process.env.UMAMI_API_TOKEN || process.env.UMAMI_API_KEY;
-    const websiteId = process.env.UMAMI_WEBSITE_ID || process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
-    const apiEndpoint = process.env.UMAMI_API_CLIENT_ENDPOINT || 'https://cloud.umami.is/api';
+    const websiteId =
+      process.env.UMAMI_WEBSITE_ID || process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
+    const apiEndpoint =
+      process.env.UMAMI_API_CLIENT_ENDPOINT || 'https://cloud.umami.is/api';
 
     if (!apiToken || !websiteId) {
       return NextResponse.json(
@@ -35,7 +37,9 @@ export async function GET() {
     });
 
     if (!response.ok) {
-      throw new Error(`Umami API returned ${response.status}: ${await response.text()}`);
+      throw new Error(
+        `Umami API returned ${response.status}: ${await response.text()}`
+      );
     }
 
     const data = await response.json();
@@ -44,7 +48,8 @@ export async function GET() {
     console.error('Error fetching Umami events:', error);
     return NextResponse.json(
       {
-        message: error instanceof Error ? error.message : 'An unknown error occurred',
+        message:
+          error instanceof Error ? error.message : 'An unknown error occurred',
         events: []
       },
       { status: 500 }

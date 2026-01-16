@@ -4,8 +4,10 @@ export async function GET() {
   try {
     // Get environment variables
     const apiToken = process.env.UMAMI_API_TOKEN;
-    const websiteId = process.env.UMAMI_WEBSITE_ID || process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
-    const apiEndpoint = process.env.UMAMI_API_CLIENT_ENDPOINT || 'https://cloud.umami.is/api';
+    const websiteId =
+      process.env.UMAMI_WEBSITE_ID || process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
+    const apiEndpoint =
+      process.env.UMAMI_API_CLIENT_ENDPOINT || 'https://cloud.umami.is/api';
 
     if (!apiToken || !websiteId) {
       console.log('Missing Umami credentials, using simulated data');
@@ -27,18 +29,26 @@ export async function GET() {
     console.log(`Using website ID: ${websiteId}`);
 
     // Try authenticated API first
-    const authSuccess = await tryAuthenticatedAPI(apiEndpoint, apiToken, websiteId, startDate, endDate);
+    const authSuccess = await tryAuthenticatedAPI(
+      apiEndpoint,
+      apiToken,
+      websiteId,
+      startDate,
+      endDate
+    );
     if (authSuccess) {
       return authSuccess;
     }
 
     // Fall back to public share URL
-    const shareUrl = process.env.NEXT_PUBLIC_UMAMI_BASE_URL ||
+    const shareUrl =
+      process.env.NEXT_PUBLIC_UMAMI_BASE_URL ||
       `https://cloud.umami.is/share/${process.env.UMAMI_SHARE_TOKEN}/imartin.dev`;
 
-    console.log('Authenticated API failed, falling back to public share URL...');
+    console.log(
+      'Authenticated API failed, falling back to public share URL...'
+    );
     return await tryPublicShareUrl(shareUrl, startDate, endDate);
-
   } catch (error) {
     console.error('Error in stats API route:', error);
     const data = generateRealisticData();
@@ -51,7 +61,13 @@ export async function GET() {
   }
 }
 
-async function tryAuthenticatedAPI(apiEndpoint: string, apiToken: string, websiteId: string, startDate: number, endDate: number) {
+async function tryAuthenticatedAPI(
+  apiEndpoint: string,
+  apiToken: string,
+  websiteId: string,
+  startDate: number,
+  endDate: number
+) {
   try {
     // Test basic authentication first
     const authTestUrl = `${apiEndpoint}/auth/verify`;
@@ -59,7 +75,7 @@ async function tryAuthenticatedAPI(apiEndpoint: string, apiToken: string, websit
 
     const authTest = await fetch(authTestUrl, {
       method: 'GET',
-      headers: { 'Authorization': `Bearer ${apiToken}` },
+      headers: { Authorization: `Bearer ${apiToken}` },
       cache: 'no-store'
     });
 
@@ -82,7 +98,9 @@ async function tryAuthenticatedAPI(apiEndpoint: string, apiToken: string, websit
     });
 
     if (!statsResponse.ok) {
-      console.log(`Bearer token failed (${statsResponse.status}), trying API key format...`);
+      console.log(
+        `Bearer token failed (${statsResponse.status}), trying API key format...`
+      );
 
       // Try alternative authentication format
       const altHeaders = {
@@ -98,12 +116,16 @@ async function tryAuthenticatedAPI(apiEndpoint: string, apiToken: string, websit
       });
 
       if (!altResponse.ok) {
-        console.log(`Both auth methods failed. Bearer: ${statsResponse.status}, API-Key: ${altResponse.status}`);
+        console.log(
+          `Both auth methods failed. Bearer: ${statsResponse.status}, API-Key: ${altResponse.status}`
+        );
         return null; // Signal to fall back to share URL
       }
 
       const statsData = await altResponse.json();
-      console.log('Successfully fetched stats data using x-umami-api-key authentication');
+      console.log(
+        'Successfully fetched stats data using x-umami-api-key authentication'
+      );
       return NextResponse.json({
         stats: statsData,
         dailyData: { pageviews: [], sessions: [] },
@@ -154,14 +176,17 @@ async function tryAuthenticatedAPI(apiEndpoint: string, apiToken: string, websit
       isRealData: true,
       note: 'Real stats data but daily breakdown unavailable'
     });
-
   } catch (apiError) {
     console.error('Authenticated API error:', apiError);
     return null; // Signal to fall back to share URL
   }
 }
 
-async function tryPublicShareUrl(shareUrl: string, startDate: number, endDate: number) {
+async function tryPublicShareUrl(
+  shareUrl: string,
+  startDate: number,
+  endDate: number
+) {
   console.log(`Trying fallback to public share URL: ${shareUrl}`);
 
   try {
@@ -269,9 +294,7 @@ async function tryPublicShareUrl(shareUrl: string, startDate: number, endDate: n
   }
 
   // If all else fails, generate simulated data
-  console.log(
-    'Could not fetch real data from share URL, using simulated data'
-  );
+  console.log('Could not fetch real data from share URL, using simulated data');
   const data = generateRealisticData();
 
   return NextResponse.json({

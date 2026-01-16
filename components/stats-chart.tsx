@@ -69,13 +69,6 @@ function useAnalyticsData() {
   const [lastUpdated, setLastUpdated] = React.useState<Date | null>(null);
   const [isRealData, setIsRealData] = React.useState<boolean>(true);
 
-  // Reset and retry function
-  const resetAndRetry = React.useCallback(() => {
-    setIsLoading(true);
-    setError(null);
-    fetchData();
-  }, []);
-
   // Fetch data function using the Umami public share URL via our proxy
   const fetchData = React.useCallback(async () => {
     try {
@@ -175,6 +168,13 @@ function useAnalyticsData() {
       setIsLoading(false);
     }
   }, []);
+
+  // Reset and retry function
+  const resetAndRetry = React.useCallback(() => {
+    setIsLoading(true);
+    setError(null);
+    fetchData();
+  }, [fetchData]);
 
   // Effect for data fetching - only run once on mount
   React.useEffect(() => {

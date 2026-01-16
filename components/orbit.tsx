@@ -19,9 +19,9 @@ import {
 
 export default function Orbit() {
   return (
-    <div className='relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 via-white to-blue-50/30 md:shadow-xl dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20'>
+    <div className='relative flex h-full w-full items-center justify-center overflow-hidden rounded-lg bg-linear-to-br from-gray-50 via-white to-blue-50/30 md:shadow-xl dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20'>
       {/* Clean background */}
-      <div className='absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:24px_24px] opacity-20' />
+      <div className='absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-size-[24px_24px] opacity-20' />
 
       {/* Orbit paths - simple dashed circles */}
       <div className='pointer-events-none absolute inset-0'>

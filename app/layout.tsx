@@ -134,12 +134,12 @@ export default function RootLayout({
       lang='en'
       suppressHydrationWarning
       className={inter.className}
-      data-scroll-behavior="smooth">
+      data-scroll-behavior='smooth'>
       <head>
         {/* Google Tag Manager - Head */}
         {/* biome-ignore lint/nursery/useUniqueElementIds: Next.js Script components with inline content require static string IDs */}
         <Script
-          id="google-analytics"
+          id='google-analytics'
           strategy='afterInteractive'>
           {`
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
