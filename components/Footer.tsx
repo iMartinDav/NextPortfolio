@@ -13,21 +13,18 @@ const Footer: React.FC = () => {
     <footer className='relative z-20 rounded-t-3xl bg-gray-800 py-3 text-gray-300 md:py-4'>
       <div className='mx-auto max-w-7xl px-4 md:px-6'>
         <div className='flex flex-col items-center space-y-2 md:flex-row md:justify-between md:space-y-0'>
-          {/* Section 1: Branding */}
           <div className='w-full text-center md:w-1/3 md:text-left'>
             <h3 className='text-xs leading-tight font-bold text-gray-300'>
               Built From Scratch With 💚 by Martin DAVILA
             </h3>
           </div>
 
-          {/* Section 2: Copyright */}
           <div className='w-full text-center md:w-1/3'>
             <h3 className='text-xs leading-tight font-medium text-gray-400'>
-              Copyright © {year} All Rights Reserved to GPT-4o
+              Copyright © {year} All Rights Reserved to GPT-5.3 Codex
             </h3>
           </div>
 
-          {/* Section 3: Social Icons */}
           <div className='w-full text-center md:w-1/3 md:text-right'>
             <ul className='flex justify-center space-x-3 md:justify-end md:space-x-4'>
               <li className='relative z-10'>

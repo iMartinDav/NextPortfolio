@@ -1,28 +1,20 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
-import Typewriter from 'typewriter-effect';
-
-const ANIMATION_SETTINGS = {
-  DELETE_SPEED: 30,
-  TYPE_DELAY: 60,
-  PAUSE_DURATION: 2500
-} as const;
-
 const THEME_GRADIENTS = {
   primary: {
-    pokemon: 'bg-linear-to-r from-purple-700 via-pink-500 to-purple-500',
-    bioinformatics: 'bg-linear-to-r from-purple-600 via-indigo-500 to-blue-500',
-    research: 'bg-linear-to-r from-blue-600 via-cyan-500 to-blue-400',
-    dna: 'bg-linear-to-r from-emerald-600 via-teal-500 to-cyan-400',
-    protein: 'bg-linear-to-r from-green-500 via-emerald-400 to-teal-500',
-    cell: 'bg-linear-to-r from-blue-500 via-violet-400 to-purple-500',
-    genome: 'bg-linear-to-r from-fuchsia-600 via-purple-500 to-pink-500',
-    biotech: 'bg-linear-to-r from-emerald-500 via-cyan-400 to-green-500',
-    analysis: 'bg-linear-to-r from-blue-600 via-indigo-500 to-violet-500',
-    software: 'bg-linear-to-r from-cyan-500 via-blue-500 to-indigo-500',
-    compbio: 'bg-linear-to-r from-green-600 via-blue-500 to-purple-500'
+    pokemon: 'bg-linear-to-r from-teal-400 via-indigo-400 to-purple-400',
+    bioinformatics: 'bg-linear-to-r from-emerald-400 via-teal-400 to-purple-500',
+    research: 'bg-linear-to-r from-violet-400 via-purple-400 to-emerald-400',
+    dna: 'bg-linear-to-r from-teal-500 via-emerald-400 to-indigo-400',
+    protein: 'bg-linear-to-r from-purple-400 via-violet-400 to-teal-400',
+    cell: 'bg-linear-to-r from-indigo-400 via-purple-400 to-emerald-400',
+    genome: 'bg-linear-to-r from-violet-500 via-fuchsia-400 to-purple-400',
+    biotech: 'bg-linear-to-r from-emerald-500 via-teal-400 to-purple-400',
+    analysis: 'bg-linear-to-r from-indigo-400 via-violet-400 to-teal-400',
+    software: 'bg-linear-to-r from-teal-400 via-emerald-400 to-indigo-400',
+    compbio: 'bg-linear-to-r from-purple-500 via-violet-400 to-emerald-400'
   }
 } as const;
 
@@ -34,189 +26,130 @@ interface TypewriterString {
   emojis: string[];
 }
 
-const TypewriterEffect: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+const typewriterStrings: TypewriterString[] = [
+  { text: 'Pokemon Master', gradient: 'pokemon', emojis: ['🎮', '✨'] },
+  { text: 'Software Engineer', gradient: 'software', emojis: ['👨🏻‍💻', '⌨️', '🚀'] },
+  { text: 'Computational Biology', gradient: 'compbio', emojis: ['🧬', '💻', '🔮'] },
+  { text: 'Bioinformatics', gradient: 'bioinformatics', emojis: ['🧬', '💻', '🔍'] },
+  { text: 'Research and Development', gradient: 'research', emojis: ['🔬', '🧪', '📊'] },
+  { text: 'DNA Sequencing', gradient: 'dna', emojis: ['🧬', '🔄', '🧫'] },
+  { text: 'Protein Analysis', gradient: 'protein', emojis: ['🔬', '🧪', '📈'] },
+  { text: 'Cell Biology', gradient: 'cell', emojis: ['🦠', '🔬', '🧫'] },
+  { text: 'Genome Editing', gradient: 'genome', emojis: ['✂️', '🧬', '🔧'] },
+  { text: 'Biotechnology', gradient: 'biotech', emojis: ['🧪', '⚗️', '🔬'] },
+  { text: 'Data Analysis', gradient: 'analysis', emojis: ['📊', '📈', '💻'] }
+];
 
-  const sanitizeText = (text: string) => {
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = text;
-    return textarea.value;
-  };
+const TypewriterEffect: React.FC = () => {
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [frame, setFrame] = useState(0);
 
   useEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes gradientFlow {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+    let animationFrameId: number;
+    let startTimestamp: number | null = null;
+    const fps = 30;
+    const interval = 1000 / fps;
+    let lastTime = 0;
+
+    const loop = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const elapsed = timestamp - lastTime;
+      
+      if (elapsed > interval) {
+        setFrame(prev => prev + 1);
+        lastTime = timestamp - (elapsed % interval);
       }
-      .animate-gradient {
-        animation: gradientFlow 3s ease infinite;
-        background-size: 200% 200%;
-      }
-      .emoji-wrapper {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif !important;
-        font-size: 1em;
-        line-height: 1;
-        vertical-align: middle;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        font-variant-emoji: emoji;
-      }
-      @supports not (font-variant-emoji: emoji) {
-        .emoji-wrapper {
-          font-variant: normal;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-    return () => style.remove();
+      animationFrameId = requestAnimationFrame(loop);
+    };
+
+    animationFrameId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
-  const typewriterStrings = useMemo<TypewriterString[]>(
-    () => [
-      {
-        text: 'Pokemon Master',
-        gradient: 'pokemon',
-        emojis: ['🎮', '✨']
-      },
-      {
-        text: 'Software Engineer',
-        gradient: 'software',
-        emojis: ['👨🏻‍💻', '⌨️', '🚀']
-      },
-      {
-        text: 'Computational Biology',
-        gradient: 'compbio',
-        emojis: ['🧬', '💻', '🔮']
-      },
-      {
-        text: 'Bioinformatics',
-        gradient: 'bioinformatics',
-        emojis: ['🧬', '💻', '🔍']
-      },
-      {
-        text: 'Research and Development',
-        gradient: 'research',
-        emojis: ['🔬', '🧪', '📊']
-      },
-      {
-        text: 'DNA Sequencing',
-        gradient: 'dna',
-        emojis: ['🧬', '🔄', '🧫']
-      },
-      {
-        text: 'Protein Analysis',
-        gradient: 'protein',
-        emojis: ['🔬', '🧪', '📈']
-      },
-      {
-        text: 'Cell Biology',
-        gradient: 'cell',
-        emojis: ['🦠', '🔬', '🧫']
-      },
-      {
-        text: 'Genome Editing',
-        gradient: 'genome',
-        emojis: ['✂️', '🧬', '🔧']
-      },
-      {
-        text: 'Biotechnology',
-        gradient: 'biotech',
-        emojis: ['🧪', '⚗️', '🔬']
-      },
-      {
-        text: 'Data Analysis',
-        gradient: 'analysis',
-        emojis: ['📊', '📈', '💻']
-      }
-    ],
-    []
-  );
+  const item = typewriterStrings[currentIdx];
+  const fullTokens = useMemo(() => [...item.text.split(''), ...item.emojis], [item]);
+  
+  const charFrames = 2;
+  const pauseFrames = 45;
+  const deleteCharFrames = 1;
+  const pauseAfterFrames = 15;
 
-  const formattedStrings = useMemo(
-    () =>
-      typewriterStrings.map(({ text, gradient, emojis }) => {
-        const sanitizedText = sanitizeText(text);
-        const emojiSpans = emojis
-          .map(
-            (emoji) =>
-              `<span class="emoji-wrapper" data-emoji="${emoji}">${emoji}</span>`
-          )
-          .join('');
+  const typeDuration = fullTokens.length * charFrames;
+  const holdStart = typeDuration;
+  const holdEnd = holdStart + pauseFrames;
+  const deleteDuration = fullTokens.length * deleteCharFrames;
+  const totalDuration = holdEnd + deleteDuration + pauseAfterFrames;
 
-        return `<div class="inline-flex items-center gap-2">
-        <span class="${THEME_GRADIENTS.primary[gradient]} animate-gradient bg-clip-text text-transparent">
-          ${sanitizedText}
-        </span>
-        <span class="flex gap-1">
-          ${emojiSpans}
-        </span>
-      </div>`;
-      }),
-    [typewriterStrings]
-  );
+  useEffect(() => {
+    if (frame >= totalDuration) {
+      setFrame(0);
+      setCurrentIdx((prev) => (prev + 1) % typewriterStrings.length);
+    }
+  }, [frame, totalDuration]);
 
-  const typewriterOptions = useMemo(
-    () => ({
-      strings: formattedStrings,
-      autoStart: true,
-      loop: true,
-      deleteSpeed: ANIMATION_SETTINGS.DELETE_SPEED,
-      delay: ANIMATION_SETTINGS.TYPE_DELAY,
-      pauseFor: ANIMATION_SETTINGS.PAUSE_DURATION,
-      html: true
-    }),
-    [formattedStrings]
-  );
+  let displayChars = 0;
+
+  if (frame < holdStart) {
+    displayChars = Math.floor(frame / charFrames);
+  } else if (frame < holdEnd) {
+    displayChars = fullTokens.length;
+  } else if (frame < holdEnd + deleteDuration) {
+    const deletePhaseFrame = frame - holdEnd;
+    displayChars = fullTokens.length - Math.floor(deletePhaseFrame / deleteCharFrames);
+  } else {
+    displayChars = 0;
+  }
+
+  const typedTokens = fullTokens.slice(0, displayChars);
+  const isEmoji = (token: string) => item.emojis.includes(token);
+  
+  const textPart = typedTokens.filter(t => !isEmoji(t)).join('');
+  const emojiPart = typedTokens.filter(t => isEmoji(t));
 
   return (
-    <div
-      ref={containerRef}
-      className={cn(
+    <div className={cn(
         'relative w-full text-center',
         'text-xl md:text-2xl lg:text-3xl xl:text-4xl',
         'leading-relaxed font-medium'
-      )}>
-      <div className='relative z-10'>
-        <style>
-          {`
-            .Typewriter__cursor {
-              @apply text-base text-teal-700 dark:text-teal-500;
-              -webkit-text-fill-color: currentColor;
-            }
-            .Typewriter__wrapper {
-              @apply min-h-[1.5em] flex items-center justify-center;
-            }
-            @media (max-width: 767px) {
-              .Typewriter__wrapper {
-                @apply text-lg font-medium min-h-[2em];
-              }
-              .Typewriter__cursor {
-                @apply hidden;
-              }
-            }
-          `}
-        </style>
-        <Typewriter options={typewriterOptions} />
+      )}
+    >
+      <div className='relative z-10 w-full flex flex-wrap items-center justify-center md:justify-start min-h-[1.5em] md:min-h-[2em]'>
+        <div className='inline-flex items-center gap-2 max-w-full overflow-hidden'>
+          <span className={cn(THEME_GRADIENTS.primary[item.gradient], 'animate-gradient bg-clip-text text-transparent break-words whitespace-pre-wrap')}>
+            {textPart === '' ? '\u00A0' : textPart}
+          </span>
+          {emojiPart.length > 0 && (
+            <span className='flex gap-1 items-center shrink-0'>
+              {emojiPart.map((e, i) => (
+                <span 
+                  key={i} 
+                  className='emoji-wrapper text-[1em] leading-none' 
+                  style={{ fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif' }}
+                >
+                  {e}
+                </span>
+              ))}
+            </span>
+          )}
+          <span 
+            className='inline-block w-[3px] h-[1.2em] bg-teal-500 dark:bg-teal-400 ml-1 rounded-sm align-middle shrink-0' 
+            style={{ opacity: Math.floor(frame / 15) % 2 === 0 ? 1 : 0 }} 
+          />
+        </div>
       </div>
 
       <div
         aria-hidden='true'
         className={cn(
-          'absolute inset-0 -z-10 opacity-25',
+          'absolute inset-0 -z-10 opacity-40',
           'pointer-events-none blur-3xl'
         )}
         style={{
           background: `
-            radial-gradient(circle at 30% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 70% 50%, rgba(79, 70, 229, 0.15) 0%, transparent 50%)
-          `
+            radial-gradient(ellipse at 20% 50%, rgba(45, 212, 191, 0.15) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 50%, rgba(168, 85, 247, 0.15) 0%, transparent 60%)
+          `,
+          mixBlendMode: 'screen'
         }}
       />
     </div>

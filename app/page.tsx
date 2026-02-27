@@ -1,9 +1,7 @@
-// app/page.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
-// Create a ThemeAwareWrapper to prevent hydration mismatches
 import type { ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 
 import BentoContact from '@/components/Home/BentoContact';
 import BiotechProfile from '@/components/Home/BiotechProfile';
@@ -11,17 +9,6 @@ import Hero from '@/components/Home/Hero';
 import PreLoader from '@/components/Pre';
 import { Bento } from '@/components/bento';
 
-// app/page.tsx
-
-// app/page.tsx
-
-// app/page.tsx
-
-// app/page.tsx
-
-// app/page.tsx
-
-// app/page.tsx
 
 function ThemeAwareWrapper({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);
@@ -30,7 +17,6 @@ function ThemeAwareWrapper({ children }: { children: ReactNode }) {
     setMounted(true);
   }, []);
 
-  // Return a completely hidden placeholder during SSR to prevent hydration mismatches
   if (!mounted) {
     return (
       <div style={{ visibility: 'hidden', height: '100vh' }}>{children}</div>
@@ -49,20 +35,19 @@ export default function LandingPage() {
       document.body.style.overflow = 'hidden';
     }
 
-    // Reduced total loading time to 1000ms (1 second)
     const timer = setTimeout(() => {
       setShowLoader(false);
       setTimeout(() => {
         setContentReady(true);
         document.body.style.overflow = 'auto';
-      }, 50); // Faster content reveal
+      }, 50);
     }, 1000);
 
     return () => {
       clearTimeout(timer);
       document.body.style.overflow = 'auto';
     };
-  }, [showLoader]); // Added showLoader as a dependency
+  }, [showLoader]);
 
   return (
     <>

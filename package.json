@@ -22,6 +22,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "@hookform/resolvers": "^3.10.0",
     "@motionone/utils": "^10.18.0",
     "@nutrient-sdk/viewer": "^1.10.0",
@@ -37,6 +38,8 @@
     "@react-pdf/renderer": "^4.3.2",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
+    "@remotion/player": "^4.0.429",
+    "@remotion/three": "^4.0.429",
     "@tsparticles/engine": "^3.9.1",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.9.1",
@@ -48,6 +51,7 @@
     "date-fns": "^4.1.0",
     "file-loader": "^6.2.0",
     "framer-motion": "^11.18.2",
+    "gsap": "^3.14.2",
     "lucide-react": "^0.453.0",
     "next": "^16.1.2",
     "next-seo": "^6.8.0",
@@ -67,6 +71,7 @@
     "react-pdf": "^10.3.0",
     "react-scroll-parallax": "^3.5.0",
     "recharts": "^2.15.4",
+    "remotion": "^4.0.429",
     "schema-dts": "^1.1.5",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
