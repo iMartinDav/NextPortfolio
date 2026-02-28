@@ -9,7 +9,7 @@ interface ProjectPost {
 
 export async function GET(): Promise<Response> {
   // Removed 'request' parameter
-  const url = `https://projects.imartin.dev/api/v1/fetchProjectsFeed.json`;
+  const url = `https://projects.imartin.dev/api/v1/fetchProjectsFeed/index.json`;
   const headers = { Accept: 'application/json' };
 
   try {

@@ -6,7 +6,7 @@ import Particle from '../Particle';
 import DNAHelix from './DNAHelix';
 import Type from './Type';
 
-export default function Hero(): JSX.Element | null {
+export default function Hero() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

@@ -165,7 +165,7 @@ export default function IconCloud({
   }
 
   return (
-    // @ts-expect-error This is required because the Cloud component expects ReactFragment but we need to render our icons directly
+
     <Cloud {...cloudProps}>{renderedIcons}</Cloud>
   );
 }
