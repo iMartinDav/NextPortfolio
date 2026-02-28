@@ -79,10 +79,6 @@ export const DNAHelixAnimation: React.FC<{ isDark: boolean }> = ({ isDark }) => 
                     <stop offset="0%" stopColor={STRAND_1} stopOpacity="0.8" />
                     <stop offset="100%" stopColor={STRAND_2} stopOpacity="0.8" />
                 </linearGradient>
-                <filter id="premium-glow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur stdDeviation={isDark ? "8" : "4"} result="blur" />
-                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
             </defs>
 
             {segments.map((seg, i) => {
@@ -103,17 +99,27 @@ export const DNAHelixAnimation: React.FC<{ isDark: boolean }> = ({ isDark }) => 
                 const depthScale = (seg.z + 1) / 2; // Converts from logic [-1, 1] to [0, 1]
                 const thickness = 6 + depthScale * 14; 
                 const opacity = 0.4 + depthScale * 0.6; // Transparency for strokes in the back
+                const hasGlow = depthScale > 0.6;
                 
                 return (
-                    <path
-                        key={`strand-${i}`}
-                        d={seg.path}
-                        stroke={seg.color}
-                        strokeWidth={thickness}
-                        strokeLinecap="round"
-                        opacity={opacity}
-                        filter={depthScale > 0.6 ? "url(#premium-glow)" : "none"}
-                    />
+                    <g key={`strand-${i}`}>
+                        {hasGlow && (
+                            <path
+                                d={seg.path}
+                                stroke={seg.color}
+                                strokeWidth={thickness * 2.5}
+                                strokeLinecap="round"
+                                opacity={opacity * 0.25}
+                            />
+                        )}
+                        <path
+                            d={seg.path}
+                            stroke={seg.color}
+                            strokeWidth={thickness}
+                            strokeLinecap="round"
+                            opacity={opacity}
+                        />
+                    </g>
                 );
             })}
             
@@ -125,16 +131,26 @@ export const DNAHelixAnimation: React.FC<{ isDark: boolean }> = ({ isDark }) => 
                 const wave = Math.sin((x / width) * Math.PI * 4 + i);
                 const y = height / 2 + wave * (height / 2.5) * (i % 2 === 0 ? 1 : -1);
                 const fadeOpacity = (1 - Math.abs(width/2 - x) / (width/2)) * 0.7; // Fades out perfectly on edges
+                const radius = i % 3 === 0 ? 6 : 3;
+                const fillColor = i % 2 === 0 ? STRAND_1 : STRAND_2;
+                
                 return (
-                   <circle 
-                     key={`particle-${i}`} 
-                     cx={x} 
-                     cy={y} 
-                     r={i % 3 === 0 ? 6 : 3}
-                     fill={i % 2 === 0 ? STRAND_1 : STRAND_2}
-                     opacity={fadeOpacity}
-                     filter="url(#premium-glow)"
-                   />
+                   <g key={`particle-${i}`}>
+                     <circle 
+                       cx={x} 
+                       cy={y} 
+                       r={radius * 2.5}
+                       fill={fillColor}
+                       opacity={fadeOpacity * 0.25}
+                     />
+                     <circle 
+                       cx={x} 
+                       cy={y} 
+                       r={radius}
+                       fill={fillColor}
+                       opacity={fadeOpacity}
+                     />
+                   </g>
                 );
             })}
         </svg>
