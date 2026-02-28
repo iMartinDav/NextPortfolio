@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { Float, Html, OrbitControls, Text } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
+import { useTheme } from 'next-themes';
 import * as THREE from 'three';
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -44,6 +45,7 @@ const VERT = `
 const FRAG = `
   varying float vBright;
   varying vec3  vColor;
+  uniform float uIsLight;
   void main() {
     vec2  uv = gl_PointCoord - 0.5;
     float d  = length(uv);
@@ -51,7 +53,8 @@ const FRAG = `
     float alpha = smoothstep(0.5, 0.05, d);
     float core  = smoothstep(0.15, 0.0, d);
     vec3  col   = mix(vColor, vec3(0.8, 1.0, 0.95), core * 0.35);
-    gl_FragColor = vec4(col, alpha * vBright * 0.75);
+    float edgeDarken = mix(1.0, smoothstep(0.5, 0.1, d), uIsLight * 0.5);
+    gl_FragColor = vec4(col * edgeDarken, alpha * vBright * mix(0.75, 0.9, uIsLight));
   }
 `;
 
@@ -402,7 +405,6 @@ function FloatingLabels({ shapeIndex }: { shapeIndex: number }) {
         mesh.material.opacity = op;
         mesh.material.transparent = true;
         mesh.material.depthWrite = false;
-        mesh.material.blending = THREE.AdditiveBlending;
       }
     });
   });
@@ -436,7 +438,7 @@ const SHAPE_LABELS = [
 
 // ── Main morphing scene ─────────────────────────────────────────────────────
 
-function MorphingScene() {
+function MorphingScene({ isLight }: { isLight: boolean }) {
   const pointsRef = useRef<THREE.Points>(null);
   const matRef = useRef<THREE.ShaderMaterial>(null);
   const groupRef = useRef<THREE.Group>(null);
@@ -456,7 +458,16 @@ function MorphingScene() {
     phases: shapes[0].phases,
   }), [shapes]);
 
-  const uniforms = useMemo(() => ({ uTime: { value: 0 } }), []);
+  const uniforms = useMemo(() => ({
+    uTime: { value: 0 },
+    uIsLight: { value: 0.0 },
+  }), []);
+
+  useEffect(() => {
+    if (matRef.current) {
+      matRef.current.uniforms.uIsLight.value = isLight ? 1.0 : 0.0;
+    }
+  }, [isLight]);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -501,10 +512,28 @@ function MorphingScene() {
 
   return (
     <>
-      <ambientLight color={0x001a14} intensity={3.0} />
-      <pointLight color={0x009990} intensity={12} distance={60} position={[-6, 8, 8]} />
-      <pointLight color={0x004d3d} intensity={6} distance={50} position={[7, -6, -4]} />
-      <pointLight color={0x00a89d} intensity={4} distance={40} position={[0, 14, 5]} />
+      <ambientLight
+        color={isLight ? 0x336655 : 0x001a14}
+        intensity={isLight ? 5.0 : 3.0}
+      />
+      <pointLight
+        color={isLight ? 0x00b8a9 : 0x009990}
+        intensity={isLight ? 18 : 12}
+        distance={60}
+        position={[-6, 8, 8]}
+      />
+      <pointLight
+        color={isLight ? 0x008070 : 0x004d3d}
+        intensity={isLight ? 10 : 6}
+        distance={50}
+        position={[7, -6, -4]}
+      />
+      <pointLight
+        color={isLight ? 0x00c8b8 : 0x00a89d}
+        intensity={isLight ? 8 : 4}
+        distance={40}
+        position={[0, 14, 5]}
+      />
 
       <OrbitControls
         autoRotate
@@ -530,7 +559,7 @@ function MorphingScene() {
             fragmentShader={FRAG}
             transparent
             depthWrite={false}
-            blending={THREE.AdditiveBlending}
+            blending={isLight ? THREE.NormalBlending : THREE.AdditiveBlending}
           />
         </points>
 
@@ -539,8 +568,14 @@ function MorphingScene() {
 
       <Float speed={1} rotationIntensity={0} floatIntensity={0.1}>
         <Html position={[0, -4.5, 0]} center>
-          <div className="flex flex-col items-center whitespace-nowrap bg-gray-900/60 backdrop-blur-md border border-gray-700/50 px-5 py-2 rounded-full shadow-lg transition-all duration-700">
-            <span className="text-teal-400 font-mono text-xs md:text-sm tracking-widest uppercase font-bold">
+          <div className={`flex flex-col items-center whitespace-nowrap backdrop-blur-md px-5 py-2 rounded-full shadow-lg transition-all duration-700 border ${
+            isLight
+              ? 'bg-white/70 border-teal-300/50'
+              : 'bg-gray-900/60 border-gray-700/50'
+          }`}>
+            <span className={`font-mono text-xs md:text-sm tracking-widest uppercase font-bold ${
+              isLight ? 'text-teal-700' : 'text-teal-400'
+            }`}>
               {'>'} {SHAPE_LABELS[shapeIndex]}
             </span>
           </div>
@@ -551,11 +586,20 @@ function MorphingScene() {
 }
 
 export default function BioinformaticsCore() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isLight = mounted && resolvedTheme === 'light';
+
   return (
     <div className="w-full h-[450px] md:h-[520px] lg:h-[600px] relative overflow-visible">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,240,255,0.04)_0%,transparent_60%)] pointer-events-none" />
-      <Canvas camera={{ position: [0, 0, 11], fov: 50 }}>
-        <MorphingScene />
+      <Canvas camera={{ position: [0, 0, 11], fov: 50 }} gl={{ alpha: true }}>
+        <MorphingScene isLight={isLight} />
       </Canvas>
     </div>
   );
