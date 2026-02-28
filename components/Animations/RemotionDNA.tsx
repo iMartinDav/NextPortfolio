@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes';
 import React, { useEffect, useState } from 'react';
 import { useCurrentFrame, useVideoConfig } from 'remotion';
 
-const POINTS = 80;
+const POINTS = 140;
 
 export const DNAHelixAnimation: React.FC<{ isDark: boolean }> = ({ isDark }) => {
   const frame = useCurrentFrame();
@@ -27,17 +27,17 @@ export const DNAHelixAnimation: React.FC<{ isDark: boolean }> = ({ isDark }) => 
 
      // Calculate position and 3D Z-depth for starting point of segment
      const x1 = t1 * width;
-     const angle1 = t1 * Math.PI * 5 - progress * Math.PI * 2;
-     const y1A = height / 2 + Math.sin(angle1) * (height / 3.5);
-     const y1B = height / 2 + Math.sin(angle1 + Math.PI) * (height / 3.5);
+     const angle1 = t1 * Math.PI * 4 - progress * Math.PI * 2;
+     const y1A = height / 2 + Math.sin(angle1) * (height / 3.2);
+     const y1B = height / 2 + Math.sin(angle1 + Math.PI) * (height / 3.2);
      const z1A = Math.cos(angle1);
      const z1B = Math.cos(angle1 + Math.PI);
 
      // Calculate position and 3D Z-depth for ending point of segment
      const x2 = t2 * width;
-     const angle2 = t2 * Math.PI * 5 - progress * Math.PI * 2;
-     const y2A = height / 2 + Math.sin(angle2) * (height / 3.5);
-     const y2B = height / 2 + Math.sin(angle2 + Math.PI) * (height / 3.5);
+     const angle2 = t2 * Math.PI * 4 - progress * Math.PI * 2;
+     const y2A = height / 2 + Math.sin(angle2) * (height / 3.2);
+     const y2B = height / 2 + Math.sin(angle2 + Math.PI) * (height / 3.2);
      const z2A = Math.cos(angle2);
      const z2B = Math.cos(angle2 + Math.PI);
 
@@ -76,11 +76,11 @@ export const DNAHelixAnimation: React.FC<{ isDark: boolean }> = ({ isDark }) => 
         <svg style={{ width: '100%', height: '100%', overflow: 'visible' }}>
             <defs>
                 <linearGradient id="link-grad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={STRAND_1} stopOpacity="0.6" />
-                    <stop offset="100%" stopColor={STRAND_2} stopOpacity="0.6" />
+                    <stop offset="0%" stopColor={STRAND_1} stopOpacity="0.8" />
+                    <stop offset="100%" stopColor={STRAND_2} stopOpacity="0.8" />
                 </linearGradient>
                 <filter id="premium-glow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur stdDeviation={isDark ? "4" : "2"} result="blur" />
+                    <feGaussianBlur stdDeviation={isDark ? "8" : "4"} result="blur" />
                     <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
             </defs>
@@ -92,17 +92,17 @@ export const DNAHelixAnimation: React.FC<{ isDark: boolean }> = ({ isDark }) => 
                           key={`link-${i}`}
                           d={seg.path}
                           stroke="url(#link-grad)"
-                          strokeWidth={1.5}
+                          strokeWidth={4.5}
                           strokeLinecap="round"
-                          opacity={0.3}
+                          opacity={0.4}
                         />
                     );
                 }
 
                 // Smooth Depth perception metrics
                 const depthScale = (seg.z + 1) / 2; // Converts from logic [-1, 1] to [0, 1]
-                const thickness = 2 + depthScale * 5; // Dynamic stroke width 2px to 7px based on depth
-                const opacity = 0.3 + depthScale * 0.7; // Transparency for strokes in the back
+                const thickness = 6 + depthScale * 14; 
+                const opacity = 0.4 + depthScale * 0.6; // Transparency for strokes in the back
                 
                 return (
                     <path
@@ -118,19 +118,19 @@ export const DNAHelixAnimation: React.FC<{ isDark: boolean }> = ({ isDark }) => 
             })}
             
             {/* Added ambient floating biological dust particles around the scene */}
-            {Array.from({ length: 15 }).map((_, i) => {
+            {Array.from({ length: 25 }).map((_, i) => {
                 const speedOffset = (i * 0.1);
                 const rawX = (progress + speedOffset) * width;
                 const x = rawX % width;
                 const wave = Math.sin((x / width) * Math.PI * 4 + i);
                 const y = height / 2 + wave * (height / 2.5) * (i % 2 === 0 ? 1 : -1);
-                const fadeOpacity = (1 - Math.abs(width/2 - x) / (width/2)) * 0.5; // Fades out perfectly on edges
+                const fadeOpacity = (1 - Math.abs(width/2 - x) / (width/2)) * 0.7; // Fades out perfectly on edges
                 return (
                    <circle 
                      key={`particle-${i}`} 
                      cx={x} 
                      cy={y} 
-                     r={i % 3 === 0 ? 2 : 1.2}
+                     r={i % 3 === 0 ? 6 : 3}
                      fill={i % 2 === 0 ? STRAND_1 : STRAND_2}
                      opacity={fadeOpacity}
                      filter="url(#premium-glow)"
@@ -161,8 +161,8 @@ const RemotionDNA: React.FC = () => {
         component={DNAHelixAnimation}
         inputProps={{ isDark }}
         durationInFrames={120}
-        compositionWidth={400}
-        compositionHeight={200}
+        compositionWidth={800}
+        compositionHeight={800}
         fps={30}
         style={{
           width: '100%',

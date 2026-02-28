@@ -160,7 +160,7 @@ const BiotechProfile: React.FC = () => {
           </div>
 
           <div className='relative mx-auto h-80 w-80'>
-            <div className='absolute inset-0 flex items-center justify-center z-0 scale-[1.35] opacity-90 transition-opacity duration-1000'>
+            <div className='absolute inset-0 flex items-center justify-center z-0 opacity-90 transition-opacity duration-1000'>
               <RemotionDNA />
             </div>
             <motion.div
