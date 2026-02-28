@@ -18,7 +18,7 @@ export default function Hero() {
   }
 
   return (
-    <section className='relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90 dark:from-[#060610] dark:via-[#0a0a1a] dark:to-[#0c1a1f]'>
+    <section className='relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90 dark:from-[#060610] dark:via-[#0a0a1a] dark:to-[#0c1a1f]'>
       <div className='absolute inset-0 z-0'>
         <Particle
           className='absolute inset-0 z-0'

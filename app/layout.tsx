@@ -18,10 +18,6 @@ const inter = Inter({
 const DOMAIN = 'https://www.imartin.dev';
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0b0a21' }
-  ],
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -222,7 +218,7 @@ export default function RootLayout({
           {/* biome-ignore lint/nursery/useUniqueElementIds: main-content is a semantic landmark ID needed for skip links */}
           <main
             id='main-content'
-            className='min-h-screen'>
+            className='min-h-[100dvh]'>
             {children}
           </main>
           <Footer />
