@@ -355,12 +355,12 @@
 }
 
 .navbar.scrolled {
-  background-color: rgba(240, 240, 245, 0.85);
+  background-color: rgba(235, 247, 244, 0.85);
   backdrop-filter: blur(8px);
   margin: 0.4rem 1.2rem;
   width: calc(100% - 2.4rem);
   border-radius: 14px;
-  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px -4px rgba(0, 15, 10, 0.1);
   padding: 0.3rem 1.2rem;
 }
 
@@ -586,11 +586,11 @@
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 2.4rem);
-    background-color: rgba(245, 245, 250, 0.95);
+    background-color: rgba(235, 247, 244, 0.95);
     backdrop-filter: blur(8px);
     border-radius: 14px;
     padding: 1rem;
-    box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px -8px rgba(0, 15, 10, 0.1);
   }
 
   .dark .navbar-nav {
