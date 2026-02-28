@@ -1,103 +1,203 @@
 'use client';
 
-import type React from 'react';
-import { memo, useEffect, useMemo, useState } from 'react';
-
+import { motion, type MotionProps } from 'framer-motion';
 import { useTheme } from 'next-themes';
-
-import type { MotionProps } from 'framer-motion';
-import { motion } from 'framer-motion';
+import type React from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 interface BentoBoxProps extends React.PropsWithChildren {
   className?: string;
-  glowColor?: string;
   hoverScale?: number;
   motionProps?: MotionProps;
 }
 
+const ROTATION_SPEED = 0.4;
+const BORDER_WIDTH = 2;
+
 const BentoBox: React.FC<BentoBoxProps> = memo(
-  ({
-    children,
-    className = '',
-    glowColor = 'rgba(255, 255, 255, 0.1)',
-    hoverScale = 1.02,
-    motionProps
-  }) => {
+  ({ children, className = '', hoverScale = 1.02, motionProps }) => {
     const { resolvedTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
+    const cardRef = useRef<HTMLDivElement>(null);
+    const borderRef = useRef<HTMLDivElement>(null);
+    const haloRef = useRef<HTMLDivElement>(null);
 
-    // Effect to set mounted state - only runs once
+    const isHoveredRef = useRef(false);
+    const angleRef = useRef(0);
+    const rafRef = useRef<number>(0);
+
     useEffect(() => {
       setMounted(true);
     }, []);
 
-    // Use a stable theme value to prevent infinite re-renders
     const isDark = mounted ? resolvedTheme === 'dark' : false;
 
-    const styles = useMemo(() => {
-      // Proper background colors for each theme
-      const cardBackground = isDark
-        ? 'bg-gray-900/80 backdrop-blur-sm'
-        : 'bg-white/90 backdrop-blur-sm';
+    useEffect(() => {
+      function tick() {
+        if (!isHoveredRef.current && cardRef.current) {
+          angleRef.current = (angleRef.current + ROTATION_SPEED) % 360;
+          cardRef.current.style.setProperty(
+            '--glow-deg',
+            `${angleRef.current}deg`
+          );
+        }
+        rafRef.current = requestAnimationFrame(tick);
+      }
+      rafRef.current = requestAnimationFrame(tick);
+      return () => cancelAnimationFrame(rafRef.current);
+    }, []);
 
-      const borderBackground = isDark ? 'bg-gray-900' : 'bg-white';
+    const handlePointerEnter = useCallback(() => {
+      isHoveredRef.current = true;
+      if (borderRef.current) borderRef.current.style.opacity = '1';
+      if (haloRef.current) haloRef.current.style.opacity = '0.7';
+    }, []);
 
-      // Enhanced glow colors for better visibility in both themes
-      const enhancedGlowColor = isDark
-        ? glowColor
-        : glowColor.includes('rgba')
-          ? glowColor.replace(/[\d.]+\)$/, '0.9)') // Increase opacity for light mode
-          : 'rgba(59, 130, 246, 0.9)'; // Fallback bright color for light mode
+    const handlePointerMove = useCallback(
+      (e: React.PointerEvent<HTMLDivElement>) => {
+        const el = cardRef.current;
+        if (!el) return;
 
-      return { cardBackground, borderBackground, enhancedGlowColor, isDark };
-    }, [isDark, glowColor]);
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
 
-    // Render a simple version during SSR that matches initial client render
-    // This avoids the hydration mismatch
+        let angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI) + 90;
+        if (angle < 0) angle += 360;
+
+        angleRef.current = angle;
+        el.style.setProperty('--glow-deg', `${angle}deg`);
+      },
+      []
+    );
+
+    const handlePointerLeave = useCallback(() => {
+      isHoveredRef.current = false;
+      if (borderRef.current) borderRef.current.style.opacity = '0.55';
+      if (haloRef.current) haloRef.current.style.opacity = '0.35';
+    }, []);
+
+    const meshColor1 = isDark ? 'hsl(270, 80%, 60%)' : 'hsl(270, 70%, 70%)';
+    const meshColor2 = isDark ? 'hsl(174, 100%, 37%)' : 'hsl(174, 70%, 50%)';
+    const meshColor3 = isDark ? 'hsl(200, 90%, 55%)' : 'hsl(200, 80%, 65%)';
+
+    const cardBg = isDark
+      ? 'rgba(15, 17, 21, 0.85)'
+      : 'rgba(255, 255, 255, 0.88)';
+
+    const meshGradient = `
+      radial-gradient(circle at 30% 20%, ${meshColor1} 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, ${meshColor2} 0%, transparent 50%),
+      radial-gradient(circle at 50% 90%, ${meshColor3} 0%, transparent 40%)
+    `;
+
+    const conicMask = `
+      conic-gradient(
+        from var(--glow-deg) at 50% 50%,
+        black 0%,
+        black 12%,
+        transparent 30%,
+        transparent 70%,
+        black 88%,
+        black 100%
+      )
+    `;
+
     return (
       <motion.div
         suppressHydrationWarning
-        className={`group relative overflow-hidden rounded-3xl p-1 shadow-lg ${className}`}
         whileHover={{ scale: hoverScale }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        {...motionProps}>
-        {/* Animated Border Glow Effect */}
-        <div className='absolute inset-0 rounded-3xl opacity-95'>
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className={className}
+        {...motionProps}
+      >
+        <div
+          ref={cardRef}
+          onPointerEnter={handlePointerEnter}
+          onPointerMove={handlePointerMove}
+          onPointerLeave={handlePointerLeave}
+          className="group relative w-full h-full rounded-[2rem] isolate"
+          style={
+            {
+              '--glow-deg': '0deg',
+            } as React.CSSProperties
+          }
+        >
           <div
-            className='animate-border-glow absolute inset-0 rounded-3xl'
+            ref={borderRef}
+            className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] transition-opacity duration-500"
             style={{
-              background: `conic-gradient(from 0deg, transparent 10%, ${styles.enhancedGlowColor} 20%, transparent 35%, ${styles.enhancedGlowColor} 50%, transparent 65%, ${styles.enhancedGlowColor} 80%, transparent 95%)`,
-              padding: '4px'
+              opacity: 0.55,
+              padding: `${BORDER_WIDTH}px`,
+              background: meshGradient,
+              WebkitMask: `
+                ${conicMask},
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0)
+              `,
+              WebkitMaskComposite: 'source-in, xor',
+              mask: `
+                ${conicMask},
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0)
+              `,
+              maskComposite: 'intersect, exclude',
             }}
           />
+
           <div
-            className={`absolute inset-[4px] rounded-3xl ${styles.borderBackground} shadow-lg`}
+            ref={haloRef}
+            className="pointer-events-none absolute -inset-[3px] -z-20 rounded-[calc(2rem+3px)] blur-[6px] transition-opacity duration-500"
+            style={{
+              opacity: 0.35,
+              padding: `${BORDER_WIDTH + 3}px`,
+              background: meshGradient,
+              WebkitMask: `
+                ${conicMask},
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0)
+              `,
+              WebkitMaskComposite: 'source-in, xor',
+              mask: `
+                ${conicMask},
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0)
+              `,
+              maskComposite: 'intersect, exclude',
+              mixBlendMode: isDark ? 'plus-lighter' : 'normal',
+            }}
           />
-        </div>
 
-        {/* Inner Glow Effect */}
-        <div
-          suppressHydrationWarning
-          className='animate-glow-move offset-path-rect absolute inset-0 h-[200px] w-[200px] rotate-45 opacity-20'
-          style={{
-            background: `radial-gradient(circle, ${styles.enhancedGlowColor} 0%, transparent 70%)`
-          }}
-        />
+          <div
+            className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit]"
+            style={{
+              padding: '1px',
+              background: isDark
+                ? 'linear-gradient(135deg, rgba(124,58,237,0.18), rgba(0,191,174,0.1), rgba(124,58,237,0.12))'
+                : 'linear-gradient(135deg, rgba(167,139,250,0.22), rgba(45,212,191,0.12), rgba(167,139,250,0.18))',
+              WebkitMask:
+                'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+              WebkitMaskComposite: 'xor',
+              maskComposite: 'exclude',
+            }}
+          />
 
-        {/* Content Container */}
-        <div
-          suppressHydrationWarning
-          className={`relative z-10 rounded-3xl p-4 shadow-inner ${styles.cardBackground}`}>
-          {children}
+          <div
+            className="relative z-10 w-full h-full rounded-[calc(2rem-1px)] p-6 transition-colors duration-500 shadow-xl backdrop-blur-3xl"
+            style={{ backgroundColor: cardBg }}
+          >
+            {children}
+          </div>
         </div>
       </motion.div>
     );
   }
 );
 
-// Setting the display name
 BentoBox.displayName = 'BentoBox';
 
 export default BentoBox;

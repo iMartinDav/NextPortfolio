@@ -5,12 +5,12 @@ import Image from 'next/image';
 
 import { useTheme } from 'next-themes';
 
-import BentoBox from '../BentoBox';
 import { motion } from 'framer-motion';
 import type { IconType } from 'react-icons';
 import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 import { RiTwitterXLine } from 'react-icons/ri';
 import { SiCodeship } from 'react-icons/si';
+import BentoBox from '../BentoBox';
 
 // Define proper types
 interface SocialLink {
@@ -117,8 +117,7 @@ const BiotechProfile: React.FC = () => {
         <div className='grid grid-cols-1 gap-12 lg:grid-cols-2'>
           <div className='space-y-8'>
             <BentoBox
-              className='bg-opacity-30 backdrop-blur-xs'
-              glowColor={colors.glowColorPrimary}>
+              className='bg-opacity-30 backdrop-blur-xs'>
               <h1 className='mb-4 text-4xl font-bold md:text-5xl'>
                 Innovating at the <GradientText>Intersection</GradientText> of
                 <br />
@@ -138,8 +137,7 @@ const BiotechProfile: React.FC = () => {
             </BentoBox>
 
             <BentoBox
-              className='bg-opacity-30 backdrop-blur-xs'
-              glowColor={colors.glowColorSecondary}>
+              className='bg-opacity-30 backdrop-blur-xs'>
               <h2 className='mb-4 text-2xl font-semibold'>Expertise</h2>
               <ul
                 suppressHydrationWarning

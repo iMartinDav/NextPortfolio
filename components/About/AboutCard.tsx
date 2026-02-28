@@ -1,10 +1,10 @@
-import BentoBox from '../BentoBox';
 import { GiCroissant, GiSpaceship } from 'react-icons/gi';
 import { TbPokeball } from 'react-icons/tb';
+import BentoBox from '../BentoBox';
 
 function AboutCard() {
   return (
-    <BentoBox className='bg-opacity-30 mx-auto max-w-md rounded-lg bg-white shadow-lg backdrop-blur-xs transition duration-300 dark:bg-gray-800'>
+    <BentoBox className='mx-auto max-w-md transition duration-300'>
       <p className='mb-6 text-justify text-gray-800 dark:text-gray-200'>
         Hello, I am{' '}
         <span className='font-bold text-purple-700 dark:text-purple-400'>

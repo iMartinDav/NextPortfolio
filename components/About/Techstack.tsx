@@ -4,18 +4,18 @@ import { BiLogoFlutter } from 'react-icons/bi';
 import { CgCPlusPlus } from 'react-icons/cg';
 import { DiGit, DiMongodb, DiNodejs, DiPython, DiReact } from 'react-icons/di';
 import {
-  SiAngular,
-  SiAstro,
-  SiFastapi,
-  SiFirebase,
-  SiFlask,
-  SiLibreofficemath,
-  SiNextdotjs,
-  SiPostgresql,
-  SiPytorch,
-  SiRedis,
-  SiRuby,
-  SiSwift
+    SiAngular,
+    SiAstro,
+    SiFastapi,
+    SiFirebase,
+    SiFlask,
+    SiLibreofficemath,
+    SiNextdotjs,
+    SiPostgresql,
+    SiPytorch,
+    SiRedis,
+    SiRuby,
+    SiSwift
 } from 'react-icons/si';
 
 interface TechItemProps {
