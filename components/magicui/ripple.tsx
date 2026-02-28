@@ -1,5 +1,4 @@
 import type { CSSProperties } from 'react';
-import React from 'react';
 
 interface RippleProps {
   mainCircleSize?: number;
@@ -7,12 +6,14 @@ interface RippleProps {
   numCircles?: number;
 }
 
-const Ripple = React.memo(function Ripple({
+export default function Ripple({
   mainCircleOpacity = 0.24,
   numCircles = 6
-}: RippleProps) {
+}: RippleProps): React.JSX.Element {
+  const baseSize = 400; 
+
   return (
-    <div className='absolute inset-0 flex items-center justify-center'>
+    <div className='absolute inset-0 flex items-center justify-center pointer-events-none'>
       {Array.from({ length: numCircles }, (_, i) => {
         const animationDelay = `${i * 1.5}s`;
         const opacity = Math.max(mainCircleOpacity - i * 0.04, 0.02);
@@ -20,18 +21,18 @@ const Ripple = React.memo(function Ripple({
         return (
           <div
             key={`ripple-${i}-${numCircles}`}
-            className='animate-ripple border-foreground/30 pointer-events-none absolute rounded-full border'
+            className='animate-ripple border-foreground/30 absolute rounded-full border'
             style={
               {
-                width: '20px',
-                height: '20px',
+                width: `${baseSize}px`,
+                height: `${baseSize}px`,
                 left: '50%',
                 top: '50%',
-                marginLeft: '-10px',
-                marginTop: '-10px',
+                marginLeft: `-${baseSize / 2}px`,
+                marginTop: `-${baseSize / 2}px`,
                 opacity: opacity,
                 animationDelay: animationDelay,
-                borderWidth: '3px'
+                borderWidth: '60px',
               } as CSSProperties
             }
           />
@@ -39,8 +40,5 @@ const Ripple = React.memo(function Ripple({
       })}
     </div>
   );
-});
+}
 
-Ripple.displayName = 'Ripple';
-
-export default Ripple;

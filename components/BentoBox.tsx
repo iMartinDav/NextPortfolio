@@ -68,11 +68,11 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
           angleRef.current = (angleRef.current + dt * ROTATION_SPEED_DEG_PER_MS) % 360;
           
           if (borderRef.current) {
-            borderRef.current.style.WebkitMask = getBorderMask(angleRef.current);
+            borderRef.current.style.webkitMask = getBorderMask(angleRef.current);
             borderRef.current.style.mask = getBorderMask(angleRef.current);
           }
           if (haloRef.current) {
-            haloRef.current.style.WebkitMask = getBorderMask(angleRef.current);
+            haloRef.current.style.webkitMask = getBorderMask(angleRef.current);
             haloRef.current.style.mask = getBorderMask(angleRef.current);
           }
         }
@@ -108,11 +108,11 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
         
         // Update mask strings matching the pointer perfectly
         if (borderRef.current) {
-          borderRef.current.style.WebkitMask = getBorderMask(angle);
+          borderRef.current.style.webkitMask = getBorderMask(angle);
           borderRef.current.style.mask = getBorderMask(angle);
         }
         if (haloRef.current) {
-          haloRef.current.style.WebkitMask = getBorderMask(angle);
+          haloRef.current.style.webkitMask = getBorderMask(angle);
           haloRef.current.style.mask = getBorderMask(angle);
         }
       },
