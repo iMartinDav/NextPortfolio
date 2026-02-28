@@ -355,7 +355,7 @@
 }
 
 .navbar.scrolled {
-  background-color: rgba(235, 247, 244, 0.85);
+  background-color: rgba(214, 242, 238, 0.85); /* Premium glassmorphism matching the dark teal tone */
   backdrop-filter: blur(8px);
   margin: 0.4rem 1.2rem;
   width: calc(100% - 2.4rem);
@@ -586,7 +586,7 @@
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 2.4rem);
-    background-color: rgba(235, 247, 244, 0.95);
+    background-color: rgba(214, 242, 238, 0.95); /* Adjusted to match scrolled tint */
     backdrop-filter: blur(8px);
     border-radius: 14px;
     padding: 1rem;
