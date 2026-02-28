@@ -11,34 +11,13 @@ interface BentoBoxProps extends React.PropsWithChildren {
   motionProps?: MotionProps;
 }
 
-const ROTATION_SPEED_DEG_PER_MS = 0.07; // Smooth speed factor
+
 const BORDER_WIDTH = 2;
-
-// Generates the mask strings directly to guarantee browser repaints (avoids Safari CSS var caching bugs)
-const getConicMask = (deg: number) => `
-  conic-gradient(
-    from ${deg}deg at 50% 50%,
-    black 0%,
-    black 12%,
-    transparent 30%,
-    transparent 70%,
-    black 88%,
-    black 100%
-  )
-`;
-
-const getBorderMask = (deg: number) => `
-  ${getConicMask(deg)},
-  linear-gradient(#fff 0 0) content-box,
-  linear-gradient(#fff 0 0)
-`;
 
 const BentoBox: React.FC<BentoBoxProps> = memo(
   ({ children, className = '', hoverScale = 1.02, motionProps }) => {
     const { resolvedTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
-    
-    // Using refs directly allows 60fps manipulation without React renders
     const cardRef = useRef<HTMLDivElement>(null);
     const borderRef = useRef<HTMLDivElement>(null);
     const haloRef = useRef<HTMLDivElement>(null);
@@ -53,37 +32,27 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
 
     const isDark = mounted ? resolvedTheme === 'dark' : false;
 
-    // The central animation loop updates the mask directly.
-    // This perfectly robust Time-Delta based loop guarantees continuous looping
-    // under all refresh rates and prevents the rotation from getting "stuck".
     useEffect(() => {
       let lastTime = performance.now();
 
       function tick(time: number) {
-        // Calculate delta time to keep rotation speed consistent across monitors
         const dt = time - lastTime;
         lastTime = time;
 
-        if (!isHoveredRef.current) {
-          angleRef.current = (angleRef.current + dt * ROTATION_SPEED_DEG_PER_MS) % 360;
-          
-          if (borderRef.current) {
-            borderRef.current.style.webkitMask = getBorderMask(angleRef.current);
-            borderRef.current.style.mask = getBorderMask(angleRef.current);
-          }
-          if (haloRef.current) {
-            haloRef.current.style.webkitMask = getBorderMask(angleRef.current);
-            haloRef.current.style.mask = getBorderMask(angleRef.current);
-          }
+        if (!isHoveredRef.current && cardRef.current) {
+          // 0.07 degrees per millisecond ≈ 42 degrees per second, smooth across all refresh rates
+          angleRef.current = (angleRef.current + dt * 0.07) % 360;
+          cardRef.current.style.setProperty(
+            '--glow-deg',
+            `${angleRef.current}deg`
+          );
         }
         rafRef.current = requestAnimationFrame(tick);
       }
-      
       rafRef.current = requestAnimationFrame(tick);
       return () => cancelAnimationFrame(rafRef.current);
     }, []);
 
-    // Pointer events map directly into the DOM styles for instant feedback
     const handlePointerEnter = useCallback(() => {
       isHoveredRef.current = true;
       if (borderRef.current) borderRef.current.style.opacity = '1';
@@ -105,16 +74,7 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
         if (angle < 0) angle += 360;
 
         angleRef.current = angle;
-        
-        // Update mask strings matching the pointer perfectly
-        if (borderRef.current) {
-          borderRef.current.style.webkitMask = getBorderMask(angle);
-          borderRef.current.style.mask = getBorderMask(angle);
-        }
-        if (haloRef.current) {
-          haloRef.current.style.webkitMask = getBorderMask(angle);
-          haloRef.current.style.mask = getBorderMask(angle);
-        }
+        el.style.setProperty('--glow-deg', `${angle}deg`);
       },
       []
     );
@@ -125,18 +85,30 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
       if (haloRef.current) haloRef.current.style.opacity = isDark ? '0.35' : '0.55';
     }, [isDark]);
 
-    const meshColor1 = isDark ? 'hsl(270, 80%, 60%)' : 'hsl(270, 90%, 50%)';
-    const meshColor2 = isDark ? 'hsl(174, 100%, 37%)' : 'hsl(174, 100%, 40%)';
-    const meshColor3 = isDark ? 'hsl(200, 90%, 55%)' : 'hsl(200, 100%, 45%)';
+    const meshColor1 = isDark ? 'hsl(270, 80%, 60%)' : 'hsl(270, 90%, 50%)'; // Deeper purple for light mode
+    const meshColor2 = isDark ? 'hsl(174, 100%, 37%)' : 'hsl(174, 100%, 40%)'; // Vibrant teal for light mode
+    const meshColor3 = isDark ? 'hsl(200, 90%, 55%)' : 'hsl(200, 100%, 45%)'; // Strong blue for light mode
 
     const cardBg = isDark
       ? 'rgba(15, 17, 21, 0.85)'
-      : 'rgba(255, 255, 255, 0.95)';
+      : 'rgba(255, 255, 255, 0.95)'; // Less transparent light mode bg to improve contrast
 
     const meshGradient = `
       radial-gradient(circle at 30% 20%, ${meshColor1} 0%, transparent 50%),
       radial-gradient(circle at 70% 60%, ${meshColor2} 0%, transparent 50%),
       radial-gradient(circle at 50% 90%, ${meshColor3} 0%, transparent 40%)
+    `;
+
+    const conicMask = `
+      conic-gradient(
+        from var(--glow-deg) at 50% 50%,
+        black 0%,
+        black 12%,
+        transparent 30%,
+        transparent 70%,
+        black 88%,
+        black 100%
+      )
     `;
 
     return (
@@ -154,8 +126,16 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
           onPointerEnter={handlePointerEnter}
           onPointerMove={handlePointerMove}
           onPointerLeave={handlePointerLeave}
-          onPointerCancel={handlePointerLeave} // Ensures pointer leaving violently via scroll doesn't freeze it
+          onPointerCancel={handlePointerLeave} // Unlocks stuck hover state when scrolling on iOS Touch
+          onTouchStart={handlePointerEnter}
+          onTouchEnd={handlePointerLeave}
+          onTouchCancel={handlePointerLeave}
           className="group relative w-full h-full rounded-[2rem] isolate"
+          style={
+            {
+              '--glow-deg': '0deg',
+            } as React.CSSProperties
+          }
         >
           <div
             ref={borderRef}
@@ -164,8 +144,17 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
               opacity: isDark ? 0.55 : 0.75,
               padding: `${BORDER_WIDTH}px`,
               background: meshGradient,
-              // The mask is now driven entirely by RS/JS to avoid CSS var bugs
+              WebkitMask: `
+                ${conicMask},
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0)
+              `,
               WebkitMaskComposite: 'source-in, xor',
+              mask: `
+                ${conicMask},
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0)
+              `,
               maskComposite: 'intersect, exclude',
             }}
           />
@@ -177,7 +166,17 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
               opacity: isDark ? 0.35 : 0.55,
               padding: `${BORDER_WIDTH + 3}px`,
               background: meshGradient,
+              WebkitMask: `
+                ${conicMask},
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0)
+              `,
               WebkitMaskComposite: 'source-in, xor',
+              mask: `
+                ${conicMask},
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0)
+              `,
               maskComposite: 'intersect, exclude',
               mixBlendMode: isDark ? 'plus-lighter' : 'normal',
             }}
