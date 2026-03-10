@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧬 BioTech Portfolio | Next.js 15
+# 🧬 BioTech Portfolio | Next.js 16
 
 > Modern, high-performance portfolio platform integrated with projects.imartin.dev for showcases and blog content
 
@@ -35,7 +35,7 @@
 
 ## 🔍 About
 
-This Next.js 15 Enterprise Portfolio Platform is specifically designed for BioTech professionals and researchers. It provides a modern, high-performance solution for showcasing professional achievements, research papers, and scientific projects.
+This Next.js 16 Enterprise Portfolio Platform is specifically designed for BioTech professionals and researchers. It provides a modern, high-performance solution for showcasing professional achievements, research papers, and scientific projects.
 
 ## 🏗️ Repository Structure
 
@@ -73,7 +73,7 @@ The projects and blog sections in this portfolio link directly to [`projects.ima
 
 ### ⚡ Performance Optimizations
 
-- Next.js 15 App Router implementation
+- Next.js 16 App Router implementation
 - Turbopack for lightning-fast builds
 - React Server Components
 - Optimized asset loading & caching
@@ -91,7 +91,7 @@ The projects and blog sections in this portfolio link directly to [`projects.ima
 ```typescript
 const techStack = {
   core: {
-    framework: 'Next.js 15.0.1 (with Turbopack)',
+    framework: 'Next.js 16.0.1 (with Turbopack)',
     runtime: 'React 19.0.0 RC',
     language: 'TypeScript 5.6.3',
     styling: 'TailwindCSS 3.4.14'
