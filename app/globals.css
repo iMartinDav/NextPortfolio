@@ -257,7 +257,8 @@
 
   .dark {
     /* Dark Mode Colors */
-    --background: 240 45% 4%; /* Matches #060610 */
+    --background: 252 22% 10%;
+    /* #0B0A21 - Dark Purple */
     --foreground: 0 0% 98%;
     /* Light foreground color for contrast */
 
@@ -313,7 +314,7 @@
   }
 
   body {
-    @apply bg-background text-foreground min-h-[100dvh] overflow-x-hidden;
+    @apply bg-background text-foreground;
   }
 }
 
