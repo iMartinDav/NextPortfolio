@@ -218,7 +218,7 @@ export default function RootLayout({
           {/* biome-ignore lint/nursery/useUniqueElementIds: main-content is a semantic landmark ID needed for skip links */}
           <main
             id='main-content'
-            className='min-h-[100dvh]'>
+            className='min-h-screen'>
             {children}
           </main>
           <Footer />
