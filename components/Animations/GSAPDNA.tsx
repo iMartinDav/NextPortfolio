@@ -39,7 +39,7 @@ const GSAPDNA: React.FC = () => {
     // 2. Animate organic floating particles in the background
     if (particlesRef.current) {
       const particles = gsap.utils.toArray('.dna-particle');
-      particles.forEach((particle: any, i) => {
+      particles.forEach((particle: any) => {
         // Randomize starting positions and speeds
         gsap.to(particle, {
           y: `-=${gsap.utils.random(100, 200)}`,
