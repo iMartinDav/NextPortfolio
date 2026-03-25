@@ -103,12 +103,12 @@ const GSAPDNA: React.FC = () => {
             className="dna-particle absolute rounded-full"
             style={{
               // Use deterministic pseudo-random values seeded by index 'i' to prevent SSR hydration mismatches
-              width: `${(Math.sin(i * 1.5) * 0.5 + 0.5) * 6 + 2}px`,
-              height: `${(Math.cos(i * 2.3) * 0.5 + 0.5) * 6 + 2}px`,
-              left: `${(Math.sin(i * 3.7) * 0.5 + 0.5) * 100}%`,
-              top: `${80 + (Math.cos(i * 4.1) * 0.5 + 0.5) * 40}%`, // Start near bottom
+              width: `${((Math.sin(i * 1.5) * 0.5 + 0.5) * 6 + 2).toFixed(3)}px`,
+              height: `${((Math.cos(i * 2.3) * 0.5 + 0.5) * 6 + 2).toFixed(3)}px`,
+              left: `${((Math.sin(i * 3.7) * 0.5 + 0.5) * 100).toFixed(3)}%`,
+              top: `${(80 + (Math.cos(i * 4.1) * 0.5 + 0.5) * 40).toFixed(3)}%`, // Start near bottom
               background: i % 2 === 0 ? STRAND_1 : STRAND_2,
-              opacity: (Math.sin(i * 5.5) * 0.5 + 0.5) * 0.5 + 0.1,
+              opacity: parseFloat(((Math.sin(i * 5.5) * 0.5 + 0.5) * 0.5 + 0.1).toFixed(3)),
               boxShadow: `0 0 8px ${i % 2 === 0 ? STRAND_1 : STRAND_2}`,
               willChange: 'transform, opacity' // Prevent repaints during particle physics
             }}
