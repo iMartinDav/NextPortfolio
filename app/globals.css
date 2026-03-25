@@ -313,7 +313,7 @@
   }
 
   body {
-    @apply bg-background text-foreground min-h-[100dvh] w-screen overflow-x-hidden;
+    @apply bg-background text-foreground min-h-[100dvh] overflow-x-hidden;
   }
 }
 
