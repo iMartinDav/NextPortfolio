@@ -113,7 +113,9 @@ const TypewriterEffect: React.FC = () => {
   const emojiPart = typedTokens.filter(t => isEmoji(t));
 
   return (
-    <div className={cn(
+    <div 
+      ref={containerRef}
+      className={cn(
         'relative w-full text-center',
         'text-xl md:text-2xl lg:text-3xl xl:text-4xl',
         'leading-relaxed font-medium'

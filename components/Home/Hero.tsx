@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import { useInView } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 import Particle from '../Particle';
 import DNAHelix from './DNAHelix';
@@ -14,25 +13,19 @@ export default function Hero() {
     setIsClient(true);
   }, []);
 
-  const heroRef = useRef<HTMLDivElement>(null);
-  // Unmount heavy background effects when scrolled out of view to boost performance
-  const isInView = useInView(heroRef, { margin: '400px' });
-
   if (!isClient) {
     return null;
   }
 
   return (
-    <section ref={heroRef} className='relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90 dark:from-[#060610] dark:via-[#0a0a1a] dark:to-[#0c1a1f]'>
-      {isInView && (
-        <div className='absolute inset-0 z-0'>
-          <Particle
-            className='absolute inset-0 z-0'
-            lightModeColor='#33c7b2'
-            darkModeColor='#ffffff'
-          />
-        </div>
-      )}
+    <section className='relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90 dark:from-[#060610] dark:via-[#0a0a1a] dark:to-[#0c1a1f]'>
+      <div className='absolute inset-0 z-0'>
+        <Particle
+          className='absolute inset-0 z-0'
+          lightModeColor='#33c7b2'
+          darkModeColor='#ffffff'
+        />
+      </div>
 
       <div
         className='pointer-events-none absolute inset-0 z-[1] dark:bg-[radial-gradient(ellipse_50%_40%_at_65%_45%,rgba(0,255,213,0.05)_0%,transparent_70%)] bg-[radial-gradient(ellipse_50%_40%_at_65%_45%,rgba(0,180,160,0.08)_0%,transparent_70%)]'
@@ -90,11 +83,9 @@ export default function Hero() {
           </div>
       </div>
 
-      {isInView && (
-        <div className='absolute inset-0 md:left-auto md:right-0 w-full md:w-[60%] h-full z-10 opacity-30 md:opacity-100 pointer-events-none md:pointer-events-auto'>
-          <DNAHelix />
-        </div>
-      )}
+      <div className='absolute inset-0 md:left-auto md:right-0 w-full md:w-[60%] h-full z-10 opacity-30 md:opacity-100 pointer-events-none md:pointer-events-auto'>
+        <DNAHelix />
+      </div>
     </section>
   );
 }
