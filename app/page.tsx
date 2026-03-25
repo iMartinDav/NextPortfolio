@@ -19,7 +19,7 @@ function ThemeAwareWrapper({ children }: { children: ReactNode }) {
 
   if (!mounted) {
     return (
-      <div style={{ visibility: 'hidden', height: '100vh' }}>{children}</div>
+      <div style={{ visibility: 'hidden', height: '100dvh' }}>{children}</div>
     );
   }
 
@@ -54,7 +54,7 @@ export default function LandingPage() {
       {showLoader && <PreLoader />}
       <ThemeAwareWrapper>
         <section
-          className={`flex min-h-screen flex-col justify-between transition-opacity duration-300 ${
+          className={`flex min-h-[100dvh] flex-col justify-between transition-opacity duration-300 ${
             contentReady ? 'opacity-100' : 'opacity-0'
           }`}>
           <Hero />
