@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
+import { useInView } from 'framer-motion';
 
 import { cn } from '@/lib/utils';
 
@@ -44,7 +45,12 @@ const TypewriterEffect: React.FC = () => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [frame, setFrame] = useState(0);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { margin: '100px' });
+
   useEffect(() => {
+    if (!isInView) return;
+
     let animationFrameId: number;
     let startTimestamp: number | null = null;
     const fps = 30;
@@ -64,7 +70,7 @@ const TypewriterEffect: React.FC = () => {
 
     animationFrameId = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(animationFrameId);
-  }, []);
+  }, [isInView]);
 
   const item = typewriterStrings[currentIdx];
   const fullTokens = useMemo(() => [...item.text.split(''), ...item.emojis], [item]);

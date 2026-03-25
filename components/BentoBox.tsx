@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, type MotionProps } from 'framer-motion';
+import { motion, type MotionProps, useInView } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import type React from 'react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
@@ -32,7 +32,12 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
 
     const isDark = mounted ? resolvedTheme === 'dark' : false;
 
+    // Performance Optimization: Pause the endless gradient animation when out of viewport
+    const isInView = useInView(cardRef, { margin: '200px' });
+
     useEffect(() => {
+      if (!isInView) return;
+
       let lastTime = performance.now();
 
       function tick(time: number) {
@@ -51,7 +56,7 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
       }
       rafRef.current = requestAnimationFrame(tick);
       return () => cancelAnimationFrame(rafRef.current);
-    }, []);
+    }, [isInView]);
 
     const handlePointerEnter = useCallback(() => {
       isHoveredRef.current = true;
@@ -144,6 +149,7 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
               opacity: isDark ? 0.55 : 0.75,
               padding: `${BORDER_WIDTH}px`,
               background: meshGradient,
+              willChange: 'mask, opacity',
               WebkitMask: `
                 ${conicMask},
                 linear-gradient(#fff 0 0) content-box,
@@ -166,6 +172,7 @@ const BentoBox: React.FC<BentoBoxProps> = memo(
               opacity: isDark ? 0.35 : 0.55,
               padding: `${BORDER_WIDTH + 3}px`,
               background: meshGradient,
+              willChange: 'mask, opacity',
               WebkitMask: `
                 ${conicMask},
                 linear-gradient(#fff 0 0) content-box,

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useInView } from 'framer-motion';
 
 interface MousePosition {
   x: number;
@@ -68,19 +69,31 @@ const Particles: React.FC<ParticlesProps> = ({
   const mouse = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const canvasSize = useRef<{ w: number; h: number }>({ w: 0, h: 0 });
   const dpr = typeof window !== 'undefined' ? window.devicePixelRatio : 1;
+  const rafId = useRef<number | null>(null);
+  const isInView = useInView(canvasContainerRef);
 
   useEffect(() => {
     if (canvasRef.current) {
       context.current = canvasRef.current.getContext('2d');
     }
     initCanvas();
-    animate();
     window.addEventListener('resize', initCanvas);
 
     return () => {
       window.removeEventListener('resize', initCanvas);
     };
   }, [color]); // color is the only dependency here
+
+  useEffect(() => {
+    if (isInView) {
+      animate();
+    }
+    return () => {
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
+      }
+    };
+  }, [isInView, color]);
 
   useEffect(() => {
     onMouseMove();
@@ -254,7 +267,8 @@ const Particles: React.FC<ParticlesProps> = ({
         circles.current.splice(i, 1);
       }
     });
-    requestAnimationFrame(animate);
+
+    rafId.current = requestAnimationFrame(animate);
   };
 
   return (

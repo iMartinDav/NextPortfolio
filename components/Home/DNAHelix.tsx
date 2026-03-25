@@ -3,6 +3,7 @@
 import { Canvas } from '@react-three/fiber';
 import { useTheme } from 'next-themes';
 import { Suspense, useRef } from 'react';
+import { useInView } from 'framer-motion';
 import { DNAHelixScene } from './DNAHelixScene';
 
 const S = 0.045;
@@ -11,14 +12,19 @@ export default function DNAHelix() {
   const { resolvedTheme } = useTheme();
   const isLight = resolvedTheme === 'light';
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Performance Optimization: Pause the WebGL rendering loop entirely when off-screen
+  const isInView = useInView(containerRef, { margin: '200px' });
+
   return (
     <div
       ref={containerRef}
       className="relative h-full w-full overflow-hidden cursor-grab active:cursor-grabbing"
     >
       <Canvas
+        frameloop={isInView ? 'always' : 'demand'} // Halts GPU rendering when user scrolls past
         camera={{ position: [0, 0, 16], fov: 48, near: 0.01, far: 300 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         dpr={[1, 2]}
         style={{ background: 'transparent' }}
       >

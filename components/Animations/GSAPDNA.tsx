@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import { useTheme } from 'next-themes';
+import { useInView } from 'framer-motion';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
@@ -25,15 +26,34 @@ const GSAPDNA: React.FC = () => {
   const STRAND_1 = isDark ? '#00BFAE' : '#009688';
   const STRAND_2 = isDark ? '#7F00FF' : '#7C3AED';
 
+  // Performance Optimization: Auto-pause when entirely scrolled out of view
+  const isInView = useInView(containerRef, { margin: '200px' });
+  const masterTl = useRef<gsap.core.Timeline | null>(null);
+
+  // Play/Pause master timeline based on viewport intersection
+  React.useEffect(() => {
+    if (!masterTl.current) return;
+    if (isInView) {
+      masterTl.current.play();
+    } else {
+      masterTl.current.pause();
+    }
+  }, [isInView]);
+
   useGSAP(() => {
+    // Create a centralized timeline to easily pause/play all background logic
+    const tl = gsap.timeline();
+    masterTl.current = tl;
+
     // 1. Animate the main 3D Helix Rotation
     if (helixRef.current) {
-      gsap.to(helixRef.current, {
+      tl.to(helixRef.current, {
         rotationY: 360,
         duration: HELIX_SPEED,
         repeat: -1,
         ease: 'none',
-      });
+        force3D: true // Hardware acceleration
+      }, 0);
     }
 
     // 2. Animate organic floating particles in the background
@@ -41,7 +61,7 @@ const GSAPDNA: React.FC = () => {
       const particles = gsap.utils.toArray('.dna-particle');
       particles.forEach((particle: any) => {
         // Randomize starting positions and speeds
-        gsap.to(particle, {
+        tl.to(particle, {
           y: `-=${gsap.utils.random(100, 200)}`,
           x: `+=${gsap.utils.random(-50, 50)}`,
           opacity: 0,
@@ -52,9 +72,14 @@ const GSAPDNA: React.FC = () => {
           yoyo: false,
           delay: gsap.utils.random(0, -10), // start randomly during the timeline
           ease: 'sine.inOut',
-        });
+          force3D: true // Hardware acceleration
+        }, 0);
       });
     }
+    
+    // Set initial play state based on whether it mounted inside the view
+    if (!isInView) tl.pause();
+    
   }, { scope: containerRef });
 
   return (
@@ -84,7 +109,8 @@ const GSAPDNA: React.FC = () => {
               top: `${80 + (Math.cos(i * 4.1) * 0.5 + 0.5) * 40}%`, // Start near bottom
               background: i % 2 === 0 ? STRAND_1 : STRAND_2,
               opacity: (Math.sin(i * 5.5) * 0.5 + 0.5) * 0.5 + 0.1,
-              boxShadow: `0 0 8px ${i % 2 === 0 ? STRAND_1 : STRAND_2}`
+              boxShadow: `0 0 8px ${i % 2 === 0 ? STRAND_1 : STRAND_2}`,
+              willChange: 'transform, opacity' // Prevent repaints during particle physics
             }}
           />
         ))}
@@ -94,7 +120,7 @@ const GSAPDNA: React.FC = () => {
       <div 
         ref={helixRef}
         className="relative flex items-center justify-center z-10"
-        style={{ transformStyle: 'preserve-3d' }}
+        style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
       >
         {/* We center the strands by offsetting by half the total height */}
         <div className="relative" style={{ transform: `translateY(-${(RUNGS_COUNT * RUNG_SPACING) / 2}px)`, transformStyle: 'preserve-3d' }}>
@@ -115,6 +141,7 @@ const GSAPDNA: React.FC = () => {
                   height: '2px', // Bonding thickness
                   transform: `rotateY(${rotationY}deg)`,
                   transformStyle: 'preserve-3d',
+                  willChange: 'transform',
                   // The rung itself (Hydrogen bond)
                   background: `linear-gradient(90deg, ${STRAND_1}40 0%, ${STRAND_2}40 100%)`,
                 }}
