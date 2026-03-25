@@ -10,7 +10,7 @@ import type { IconType } from 'react-icons';
 import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 import { RiTwitterXLine } from 'react-icons/ri';
 import { SiCodeship } from 'react-icons/si';
-import RemotionDNA from '../Animations/RemotionDNA';
+import GSAPDNA from '../Animations/GSAPDNA';
 import BentoBox from '../BentoBox';
 
 // Define proper types
@@ -161,7 +161,7 @@ const BiotechProfile: React.FC = () => {
 
           <div className='relative mx-auto h-80 w-80'>
             <div className='absolute inset-0 flex items-center justify-center z-0 opacity-90 transition-opacity duration-1000'>
-              <RemotionDNA />
+              <GSAPDNA />
             </div>
             <motion.div
               className='absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform'
