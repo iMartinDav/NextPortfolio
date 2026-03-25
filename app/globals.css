@@ -257,8 +257,7 @@
 
   .dark {
     /* Dark Mode Colors */
-    --background: 252 22% 10%;
-    /* #0B0A21 - Dark Purple */
+    --background: 240 45% 4%; /* Matches #060610 */
     --foreground: 0 0% 98%;
     /* Light foreground color for contrast */
 
