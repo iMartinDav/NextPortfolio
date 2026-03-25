@@ -39,13 +39,13 @@ export default function LandingPage() {
       setShowLoader(false);
       setTimeout(() => {
         setContentReady(true);
-        document.body.style.overflow = 'auto';
+        document.body.style.overflow = '';
       }, 50);
     }, 1000);
 
     return () => {
       clearTimeout(timer);
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     };
   }, [showLoader]);
 
