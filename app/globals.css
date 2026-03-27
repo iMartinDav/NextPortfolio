@@ -364,7 +364,7 @@
 }
 
 .navbar.scrolled {
-  background-color: rgba(214, 242, 238, 0.85); /* Premium glassmorphism matching the dark teal tone */
+  background-color: rgba(214, 242, 238, 0.85); /* Premium glassmorphism matching the cyan tone */
   backdrop-filter: blur(8px);
   margin: 0.4rem 1.2rem;
   width: calc(100% - 2.4rem);
@@ -422,11 +422,6 @@
     text-shadow 0.3s ease;
 }
 
-.luxury-text:hover {
-  color: #7c3aed;
-  text-shadow: 0 1px 6px rgba(124, 58, 237, 0.3);
-}
-
 .dark .luxury-text {
   color: #f8f8f8;
   text-shadow:
@@ -435,8 +430,8 @@
 }
 
 .dark .luxury-text:hover {
-  color: #d4af37;
-  text-shadow: 0 1px 8px rgba(255, 215, 0, 0.8);
+  color: #00e5ff;
+  text-shadow: 0 1px 8px rgba(0, 229, 255, 0.8);
 }
 
 .navbar-toggler {
@@ -904,7 +899,7 @@ input[type='checkbox']:checked::after {
 }
 
 .main-name {
-  background: linear-gradient(90deg, #fbb52d, #ff8c00);
+  background: linear-gradient(90deg, #00e5ff, #00bcd4);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -999,8 +994,8 @@ footer .transition-transform {
 
 footer .transform:hover {
   transform: scale(1.1);
-  color: #fbbf24;
-  /* Gold color on hover for icons */
+  color: #00e5ff;
+  /* Cyan color on hover for icons */
 }
 
 @media (max-width: 767px) {

@@ -123,10 +123,10 @@ export default function Navbar() {
           onClick={handleNavItemClick}>
           <Image
             className='dark'
-            src='/logo.png'
+            src='/imartin-logo-1024.webp'
             alt='logo'
-            width={60}
-            height={60}
+            width={45}
+            height={45}
             priority // Keep this if this logo is critical for initial loading
           />
           <span className='navbar-brand-name luxury-text'>iMartinDav</span>

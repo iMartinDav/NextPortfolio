@@ -24,7 +24,7 @@ interface ParticleProps {
 }
 
 const DEFAULT_COLORS = {
-  light: '#33c7b2',
+  light: '#00fff2',
   dark: '#ffffff'
 };
 

@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     canonical: DOMAIN
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/imartin-logo.ico',
     other: [
       {
         rel: 'icon',

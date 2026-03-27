@@ -261,7 +261,7 @@ function generatePlasmid(): ShapeData {
   // Promoter region — subtle marker at 90°
   const prX = (R + TUBE) * Math.cos(Math.PI / 2);
   const prZ = (R + TUBE) * Math.sin(Math.PI / 2);
-  cloud(prX, 0, prZ, new THREE.Color('#fbbf24'), 25, 0.3, 0.04, 0.2, 0.5, 0.9, buf, true);
+  cloud(prX, 0, prZ, new THREE.Color('#00e5ff'), 25, 0.3, 0.04, 0.2, 0.5, 0.9, buf, true);
 
   return finalize(buf);
 }

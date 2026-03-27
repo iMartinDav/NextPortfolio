@@ -22,7 +22,7 @@ export default function Hero() {
       <div className='absolute inset-0 z-0'>
         <Particle
           className='absolute inset-0 z-0'
-          lightModeColor='#33c7b2'
+          lightModeColor='#00fff2'
           darkModeColor='#ffffff'
         />
       </div>

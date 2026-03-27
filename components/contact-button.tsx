@@ -5,7 +5,7 @@ import { CheckIcon, ChevronRightIcon } from 'lucide-react';
 export function SubscribeButton() {
   return (
     <AnimatedSubscribeButton
-      brand='#ffbd7a'
+      brand='#00e5ff'
       subscribeStatus={true}
       buttonTextColor='#000009'
       initialText={

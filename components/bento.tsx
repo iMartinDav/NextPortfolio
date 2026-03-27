@@ -84,7 +84,7 @@ const features = [
                 className={`h-3 w-3 animate-pulse rounded-full ${
                   process.env.NEXT_PUBLIC_AVAILABLE_FOR_FREELANCE === 'true'
                     ? 'bg-emerald-400'
-                    : 'bg-yellow-400'
+                    : 'bg-cyan-400'
                 }`}
               />
               <div className=''>
