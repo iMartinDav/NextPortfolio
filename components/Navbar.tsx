@@ -125,8 +125,8 @@ export default function Navbar() {
             className='dark'
             src='/imartin-logo.svg'
             alt='logo'
-            width={52}
-            height={52}
+            width={45}
+            height={45}
             priority // Keep this if this logo is critical for initial loading
             unoptimized
           />
