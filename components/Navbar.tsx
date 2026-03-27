@@ -123,7 +123,7 @@ export default function Navbar() {
           onClick={handleNavItemClick}>
           <Image
             className='dark'
-            src='/imartin-logo-1024.webp'
+            src='/imartin-logo.svg'
             alt='logo'
             width={45}
             height={45}
