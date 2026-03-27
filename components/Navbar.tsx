@@ -122,12 +122,12 @@ export default function Navbar() {
           className='navbar-brand'
           onClick={handleNavItemClick}>
           <Image
-            className='dark'
             src='/imartin-logo.svg'
             alt='logo'
-            width={45}
-            height={45}
-            priority // Keep this if this logo is critical for initial loading
+            width={512}
+            height={512}
+            className='h-[45px] w-[45px] object-contain'
+            priority
             unoptimized
           />
           <span className='navbar-brand-name luxury-text'>iMartinDav</span>
