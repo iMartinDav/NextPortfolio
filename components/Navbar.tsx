@@ -2,11 +2,11 @@
 
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { FadeIn } from '@/components/magicui/fade-in';
 import ThemeToggle from '@/components/theme-toggle';
+import { Logo } from '@/components/Logo';
 
 import type { LucideIcon } from 'lucide-react';
 import {
@@ -121,15 +121,7 @@ export default function Navbar() {
           href='/'
           className='navbar-brand'
           onClick={handleNavItemClick}>
-          <Image
-            src='/imartin-logo.svg'
-            alt='logo'
-            width={512}
-            height={512}
-            className='h-[45px] w-[45px] object-contain'
-            priority
-            unoptimized
-          />
+          <Logo className='h-[45px] w-[45px] object-contain' aria-hidden='true' />
           <span className='navbar-brand-name luxury-text'>iMartinDav</span>
         </Link>
         <button
