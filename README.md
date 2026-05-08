@@ -144,14 +144,14 @@ git clone https://github.com/iMartinDav/NextPortfolio.git
 cd NextPortfolio
 
 # Install dependencies
-pnpm install
+bun install
 
 # Start development server (with Turbopack)
-pnpm dev
+bun dev
 
 # Production build
-pnpm build
-pnpm start
+bun run build
+bun start
 ```
 
 ## 📁 Project Structure

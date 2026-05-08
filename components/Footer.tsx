@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
 
           <div className='w-full text-center md:w-1/3'>
             <h3 className='text-xs leading-tight font-medium text-gray-400'>
-              Copyright © {year} All Rights Reserved to Claude Opus 4.6
+              Copyright © {year} All Rights Reserved to Claude Opus 4.7
             </h3>
           </div>
 
