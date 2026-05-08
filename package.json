@@ -14,7 +14,7 @@
     "bun:build": "bun run build"
   },
   "engines": {
-    "node": ">=22",
+    "node": ">=24",
     "bun": ">=1.1.0"
   },
   "dependencies": {
