@@ -37,15 +37,23 @@ export async function GET() {
     });
 
     if (!response.ok) {
-      throw new Error(
-        `Umami API returned ${response.status}: ${await response.text()}`
+      // Log a clean warning instead of throwing an Error that clutters the build output
+      console.log(`Umami Events API returned ${response.status}: Failed to fetch events. Using empty fallback.`);
+      return NextResponse.json(
+        {
+          message: `Umami API returned ${response.status}`,
+          events: [],
+          error: true
+        },
+        { status: 200 }
       );
     }
 
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Error fetching Umami events:', error);
+    // Log cleanly without a stack trace during build
+    console.log('Error fetching Umami events. Using empty fallback.');
     return NextResponse.json(
       {
         message:

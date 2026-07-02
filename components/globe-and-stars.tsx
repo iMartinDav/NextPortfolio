@@ -9,7 +9,7 @@ import { useInView } from 'framer-motion';
 import Globe from '@/components/magicui/globe';
 import Particles from '@/components/magicui/particles';
 
-export default function GlobeAndStars() {
+export default function GlobeAndStars({ globeClassName }: { globeClassName?: string } = {}) {
   const { theme } = useTheme();
   const [color, setColor] = useState('#ffffff');
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,7 +30,7 @@ export default function GlobeAndStars() {
             color={color}
             refresh
           />
-          <Globe />
+          <Globe className={globeClassName} />
         </>
       )}
     </div>

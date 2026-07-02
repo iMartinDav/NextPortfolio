@@ -196,8 +196,10 @@ const features = [
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/vercel`,
     cta: 'Learn more',
     background: (
-      <div className='absolute top-0 right-0 h-full w-full origin-top rounded-md mask-[linear-gradient(to_top,transparent_20%,#000_100%)] transition-all duration-300 ease-out group-hover:-translate-y-4 group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_10%,#000_100%)]'>
-        <GlobeAndStars />
+      <div className='absolute top-0 right-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-105'>
+        <div className="absolute inset-0 w-full h-full mask-[linear-gradient(to_top,transparent_25%,#000_70%)]">
+          <GlobeAndStars globeClassName="!max-w-[800px] !w-[150vw] md:!w-[800px] !h-[150vw] md:!h-[800px] !-top-10 md:!-top-40 !-right-20 md:!-right-40 !left-auto !mx-0" />
+        </div>
       </div>
     )
   },

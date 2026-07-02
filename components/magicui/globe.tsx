@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef } from 'react';
+import { useTheme } from 'next-themes';
 
 import { cn } from '@/lib/utils';
 
@@ -91,7 +92,8 @@ export default function Globe({
   className?: string;
   config?: COBEOptions;
 }) {
-  let phi = 0;
+  // Start rotated to show continents (Americas/Europe) instead of the Pacific Ocean
+  let phi = 5.0;
   // Convert width to a ref to track it properly
   const widthRef = useRef<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -143,17 +145,27 @@ export default function Globe({
     }
   }, []);
 
+  const { theme } = useTheme();
+
   useEffect(() => {
     window.addEventListener('resize', onResize);
     onResize();
 
     if (!canvasRef.current || !isInView) return;
-    const globe = createGlobe(canvasRef.current, {
+    
+    // Dynamic theme configuration for Cobe
+    const isDark = theme === 'dark';
+    const dynamicConfig = {
       ...config,
+      dark: isDark ? 1 : 0,
+      baseColor: isDark ? [0.3, 0.3, 0.3] as [number, number, number] : [1, 1, 1] as [number, number, number],
+      glowColor: isDark ? [0.1, 0.1, 0.1] as [number, number, number] : [1, 1, 1] as [number, number, number],
       width: widthRef.current * 2,
       height: widthRef.current * 2,
       onRender
-    });
+    };
+
+    const globe = createGlobe(canvasRef.current, dynamicConfig);
 
     setTimeout(() => {
       if (canvasRef.current) {
@@ -165,7 +177,7 @@ export default function Globe({
       window.removeEventListener('resize', onResize);
       globe.destroy();
     };
-  }, [config, onResize, onRender, isInView]);
+  }, [config, onResize, onRender, isInView, theme]);
 
   return (
     <div
