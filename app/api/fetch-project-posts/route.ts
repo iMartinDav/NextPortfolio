@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'; // defaults to auto
+export const revalidate = 3600; // Cache data for 1 hour
 
 // Define an interface for the project post structure
 interface ProjectPost {

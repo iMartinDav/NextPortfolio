@@ -1,5 +1,5 @@
 import { FaApple, FaDocker } from 'react-icons/fa';
-import { SiHeroku, SiLinux, SiPostman, SiVercel } from 'react-icons/si';
+import { SiLinux, SiPostman, SiVercel } from 'react-icons/si';
 import { VscCode } from 'react-icons/vsc';
 
 function Toolstack() {
@@ -28,10 +28,6 @@ function Toolstack() {
       <div className='flex h-16 w-16 flex-col items-center'>
         <SiVercel className='text-4xl text-gray-800 dark:text-gray-200' />
         <p className='mt-2 text-gray-700 dark:text-gray-300'>Vercel</p>
-      </div>
-      <div className='flex h-16 w-16 flex-col items-center'>
-        <SiHeroku className='text-4xl text-gray-800 dark:text-gray-200' />
-        <p className='mt-2 text-gray-700 dark:text-gray-300'>Heroku</p>
       </div>
     </div>
   );

@@ -62,7 +62,7 @@ const PreLoader = () => {
                 className='animate-float'
                 style={{
                   animationDelay: `${index * 0.05}s`, // Faster letter animations
-                  animationDuration: '2s' // Shorter animation duration
+                  animationDuration: '1s' // Shorter animation duration
                 }}>
                 <span
                   className='relative text-6xl font-light tracking-wider text-transparent md:text-8xl'
@@ -78,7 +78,7 @@ const PreLoader = () => {
           <div className='absolute inset-0 -z-10'>
             <div
               className='absolute inset-0 animate-pulse bg-linear-to-r from-transparent via-teal-500/30 to-transparent blur-2xl'
-              style={{ animationDuration: '2s' }}
+              style={{ animationDuration: '1s' }}
             />
           </div>
         </div>

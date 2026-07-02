@@ -36,10 +36,7 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
 // Modern PDF.js worker configuration for Next.js
-if (typeof window !== 'undefined') {
-  // Use local worker file (updated to match API version)
-  pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
-}
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const options = {
   cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,

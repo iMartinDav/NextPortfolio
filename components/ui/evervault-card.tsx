@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -18,6 +18,7 @@ export const EvervaultCard = ({
   const mouseY = useMotionValue(0); // Initialized as MotionValue<number>
 
   const [randomString, setRandomString] = useState<string>('');
+  const lastUpdate = useRef(0);
 
   useEffect(() => {
     const str = generateRandomString(1500);
@@ -33,8 +34,12 @@ export const EvervaultCard = ({
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
 
-    const str = generateRandomString(1500);
-    setRandomString(str);
+    const now = Date.now();
+    if (now - lastUpdate.current > 100) {
+      const str = generateRandomString(1500);
+      setRandomString(str);
+      lastUpdate.current = now;
+    }
   }
 
   return (

@@ -2,12 +2,12 @@ import OrbitingCircles from '@/components/magicui/orbiting-circles';
 
 import { AiOutlineDocker } from 'react-icons/ai';
 import { FaGithub, FaLaptop } from 'react-icons/fa';
+import { VscOpenai } from 'react-icons/vsc';
 import {
   SiFastapi,
   SiJavascript,
   SiNextdotjs,
   SiNginx,
-  SiOpenai,
   SiPocketbase,
   SiPython,
   SiReact,
@@ -135,6 +135,6 @@ const Icons = {
   typescript: () => <SiTypescript className='h-full w-full' />,
   javascript: () => <SiJavascript className='h-full w-full' />,
   fastapi: () => <SiFastapi className='h-full w-full' />,
-  openai: () => <SiOpenai className='h-full w-full' />,
+  openai: () => <VscOpenai className='h-full w-full' />,
   laptop: () => <FaLaptop className='h-full w-full' />
 };

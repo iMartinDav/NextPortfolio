@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+export const revalidate = 3600; // Cache data for 1 hour
+
 export async function GET() {
   try {
     // Get environment variables
@@ -45,9 +47,7 @@ export async function GET() {
       process.env.NEXT_PUBLIC_UMAMI_BASE_URL ||
       `https://cloud.umami.is/share/${process.env.UMAMI_SHARE_TOKEN}/imartin.dev`;
 
-    console.log(
-      'Authenticated API failed, falling back to public share URL...'
-    );
+
     return await tryPublicShareUrl(shareUrl, startDate, endDate);
   } catch (error) {
     console.error('Error in stats API route:', error);
@@ -75,8 +75,7 @@ async function tryAuthenticatedAPI(
 
     const authTest = await fetch(authTestUrl, {
       method: 'GET',
-      headers: { Authorization: `Bearer ${apiToken}` },
-      cache: 'no-store'
+      headers: { Authorization: `Bearer ${apiToken}` }
     });
 
     console.log(`Auth test result: ${authTest.status}`);
@@ -93,8 +92,7 @@ async function tryAuthenticatedAPI(
 
     const statsResponse = await fetch(statsUrl, {
       method: 'GET',
-      headers,
-      cache: 'no-store'
+      headers
     });
 
     if (!statsResponse.ok) {
@@ -111,14 +109,11 @@ async function tryAuthenticatedAPI(
 
       const altResponse = await fetch(statsUrl, {
         method: 'GET',
-        headers: altHeaders,
-        cache: 'no-store'
+        headers: altHeaders
       });
 
       if (!altResponse.ok) {
-        console.log(
-          `Both auth methods failed. Bearer: ${statsResponse.status}, API-Key: ${altResponse.status}`
-        );
+
         return null; // Signal to fall back to share URL
       }
 
@@ -143,8 +138,7 @@ async function tryAuthenticatedAPI(
     try {
       const pageviewsResponse = await fetch(pageviewsUrl, {
         method: 'GET',
-        headers,
-        cache: 'no-store'
+        headers
       });
 
       if (pageviewsResponse.ok) {
@@ -187,7 +181,7 @@ async function tryPublicShareUrl(
   startDate: number,
   endDate: number
 ) {
-  console.log(`Trying fallback to public share URL: ${shareUrl}`);
+
 
   try {
     // Try a simplified approach for public share URL
@@ -207,12 +201,10 @@ async function tryPublicShareUrl(
 
     for (const url of urlPatterns) {
       try {
-        console.log(`Trying URL pattern: ${url}`);
 
         const response = await fetch(url, {
           method: 'GET',
-          headers: requestHeaders,
-          cache: 'no-store'
+          headers: requestHeaders
         });
 
         // If successful, parse the data
@@ -254,8 +246,7 @@ async function tryPublicShareUrl(
       try {
         console.log(`Trying pageviews URL: ${pageviewsUrl}`);
         const pageviewsResponse = await fetch(pageviewsUrl, {
-          headers: requestHeaders,
-          cache: 'no-store'
+          headers: requestHeaders
         });
 
         if (pageviewsResponse.ok) {
@@ -294,7 +285,6 @@ async function tryPublicShareUrl(
   }
 
   // If all else fails, generate simulated data
-  console.log('Could not fetch real data from share URL, using simulated data');
   const data = generateRealisticData();
 
   return NextResponse.json({

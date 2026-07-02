@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import dynamic from 'next/dynamic';
+import { useInView } from 'framer-motion';
 
 import { Button } from '@/components/ui/button';
 
@@ -12,6 +13,8 @@ const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
 
 const BentoContact = () => {
   const [hasCopied, setHasCopied] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { margin: '400px' });
 
   const handleCopy = () => {
     navigator.clipboard.writeText('martin@bioinfometrics.com');
@@ -24,10 +27,12 @@ const BentoContact = () => {
 
   return (
     <section
-      className='bg-background text-foreground my-20 space-y-20 p-4'
+      ref={sectionRef}
+      className='bg-background text-foreground my-20 space-y-20 p-4 min-h-[800px]'
       id='contact'>
-      <div className='grid h-full grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
-        {/* Section 1: Introduction */}
+      {isInView && (
+        <div className='grid h-full grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
+          {/* Section 1: Introduction */}
         <div className='border-border bg-card bg-opacity-50 col-span-1 rounded-lg border p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:row-span-3'>
           <div className='flex flex-col items-start justify-center'>
             <EvervaultCard
@@ -178,6 +183,7 @@ const BentoContact = () => {
           </div>
         </div>
       </div>
+      )}
     </section>
   );
 };

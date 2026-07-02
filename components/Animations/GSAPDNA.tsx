@@ -141,7 +141,6 @@ const GSAPDNA: React.FC = () => {
                   height: '2px', // Bonding thickness
                   transform: `rotateY(${rotationY}deg)`,
                   transformStyle: 'preserve-3d',
-                  willChange: 'transform',
                   // The rung itself (Hydrogen bond)
                   background: `linear-gradient(90deg, ${STRAND_1}40 0%, ${STRAND_2}40 100%)`,
                 }}

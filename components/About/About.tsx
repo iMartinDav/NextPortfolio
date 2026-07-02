@@ -1,9 +1,18 @@
+'use client';
+
+import dynamic from 'next/dynamic';
+
 import Particle from '../Particle';
 import Aboutcard from './AboutCard';
-import BioinformaticsCore from './BioinformaticsCore';
 import Github from './Github';
 import Techstack from './Techstack';
 import Toolstack from './Toolstack';
+
+// Dynamically import the heavy 3D canvas so it doesn't block initial page load
+const BioinformaticsCore = dynamic(() => import('./BioinformaticsCore'), { 
+  ssr: false, 
+  loading: () => <div className="min-h-[400px] w-full" /> 
+});
 
 const AboutContent: React.FC = () => {
   return (

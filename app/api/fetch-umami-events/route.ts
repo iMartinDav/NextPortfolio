@@ -1,5 +1,6 @@
-// app/api/fetch-umami-events/route.ts
 import { NextResponse } from 'next/server';
+
+export const revalidate = 3600; // Cache data for 1 hour
 
 export async function GET() {
   try {
@@ -32,8 +33,7 @@ export async function GET() {
         'Authorization': `Bearer ${apiToken}`,
         'Content-Type': 'application/json',
         'Accept': 'application/json'
-      },
-      cache: 'no-store'
+      }
     });
 
     if (!response.ok) {
@@ -50,9 +50,10 @@ export async function GET() {
       {
         message:
           error instanceof Error ? error.message : 'An unknown error occurred',
-        events: []
+        events: [],
+        error: true
       },
-      { status: 500 }
+      { status: 200 }
     );
   }
 }

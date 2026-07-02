@@ -31,7 +31,7 @@ const ReviewCard = ({
 
   // Construct the proper image URL
   const getImageUrl = (image: string) => {
-    if (imageError) return '/images/placeholder.jpg';
+    if (imageError || !image || image === 'placeholder') return '/images/placeholder.jpg';
     return image.startsWith('/')
       ? `https://projects.imartin.dev${image}`
       : `https://projects.imartin.dev/images/${image}`;

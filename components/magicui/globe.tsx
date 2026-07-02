@@ -7,17 +7,18 @@ import { cn } from '@/lib/utils';
 import createGlobe from 'cobe';
 import type { COBEOptions } from 'cobe';
 import { useSpring } from 'react-spring';
+import { useInView } from 'framer-motion';
 
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,
   height: 800,
   onRender: () => {},
-  devicePixelRatio: 2,
+  devicePixelRatio: 1.5,
   phi: 0,
   theta: 0.41,
   dark: 0,
   diffuse: 0.4,
-  mapSamples: 64000,
+  mapSamples: 16000,
   mapBrightness: 1.2,
   baseColor: [1, 1, 1],
   markerColor: [251 / 255, 100 / 255, 21 / 255],
@@ -64,11 +65,6 @@ const GLOBE_CONFIG: COBEOptions = {
     { location: [41.8781, -87.6298], size: 0.07 }, // Chicago
     { location: [40.4168, -3.7038], size: 0.07 }, // Madrid
     { location: [55.7558, 37.6173], size: 0.07 }, // Moscow, Russia
-    { location: [35.6762, 139.6503], size: 0.07 }, // Tokyo, Japan
-    { location: [-34.6037, -58.3816], size: 0.07 }, // Buenos Aires, Argentina
-    { location: [37.9838, 23.7275], size: 0.06 }, // Athens, Greece
-    { location: [28.6139, 77.209], size: 0.07 }, // New Delhi, India
-    { location: [45.4642, 9.19], size: 0.07 }, // Milan, Italy
     { location: [50.1109, 8.6821], size: 0.07 }, // Frankfurt, Germany
     { location: [35.8617, 104.1954], size: 0.07 }, // China
     { location: [31.2304, 121.4737], size: 0.08 }, // Shanghai, China
@@ -80,15 +76,11 @@ const GLOBE_CONFIG: COBEOptions = {
     { location: [-22.9068, -43.1729], size: 0.07 }, // Rio de Janeiro, Brazil
     { location: [35.6895, 139.6917], size: 0.08 }, // Tokyo, Japan
     { location: [25.0343, -77.3963], size: 0.06 }, // Nassau, Bahamas
-    { location: [22.3964, 114.1095], size: 0.07 }, // Hong Kong
     { location: [3.139, 101.6869], size: 0.07 }, // Kuala Lumpur, Malaysia
     { location: [-1.2921, 36.8219], size: 0.06 }, // Nairobi, Kenya
-    { location: [39.9042, 116.4074], size: 0.08 }, // Beijing, China
     { location: [32.7767, -96.797], size: 0.06 }, // Dallas, Texas
-    { location: [39.9042, 116.4074], size: 0.08 }, // Beijing, China
     { location: [-37.8136, 144.9631], size: 0.07 }, // Melbourne, Australia
     { location: [43.7696, 11.2558], size: 0.06 }, // Florence, Italy
-    { location: [41.9028, 12.4964], size: 0.07 } // Rome, Italy
   ]
 };
 
@@ -102,7 +94,9 @@ export default function Globe({
   let phi = 0;
   // Convert width to a ref to track it properly
   const widthRef = useRef<number>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isInView = useInView(containerRef, { margin: '200px' });
   const pointerInteracting = useRef<number | null>(null);
   const pointerInteractionMovement = useRef(0);
   const [{ r }, api] = useSpring(() => ({
@@ -153,7 +147,7 @@ export default function Globe({
     window.addEventListener('resize', onResize);
     onResize();
 
-    if (!canvasRef.current) return;
+    if (!canvasRef.current || !isInView) return;
     const globe = createGlobe(canvasRef.current, {
       ...config,
       width: widthRef.current * 2,
@@ -171,10 +165,11 @@ export default function Globe({
       window.removeEventListener('resize', onResize);
       globe.destroy();
     };
-  }, [config, onResize, onRender]);
+  }, [config, onResize, onRender, isInView]);
 
   return (
     <div
+      ref={containerRef}
       className={cn(
         'absolute inset-0 mx-auto aspect-square w-full max-w-[600px]',
         className

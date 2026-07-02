@@ -144,20 +144,6 @@ export default function RootLayout({
       className={inter.className}
       data-scroll-behavior='smooth'>
       <head>
-        {/* Google Tag Manager - Head */}
-        {/* biome-ignore lint/nursery/useUniqueElementIds: Next.js Script components with inline content require static string IDs */}
-        <Script
-          id='google-analytics'
-          strategy='afterInteractive'>
-          {`
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-            ga('create', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', 'auto');
-            ga('send', 'pageview');
-          `}
-        </Script>
 
         {/* Preconnect to analytics domains */}
         <link
@@ -169,7 +155,25 @@ export default function RootLayout({
         <script
           type='application/ld+json'
           // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data injection is safe
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}
+        />
+
+        {/* Suppress harmless console warnings from dependencies */}
+        <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: safe console patch
+          dangerouslySetInnerHTML={{
+            __html: `
+              if (typeof console !== 'undefined') {
+                const originalWarn = console.warn;
+                console.warn = function(...args) {
+                  const msg = typeof args[0] === 'string' ? args[0] : '';
+                  if (msg.includes('THREE.Clock: This module has been deprecated')) return;
+                  if (msg.includes('Multiple instances of Three.js being imported')) return;
+                  originalWarn.apply(console, args);
+                };
+              }
+            `
+          }}
         />
 
         {/* Cookie Script */}
@@ -191,16 +195,6 @@ export default function RootLayout({
         )}
       </head>
       <body>
-        {/* Google Tag Manager - Body */}
-        <noscript>
-          <iframe
-            src='https://www.googletagmanager.com/ns.html?id=GTM-PFT9XVXM'
-            height='0'
-            width='0'
-            style={{ display: 'none', visibility: 'hidden' }}
-            title='Google Tag Manager'
-          />
-        </noscript>
 
         <ThemeProvider
           attribute='class'

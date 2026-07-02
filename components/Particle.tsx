@@ -1,7 +1,7 @@
 'use client';
 
 import type React from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 
 import { useTheme } from 'next-themes';
 
@@ -29,7 +29,7 @@ const DEFAULT_COLORS = {
 };
 
 const DEFAULT_CONFIG = {
-  density: 1400,
+  density: 800,
   particleCount: 120,
   speed: 0.1,
   parallaxForce: 60
@@ -49,6 +49,7 @@ const ParticleBackground: React.FC<ParticleProps> = ({
 
   const currentTheme = theme === 'system' ? systemTheme : theme;
   const isDark = currentTheme === 'dark';
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const initEngine = async () => {
@@ -165,14 +166,15 @@ const ParticleBackground: React.FC<ParticleProps> = ({
         },
         glow: {
           enable: true,
-          color: isDark ? darkModeColor : lightModeColor,
-          opacity: 0.7
+          color: isDark ? '#ffffff' : '#00fff2',
+          intensity: 0.8,
+          offset: 10
         },
         twinkle: {
           particles: {
             enable: true,
-            frequency: 0.05,
-            opacity: 0.9
+            frequency: 0.08,
+            opacity: 1
           }
         }
       },
@@ -199,8 +201,9 @@ const ParticleBackground: React.FC<ParticleProps> = ({
           }
         }
       },
-      detectRetina: true,
-      fpsLimit: 60,
+      detectRetina: false,
+      fpsLimit: 30,
+      pauseOnOutsideViewport: true,
       responsive: [
         {
           maxWidth: 768,
@@ -243,12 +246,14 @@ const ParticleBackground: React.FC<ParticleProps> = ({
   }
 
   return (
-    <Particles
-      id='tsparticles'
-      particlesLoaded={handleParticlesLoaded}
-      options={particleOptions}
-      className={className}
-    />
+    <div ref={containerRef} className={className}>
+      <Particles
+        id='tsparticles'
+        particlesLoaded={handleParticlesLoaded}
+        options={particleOptions}
+        className="absolute inset-0"
+      />
+    </div>
   );
 };
 

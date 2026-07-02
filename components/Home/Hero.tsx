@@ -1,22 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+
+import dynamic from 'next/dynamic';
 
 import Particle from '../Particle';
-import DNAHelix from './DNAHelix';
 import Type from './Type';
 
+// Dynamically import the heavy 3D canvas so it doesn't block initial page load
+const DNAHelix = dynamic(() => import('./DNAHelix'), { 
+  ssr: false, 
+  loading: () => <div className="absolute right-0 top-0 h-full w-full md:w-1/2" /> 
+});
+
 export default function Hero() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    return null;
-  }
-
   return (
     <section className='relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90 dark:from-[#060610] dark:via-[#0a0a1a] dark:to-[#0c1a1f]'>
       <div className='absolute inset-0 z-0'>

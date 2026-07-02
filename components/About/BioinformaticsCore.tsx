@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, Suspense } from 'react';
 
 import { Float, Html, OrbitControls, Text } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useTheme } from 'next-themes';
 import * as THREE from 'three';
+import { useInView } from 'framer-motion';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 //  BIOINFORMATICS MORPHING CORE
@@ -588,6 +589,8 @@ function MorphingScene({ isLight }: { isLight: boolean }) {
 export default function BioinformaticsCore() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { margin: '200px' });
 
   useEffect(() => {
     setMounted(true);
@@ -596,10 +599,16 @@ export default function BioinformaticsCore() {
   const isLight = mounted && resolvedTheme === 'light';
 
   return (
-    <div className="w-full h-[450px] md:h-[520px] lg:h-[600px] relative overflow-visible">
+    <div ref={containerRef} className="w-full h-[450px] md:h-[520px] lg:h-[600px] relative overflow-visible">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,240,255,0.04)_0%,transparent_60%)] pointer-events-none" />
-      <Canvas camera={{ position: [0, 0, 11], fov: 50 }} gl={{ alpha: true }}>
-        <MorphingScene isLight={isLight} />
+      <Canvas 
+        frameloop={isInView ? 'always' : 'demand'}
+        camera={{ position: [0, 0, 11], fov: 50 }} 
+        gl={{ alpha: true }}
+      >
+        <Suspense fallback={null}>
+          <MorphingScene isLight={isLight} />
+        </Suspense>
       </Canvas>
     </div>
   );

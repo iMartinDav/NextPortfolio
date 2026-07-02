@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'; // Ensures fresh data on each request
+export const revalidate = 3600; // Cache data for 1 hour
 
 interface Repo {
   stargazers_count: number;
@@ -47,8 +47,7 @@ export async function GET(): Promise<Response> {
 
       // Fetch with improved error handling
       const response = await fetch(requestUrl, {
-        headers,
-        cache: 'no-store'
+        headers
       });
 
       if (!response.ok) {

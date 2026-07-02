@@ -25,7 +25,6 @@ export default function DNAHelix() {
         frameloop={isInView ? 'always' : 'demand'} // Halts GPU rendering when user scrolls past
         camera={{ position: [0, 0, 16], fov: 48, near: 0.01, far: 300 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-        dpr={[1, 2]}
         style={{ background: 'transparent' }}
       >
         <Suspense fallback={null}>

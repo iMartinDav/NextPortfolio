@@ -1,4 +1,9 @@
-import IconCloud from '@/components/magicui/icon-cloud';
+import dynamic from 'next/dynamic';
+
+const IconCloud = dynamic(() => import('@/components/magicui/icon-cloud'), {
+  ssr: false,
+  loading: () => <div className="h-64 w-full animate-pulse rounded-full bg-slate-200/20 dark:bg-slate-800/20" />
+});
 
 const slugs = [
   'amazonwebservices',

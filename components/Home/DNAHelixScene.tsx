@@ -31,7 +31,7 @@ const BASES = ['A', 'T', 'C', 'G'];
 
 // ── Droplets System (DNA-to-Bits Glitch Transformation) ─────────────────────
 function Droplets({ isLight }: { isLight: boolean }) {
-  const count = 20;
+  const count = 25;
   const textRefs = useRef<any[]>([]);
 
   const dropletsData = useMemo(() => {
@@ -271,7 +271,7 @@ export function DNAHelixScene({ isLight }: Props) {
       const pxA = Math.cos(angA) * RP, pzA = Math.sin(angA) * RP;
       const pyA = y + RISE_S * 0.3;
 
-      cloud(pxA, pyA, pzA, C.phosphate, 75, 0.32, bMinSize, bMaxSize, 0.6, 1.0, P, CO, SZ, BR, PH, true);
+      cloud(pxA, pyA, pzA, C.phosphate, 100, 0.32, bMinSize, bMaxSize, 0.6, 1.0, P, CO, SZ, BR, PH, true);
 
       const c1xA = Math.cos(angA) * RC, c1zA = Math.sin(angA) * RC;
       c1A.push(new THREE.Vector3(c1xA, y, c1zA));
@@ -302,7 +302,7 @@ export function DNAHelixScene({ isLight }: Props) {
       const pxB = Math.cos(angB) * RP, pzB = Math.sin(angB) * RP;
       const pyB = y - RISE_S * 0.3;
 
-      cloud(pxB, pyB, pzB, C.phosphate, 75, 0.32, bMinSize, bMaxSize, 0.6, 1.0, P, CO, SZ, BR, PH, true);
+      cloud(pxB, pyB, pzB, C.phosphate, 100, 0.32, bMinSize, bMaxSize, 0.6, 1.0, P, CO, SZ, BR, PH, true);
 
       const c1xB = Math.cos(angB) * RC, c1zB = Math.sin(angB) * RC;
       c1B.push(new THREE.Vector3(c1xB, y, c1zB));
@@ -369,13 +369,13 @@ export function DNAHelixScene({ isLight }: Props) {
         const pB2 = new THREE.Vector3(Math.cos(b2) * RP, y2 - RISE_S * 0.3, Math.sin(b2) * RP);
 
         // Scatter dense connection dots between backbone nodes
-        for (let step = 1; step < 8; step++) {
-            const t = step / 8;
+        for (let step = 1; step < 4; step++) {
+            const t = step / 4;
             const curA = new THREE.Vector3().lerpVectors(pA1, pA2, t);
             const curB = new THREE.Vector3().lerpVectors(pB1, pB2, t);
             
-            cloud(curA.x, curA.y, curA.z, C.phosphate, 16, 0.26, bMinSize, bMaxSize * 0.8, 0.5, 1.0, P, CO, SZ, BR, PH, true);
-            cloud(curB.x, curB.y, curB.z, C.phosphate, 16, 0.26, bMinSize, bMaxSize * 0.8, 0.5, 1.0, P, CO, SZ, BR, PH, true);
+            cloud(curA.x, curA.y, curA.z, C.phosphate, 20, 0.26, bMinSize, bMaxSize * 0.8, 0.5, 1.0, P, CO, SZ, BR, PH, true);
+            cloud(curB.x, curB.y, curB.z, C.phosphate, 20, 0.26, bMinSize, bMaxSize * 0.8, 0.5, 1.0, P, CO, SZ, BR, PH, true);
         }
     }
 

@@ -70,9 +70,9 @@ export default function ThemeToggle() {
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={isDark ? 'moon' : 'sun'}
-          initial={{ scale: 0, opacity: 0, rotate: -120 }}
+          initial={{ scale: 0.95, opacity: 0, rotate: -120 }}
           animate={{ scale: 1, opacity: 1, rotate: 0 }}
-          exit={{ scale: 0, opacity: 0, rotate: 120 }}
+          exit={{ scale: 0.95, opacity: 0, rotate: 120 }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
           className="flex items-center justify-center"
         >
