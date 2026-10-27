@@ -1058,3 +1058,85 @@ footer .transform:hover {
     animation-duration: 0s !important;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Intro splash (components/Pre.tsx). State lives on html[data-intro]: */
+/* unset = playing, "exiting" = fading out, "played" = gone.          */
+/* ------------------------------------------------------------------ */
+.intro-splash {
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+html[data-intro='exiting'] .intro-splash {
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none;
+}
+html[data-intro='played'] .intro-splash {
+  display: none;
+}
+
+.intro-content {
+  transition: opacity 300ms ease;
+}
+html:not([data-intro]) .intro-content {
+  opacity: 0;
+}
+
+.intro-float {
+  animation: intro-float 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.intro-progress {
+  transform-origin: left;
+  animation: intro-progress ease-out forwards;
+}
+
+@keyframes intro-float {
+  0%,
+  100% {
+    transform: translateY(0);
+    filter: brightness(1);
+  }
+  50% {
+    transform: translateY(-8px);
+    filter: brightness(1.2);
+  }
+}
+@keyframes intro-progress {
+  from {
+    transform: scaleX(0.3);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Route fallback (app/loading.tsx): appears only if navigation takes >200ms */
+.route-loading {
+  opacity: 0;
+  animation: route-loading-in 200ms ease 200ms forwards;
+}
+.route-loading-bar {
+  animation: route-loading-slide 1s ease-in-out infinite;
+}
+@keyframes route-loading-in {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes route-loading-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-loading-bar {
+    animation: none;
+    width: 100%;
+    opacity: 0.6;
+  }
+}

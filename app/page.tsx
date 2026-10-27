@@ -1,62 +1,36 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
 
 import BentoContact from '@/components/Home/BentoContact';
 import BiotechProfile from '@/components/Home/BiotechProfile';
 import Hero from '@/components/Home/Hero';
 import PreLoader from '@/components/Pre';
 import { Bento } from '@/components/bento';
-
+import { useMounted } from '@/hooks/use-mounted';
 
 function ThemeAwareWrapper({ children }: { children: ReactNode }) {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div style={{ visibility: 'hidden', height: '100dvh' }}>{children}</div>
-    );
-  }
-
-  return <>{children}</>;
+  // Same element on both renders: swapping <div> for a fragment would remount
+  // (and re-fetch) the whole page once hydrated.
+  return (
+    <div
+      style={
+        mounted ? undefined : { visibility: 'hidden', height: '100dvh' }
+      }>
+      {children}
+    </div>
+  );
 }
 
 export default function LandingPage() {
-  const [showLoader, setShowLoader] = useState(true);
-  const [contentReady, setContentReady] = useState(false);
-
-  useEffect(() => {
-    if (showLoader) {
-      document.body.style.overflow = 'hidden';
-    }
-
-    const timer = setTimeout(() => {
-      setShowLoader(false);
-      setTimeout(() => {
-        setContentReady(true);
-        document.body.style.overflow = '';
-      }, 50);
-    }, 1000);
-
-    return () => {
-      clearTimeout(timer);
-      document.body.style.overflow = '';
-    };
-  }, [showLoader]);
-
   return (
     <>
-      {showLoader && <PreLoader />}
+      <PreLoader />
       <ThemeAwareWrapper>
         <section
-          className={`flex min-h-screen flex-col justify-between transition-opacity duration-300 ${
-            contentReady ? 'opacity-100' : 'opacity-0'
-          }`}>
+          className='intro-content flex min-h-screen flex-col justify-between'>
           <Hero />
           <div className='mx-auto flex w-full max-w-5xl items-center justify-center'>
             <div className='flex flex-col items-center overflow-hidden'>

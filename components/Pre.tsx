@@ -1,69 +1,67 @@
 // components/Pre.tsx
-import { useEffect, useState } from 'react';
+'use client';
 
-import { Loader2 } from 'lucide-react';
+import { useEffect } from 'react';
+
+import { INTRO_STORAGE_KEY } from '@/lib/intro';
+
+// Intro splash: plays once per browser session (first entry to the site).
+// Visibility is driven by `html[data-intro]`, which `introBootScript` (lib/intro.ts) sets
+// before first paint, so refreshes / back-navigation never flash the splash
+// and server and client markup always match.
+
+const INTRO_DURATION_MS = 800;
+const EXIT_DURATION_MS = 300;
+
+const text = 'iMartinDav';
 
 const PreLoader = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [progress, setProgress] = useState(0);
-  const [isExiting, setIsExiting] = useState(false);
-
   useEffect(() => {
-    // Start with 30% progress instantly for perceived speed
-    setProgress(30);
+    const root = document.documentElement;
+    if (root.dataset.intro === 'played') return;
 
-    // Faster progress animation
-    const progressInterval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(progressInterval);
-          return 100;
-        }
-        // Accelerated progress
-        const remaining = 100 - prev;
-        return prev + remaining * 0.2; // Increased speed
-      });
-    }, 30); // Reduced interval
+    document.body.style.overflow = 'hidden';
 
-    // Shorter loading time (800ms instead of 2000ms)
+    let exitTimer: ReturnType<typeof setTimeout> | undefined;
     const timer = setTimeout(() => {
-      setProgress(100);
-      setIsExiting(true);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 300); // Faster exit animation
-    }, 800);
+      root.dataset.intro = 'exiting';
+      exitTimer = setTimeout(() => {
+        root.dataset.intro = 'played';
+        document.body.style.overflow = '';
+        try {
+          sessionStorage.setItem(INTRO_STORAGE_KEY, '1');
+        } catch {
+          // Storage unavailable (private mode): intro simply replays next load
+        }
+      }, EXIT_DURATION_MS);
+    }, INTRO_DURATION_MS);
 
     return () => {
       clearTimeout(timer);
-      clearInterval(progressInterval);
+      clearTimeout(exitTimer);
+      document.body.style.overflow = '';
+      // Unmounted mid-intro (navigated away): don't leave the content hidden
+      if (root.dataset.intro !== 'played') root.dataset.intro = 'played';
     };
   }, []);
 
-  if (!isLoading) return null;
-
-  const text = 'iMartinDav';
-
   return (
     <div
-      className={`fixed inset-0 z-9999 flex items-center justify-center bg-black/95 backdrop-blur-md transition-all duration-300 ${
-        isExiting ? 'scale-98 opacity-0' : 'scale-100 opacity-100'
-      }`}
-      style={{
-        isolation: 'isolate'
-      }}>
+      className='intro-splash fixed inset-0 z-9999 flex items-center justify-center bg-black/95 backdrop-blur-md'
+      role='status'
+      aria-label='Loading'
+      style={{ isolation: 'isolate' }}>
       <div className='absolute inset-0 bg-black/80' />
-      <div className='relative z-10 flex flex-col items-center gap-6'>
+      <div className='relative z-10 flex flex-col items-center gap-8'>
         <div className='relative'>
-          <div className='flex space-x-1'>
+          <div
+            className='flex space-x-1'
+            aria-hidden='true'>
             {text.split('').map((char, index) => (
               <div
-                key={`char-${char === ' ' ? 'space' : char}-position-${index}`}
-                className='animate-float'
-                style={{
-                  animationDelay: `${index * 0.05}s`, // Faster letter animations
-                  animationDuration: '1s' // Shorter animation duration
-                }}>
+                key={`char-${char}-position-${index}`}
+                className='intro-float'
+                style={{ animationDelay: `${index * 0.05}s` }}>
                 <span
                   className='relative text-6xl font-light tracking-wider text-transparent md:text-8xl'
                   style={{
@@ -83,53 +81,13 @@ const PreLoader = () => {
           </div>
         </div>
 
-        <div className='flex w-full flex-col items-center gap-3'>
-          <Loader2 className='h-5 w-5 animate-spin text-teal-400' />
-          <div className='h-1 w-48 overflow-hidden rounded-full bg-gray-800/50 backdrop-blur-xs'>
-            <div
-              className='animate-gradient-move h-full rounded-full bg-linear-to-r from-teal-400 via-cyan-500 to-teal-400 transition-all duration-150 ease-out'
-              style={{
-                width: `${progress}%`,
-                transition: 'width 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
-              }}
-            />
-          </div>
-          <span className='text-sm font-medium text-teal-400'>
-            {Math.round(progress)}%
-          </span>
+        <div className='h-1 w-48 overflow-hidden rounded-full bg-gray-800/50'>
+          <div
+            className='intro-progress h-full rounded-full bg-linear-to-r from-teal-400 via-cyan-500 to-teal-400'
+            style={{ animationDuration: `${INTRO_DURATION_MS}ms` }}
+          />
         </div>
       </div>
-
-      <style
-        jsx
-        global>{`
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0);
-            filter: brightness(1);
-          }
-          50% {
-            transform: translateY(-8px); // Reduced movement
-            filter: brightness(1.2);
-          }
-        }
-        .animate-float {
-          animation: float 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        }
-        @keyframes gradient-move {
-          0% {
-            background-position: 0% 50%;
-          }
-          100% {
-            background-position: 100% 50%;
-          }
-        }
-        .animate-gradient-move {
-          background-size: 200% 100%;
-          animation: gradient-move 2s linear infinite;
-        }
-      `}</style>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import Script from 'next/script';
 
 import Footer from '@/components/Footer';
+import { introBootScript } from '@/lib/intro';
 import Navbar from '@/components/Navbar';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
@@ -144,6 +145,14 @@ export default function RootLayout({
       className={inter.className}
       data-scroll-behavior='smooth'>
       <head>
+        {/* Decide before first paint whether the intro splash already played this session */}
+        <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: static inline boot script
+          dangerouslySetInnerHTML={{ __html: introBootScript }}
+        />
+        <noscript>
+          <style>{'.intro-splash{display:none}.intro-content{opacity:1!important}'}</style>
+        </noscript>
 
         {/* Preconnect to analytics domains */}
         <link
