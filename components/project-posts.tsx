@@ -22,7 +22,8 @@ interface FetchProjectsResponse {
       description: string;
       image: string;
     };
-    slug: string;
+    // Astro content collections expose the entry slug as `id` (no `slug` since Astro 5)
+    id: string;
   }[];
 }
 
@@ -37,7 +38,7 @@ const ProjectPosts: React.FC = () => {
           const formattedPosts: Post[] = postsData.postsData.map((post) => ({
             name: post.data.title,
             body: post.data.description,
-            slug: post.slug,
+            slug: post.id,
             image: post.data.image
           }));
           setFiles(formattedPosts.slice(0, 10));

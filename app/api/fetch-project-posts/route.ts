@@ -15,7 +15,6 @@ export async function GET(): Promise<Response> {
   try {
     let postsData: ProjectPost[] = []; // Change from any[] to ProjectPost[]
     let nextUrl: string | null = url; // Change to string | null
-    let pageCount = 0;
 
     while (nextUrl) {
       const response: Response = await fetch(nextUrl, { headers });
@@ -28,9 +27,6 @@ export async function GET(): Promise<Response> {
 
       const posts: ProjectPost[] = await response.json(); // Specify the expected type
       postsData = postsData.concat(posts);
-
-      // Logging for debugging
-      console.log(`Fetched ${posts.length} posts on page ${pageCount + 1}`);
 
       // Check for pagination
       const linkHeader: string | null = response.headers.get('link');
@@ -45,10 +41,8 @@ export async function GET(): Promise<Response> {
         nextUrl = null; // Set to null when there's no next URL
       }
 
-      pageCount++;
     }
 
-    console.log(`Total posts: ${postsData.length}`);
     return new Response(JSON.stringify({ postsData }), { status: 200 });
   } catch (error) {
     console.error('Error fetching projects feed:', error);

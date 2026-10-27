@@ -61,6 +61,98 @@ const CHART_METRICS = [
   }
 ];
 
+interface AnalyticsResult {
+  chartData: ChartData[];
+  stats: StatsData;
+  isRealData: boolean;
+}
+
+// Pure loader (no React state) so the hook can apply results from a callback
+async function loadAnalytics(): Promise<AnalyticsResult> {
+  // Use our API proxy to fetch from Umami's public share URL
+  const response = await fetch('/api/fetch-umami-stats', {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Cache-Control': 'no-cache, no-store'
+    },
+    cache: 'no-store'
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `API Error (${response.status}): ${await response.text()}`
+    );
+  }
+
+  const apiData = await response.json();
+
+  // Check if we have an error in the response
+  if (apiData.error) {
+    throw new Error(apiData.error);
+  }
+
+  // Handle field name differences if any
+  const normalizedStats = {
+    pageviews: apiData.pageviews || { value: 0, prev: 0 },
+    visitors: apiData.visitors || { value: 0, prev: 0 },
+    visits: apiData.visits || { value: 0, prev: 0 },
+    bounces: apiData.bounces || { value: 0, prev: 0 },
+    totaltime: apiData.totaltime ||
+      apiData.totalTime || { value: 0, prev: 0 }
+  };
+
+  // Use real daily data from API if available
+  let chartData: ChartData[] = [];
+
+  if (apiData.dailyData?.pageviews?.length > 0) {
+    // Process the real daily data
+    chartData = apiData.dailyData.pageviews.map((item: PageviewData) => {
+      const date = new Date(item.x);
+      const matchingSession = apiData.dailyData.sessions.find(
+        (s: PageviewData) => s.x === item.x
+      );
+
+      return {
+        date: item.x,
+        formattedDate: date.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric'
+        }),
+        pageviews: item.y,
+        visitors: matchingSession?.y || 0
+      };
+    });
+  } else {
+    // Fallback to distribution algorithm if no daily data
+    const distributionFactors = [0.13, 0.15, 0.17, 0.18, 0.16, 0.11, 0.1];
+    const today = new Date();
+
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(today.getDate() - i);
+      const dayOfWeek = date.getDay();
+      const factor = distributionFactors[(dayOfWeek + 1) % 7];
+
+      chartData.push({
+        date: date.toISOString().split('T')[0],
+        formattedDate: date.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric'
+        }),
+        pageviews: Math.round(normalizedStats.pageviews.value * factor),
+        visitors: Math.round(normalizedStats.visitors.value * factor)
+      });
+    }
+  }
+
+  return {
+    chartData,
+    stats: normalizedStats,
+    isRealData: !!apiData.isRealData
+  };
+}
+
 function useAnalyticsData() {
   const [data, setData] = React.useState<ChartData[]>([]);
   const [stats, setStats] = React.useState<StatsData | null>(null);
@@ -69,117 +161,45 @@ function useAnalyticsData() {
   const [lastUpdated, setLastUpdated] = React.useState<Date | null>(null);
   const [isRealData, setIsRealData] = React.useState<boolean>(true);
 
-  // Fetch data function using the Umami public share URL via our proxy
-  const fetchData = React.useCallback(async () => {
-    try {
-      // Use our API proxy to fetch from Umami's public share URL
-      const response = await fetch('/api/fetch-umami-stats', {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Cache-Control': 'no-cache, no-store'
-        },
-        cache: 'no-store'
+  const load = React.useCallback((isCancelled: () => boolean = () => false) => {
+    return loadAnalytics()
+      .then((result) => {
+        if (isCancelled()) return;
+        setData(result.chartData);
+        setStats(result.stats);
+        setIsRealData(result.isRealData);
+        setLastUpdated(new Date());
+        setError(null);
+      })
+      .catch((err: unknown) => {
+        if (isCancelled()) return;
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+        console.error('Failed to fetch analytics data:', errorMessage);
+        setError(errorMessage);
+        setData([]);
+        setStats(null);
+        setIsRealData(false);
+      })
+      .finally(() => {
+        if (!isCancelled()) setIsLoading(false);
       });
-
-      if (!response.ok) {
-        throw new Error(
-          `API Error (${response.status}): ${await response.text()}`
-        );
-      }
-
-      const apiData = await response.json();
-
-      // Check if we have an error in the response
-      if (apiData.error) {
-        throw new Error(apiData.error);
-      }
-
-      // Check if this is real or simulated data
-      setIsRealData(!!apiData.isRealData);
-
-      // Handle field name differences if any
-      const normalizedStats = {
-        pageviews: apiData.pageviews || { value: 0, prev: 0 },
-        visitors: apiData.visitors || { value: 0, prev: 0 },
-        visits: apiData.visits || { value: 0, prev: 0 },
-        bounces: apiData.bounces || { value: 0, prev: 0 },
-        totaltime: apiData.totaltime ||
-          apiData.totalTime || { value: 0, prev: 0 }
-      };
-
-      // Use real daily data from API if available
-      let chartData: ChartData[] = [];
-
-      if (apiData.dailyData?.pageviews?.length > 0) {
-        // Process the real daily data
-        chartData = apiData.dailyData.pageviews.map((item: PageviewData) => {
-          const date = new Date(item.x);
-          const matchingSession = apiData.dailyData.sessions.find(
-            (s: PageviewData) => s.x === item.x
-          );
-
-          return {
-            date: item.x,
-            formattedDate: date.toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric'
-            }),
-            pageviews: item.y,
-            visitors: matchingSession?.y || 0
-          };
-        });
-      } else {
-        // Fallback to distribution algorithm if no daily data
-        const distributionFactors = [0.13, 0.15, 0.17, 0.18, 0.16, 0.11, 0.1];
-        const today = new Date();
-
-        for (let i = 6; i >= 0; i--) {
-          const date = new Date();
-          date.setDate(today.getDate() - i);
-          const dayOfWeek = date.getDay();
-          const factor = distributionFactors[(dayOfWeek + 1) % 7];
-
-          chartData.push({
-            date: date.toISOString().split('T')[0],
-            formattedDate: date.toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric'
-            }),
-            pageviews: Math.round(normalizedStats.pageviews.value * factor),
-            visitors: Math.round(normalizedStats.visitors.value * factor)
-          });
-        }
-      }
-
-      setData(chartData);
-      setStats(normalizedStats);
-      setLastUpdated(new Date());
-      setError(null);
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error';
-      console.error('Failed to fetch analytics data:', errorMessage);
-      setError(errorMessage);
-      setData([]);
-      setStats(null);
-      setIsRealData(false);
-    } finally {
-      setIsLoading(false);
-    }
   }, []);
 
   // Reset and retry function
   const resetAndRetry = React.useCallback(() => {
     setIsLoading(true);
     setError(null);
-    fetchData();
-  }, [fetchData]);
+    load();
+  }, [load]);
 
-  // Effect for data fetching - only run once on mount
+  // Fetch once on mount; ignore results that land after unmount
   React.useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    let cancelled = false;
+    load(() => cancelled);
+    return () => {
+      cancelled = true;
+    };
+  }, [load]);
 
   return {
     data,
