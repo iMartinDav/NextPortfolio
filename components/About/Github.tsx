@@ -1,14 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useMounted } from '@/hooks/use-mounted';
 import { GitHubCalendar } from 'react-github-calendar';
 
 export default function Github() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   return (
     <div className='flex flex-col items-center pb-10'>

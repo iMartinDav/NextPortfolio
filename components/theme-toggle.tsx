@@ -7,6 +7,7 @@ import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
 import { Button } from '@/components/ui/button';
+import { useMounted } from '@/hooks/use-mounted';
 import { cn } from '@/lib/utils';
 
 /**
@@ -19,10 +20,8 @@ import { cn } from '@/lib/utils';
 
 export default function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const mounted = useMounted();
   const buttonRef = React.useRef<HTMLButtonElement>(null);
-
-  React.useEffect(() => setMounted(true), []);
 
   const handleToggle = React.useCallback(() => {
     if (!mounted) return;

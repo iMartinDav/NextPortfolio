@@ -103,7 +103,6 @@ export default function IconCloud({
   const { theme } = useTheme();
 
   useEffect(() => {
-    setLoading(true);
     fetchSimpleIcons({ slugs: iconSlugs })
       .then((fetchedData) => {
         setData(fetchedData);

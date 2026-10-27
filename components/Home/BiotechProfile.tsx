@@ -1,5 +1,5 @@
 import type React from 'react';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useMemo } from 'react';
 
 import Image from 'next/image';
 
@@ -10,6 +10,8 @@ import type { IconType } from 'react-icons';
 import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 import { RiTwitterXLine } from 'react-icons/ri';
 import { SiCodeship } from 'react-icons/si';
+import { useMounted } from '@/hooks/use-mounted';
+
 import GSAPDNA from '../Animations/GSAPDNA';
 import BentoBox from '../BentoBox';
 
@@ -71,12 +73,7 @@ interface ThemeColors {
 
 const BiotechProfile: React.FC = () => {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Only execute theme-related code on the client side
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   const colors = useMemo<ThemeColors>(() => {
     // Use a safe default for server-side rendering

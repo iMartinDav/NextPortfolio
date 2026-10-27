@@ -47,7 +47,6 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [scale, setScale] = useState<number>(1);
   const [rotation, setRotation] = useState<number>(0);
   const [controlsVisible, setControlsVisible] = useState<boolean>(true);
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
@@ -73,6 +72,16 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
     return 1.2;
   }, [isMobile, isTablet]);
 
+  // Viewer is client-only (ssr: false), so the first scale can be computed up front;
+  // re-fit whenever the breakpoint changes, without an effect round-trip.
+  const [scale, setScale] = useState<number>(calculateInitialScale);
+  const breakpoint = `${isMobile}-${isTablet}`;
+  const [scaleBreakpoint, setScaleBreakpoint] = useState(breakpoint);
+  if (breakpoint !== scaleBreakpoint) {
+    setScaleBreakpoint(breakpoint);
+    setScale(calculateInitialScale());
+  }
+
   // Handle orientation changes for mobile devices
   useEffect(() => {
     const handleResize = () => {
@@ -88,10 +97,6 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
     };
   }, [calculateInitialScale]);
 
-  useEffect(() => {
-    const newScale = calculateInitialScale();
-    setScale(newScale);
-  }, [calculateInitialScale]);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -116,10 +121,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
       window.addEventListener('scroll', handleInteraction);
       window.addEventListener('touchmove', handleInteraction);
       window.addEventListener('touchstart', handleInteraction);
-      // Reset visibility on page change
-      setControlsVisible(true);
-
-      // Always trigger the timeout when component mounts
+      // Always trigger the hide timeout when component mounts
       handleInteraction();
 
       return () => {

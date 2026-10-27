@@ -1,6 +1,6 @@
 import { OrbitControls, Text } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -29,43 +29,49 @@ const SEQ = 'CGCGAATTCGCGCGCGAATTCGCGCGCGAATTCGCGCGCGAATTCGCGCGCGAATTCGCGCGCGAAT
 const IS_PURINE: Record<string, boolean> = { A: true, G: true, C: false, T: false };
 const BASES = ['A', 'T', 'C', 'G'];
 
+const DROPLET_COUNT = 25;
+
+// Random droplet field; called once per <Droplets> mount
+function generateDroplets() {
+  const count = DROPLET_COUNT;
+  const data = [];
+  for (let i = 0; i < count; i++) {
+      const isBit = Math.random() > 0.4;
+      const char = isBit ? (Math.random() > 0.5 ? '0' : '1') : BASES[Math.floor(Math.random() * 4)];
+      
+      const d: any = {
+          char,
+          isBit,
+          glitchX: 0,
+          glitchY: 0,
+          glitchZ: 0,
+      };
+      
+      const bpIndex = Math.floor(Math.random() * BP_COUNT);
+      d.y = (bpIndex - BP_COUNT / 2) * RISE_S;
+      
+      const baseAngle = bpIndex * TWIST;
+      d.angle = baseAngle + (Math.random() > 0.5 ? GROOVE_OFFSET : 0);
+      d.radius = d.isBit ? RP : RC;
+      
+      d.vy = -(0.004 + Math.random() * 0.01);
+      d.vr = 0.002 + Math.random() * 0.006;
+      d.va = (Math.random() - 0.5) * 0.005;
+      
+      d.age = Math.random() * 200;
+      d.maxAge = 180 + Math.random() * 100;
+      
+      data.push(d);
+  }
+  return data;
+}
+
 // ── Droplets System (DNA-to-Bits Glitch Transformation) ─────────────────────
 function Droplets({ isLight }: { isLight: boolean }) {
-  const count = 25;
   const textRefs = useRef<any[]>([]);
 
-  const dropletsData = useMemo(() => {
-    const data = [];
-    for (let i = 0; i < count; i++) {
-        const isBit = Math.random() > 0.4;
-        const char = isBit ? (Math.random() > 0.5 ? '0' : '1') : BASES[Math.floor(Math.random() * 4)];
-        
-        const d: any = {
-            char,
-            isBit,
-            glitchX: 0,
-            glitchY: 0,
-            glitchZ: 0,
-        };
-        
-        const bpIndex = Math.floor(Math.random() * BP_COUNT);
-        d.y = (bpIndex - BP_COUNT / 2) * RISE_S;
-        
-        const baseAngle = bpIndex * TWIST;
-        d.angle = baseAngle + (Math.random() > 0.5 ? GROOVE_OFFSET : 0);
-        d.radius = d.isBit ? RP : RC;
-        
-        d.vy = -(0.004 + Math.random() * 0.01);
-        d.vr = 0.002 + Math.random() * 0.006;
-        d.va = (Math.random() - 0.5) * 0.005;
-        
-        d.age = Math.random() * 200;
-        d.maxAge = 180 + Math.random() * 100;
-        
-        data.push(d);
-    }
-    return data;
-  }, []);
+  // Random layout generated once per mount, outside render
+  const [dropletsData] = useState(generateDroplets);
 
   useFrame(() => {
     dropletsData.forEach((d, i) => {
@@ -227,7 +233,7 @@ function cloud(
     const theta = u * 2.0 * Math.PI;
     const phi = Math.acos(2.0 * v - 1.0);
     
-    let rFrac = centerWeighted ? Math.pow(Math.random(), 2) : Math.cbrt(Math.random());
+    const rFrac = centerWeighted ? Math.pow(Math.random(), 2) : Math.cbrt(Math.random());
     const r = rFrac * spread;
     
     P.push(cx + r * Math.sin(phi) * Math.cos(theta), cy + r * Math.sin(phi) * Math.sin(theta), cz + r * Math.cos(phi));
@@ -246,147 +252,151 @@ interface Props {
   isLight: boolean;
 }
 
+// Point cloud for the helix; impure (Math.random), so it lives outside render
+function buildHelixData(isLight: boolean) {
+  const C = isLight ? LIGHT : DARK;
+  const P: number[] = [], CO: number[] = [], SZ: number[] = [], BR: number[] = [], PH: number[] = [];
+  const c1A: THREE.Vector3[] = [], c1B: THREE.Vector3[] = [];
+
+  const bMinSize = isLight ? 0.04 : 0.02;
+  const bMaxSize = isLight ? 0.28 : 0.22;
+
+  for (let i = 0; i < BP_COUNT; i++) {
+    const base = SEQ[i % SEQ.length] || BASES[i % 4];
+    const comp = COMPLEMENT[base];
+    const ang = i * TWIST;
+    const y = (i - BP_COUNT / 2) * RISE_S;
+    const angA = ang;
+    const angB = ang + GROOVE_OFFSET;
+
+    // ── Strand A ──────────────────────────────────────────
+    const pxA = Math.cos(angA) * RP, pzA = Math.sin(angA) * RP;
+    const pyA = y + RISE_S * 0.3;
+
+    cloud(pxA, pyA, pzA, C.phosphate, 100, 0.32, bMinSize, bMaxSize, 0.6, 1.0, P, CO, SZ, BR, PH, true);
+
+    const c1xA = Math.cos(angA) * RC, c1zA = Math.sin(angA) * RC;
+    c1A.push(new THREE.Vector3(c1xA, y, c1zA));
+    for (let s = 0; s <= 6; s++) {
+      const t = s / 6;
+      const sx = pxA + (c1xA - pxA) * t;
+      const sy = pyA + (y - pyA) * t;
+      const sz = pzA + (c1zA - pzA) * t;
+      cloud(sx, sy, sz, C.sugar, 4, 0.08, 0.04, 0.15, 0.5, 0.9, P, CO, SZ, BR, PH, true);
+    }
+
+    const isPurA = IS_PURINE[base];
+    const colA = isPurA ? C.purine : C.pyrimidine;
+    const nA = isPurA ? 11 : 7;
+    const lenA = (isPurA ? 7.5 : 5.0) * S * VIS_SCALE;
+    for (let b = 0; b < nA; b++) {
+      const bt = b / (nA - 1);
+      const br = RC - lenA * bt;
+      const ba = angA + (Math.random() - 0.5) * 0.12;
+      const by = (Math.random() - 0.5) * RISE_S * 0.5;
+      const bx = Math.cos(ba) * br, bz = Math.sin(ba) * br;
+      
+      const bSizeMax = b === 0 ? 0.25 : 0.18;
+      cloud(bx, y + by, bz, colA, 3, 0.06, 0.04, bSizeMax, 0.5, 0.9, P, CO, SZ, BR, PH);
+    }
+
+    // ── Strand B (antiparallel) ───────────────────────────
+    const pxB = Math.cos(angB) * RP, pzB = Math.sin(angB) * RP;
+    const pyB = y - RISE_S * 0.3;
+
+    cloud(pxB, pyB, pzB, C.phosphate, 100, 0.32, bMinSize, bMaxSize, 0.6, 1.0, P, CO, SZ, BR, PH, true);
+
+    const c1xB = Math.cos(angB) * RC, c1zB = Math.sin(angB) * RC;
+    c1B.push(new THREE.Vector3(c1xB, y, c1zB));
+    for (let s = 0; s <= 6; s++) {
+      const t = s / 6;
+      const sx = pxB + (c1xB - pxB) * t;
+      const sy = pyB + (y - pyB) * t;
+      const sz = pzB + (c1zB - pzB) * t;
+      cloud(sx, sy, sz, C.sugar, 4, 0.08, 0.04, 0.15, 0.5, 0.9, P, CO, SZ, BR, PH, true);
+    }
+
+    const isPurB = IS_PURINE[comp];
+    const colB = isPurB ? C.purine : C.pyrimidine;
+    const nB = isPurB ? 11 : 7;
+    const lenB = (isPurB ? 7.5 : 5.0) * S * VIS_SCALE;
+    for (let b = 0; b < nB; b++) {
+      const bt = b / (nB - 1);
+      const br = RC - lenB * bt;
+      const ba = angB + (Math.random() - 0.5) * 0.12;
+      const by = (Math.random() - 0.5) * RISE_S * 0.5;
+      const bx = Math.cos(ba) * br, bz = Math.sin(ba) * br;
+      
+      const bSizeMax = b === 0 ? 0.25 : 0.18;
+      cloud(bx, y + by, bz, colB, 3, 0.06, 0.04, bSizeMax, 0.5, 0.9, P, CO, SZ, BR, PH);
+    }
+  }
+
+  // ── H-bond rungs (composed of variable sized dots) ────────────────────
+  for (let i = 0; i < BP_COUNT; i++) {
+    const start = new THREE.Vector3(c1A[i].x, c1A[i].y, c1A[i].z);
+    const end = new THREE.Vector3(c1B[i].x, c1B[i].y, c1B[i].z);
+    const dist = start.distanceTo(end);
+    
+    const dotCount = Math.floor(dist * 18);
+    for (let d = 0; d < dotCount; d++) {
+        const t = d / (dotCount - 1);
+        const cx = start.x + (end.x - start.x) * t;
+        const cy = start.y + (end.y - start.y) * t;
+        const cz = start.z + (end.z - start.z) * t;
+        
+        const isMain = Math.random() > 0.7;
+        const sMin = isMain ? 0.04 : 0.01;
+        const sMax = isMain ? 0.14 : 0.04;
+        const rOffset = isMain ? 0.015 : 0.06;
+        
+        cloud(cx, cy, cz, C.hbond, isMain ? 2 : 1, rOffset, sMin, sMax, 0.5, 1.0, P, CO, SZ, BR, PH);
+    }
+  }
+
+  for (let i = 0; i < BP_COUNT - 1; i++) {
+      const y1 = (i - BP_COUNT / 2) * RISE_S;
+      const y2 = ((i + 1) - BP_COUNT / 2) * RISE_S;
+
+      const a1 = i * TWIST;
+      const a2 = (i + 1) * TWIST;
+      
+      const b1 = a1 + GROOVE_OFFSET;
+      const b2 = a2 + GROOVE_OFFSET;
+
+      const pA1 = new THREE.Vector3(Math.cos(a1) * RP, y1 + RISE_S * 0.3, Math.sin(a1) * RP);
+      const pA2 = new THREE.Vector3(Math.cos(a2) * RP, y2 + RISE_S * 0.3, Math.sin(a2) * RP);
+
+      const pB1 = new THREE.Vector3(Math.cos(b1) * RP, y1 - RISE_S * 0.3, Math.sin(b1) * RP);
+      const pB2 = new THREE.Vector3(Math.cos(b2) * RP, y2 - RISE_S * 0.3, Math.sin(b2) * RP);
+
+      // Scatter dense connection dots between backbone nodes
+      for (let step = 1; step < 4; step++) {
+          const t = step / 4;
+          const curA = new THREE.Vector3().lerpVectors(pA1, pA2, t);
+          const curB = new THREE.Vector3().lerpVectors(pB1, pB2, t);
+          
+          cloud(curA.x, curA.y, curA.z, C.phosphate, 20, 0.26, bMinSize, bMaxSize * 0.8, 0.5, 1.0, P, CO, SZ, BR, PH, true);
+          cloud(curB.x, curB.y, curB.z, C.phosphate, 20, 0.26, bMinSize, bMaxSize * 0.8, 0.5, 1.0, P, CO, SZ, BR, PH, true);
+      }
+  }
+
+  return {
+    positions: new Float32Array(P),
+    colors: new Float32Array(CO),
+    sizes: new Float32Array(SZ),
+    brights: new Float32Array(BR),
+    phases: new Float32Array(PH)
+  };
+}
+
 export function DNAHelixScene({ isLight }: Props) {
   const groupRef = useRef<THREE.Group>(null);
   const matRef = useRef<THREE.ShaderMaterial>(null);
 
   const C = isLight ? LIGHT : DARK;
 
-  const data = useMemo(() => {
-    const P: number[] = [], CO: number[] = [], SZ: number[] = [], BR: number[] = [], PH: number[] = [];
-    const c1A: THREE.Vector3[] = [], c1B: THREE.Vector3[] = [];
-
-    const bMinSize = isLight ? 0.04 : 0.02;
-    const bMaxSize = isLight ? 0.28 : 0.22;
-
-    for (let i = 0; i < BP_COUNT; i++) {
-      const base = SEQ[i % SEQ.length] || BASES[i % 4];
-      const comp = COMPLEMENT[base];
-      const ang = i * TWIST;
-      const y = (i - BP_COUNT / 2) * RISE_S;
-      const angA = ang;
-      const angB = ang + GROOVE_OFFSET;
-
-      // ── Strand A ──────────────────────────────────────────
-      const pxA = Math.cos(angA) * RP, pzA = Math.sin(angA) * RP;
-      const pyA = y + RISE_S * 0.3;
-
-      cloud(pxA, pyA, pzA, C.phosphate, 100, 0.32, bMinSize, bMaxSize, 0.6, 1.0, P, CO, SZ, BR, PH, true);
-
-      const c1xA = Math.cos(angA) * RC, c1zA = Math.sin(angA) * RC;
-      c1A.push(new THREE.Vector3(c1xA, y, c1zA));
-      for (let s = 0; s <= 6; s++) {
-        const t = s / 6;
-        const sx = pxA + (c1xA - pxA) * t;
-        const sy = pyA + (y - pyA) * t;
-        const sz = pzA + (c1zA - pzA) * t;
-        cloud(sx, sy, sz, C.sugar, 4, 0.08, 0.04, 0.15, 0.5, 0.9, P, CO, SZ, BR, PH, true);
-      }
-
-      const isPurA = IS_PURINE[base];
-      const colA = isPurA ? C.purine : C.pyrimidine;
-      const nA = isPurA ? 11 : 7;
-      const lenA = (isPurA ? 7.5 : 5.0) * S * VIS_SCALE;
-      for (let b = 0; b < nA; b++) {
-        const bt = b / (nA - 1);
-        const br = RC - lenA * bt;
-        const ba = angA + (Math.random() - 0.5) * 0.12;
-        const by = (Math.random() - 0.5) * RISE_S * 0.5;
-        const bx = Math.cos(ba) * br, bz = Math.sin(ba) * br;
-        
-        const bSizeMax = b === 0 ? 0.25 : 0.18;
-        cloud(bx, y + by, bz, colA, 3, 0.06, 0.04, bSizeMax, 0.5, 0.9, P, CO, SZ, BR, PH);
-      }
-
-      // ── Strand B (antiparallel) ───────────────────────────
-      const pxB = Math.cos(angB) * RP, pzB = Math.sin(angB) * RP;
-      const pyB = y - RISE_S * 0.3;
-
-      cloud(pxB, pyB, pzB, C.phosphate, 100, 0.32, bMinSize, bMaxSize, 0.6, 1.0, P, CO, SZ, BR, PH, true);
-
-      const c1xB = Math.cos(angB) * RC, c1zB = Math.sin(angB) * RC;
-      c1B.push(new THREE.Vector3(c1xB, y, c1zB));
-      for (let s = 0; s <= 6; s++) {
-        const t = s / 6;
-        const sx = pxB + (c1xB - pxB) * t;
-        const sy = pyB + (y - pyB) * t;
-        const sz = pzB + (c1zB - pzB) * t;
-        cloud(sx, sy, sz, C.sugar, 4, 0.08, 0.04, 0.15, 0.5, 0.9, P, CO, SZ, BR, PH, true);
-      }
-
-      const isPurB = IS_PURINE[comp];
-      const colB = isPurB ? C.purine : C.pyrimidine;
-      const nB = isPurB ? 11 : 7;
-      const lenB = (isPurB ? 7.5 : 5.0) * S * VIS_SCALE;
-      for (let b = 0; b < nB; b++) {
-        const bt = b / (nB - 1);
-        const br = RC - lenB * bt;
-        const ba = angB + (Math.random() - 0.5) * 0.12;
-        const by = (Math.random() - 0.5) * RISE_S * 0.5;
-        const bx = Math.cos(ba) * br, bz = Math.sin(ba) * br;
-        
-        const bSizeMax = b === 0 ? 0.25 : 0.18;
-        cloud(bx, y + by, bz, colB, 3, 0.06, 0.04, bSizeMax, 0.5, 0.9, P, CO, SZ, BR, PH);
-      }
-    }
-
-    // ── H-bond rungs (composed of variable sized dots) ────────────────────
-    for (let i = 0; i < BP_COUNT; i++) {
-      const start = new THREE.Vector3(c1A[i].x, c1A[i].y, c1A[i].z);
-      const end = new THREE.Vector3(c1B[i].x, c1B[i].y, c1B[i].z);
-      const dist = start.distanceTo(end);
-      
-      const dotCount = Math.floor(dist * 18);
-      for (let d = 0; d < dotCount; d++) {
-          const t = d / (dotCount - 1);
-          const cx = start.x + (end.x - start.x) * t;
-          const cy = start.y + (end.y - start.y) * t;
-          const cz = start.z + (end.z - start.z) * t;
-          
-          const isMain = Math.random() > 0.7;
-          const sMin = isMain ? 0.04 : 0.01;
-          const sMax = isMain ? 0.14 : 0.04;
-          const rOffset = isMain ? 0.015 : 0.06;
-          
-          cloud(cx, cy, cz, C.hbond, isMain ? 2 : 1, rOffset, sMin, sMax, 0.5, 1.0, P, CO, SZ, BR, PH);
-      }
-    }
-
-    for (let i = 0; i < BP_COUNT - 1; i++) {
-        const y1 = (i - BP_COUNT / 2) * RISE_S;
-        const y2 = ((i + 1) - BP_COUNT / 2) * RISE_S;
-
-        const a1 = i * TWIST;
-        const a2 = (i + 1) * TWIST;
-        
-        const b1 = a1 + GROOVE_OFFSET;
-        const b2 = a2 + GROOVE_OFFSET;
-
-        const pA1 = new THREE.Vector3(Math.cos(a1) * RP, y1 + RISE_S * 0.3, Math.sin(a1) * RP);
-        const pA2 = new THREE.Vector3(Math.cos(a2) * RP, y2 + RISE_S * 0.3, Math.sin(a2) * RP);
-
-        const pB1 = new THREE.Vector3(Math.cos(b1) * RP, y1 - RISE_S * 0.3, Math.sin(b1) * RP);
-        const pB2 = new THREE.Vector3(Math.cos(b2) * RP, y2 - RISE_S * 0.3, Math.sin(b2) * RP);
-
-        // Scatter dense connection dots between backbone nodes
-        for (let step = 1; step < 4; step++) {
-            const t = step / 4;
-            const curA = new THREE.Vector3().lerpVectors(pA1, pA2, t);
-            const curB = new THREE.Vector3().lerpVectors(pB1, pB2, t);
-            
-            cloud(curA.x, curA.y, curA.z, C.phosphate, 20, 0.26, bMinSize, bMaxSize * 0.8, 0.5, 1.0, P, CO, SZ, BR, PH, true);
-            cloud(curB.x, curB.y, curB.z, C.phosphate, 20, 0.26, bMinSize, bMaxSize * 0.8, 0.5, 1.0, P, CO, SZ, BR, PH, true);
-        }
-    }
-
-    return {
-      positions: new Float32Array(P),
-      colors: new Float32Array(CO),
-      sizes: new Float32Array(SZ),
-      brights: new Float32Array(BR),
-      phases: new Float32Array(PH)
-    };
-  }, [C, isLight]);
+  const data = useMemo(() => buildHelixData(isLight), [isLight]);
 
   useFrame((state) => {
     if (!groupRef.current || !matRef.current) return;

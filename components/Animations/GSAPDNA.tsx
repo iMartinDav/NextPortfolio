@@ -6,6 +6,8 @@ import { useInView } from 'framer-motion';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
+import { useMounted } from '@/hooks/use-mounted';
+
 const RUNGS_COUNT = 45;
 const RUNG_SPACING = 12; // Vertical spacing between lines
 const HELIX_TWIST = 16;  // Degrees of rotation per rung
@@ -18,8 +20,7 @@ const GSAPDNA: React.FC = () => {
   const { resolvedTheme } = useTheme();
 
   // Handle hydration safely
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => setMounted(true), []);
+  const mounted = useMounted();
   const isDark = mounted ? resolvedTheme === 'dark' : true;
 
   // Premium theme colors adapted for dark and light modes

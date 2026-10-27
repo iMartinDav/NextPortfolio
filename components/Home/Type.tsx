@@ -86,12 +86,12 @@ const TypewriterEffect: React.FC = () => {
   const deleteDuration = fullTokens.length * deleteCharFrames;
   const totalDuration = holdEnd + deleteDuration + pauseAfterFrames;
 
-  useEffect(() => {
-    if (frame >= totalDuration) {
-      setFrame(0);
-      setCurrentIdx((prev) => (prev + 1) % typewriterStrings.length);
-    }
-  }, [frame, totalDuration]);
+  // Advance to the next string during render (React's "adjust state on change"
+  // pattern) instead of an effect that would paint one stale frame first.
+  if (frame >= totalDuration) {
+    setFrame(0);
+    setCurrentIdx((prev) => (prev + 1) % typewriterStrings.length);
+  }
 
   let displayChars = 0;
 

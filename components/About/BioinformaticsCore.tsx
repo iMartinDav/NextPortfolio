@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState, Suspense } from 'react';
 
 import { Float, Html, OrbitControls, Text } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
+
+import { useMounted } from '@/hooks/use-mounted';
 import { useTheme } from 'next-themes';
 import * as THREE from 'three';
 import { useInView } from 'framer-motion';
@@ -372,23 +374,26 @@ const CHAR_SETS = [
 const LABEL_COLORS = ['#34d399', '#22d3ee', '#a78bfa', '#8b5cf6'];
 const LABEL_COUNT = 12;
 
+// Random label positions; called once per <FloatingLabels> mount
+function generateLabelAnchors() {
+  const list = [];
+  for (let i = 0; i < LABEL_COUNT; i++) {
+    list.push({
+      x: (Math.random() - 0.5) * 8,
+      y: (Math.random() - 0.5) * 8,
+      z: (Math.random() - 0.5) * 4,
+      speed: 0.2 + Math.random() * 0.4,
+      phase: Math.random() * Math.PI * 2,
+      size: 0.15 + Math.random() * 0.15,
+    });
+  }
+  return list;
+}
+
 function FloatingLabels({ shapeIndex }: { shapeIndex: number }) {
   const textRefs = useRef<any[]>([]);
 
-  const anchors = useMemo(() => {
-    const list = [];
-    for (let i = 0; i < LABEL_COUNT; i++) {
-      list.push({
-        x: (Math.random() - 0.5) * 8,
-        y: (Math.random() - 0.5) * 8,
-        z: (Math.random() - 0.5) * 4,
-        speed: 0.2 + Math.random() * 0.4,
-        phase: Math.random() * Math.PI * 2,
-        size: 0.15 + Math.random() * 0.15,
-      });
-    }
-    return list;
-  }, []);
+  const [anchors] = useState(generateLabelAnchors);
 
   useFrame((state: any) => {
     const t = state.clock.elapsedTime;
@@ -452,6 +457,10 @@ function MorphingScene({ isLight }: { isLight: boolean }) {
 
   const currentPos = useRef(new Float32Array(shapes[0].positions));
   const currentCol = useRef(new Float32Array(shapes[0].colors));
+
+  // Initial GPU buffers (copies, so the refs above can be mutated per frame)
+  const initialPos = useMemo(() => new Float32Array(shapes[0].positions), [shapes]);
+  const initialCol = useMemo(() => new Float32Array(shapes[0].colors), [shapes]);
 
   const attrs = useMemo(() => ({
     sizes: shapes[0].sizes,
@@ -547,8 +556,8 @@ function MorphingScene({ isLight }: { isLight: boolean }) {
       <group ref={groupRef}>
         <points ref={pointsRef}>
           <bufferGeometry>
-            <bufferAttribute attach="attributes-position" args={[new Float32Array(currentPos.current), 3]} />
-            <bufferAttribute attach="attributes-aColor" args={[new Float32Array(currentCol.current), 3]} />
+            <bufferAttribute attach="attributes-position" args={[initialPos, 3]} />
+            <bufferAttribute attach="attributes-aColor" args={[initialCol, 3]} />
             <bufferAttribute attach="attributes-aSize" args={[attrs.sizes, 1]} />
             <bufferAttribute attach="attributes-aBright" args={[attrs.brights, 1]} />
             <bufferAttribute attach="attributes-aPhase" args={[attrs.phases, 1]} />
@@ -588,13 +597,9 @@ function MorphingScene({ isLight }: { isLight: boolean }) {
 
 export default function BioinformaticsCore() {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { margin: '200px' });
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const isLight = mounted && resolvedTheme === 'light';
 

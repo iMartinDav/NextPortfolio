@@ -47,65 +47,6 @@ const Particles: React.FC<ParticlesProps> = ({
   const rafId = useRef<number | null>(null);
   const isInView = useInView(canvasContainerRef);
 
-  useEffect(() => {
-    if (canvasRef.current) {
-      context.current = canvasRef.current.getContext('2d');
-    }
-    initCanvas();
-    window.addEventListener('resize', initCanvas);
-
-    return () => {
-      window.removeEventListener('resize', initCanvas);
-    };
-  }, [color]); // color is the only dependency here
-
-  useEffect(() => {
-    if (isInView) {
-      animate();
-    }
-    return () => {
-      if (rafId.current) {
-        cancelAnimationFrame(rafId.current);
-      }
-    };
-  }, [isInView, color]);
-
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      if (canvasRef.current) {
-        const rect = canvasRef.current.getBoundingClientRect();
-        const { w, h } = canvasSize.current;
-        const x = event.clientX - rect.left - w / 2;
-        const y = event.clientY - rect.top - h / 2;
-        const inside = x < w / 2 && x > -w / 2 && y < h / 2 && y > -h / 2;
-        if (inside) {
-          mouse.current.x = x;
-          mouse.current.y = y;
-        }
-      }
-    };
-    
-    // Throttle mousemove
-    let timeout: ReturnType<typeof setTimeout>;
-    const throttledHandler = (e: MouseEvent) => {
-      if (timeout) return;
-      timeout = setTimeout(() => {
-        handleMouseMove(e);
-        timeout = undefined as any;
-      }, 50);
-    };
-
-    window.addEventListener('mousemove', throttledHandler);
-    return () => {
-      window.removeEventListener('mousemove', throttledHandler);
-      if (timeout) clearTimeout(timeout);
-    };
-  }, []);
-
-  useEffect(() => {
-    initCanvas();
-  }, [refresh]);
-
   const initCanvas = () => {
     resizeCanvas();
     drawParticles();
@@ -260,6 +201,66 @@ const Particles: React.FC<ParticlesProps> = ({
 
     rafId.current = requestAnimationFrame(animate);
   };
+
+  // Effects come after the helpers they call (const functions aren't hoisted)
+  useEffect(() => {
+    if (canvasRef.current) {
+      context.current = canvasRef.current.getContext('2d');
+    }
+    initCanvas();
+    window.addEventListener('resize', initCanvas);
+
+    return () => {
+      window.removeEventListener('resize', initCanvas);
+    };
+  }, [color]); // color is the only dependency here
+
+  useEffect(() => {
+    if (isInView) {
+      animate();
+    }
+    return () => {
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
+      }
+    };
+  }, [isInView, color]);
+
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      if (canvasRef.current) {
+        const rect = canvasRef.current.getBoundingClientRect();
+        const { w, h } = canvasSize.current;
+        const x = event.clientX - rect.left - w / 2;
+        const y = event.clientY - rect.top - h / 2;
+        const inside = x < w / 2 && x > -w / 2 && y < h / 2 && y > -h / 2;
+        if (inside) {
+          mouse.current.x = x;
+          mouse.current.y = y;
+        }
+      }
+    };
+    
+    // Throttle mousemove
+    let timeout: ReturnType<typeof setTimeout>;
+    const throttledHandler = (e: MouseEvent) => {
+      if (timeout) return;
+      timeout = setTimeout(() => {
+        handleMouseMove(e);
+        timeout = undefined as any;
+      }, 50);
+    };
+
+    window.addEventListener('mousemove', throttledHandler);
+    return () => {
+      window.removeEventListener('mousemove', throttledHandler);
+      if (timeout) clearTimeout(timeout);
+    };
+  }, []);
+
+  useEffect(() => {
+    initCanvas();
+  }, [refresh]);
 
   return (
     <div

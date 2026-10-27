@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -17,13 +17,10 @@ export const EvervaultCard = ({
   const mouseX = useMotionValue(0); // Initialized as MotionValue<number>
   const mouseY = useMotionValue(0); // Initialized as MotionValue<number>
 
+  // Filled on first pointer move: the pattern is masked to the cursor anyway,
+  // and generating it during render would break SSR/hydration purity.
   const [randomString, setRandomString] = useState<string>('');
   const lastUpdate = useRef(0);
-
-  useEffect(() => {
-    const str = generateRandomString(1500);
-    setRandomString(str);
-  }, []);
 
   function onMouseMove({
     currentTarget,
