@@ -13,7 +13,6 @@ import { useInView } from 'framer-motion';
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,
   height: 800,
-  onRender: () => {},
   devicePixelRatio: 1.5,
   phi: 0,
   theta: 0.41,
@@ -93,8 +92,7 @@ export default function Globe({
   config?: COBEOptions;
 }) {
   // Start rotated to show continents (Americas/Europe) instead of the Pacific Ocean
-  let phi = 5.0;
-  // Convert width to a ref to track it properly
+  const phiRef = useRef(5.0);
   const widthRef = useRef<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -126,18 +124,6 @@ export default function Globe({
     }
   };
 
-  // Fix the type and dependencies in onRender
-  const onRender = useCallback(
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    (state: Record<string, any>) => {
-      if (!pointerInteracting.current) phi += 0.0025;
-      state.phi = phi + r.get();
-      state.width = widthRef.current * 2;
-      state.height = widthRef.current * 2;
-    },
-    [phi, r]
-  );
-
   // Update onResize to use the widthRef
   const onResize = useCallback(() => {
     if (canvasRef.current) {
@@ -161,11 +147,23 @@ export default function Globe({
       baseColor: isDark ? [0.3, 0.3, 0.3] as [number, number, number] : [1, 1, 1] as [number, number, number],
       glowColor: isDark ? [0.1, 0.1, 0.1] as [number, number, number] : [1, 1, 1] as [number, number, number],
       width: widthRef.current * 2,
-      height: widthRef.current * 2,
-      onRender
+      height: widthRef.current * 2
     };
 
     const globe = createGlobe(canvasRef.current, dynamicConfig);
+
+    // cobe v2 no longer drives its own loop; push per-frame state via update()
+    let frameId = 0;
+    const tick = () => {
+      if (!pointerInteracting.current) phiRef.current += 0.0025;
+      globe.update({
+        phi: phiRef.current + r.get(),
+        width: widthRef.current * 2,
+        height: widthRef.current * 2
+      });
+      frameId = requestAnimationFrame(tick);
+    };
+    frameId = requestAnimationFrame(tick);
 
     setTimeout(() => {
       if (canvasRef.current) {
@@ -174,10 +172,11 @@ export default function Globe({
     });
 
     return () => {
+      cancelAnimationFrame(frameId);
       window.removeEventListener('resize', onResize);
       globe.destroy();
     };
-  }, [config, onResize, onRender, isInView, theme]);
+  }, [config, onResize, r, isInView, theme]);
 
   return (
     <div

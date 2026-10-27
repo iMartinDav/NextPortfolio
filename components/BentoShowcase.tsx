@@ -6,7 +6,8 @@ import MeteorShower from '@/components/magicui/meteors';
 import WordPullUp from '@/components/magicui/word-pull-up';
 import { Button } from '@/components/ui/button';
 
-import { Github, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
 
 export default function BentoShowcase() {
   return (
@@ -39,7 +40,7 @@ export default function BentoShowcase() {
                   size='sm'
                   className='group/Github flex w-full items-center gap-2'>
                   <div className='text-xs sm:text-sm'>View Code</div>
-                  <Github className='h-3 w-3 transition-all duration-300 lg:group-hover/Github:translate-x-1' />
+                  <FaGithub className='h-3 w-3 transition-all duration-300 lg:group-hover/Github:translate-x-1' />
                 </Button>
               </a>
 

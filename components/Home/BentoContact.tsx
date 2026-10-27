@@ -6,7 +6,8 @@ import { useInView } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
 import { EvervaultCard } from '../ui/evervault-card';
-import { Check, Copy, Github, Linkedin, MapPin } from 'lucide-react';
+import { Check, Copy, MapPin } from 'lucide-react';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 // Dynamically import the Globe component to disable SSR
 const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
@@ -165,7 +166,7 @@ const BentoContact = () => {
                   <Button
                     variant='outline'
                     size='icon'>
-                    <Linkedin size={20} />
+                    <FaLinkedin size={20} />
                   </Button>
                 </a>
                 <a
@@ -175,7 +176,7 @@ const BentoContact = () => {
                   <Button
                     variant='outline'
                     size='icon'>
-                    <Github size={20} />
+                    <FaGithub size={20} />
                   </Button>
                 </a>
               </div>

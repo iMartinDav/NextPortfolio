@@ -22,7 +22,6 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "ignoreDeprecations": "5.0",
     "paths": {
       "@/*": [
         "./*"

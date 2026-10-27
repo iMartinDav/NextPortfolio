@@ -13,11 +13,11 @@ import {
   BookOpen,
   FileText,
   FolderKanban,
-  Github,
   Home,
   Star,
   User
 } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
 
 interface NavItem {
   href: string;
@@ -196,7 +196,7 @@ function GithubButton({ onClick }: GithubButtonProps) {
       target='_blank'
       rel='noopener noreferrer'
       onClick={onClick}>
-      <Github size={20} />
+      <FaGithub size={20} />
       <Star
         size={16}
         className='github-star'
