@@ -6,7 +6,9 @@ import { notFound } from 'next/navigation';
 import Script from 'next/script';
 
 import Footer from '@/components/Footer';
+import InlineScript from '@/components/inline-script';
 import { introBootScript } from '@/lib/intro';
+import { localeRevealScript } from '@/lib/locale-reveal';
 import Navbar from '@/components/Navbar';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
@@ -143,6 +145,19 @@ export async function generateMetadata({
 }
 
 // JSON-LD Structured Data
+// Runs before app code so dependency warnings are filtered from the start
+const CONSOLE_FILTER_SCRIPT = `
+              if (typeof console !== 'undefined') {
+                const originalWarn = console.warn;
+                console.warn = function(...args) {
+                  const msg = typeof args[0] === 'string' ? args[0] : '';
+                  if (msg.includes('THREE.Clock: This module has been deprecated')) return;
+                  if (msg.includes('Multiple instances of Three.js being imported')) return;
+                  originalWarn.apply(console, args);
+                };
+              }
+`;
+
 const getStructuredData = (jobTitle: string, description: string) => ({
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -183,10 +198,8 @@ export default async function RootLayout({ children, params }: LayoutProps) {
       data-scroll-behavior='smooth'>
       <head>
         {/* Decide before first paint whether the intro splash already played this session */}
-        <script
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: static inline boot script
-          dangerouslySetInnerHTML={{ __html: introBootScript }}
-        />
+        <InlineScript code={introBootScript} />
+        <InlineScript code={localeRevealScript} />
         <noscript>
           <style>{'.intro-splash{display:none}.intro-content{opacity:1!important}'}</style>
         </noscript>
@@ -205,22 +218,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         />
 
         {/* Suppress harmless console warnings from dependencies */}
-        <script
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: safe console patch
-          dangerouslySetInnerHTML={{
-            __html: `
-              if (typeof console !== 'undefined') {
-                const originalWarn = console.warn;
-                console.warn = function(...args) {
-                  const msg = typeof args[0] === 'string' ? args[0] : '';
-                  if (msg.includes('THREE.Clock: This module has been deprecated')) return;
-                  if (msg.includes('Multiple instances of Three.js being imported')) return;
-                  originalWarn.apply(console, args);
-                };
-              }
-            `
-          }}
-        />
+        <InlineScript code={CONSOLE_FILTER_SCRIPT} />
 
         {/* Cookie Script */}
         <Script

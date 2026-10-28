@@ -21,6 +21,14 @@ const PreLoader = () => {
   const t = useTranslations('Common');
   useEffect(() => {
     const root = document.documentElement;
+    let playedThisSession = false;
+    try {
+      playedThisSession = sessionStorage.getItem(INTRO_STORAGE_KEY) !== null;
+    } catch {
+      // Storage unavailable: rely on the html attribute alone
+    }
+    // Also covers a re-created <html> (e.g. after a language switch) losing the attribute
+    if (playedThisSession) root.dataset.intro = 'played';
     if (root.dataset.intro === 'played') return;
 
     document.body.style.overflow = 'hidden';
