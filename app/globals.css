@@ -1031,6 +1031,12 @@ footer .transform:hover {
   mix-blend-mode: normal;
 }
 
+/* Opt same-origin page loads into view transitions; lib/locale-reveal.ts
+   skips every one except a language switch */
+@view-transition {
+  navigation: auto;
+}
+
 /* The old snapshot sits underneath */
 ::view-transition-old(root) {
   z-index: 1;
