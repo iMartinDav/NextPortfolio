@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, Suspense } from 'react';
 
-import { Float, Html, OrbitControls, Text } from '@react-three/drei';
+import { OrbitControls, Text } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 
 import { useMounted } from '@/hooks/use-mounted';
@@ -444,11 +444,10 @@ const SHAPE_LABELS = [
 
 // ── Main morphing scene ─────────────────────────────────────────────────────
 
-function MorphingScene({ isLight }: { isLight: boolean }) {
+function MorphingScene({ isLight, shapeIndex }: { isLight: boolean; shapeIndex: number }) {
   const pointsRef = useRef<THREE.Points>(null);
   const matRef = useRef<THREE.ShaderMaterial>(null);
   const groupRef = useRef<THREE.Group>(null);
-  const [shapeIndex, setShapeIndex] = useState(0);
 
   const shapes = useMemo(
     () => [generatePetriDish(), generatePlasmid(), generateBitstream(), generateDashboard()],
@@ -478,13 +477,6 @@ function MorphingScene({ isLight }: { isLight: boolean }) {
       matRef.current.uniforms.uIsLight.value = isLight ? 1.0 : 0.0;
     }
   }, [isLight]);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setShapeIndex((p: number) => (p + 1) % 4);
-    }, 5500);
-    return () => clearInterval(id);
-  }, []);
 
   useFrame((state: any) => {
     if (!pointsRef.current || !matRef.current) return;
@@ -576,21 +568,6 @@ function MorphingScene({ isLight }: { isLight: boolean }) {
         <FloatingLabels shapeIndex={shapeIndex} />
       </group>
 
-      <Float speed={1} rotationIntensity={0} floatIntensity={0.1}>
-        <Html position={[0, -4.5, 0]} center>
-          <div className={`flex flex-col items-center whitespace-nowrap backdrop-blur-md px-5 py-2 rounded-full shadow-lg transition-all duration-700 border ${
-            isLight
-              ? 'bg-white/70 border-teal-300/50'
-              : 'bg-gray-900/60 border-gray-700/50'
-          }`}>
-            <span className={`font-mono text-xs md:text-sm tracking-widest uppercase font-bold ${
-              isLight ? 'text-teal-700' : 'text-teal-400'
-            }`}>
-              {'>'} {SHAPE_LABELS[shapeIndex]}
-            </span>
-          </div>
-        </Html>
-      </Float>
     </>
   );
 }
@@ -602,6 +579,14 @@ export default function BioinformaticsCore() {
   const isInView = useInView(containerRef, { margin: '200px' });
 
   const isLight = mounted && resolvedTheme === 'light';
+  const [shapeIndex, setShapeIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setShapeIndex((p) => (p + 1) % SHAPE_LABELS.length);
+    }, 5500);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <div ref={containerRef} className="w-full h-[450px] md:h-[520px] lg:h-[600px] relative overflow-visible">
@@ -612,9 +597,24 @@ export default function BioinformaticsCore() {
         gl={{ alpha: true }}
       >
         <Suspense fallback={null}>
-          <MorphingScene isLight={isLight} />
+          <MorphingScene isLight={isLight} shapeIndex={shapeIndex} />
         </Suspense>
       </Canvas>
+      {/* Plain DOM overlay (drei <Html> mounts a nested React root that React 19
+          can't unmount synchronously mid-render) */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-[12%] flex justify-center">
+        <div className={`bio-label-float flex flex-col items-center whitespace-nowrap backdrop-blur-md px-5 py-2 rounded-full shadow-lg transition-all duration-700 border ${
+          isLight
+            ? 'bg-white/70 border-teal-300/50'
+            : 'bg-gray-900/60 border-gray-700/50'
+        }`}>
+          <span className={`font-mono text-xs md:text-sm tracking-widest uppercase font-bold ${
+            isLight ? 'text-teal-700' : 'text-teal-400'
+          }`}>
+            {'>'} {SHAPE_LABELS[shapeIndex]}
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
