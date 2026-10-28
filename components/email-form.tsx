@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -15,6 +15,7 @@ import { toast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { LoaderCircle, SendHorizonal } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import PocketBase from 'pocketbase';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -22,24 +23,29 @@ import { z } from 'zod';
 // Initialize PocketBase client
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL);
 
-// Define the form schema with email validation
-const FormSchema = z.object({
-  email: z
-    .string()
-    .email({ message: 'Please enter a valid email address.' })
-    .transform((email) => email.toLowerCase())
-});
+// Form schema with a localized validation message
+const createFormSchema = (invalidEmail: string) =>
+  z.object({
+    email: z
+      .string()
+      .email({ message: invalidEmail })
+      .transform((email) => email.toLowerCase())
+  });
+
+type FormValues = z.infer<ReturnType<typeof createFormSchema>>;
 
 export function EmailForm() {
+  const t = useTranslations('EmailForm');
   const [isLoading, setIsLoading] = useState(false);
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const formSchema = useMemo(() => createFormSchema(t('invalidEmail')), [t]);
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       email: ''
     }
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: FormValues) {
     setIsLoading(true); // Set loading state to true
     try {
       // wait for half a second to show loading animation
@@ -47,7 +53,7 @@ export function EmailForm() {
       const record = await pb.collection('cook_form_submissions').create(data);
       toast({
         variant: 'success',
-        title: 'Email submitted successfully!',
+        title: t('successTitle'),
         description: (
           <>
             <pre className='bg-background my-2 w-full rounded-md p-4'>
@@ -56,7 +62,7 @@ export function EmailForm() {
               </code>
             </pre>
             <p className='text-lg font-semibold'>
-              We&apos;ll be in touch soon.
+              {t('successBody')}
             </p>
           </>
         )
@@ -66,8 +72,8 @@ export function EmailForm() {
       console.error('Error creating record:', error);
       toast({
         variant: 'destructive',
-        title: 'Failed to submit email. It may already exist.',
-        description: 'Please try again.'
+        title: t('errorTitle'),
+        description: t('errorBody')
       });
     } finally {
       setIsLoading(false); // Set loading state to false after the request is complete
@@ -107,12 +113,12 @@ export function EmailForm() {
           >
             {isLoading ? (
               <div className='flex items-center gap-2'>
-                <div>Send</div>
+                <div>{t('send')}</div>
                 <LoaderCircle className='h-5 w-5 animate-spin' />
               </div>
             ) : (
               <div className='flex items-center gap-2'>
-                <div>Send</div>
+                <div>{t('send')}</div>
                 <SendHorizonal className='h-5 w-5 transition-all duration-300 md:group-hover/Button:translate-x-[2px]' />
               </div>
             )}

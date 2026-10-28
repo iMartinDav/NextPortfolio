@@ -1,11 +1,14 @@
 import type React from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { AiFillGithub } from 'react-icons/ai';
 import { FaLinkedinIn } from 'react-icons/fa';
 import { RiTwitterXLine } from 'react-icons/ri';
 import { SiCodeship } from 'react-icons/si';
 
 const Footer: React.FC = () => {
+  const t = useTranslations('Footer');
   const date = new Date();
   const year = date.getFullYear();
 
@@ -15,13 +18,13 @@ const Footer: React.FC = () => {
         <div className='flex flex-col items-center space-y-2 md:flex-row md:justify-between md:space-y-0'>
           <div className='w-full text-center md:w-1/3 md:text-left'>
             <h3 className='text-xs leading-tight font-bold text-gray-300'>
-              Built From Scratch With 💚 by Martin DAVILA
+              {t('builtBy')}
             </h3>
           </div>
 
           <div className='w-full text-center md:w-1/3'>
             <h3 className='text-xs leading-tight font-medium text-gray-400'>
-              Copyright © {year} All Rights Reserved to Claude Opus 4.7
+              {t('copyright', { year })}
             </h3>
           </div>
 

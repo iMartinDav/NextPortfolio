@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 
 import BlurIn from '@/components/magicui/blur-in';
 import { Button } from '@/components/ui/button';
+import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
 
@@ -82,10 +83,18 @@ const BentoCard = ({
           asChild
           size='sm'
           className='group/Arrow pointer-events-auto'>
-          <a href={href}>
-            {cta}
-            <ArrowRightIcon className='ml-2 h-4 w-4 transition-transform duration-300 lg:group-hover/Arrow:translate-x-1' />
-          </a>
+          {href.startsWith('/') ? (
+            // Internal route: keep the active locale and navigate client-side
+            <Link href={href}>
+              {cta}
+              <ArrowRightIcon className='ml-2 h-4 w-4 transition-transform duration-300 lg:group-hover/Arrow:translate-x-1' />
+            </Link>
+          ) : (
+            <a href={href}>
+              {cta}
+              <ArrowRightIcon className='ml-2 h-4 w-4 transition-transform duration-300 lg:group-hover/Arrow:translate-x-1' />
+            </a>
+          )}
         </Button>
       ) : (
         ''

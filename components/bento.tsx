@@ -21,8 +21,11 @@ import { cn } from '@/lib/utils';
 
 import { RippleCard } from './ui/ripper-card';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
-const features = [
+type BentoT = ReturnType<typeof useTranslations<'Bento'>>;
+
+const getFeatures = (t: BentoT) => [
   {
     Icon: '',
     name: '',
@@ -42,12 +45,11 @@ const features = [
   },
   {
     Icon: '',
-    name: "I'm Martin DAVILA",
-    description:
-      'Software Sorcerer & Bioinformatics Wizard Specialist Full-stack dev with a genomic twist. Cloud architect who speaks DNA.',
+    name: t('intro.name'),
+    description: t('intro.description'),
     className: 'col-span-3 md:col-span-1',
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}`,
-    cta: 'Explore my digital lab',
+    cta: t('intro.cta'),
     background: (
       <div>
         <div className='absolute top-0 right-0 h-3/4 w-full border-none mask-[linear-gradient(to_top,transparent_5%,#000_50%)] transition-all duration-300 ease-out group-hover:scale-105'>
@@ -57,7 +59,7 @@ const features = [
             <Image
               className='h-full w-full object-cover object-center'
               src={process.env.AVATAR_URL || '/images/profile-cool.webp'}
-              alt='avatar image'
+              alt={t('avatarAlt')}
               width={400}
               height={400}
               quality={90}
@@ -101,11 +103,10 @@ const features = [
 
   {
     Icon: '',
-    name: 'Tech Arsenal',
-    description:
-      "From web apps to gene sequencing. Docker to PCR. I've got the tools.",
+    name: t('arsenal.name'),
+    description: t('arsenal.description'),
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/projects`,
-    cta: 'View my experiments',
+    cta: t('arsenal.cta'),
     className: 'col-span-3 md:col-span-1',
     background: (
       <motion.div
@@ -142,11 +143,10 @@ const features = [
   },
   {
     Icon: '',
-    name: 'Tech Shenanigans',
-    description:
-      'I tinker with biotech and code until, somehow, magic happens.',
+    name: t('shenanigans.name'),
+    description: t('shenanigans.description'),
     href: '/technologies',
-    cta: 'View all technologies',
+    cta: t('shenanigans.cta'),
     className: 'col-span-3 md:col-span-2',
     background: (
       <div className='absolute top-0 right-0 w-[80%] origin-top translate-x-0 mask-[linear-gradient(to_top,transparent_40%,#000_70%)] transition-all duration-300 ease-out group-hover:-translate-y-5 group-hover:scale-105 md:mask-[linear-gradient(to_top,transparent_50%,#000_70%)]'>
@@ -158,11 +158,10 @@ const features = [
   },
   {
     Icon: '',
-    name: 'AI Integrations',
-    description:
-      'From predicting protein structures to optimizing pipelines, I&apos;ve got AI that would make Watson jealous.',
+    name: t('ai.name'),
+    description: t('ai.description'),
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/ai`,
-    cta: 'Visit AI projects',
+    cta: t('ai.cta'),
     className: 'col-span-3 md:col-span-2',
     background: (
       <motion.div
@@ -175,11 +174,11 @@ const features = [
   },
   {
     Icon: '',
-    name: 'Seamless Deployments',
-    description: 'Push, Build, Deploy, Mutate.',
+    name: t('deployments.name'),
+    description: t('deployments.description'),
     className: 'col-span-3 md:col-span-1',
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/vercel`,
-    cta: 'Learn more',
+    cta: t('deployments.cta'),
     background: (
       <div className='absolute top-0 right-0 h-full w-full origin-top rounded-md mask-[linear-gradient(to_top,transparent_25%,#000_70%)] transition-all duration-300 ease-out group-hover:scale-105'>
         <Orbit />
@@ -189,12 +188,11 @@ const features = [
 
   {
     Icon: '',
-    name: 'Worldwide Reach',
-    description:
-      'Cloud or lab, my code spans continents. No genome left behind.',
+    name: t('reach.name'),
+    description: t('reach.description'),
     className: 'col-span-3 md:col-span-3',
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/tags/vercel`,
-    cta: 'Learn more',
+    cta: t('reach.cta'),
     background: (
       <div className='absolute top-0 right-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-105'>
         <div className="absolute inset-0 w-full h-full mask-[linear-gradient(to_top,transparent_25%,#000_70%)]">
@@ -206,11 +204,11 @@ const features = [
 
   {
     Icon: '',
-    name: 'GitHub Stars',
-    description: 'Star my digital organisms. Help my code evolve.',
+    name: t('stars.name'),
+    description: t('stars.description'),
     className: 'col-span-3 md:col-span-1',
     href: 'https://github.com/iMartinDav/NextPortfolio',
-    cta: 'Star repository',
+    cta: t('stars.cta'),
     background: (
       <div className='absolute top-0 left-0 h-full w-full origin-top rounded-md mask-[linear-gradient(to_top,transparent_40%,#000_70%)] transition-all duration-300 ease-out group-hover:-translate-y-4 group-hover:scale-105'>
         <div className='flex h-2/3 w-full items-center justify-center text-7xl font-semibold transition-all duration-300 group-hover:-translate-y-2'>
@@ -234,12 +232,11 @@ const features = [
 
   {
     Icon: '',
-    name: 'Project Showcase',
-    description:
-      'Explore my latest creations, from optimized CI/CD pipelines to DNA sequence analysis tools. Where silicon meets cells. Peek into my tech-bio brainstorms.',
+    name: t('projects.name'),
+    description: t('projects.description'),
     className: 'col-span-3 md:col-span-2',
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/projects`,
-    cta: 'All projects',
+    cta: t('projects.cta'),
     background: (
       <div className='absolute top-0 left-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[102%]'>
         <div className='absolute h-full w-full mask-[linear-gradient(to_top,transparent_20%,#000_70%)]'>
@@ -257,11 +254,10 @@ const features = [
 
   {
     Icon: '',
-    name: 'Daily Visitors',
-    description:
-      'Watch my digital petri dish grow. Watch in real-time as curious minds explore my digital petri dish. Powered by analytics, not ATP. powered by Umami Analytics.',
+    name: t('visitors.name'),
+    description: t('visitors.description'),
     href: 'https://umami.is',
-    cta: 'Umami',
+    cta: t('visitors.cta'),
     className: 'col-span-3 md:col-span-2',
     background: (
       <>
@@ -283,7 +279,7 @@ const features = [
     description: '',
     className: 'col-span-3 md:col-span-1',
     href: `${process.env.NEXT_PUBLIC_PORTFOLIO_URL}/biocode`,
-    cta: 'Incubating Innovations',
+    cta: t('incubating.cta'),
     background: (
       <div className='absolute top-0 left-0 h-full w-full origin-top rounded-md transition-all duration-300 ease-out group-hover:scale-[105%]'>
         <div className='absolute h-full w-full mask-[linear-gradient(to_top,transparent_20%,#000_70%)]'>
@@ -312,16 +308,14 @@ const features = [
               <BlurIn
                 duration={0.5}
                 className='h-full'>
-                Connect.
+                {t('contact.title')}
               </BlurIn>
             </div>
             <div className='flex w-full justify-center text-neutral-500 dark:text-neutral-400'>
-              Ready to collaborate? Whether you're into bits or base pairs, I'm
-              all ears. Your message will be treated with the same care as a
-              rare enzyme.
+              {t('contact.body')}
             </div>
             <div className='mt-2 text-sm text-neutral-500 dark:text-neutral-400'>
-              *Your email is as protected as a patented.
+              {t('contact.privacy')}
             </div>
             <div className=''>
               <EmailForm />
@@ -336,6 +330,9 @@ const features = [
 ];
 
 export function Bento() {
+  const t = useTranslations('Bento');
+  const features = getFeatures(t);
+
   return (
     <BentoGrid>
       {features.map((feature, idx) => (

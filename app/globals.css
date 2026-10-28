@@ -1140,3 +1140,22 @@ html:not([data-intro]) .intro-content {
     opacity: 0.6;
   }
 }
+
+/* Gentle bob for the BioinformaticsCore caption (replaces drei <Float>) */
+.bio-label-float {
+  animation: bio-label-float 4s ease-in-out infinite;
+}
+@keyframes bio-label-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bio-label-float {
+    animation: none;
+  }
+}

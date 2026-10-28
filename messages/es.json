@@ -1,0 +1,235 @@
+{
+  "Metadata": {
+    "title": "Martin DAVILA | Ingeniero Full Stack en Bioinformática",
+    "titleTemplate": "%s | Martin DAVILA",
+    "description": "Martin Davila desarrolla soluciones bioinformáticas para impulsar la investigación en biotecnología...",
+    "ogDescription": "Soluciones bioinformáticas que impulsan la investigación en biotecnología...",
+    "twitterDescription": "Innovación biotecnológica con bioinformática y desarrollo full-stack.",
+    "ogImageAlt": "Martin DAVILA - Ingeniero Full Stack en Bioinformática",
+    "siteName": "Portafolio de Martin DAVILA",
+    "jobTitle": "Ingeniero Full Stack en Bioinformática",
+    "personDescription": "Soluciones innovadoras en bioinformática y biotecnología."
+  },
+  "Common": {
+    "skipToContent": "Ir al contenido principal",
+    "loading": "Cargando"
+  },
+  "Nav": {
+    "home": "Inicio",
+    "about": "Sobre mí",
+    "projects": "Proyectos",
+    "resume": "CV",
+    "blog": "Blog",
+    "toggleMenu": "Abrir o cerrar el menú",
+    "github": "Perfil de GitHub"
+  },
+  "LanguageSwitcher": {
+    "label": "Cambiar idioma",
+    "en": "English",
+    "fr": "Français",
+    "es": "Español"
+  },
+  "Footer": {
+    "builtBy": "Hecho desde cero con 💚 por Martin DAVILA",
+    "copyright": "Copyright © {year} Todos los derechos reservados a Claude Opus 4.7"
+  },
+  "Hero": {
+    "greeting": "¡Hola!",
+    "intro": "Soy <name>Martin DAVILA</name>",
+    "tagline": "Descifrando el código de la vida",
+    "cta": "Mira mi código"
+  },
+  "Typewriter": {
+    "pokemon": "Maestro Pokémon",
+    "software": "Ingeniero de software",
+    "compbio": "Biología computacional",
+    "bioinformatics": "Bioinformática",
+    "research": "Investigación y desarrollo",
+    "dna": "Secuenciación de ADN",
+    "protein": "Análisis de proteínas",
+    "cell": "Biología celular",
+    "genome": "Edición genómica",
+    "biotech": "Biotecnología",
+    "analysis": "Análisis de datos"
+  },
+  "Bento": {
+    "avatarAlt": "foto de perfil",
+    "intro": {
+      "name": "Soy Martin DAVILA",
+      "description": "Hechicero del software y mago de la bioinformática. Desarrollador full-stack con un toque genómico. Arquitecto cloud que habla ADN.",
+      "cta": "Visita mi laboratorio digital"
+    },
+    "arsenal": {
+      "name": "Arsenal técnico",
+      "description": "De aplicaciones web a la secuenciación de genes. De Docker a la PCR. Tengo las herramientas.",
+      "cta": "Ver mis experimentos"
+    },
+    "shenanigans": {
+      "name": "Travesuras técnicas",
+      "description": "Juego con la biotecnología y el código hasta que, de alguna manera, ocurre la magia.",
+      "cta": "Ver todas las tecnologías"
+    },
+    "ai": {
+      "name": "Integraciones de IA",
+      "description": "Desde predecir estructuras de proteínas hasta optimizar pipelines, tengo IA que pondría celoso a Watson.",
+      "cta": "Ver proyectos de IA"
+    },
+    "deployments": {
+      "name": "Despliegues sin fricción",
+      "description": "Push, build, despliegue, mutación.",
+      "cta": "Saber más"
+    },
+    "reach": {
+      "name": "Alcance mundial",
+      "description": "En la nube o en el laboratorio, mi código cruza continentes. Ningún genoma se queda atrás.",
+      "cta": "Saber más"
+    },
+    "stars": {
+      "name": "Estrellas en GitHub",
+      "description": "Dale una estrella a mis organismos digitales. Ayuda a que mi código evolucione.",
+      "cta": "Dar una estrella"
+    },
+    "projects": {
+      "name": "Proyectos",
+      "description": "Descubre mis últimas creaciones, desde pipelines de CI/CD optimizados hasta herramientas de análisis de secuencias de ADN. Donde el silicio se encuentra con la célula. Un vistazo a mis ideas entre tecnología y biología.",
+      "cta": "Todos los proyectos"
+    },
+    "visitors": {
+      "name": "Visitantes diarios",
+      "description": "Mira cómo crece mi placa de Petri digital, en tiempo real, con cada visita. Funciona con analítica, no con ATP. Datos de Umami Analytics.",
+      "cta": "Umami"
+    },
+    "incubating": {
+      "cta": "Innovaciones en incubación"
+    },
+    "contact": {
+      "title": "Hablemos.",
+      "body": "¿Quieres colaborar? Seas más de bits o de pares de bases, te escucho. Tu mensaje recibirá el mismo cuidado que una enzima rara.",
+      "privacy": "*Tu correo está tan protegido como una patente."
+    }
+  },
+  "Showcase": {
+    "title": "El código se une a la biotecnología",
+    "subtitle": "Software inteligente y escalable para la ciencia. Menos bugs, más descubrimientos."
+  },
+  "EmailForm": {
+    "invalidEmail": "Introduce un correo electrónico válido.",
+    "successTitle": "¡Correo enviado!",
+    "successBody": "Te escribiré pronto.",
+    "errorTitle": "No se pudo enviar el correo. Puede que ya esté registrado.",
+    "errorBody": "Inténtalo de nuevo.",
+    "send": "Enviar"
+  },
+  "Stats": {
+    "title": "Estadísticas",
+    "dashboardTitle": "Panel de estadísticas",
+    "period": "Tráfico del sitio en los últimos 7 días",
+    "error": "No se pudieron cargar las estadísticas",
+    "empty": "No hay estadísticas disponibles",
+    "retry": "Reintentar",
+    "pageViews": "Páginas vistas",
+    "uniqueVisitors": "Visitantes únicos",
+    "totalSessions": "Sesiones",
+    "bounceRate": "Tasa de rebote",
+    "timeOnSite": "Tiempo en el sitio",
+    "increased": "Sube un {value} %",
+    "decreased": "Baja un {value} %"
+  },
+  "Contact": {
+    "craftingTitle": "Las soluciones del mañana",
+    "craftingBody": "En la bioinformática y la biotecnología, cada avance empieza con curiosidad. Con los años he puesto la tecnología al servicio de los datos biológicos, para pasar de la información en bruto a resultados con sentido.",
+    "innovativeTitle": "Soluciones innovadoras",
+    "innovativeBody": "Cada proyecto es un paso más para entender los sistemas biológicos. Combinando algoritmos avanzados y aprendizaje automático, el objetivo siempre ha sido el mismo: ofrecer resultados útiles que hagan avanzar la investigación y sus aplicaciones en biotecnología.",
+    "networkTitle": "Una red de innovación global",
+    "networkBody": "La colaboración no tiene fronteras. Desde Lyon hasta cualquier rincón del mundo, el objetivo sigue siendo impulsar avances que mejoren la industria biotecnológica en todas partes.",
+    "pathTitle": "Un camino de descubrimiento",
+    "pathBody": "Mi recorrido en la bioinformática y la biotecnología está hecho de contribuciones a proyectos e investigaciones que dan forma al futuro de la salud y del análisis de datos. Cada puesto ha sido un paso más hacia el próximo gran descubrimiento.",
+    "futureTitle": "Construyamos el futuro juntos",
+    "futureBody": "La bioinformática y la biotecnología no dejan de evolucionar, y siempre hay espacio para nuevas colaboraciones. Escríbeme y veamos cómo podemos innovar y tener impacto juntos."
+  },
+  "Profile": {
+    "heading": "Innovando en la <accent>intersección</accent> entre la<br></br><accent>biología y el código</accent>",
+    "body": "Ya sea domando pipelines de CI/CD, automatizando flujos de trabajo o poniendo orden en los datos, de alguna manera lo consigo. Desde acelerar avances en biotecnología hasta hacer que los despliegues den menos dolores de cabeza, intento aportar un poco de innovación y automatización a todo lo que toco. ¿Y dormir? No mucho, pero para eso está el café, ¿no? ☕",
+    "expertise": {
+      "bioinformatics": "Bioinformática",
+      "softwareEngineering": "Ingeniería de software",
+      "devops": "DevOps y CI/CD",
+      "fullStack": "Desarrollo full-stack",
+      "cloud": "Infraestructura cloud",
+      "genomics": "Análisis de datos genómicos",
+      "ml": "ML para bioinformática",
+      "research": "Investigación"
+    },
+    "photoAlt": "Foto de perfil de Martin Davila",
+    "pitch": "¿Tienes un problema de biología que necesita una solución técnica? Me especializo en convertir retos complejos de las ciencias de la vida en código claro y elegante. De la secuenciación de genes al plegamiento de proteínas, ayudo a tu equipo a entender sus datos y a hacer avanzar la investigación. Construyamos algo grande juntos."
+  },
+  "About": {
+    "metaTitle": "Sobre mí",
+    "heading": "¿Quién <accent>soy</accent>?",
+    "skillset": "Habilidades <accent>profesionales</accent>",
+    "tools": "<accent>Herramientas</accent> que uso",
+    "github": "Mis días de <accent>código</accent>",
+    "card": {
+      "intro": "Hola, soy <name>Martin DAVILA</name>, ingeniero full stack en bioinformática. Uso el poder de los datos para impulsar la innovación en las ciencias de la vida.",
+      "expertise": "Con experiencia en biología computacional, trabajo para unir la tecnología y la investigación biológica, usando algoritmos avanzados para analizar conjuntos de datos complejos y contribuir a grandes descubrimientos.",
+      "hobbiesIntro": "Fuera del trabajo técnico, disfruto de:",
+      "gaming": "Videojuegos: explorar el universo Pokémon",
+      "food": "Cocina: descubrir culturas a través de la comida",
+      "travel": "Viajes: conocer las maravillas del mundo",
+      "quote": "«El verdadero poder de programar no está en lo técnico, sino en su capacidad de ayudar y empoderar a las personas. Usa tus habilidades para crear un cambio positivo y, juntos, podremos abrir el camino hacia un futuro más brillante e innovador.»"
+    }
+  },
+  "Technologies": {
+    "metaTitle": "Tecnologías",
+    "title": "Tecnologías",
+    "subtitle": "Haz clic en un icono para ver los proyectos que usan esa tecnología.",
+    "loading": "Cargando tecnologías..."
+  },
+  "Deployments": {
+    "metaTitle": "Despliegues",
+    "title": "Despliegues",
+    "subtitle": "Haz clic en un despliegue para ver el proyecto.",
+    "cloudTitle": "Nube",
+    "cloudBody": "La nube es la forma más común de desplegar un proyecto. Es fácil de configurar y mantener, y en general es más segura que otros métodos. También es escalable: puedes añadir recursos a tu proyecto a medida que crece. Algunas de las plataformas más populares son AWS, Google Cloud y Azure.",
+    "edgeTitle": "Edge",
+    "edgeBody": "Lorem sint est ipsum excepteur in Lorem occaecat labore exercitation laboris minim ea. Proident eu consectetur commodo laborum elit voluptate et adipisicing incididunt amet laboris do. Pariatur consectetur dolor aliqua labore. Sunt et exercitation fugiat ullamco non mollit dolor ullamco.",
+    "onPremTitle": "Local",
+    "onPremBody": "Lorem sint est ipsum excepteur in Lorem occaecat labore exercitation laboris minim ea. Proident eu consectetur commodo laborum elit voluptate et adipisicing incididunt amet laboris do. Pariatur consectetur dolor aliqua labore. Sunt et exercitation fugiat ullamco non mollit dolor ullamco."
+  },
+  "WorldwideReach": {
+    "metaTitle": "Alcance mundial",
+    "title": "Alcance mundial",
+    "subtitle": "Haz clic en un despliegue para ver el proyecto.",
+    "cloudTitle": "Nube",
+    "cloudBody": "La nube es la forma más común de desplegar un proyecto. Algunas de las plataformas más populares son AWS, Google Cloud y Azure.",
+    "edgeTitle": "Edge",
+    "edgeBody": "Los despliegues edge usan computación distribuida para acercar los datos y los servicios a los usuarios, lo que reduce la latencia y mejora los tiempos de respuesta. Son especialmente útiles para aplicaciones en tiempo real y servicios que necesitan procesar y entregar datos muy rápido. Al acortar la distancia que recorren los datos, mejoran la experiencia del usuario y también pueden reducir los costes de ancho de banda.",
+    "onPremTitle": "Local",
+    "onPremBody": "Los despliegues locales (on-premises) se alojan en los propios servidores e infraestructura de la empresa. Así las organizaciones tienen más control sobre sus datos y aplicaciones, lo que les ayuda a cumplir requisitos concretos de seguridad y normativa. A cambio, exigen muchos recursos para mantenerlos y administrarlos, y son menos flexibles y escalables que la nube o el edge."
+  },
+  "Resume": {
+    "metaTitle": "CV",
+    "zoomIn": "Acercar",
+    "zoomOut": "Alejar",
+    "rotate": "Girar",
+    "enterFullscreen": "Pantalla completa",
+    "exitFullscreen": "Salir de pantalla completa",
+    "download": "Descargar",
+    "downloadPdf": "Descargar PDF",
+    "previousPage": "Página anterior",
+    "nextPage": "Página siguiente",
+    "loading": "Cargando PDF...",
+    "pageError": "No se pudo cargar la página",
+    "noFile": "No se seleccionó ningún PDF",
+    "success": "Listo",
+    "error": "Error",
+    "downloadFailed": "No se pudo descargar el PDF. Inténtalo de nuevo.",
+    "loadFailed": "No se pudo cargar el PDF. Inténtalo más tarde.",
+    "downloadSuccess": "¡PDF descargado!"
+  },
+  "Error": {
+    "title": "Algo salió mal",
+    "body": "Se produjo un error inesperado al mostrar esta página.",
+    "retry": "Reintentar"
+  }
+}

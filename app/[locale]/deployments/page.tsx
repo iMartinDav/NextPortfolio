@@ -1,16 +1,29 @@
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
 import BlurIn from '@/components/magicui/blur-in';
 import { FadeIn } from '@/components/magicui/fade-in';
+import { getPageMetadata } from '@/i18n/metadata';
+import { toLocale } from '@/i18n/routing';
 
-export default async function DeploymentsPage() {
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props) {
+  const { locale } = await params;
+  return getPageMetadata(locale, 'Deployments', '/deployments');
+}
+
+export default async function DeploymentsPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(toLocale(locale));
+  const t = await getTranslations('Deployments');
+
   return (
     <div className='mx-auto mt-10 w-full max-w-2xl px-6'>
       <BlurIn duration={0.5}>
         <FadeIn direction='up'>
           <div className='flex flex-col items-start'>
-            <div className='text-center text-4xl font-bold'>Deployments</div>
-            <div className='font-thin'>
-              Click on a deployment to see the project.
-            </div>
+            <div className='text-center text-4xl font-bold'>{t('title')}</div>
+            <div className='font-thin'>{t('subtitle')}</div>
           </div>
         </FadeIn>
       </BlurIn>
@@ -18,39 +31,26 @@ export default async function DeploymentsPage() {
       <BlurIn duration={0.5}>
         <FadeIn direction='down'>
           <section className='mt-10'>
-            <div className='text-2xl font-bold'>Cloud</div>
+            <div className='text-2xl font-bold'>{t('cloudTitle')}</div>
 
             <div>
-              Cloud deployments are the most common way to deploy a project.
-              They are easy to set up and maintain, and are generally more
-              secure than other deployment methods. Cloud deployments are also
-              scalable, meaning that you can easily add more resources to your
-              project as it grows. Some popular cloud deployment platforms
-              include AWS, Google Cloud, and Azure.
+              {t('cloudBody')}
             </div>
           </section>
 
           <section className='mt-5'>
-            <div className='text-2xl font-bold'>Edge</div>
+            <div className='text-2xl font-bold'>{t('edgeTitle')}</div>
 
             <div>
-              Lorem sint est ipsum excepteur in Lorem occaecat labore
-              exercitation laboris minim ea. Proident eu consectetur commodo
-              laborum elit voluptate et adipisicing incididunt amet laboris do.
-              Pariatur consectetur dolor aliqua labore. Sunt et exercitation
-              fugiat ullamco non mollit dolor ullamco.
+              {t('edgeBody')}
             </div>
           </section>
 
           <section className='mt-5'>
-            <div className='text-2xl font-bold'>On-Prem</div>
+            <div className='text-2xl font-bold'>{t('onPremTitle')}</div>
 
             <div>
-              Lorem sint est ipsum excepteur in Lorem occaecat labore
-              exercitation laboris minim ea. Proident eu consectetur commodo
-              laborum elit voluptate et adipisicing incididunt amet laboris do.
-              Pariatur consectetur dolor aliqua labore. Sunt et exercitation
-              fugiat ullamco non mollit dolor ullamco.
+              {t('onPremBody')}
             </div>
           </section>
         </FadeIn>

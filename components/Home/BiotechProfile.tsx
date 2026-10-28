@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import type { IconType } from 'react-icons';
 import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 import { RiTwitterXLine } from 'react-icons/ri';
@@ -43,16 +44,16 @@ const SOCIAL_LINKS: SocialLink[] = [
 ];
 
 // Expertise items to make them configurable
-const EXPERTISE_ITEMS = [
-  'Bioinformatics',
-  'Software Engineering',
-  'DevOps & CI/CD',
-  'Full-Stack Development',
-  'Cloud Infrastructure',
-  'Genomic Data Analysis',
-  'ML for Bioinformatics',
-  'Research'
-];
+const EXPERTISE_KEYS = [
+  'bioinformatics',
+  'softwareEngineering',
+  'devops',
+  'fullStack',
+  'cloud',
+  'genomics',
+  'ml',
+  'research'
+] as const;
 
 interface GradientTextProps {
   children: React.ReactNode;
@@ -74,6 +75,7 @@ interface ThemeColors {
 const BiotechProfile: React.FC = () => {
   const { resolvedTheme } = useTheme();
   const mounted = useMounted();
+  const t = useTranslations('Profile');
 
   const colors = useMemo<ThemeColors>(() => {
     // Use a safe default for server-side rendering
@@ -117,20 +119,15 @@ const BiotechProfile: React.FC = () => {
             <BentoBox
               className='bg-opacity-30 backdrop-blur-xs'>
               <h1 className='mb-4 text-4xl font-bold md:text-5xl'>
-                Innovating at the <GradientText>Intersection</GradientText> of
-                <br />
-                <GradientText>Biology and Code</GradientText>
+                {t.rich('heading', {
+                  accent: (chunks) => <GradientText>{chunks}</GradientText>,
+                  br: () => <br />
+                })}
               </h1>
               <p
                 suppressHydrationWarning
                 className={`text-xl ${colors.mutedColor}`}>
-                Whether it&apos;s wrangling CI/CD pipelines, automating
-                workflows, or making data behave, I somehow manage to get it
-                done. From speeding up biotech breakthroughs to making
-                deployments less of a headache, I try to bring a little
-                innovation and automation into everything I touch. And yeah,
-                sleep? Not much of that, but hey, that&apos;s what coffee&apos;s
-                for, right? ☕
+                {t('body')}
               </p>
             </BentoBox>
 
@@ -140,7 +137,7 @@ const BiotechProfile: React.FC = () => {
               <ul
                 suppressHydrationWarning
                 className={`grid grid-cols-2 gap-2 ${colors.mutedColor}`}>
-                {EXPERTISE_ITEMS.map((item) => (
+                {EXPERTISE_KEYS.map((item) => (
                   <li
                     key={item}
                     className='flex items-center'>
@@ -149,7 +146,7 @@ const BiotechProfile: React.FC = () => {
                       aria-hidden='true'>
                       ✓
                     </span>
-                    {item}
+                    {t(`expertise.${item}`)}
                   </li>
                 ))}
               </ul>
@@ -166,7 +163,7 @@ const BiotechProfile: React.FC = () => {
               transition={{ type: 'spring', stiffness: 300, damping: 10 }}>
               <Image
                 src='/avatar.svg'
-                alt='Profile photo of Martin Davila'
+                alt={t('photoAlt')}
                 width={200}
                 height={200}
                 className='border-secondary rounded-full border-4 shadow-lg'
@@ -181,11 +178,7 @@ const BiotechProfile: React.FC = () => {
           className='mt-16 text-center'>
           <h2 className='mb-6 text-3xl font-bold'>Connect & Collaborate</h2>
           <p className='mb-8 text-xl'>
-            Got a tricky biology problem that needs a tech solution? I
-            specialize in turning complex life science challenges into elegant
-            code. From gene sequencing to protein folding, I&apos;m here to help
-            your team make sense of the data and push research forward.
-            Let&apos;s build something great together.
+            {t('pitch')}
           </p>
           <ul className='flex justify-center space-x-6'>
             {SOCIAL_LINKS.map(({ href, Icon, label }) => (

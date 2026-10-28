@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import dynamic from 'next/dynamic';
 
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 
 import { sanitizeSlug } from '@/lib/utils';
@@ -98,6 +99,7 @@ export default function IconCloud({
   iconSlugs,
   liveLinks = true
 }: DynamicCloudProps) {
+  const t = useTranslations('Technologies');
   const [data, setData] = useState<IconData | null>(null);
   const [loading, setLoading] = useState(true);
   const { theme } = useTheme();
@@ -156,7 +158,7 @@ export default function IconCloud({
         <div className='text-center'>
           <div className='mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-gray-900 dark:border-white'></div>
           <p className='mt-2 text-sm text-gray-600 dark:text-gray-400'>
-            Loading technologies...
+            {t('loading')}
           </p>
         </div>
       </div>

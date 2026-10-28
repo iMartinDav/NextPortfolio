@@ -3,6 +3,8 @@
 import type React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {
@@ -44,6 +46,7 @@ const options = {
 };
 
 const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
+  const t = useTranslations('Resume');
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -163,15 +166,15 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
       window.URL.revokeObjectURL(url);
 
       toast({
-        title: 'Success',
-        description: 'PDF downloaded successfully!'
+        title: t('success'),
+        description: t('downloadSuccess')
       });
     } catch (error) {
       console.error('Error downloading PDF:', error);
       toast({
         variant: 'destructive',
-        title: 'Error',
-        description: 'Failed to download PDF. Please try again.'
+        title: t('error'),
+        description: t('downloadFailed')
       });
     }
   };
@@ -249,8 +252,8 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
     setIsLoading(false);
     toast({
       variant: 'destructive',
-      title: 'Error',
-      description: 'Failed to load PDF. Please try again later.'
+      title: t('error'),
+      description: t('loadFailed')
     });
   };
 
@@ -301,7 +304,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                 onClick={handleZoomIn}
                 disabled={scale >= 2}
                 className='h-10 w-10 rounded-full'
-                aria-label='Zoom in'>
+                aria-label={t('zoomIn')}>
                 <ZoomIn className='h-5 w-5' />
               </Button>
               <Button
@@ -310,7 +313,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                 onClick={handleZoomOut}
                 disabled={scale <= 0.5}
                 className='h-10 w-10 rounded-full'
-                aria-label='Zoom out'>
+                aria-label={t('zoomOut')}>
                 <ZoomOut className='h-5 w-5' />
               </Button>
               <Button
@@ -318,7 +321,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                 size='icon'
                 onClick={handleRotate}
                 className='h-10 w-10 rounded-full'
-                aria-label='Rotate'>
+                aria-label={t('rotate')}>
                 <RotateCw className='h-5 w-5' />
               </Button>
               <Button
@@ -327,7 +330,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                 onClick={toggleFullScreen}
                 className='h-10 w-10 rounded-full'
                 aria-label={
-                  isFullScreen ? 'Exit fullscreen' : 'Enter fullscreen'
+                  isFullScreen ? t('exitFullscreen') : t('enterFullscreen')
                 }>
                 {isFullScreen ? (
                   <Minimize2 className='h-5 w-5' />
@@ -340,7 +343,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                 size='icon'
                 onClick={handleDownload}
                 className='h-10 w-10 rounded-full'
-                aria-label='Download PDF'>
+                aria-label={t('downloadPdf')}>
                 <Download className='h-5 w-5' />
               </Button>
               <Button
@@ -388,6 +391,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                       setPageNumber((prev) => Math.max(prev - 1, 1))
                     }
                     disabled={pageNumber <= 1}
+                    aria-label={t('previousPage')}
                     className='h-7 w-7 rounded-full border border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 sm:h-8 sm:w-8 md:h-9 md:w-9 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'>
                     <ChevronLeft className='h-4 w-4' />
                   </Button>
@@ -403,6 +407,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                       setPageNumber((prev) => Math.min(prev + 1, numPages))
                     }
                     disabled={pageNumber >= numPages}
+                    aria-label={t('nextPage')}
                     className='h-7 w-7 rounded-full border border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 sm:h-8 sm:w-8 md:h-9 md:w-9 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'>
                     <ChevronRight className='h-4 w-4' />
                   </Button>
@@ -414,18 +419,18 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                       icon={<ZoomIn className='h-4 w-4' />}
                       onClick={handleZoomIn}
                       disabled={scale >= 2}
-                      tooltip='Zoom in'
+                      tooltip={t('zoomIn')}
                     />
                     <ControlButton
                       icon={<ZoomOut className='h-4 w-4' />}
                       onClick={handleZoomOut}
                       disabled={scale <= 0.5}
-                      tooltip='Zoom out'
+                      tooltip={t('zoomOut')}
                     />
                     <ControlButton
                       icon={<RotateCw className='h-4 w-4' />}
                       onClick={handleRotate}
-                      tooltip='Rotate'
+                      tooltip={t('rotate')}
                     />
                     <ControlButton
                       icon={
@@ -437,7 +442,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                       }
                       onClick={toggleFullScreen}
                       tooltip={
-                        isFullScreen ? 'Exit fullscreen' : 'Enter fullscreen'
+                        isFullScreen ? t('exitFullscreen') : t('enterFullscreen')
                       }
                     />
                   </div>
@@ -453,7 +458,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                         className='h-7 space-x-1 rounded-md border border-[#2ba999]/20 bg-[#33c7b2] px-2 font-medium text-white shadow-xs transition-colors duration-150 hover:bg-[#2cb3a1] focus:ring-2 focus:ring-[#33c7b2]/20 active:bg-[#2ba999] disabled:pointer-events-none disabled:opacity-50 sm:h-8 sm:space-x-2 sm:px-3 md:h-9 dark:border-[#33c7b2]/20 dark:bg-[#2ba999] dark:hover:bg-[#33c7b2] dark:focus:ring-[#33c7b2]/30 dark:active:bg-[#2cb3a1]'>
                         <Download className='h-4 w-4' />
                         <span className='hidden text-xs font-medium sm:inline sm:text-sm'>
-                          Download
+                          {t('download')}
                         </span>
                       </Button>
                     </TooltipTrigger>
@@ -487,7 +492,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                 <div className='flex flex-col items-center space-y-3'>
                   <Loader2 className='text-primary h-6 w-6 animate-spin sm:h-8 sm:w-8' />
                   <p className='text-muted-foreground text-xs sm:text-sm'>
-                    Loading PDF...
+                    {t('loading')}
                   </p>
                 </div>
               </div>
@@ -516,7 +521,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                 error={
                   <div className='p-4 text-center sm:p-6'>
                     <p className='text-destructive text-sm font-medium sm:text-base'>
-                      Error loading page
+                      {t('pageError')}
                     </p>
                     <p className='text-muted-foreground mt-1 text-xs sm:text-sm'>
                       Please try again or download the PDF
@@ -526,7 +531,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                 noData={
                   <div className='p-4 text-center sm:p-6'>
                     <p className='text-muted-foreground text-sm sm:text-base'>
-                      No PDF file selected
+                      {t('noFile')}
                     </p>
                   </div>
                 }

@@ -1,6 +1,7 @@
 'use client';
 
 
+import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 
 import Particle from '../Particle';
@@ -13,6 +14,7 @@ const DNAHelix = dynamic(() => import('./DNAHelix'), {
 });
 
 export default function Hero() {
+  const t = useTranslations('Hero');
   return (
     <section className='relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90 dark:from-[#060610] dark:via-[#0a0a1a] dark:to-[#0c1a1f]'>
       <div className='absolute inset-0 z-0'>
@@ -31,7 +33,7 @@ export default function Hero() {
       <div className='relative z-20 container mx-auto px-6 h-full flex items-center pt-20 pb-10 md:py-32 pointer-events-none'>
         <div className='flex w-full flex-col items-center text-center md:w-1/2 md:items-start md:text-left pointer-events-auto'>
             <h1 className='mb-6 text-4xl leading-tight font-extrabold text-foreground dark:text-[#EAEAFF] md:text-6xl'>
-              Hi There!
+              {t('greeting')}
               <span
                 className='wave text-4xl inline-block ml-2'
                 role='img'
@@ -41,11 +43,17 @@ export default function Hero() {
             </h1>
 
             <h2 className='mb-6 text-3xl font-bold text-foreground dark:text-[#EAEAFF] md:text-5xl'>
-              I&apos;m <strong className='main-name text-primary-dark dark:text-primary'>Martin DAVILA</strong>
+              {t.rich('intro', {
+                name: (chunks) => (
+                  <strong className='main-name text-primary-dark dark:text-primary'>
+                    {chunks}
+                  </strong>
+                )
+              })}
             </h2>
 
             <h3 className='mb-6 text-4xl leading-tight font-extrabold text-foreground dark:text-[#EAEAFF] md:text-6xl'>
-              Decoding Life&apos;s Blueprint
+              {t('tagline')}
               <span
                 className='wave text-4xl inline-block ml-2'
                 role='img'
@@ -69,7 +77,7 @@ export default function Hero() {
                   <div className='relative h-full w-8 bg-white/20' />
                 </span>
                 <span className='relative flex items-center gap-2'>
-                  Explore My Code
+                  {t('cta')}
                   <svg className='h-5 w-5 transition-transform duration-300 group-hover:translate-x-1' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
                     <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M14 5l7 7m0 0l-7 7m7-7H3' />
                   </svg>

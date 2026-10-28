@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from 'next';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Inter } from 'next/font/google';
+import { notFound } from 'next/navigation';
 import Script from 'next/script';
 
 import Footer from '@/components/Footer';
@@ -7,8 +10,10 @@ import { introBootScript } from '@/lib/intro';
 import Navbar from '@/components/Navbar';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
+import { getPathname } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
 
-import './globals.css';
+import '../globals.css';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -26,98 +31,125 @@ export const viewport: Viewport = {
   viewportFit: 'cover'
 };
 
-export const metadata: Metadata = {
-  metadataBase: new URL(DOMAIN),
-  title: {
-    default: 'Martin DAVILA | Full Stack Bioinformatics Engineer',
-    template: '%s | Martin DAVILA'
-  },
-  description:
-    'Martin Davila specializes in bioinformatics solutions for advancing biotechnology research...',
-  keywords: [
-    'bioinformatics engineer',
-    'biotech software',
-    'genomics data analysis',
-    'full stack developer',
-    'pipeline development',
-    'Martin DAVILA',
-    'biotechnology solutions',
-    'computational biology'
-  ],
-  authors: [{ name: 'Martin DAVILA', url: DOMAIN }],
-  creator: 'Martin DAVILA',
-  publisher: 'Martin DAVILA Portfolio',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false
-  },
-  openGraph: {
-    type: 'website',
-    url: DOMAIN,
-    title: 'Martin DAVILA | Full Stack Bioinformatics Engineer',
-    description: 'Bioinformatics solutions advancing biotechnology research...',
-    siteName: 'Martin DAVILA Portfolio',
-    locale: 'en_US',
-    images: [
-      {
-        url: `${DOMAIN}/og-image.jpg`,
-        width: 1200,
-        height: 630,
-        alt: 'Martin DAVILA - Full Stack Bioinformatics Engineer',
-        type: 'image/jpeg'
-      }
-    ]
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Martin DAVILA | Full Stack Bioinformatics Engineer',
-    description:
-      'Driving biotech innovation with bioinformatics and full-stack solutions.',
-    images: [`${DOMAIN}/og-image.jpg`],
-    creator: '@iMartinDav'
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      'index': true,
-      'follow': true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1
-    }
-  },
-  alternates: {
-    canonical: DOMAIN
-  },
-  icons: {
-    icon: '/imartin-logo.ico',
-    other: [
-      {
-        rel: 'icon',
-        type: 'image/png',
-        sizes: '32x32',
-        url: '/favicon-32x32.png'
-      }
-    ]
-  },
-  manifest: '/site.webmanifest',
-  verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
-    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || ''
-  }
+type LayoutProps = {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 };
 
+// One static build per locale
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+const OG_LOCALES = { en: 'en_US', fr: 'fr_FR', es: 'es_ES' } as const;
+
+export async function generateMetadata({
+  params
+}: Omit<LayoutProps, 'children'>): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) return {};
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
+  const url = (l: typeof locale) =>
+    `${DOMAIN}${getPathname({ href: '/', locale: l }).replace(/\/$/, '')}`;
+
+  return {
+    metadataBase: new URL(DOMAIN),
+    title: {
+      default: t('title'),
+      template: t('titleTemplate')
+    },
+    description: t('description'),
+    keywords: [
+      'bioinformatics engineer',
+      'biotech software',
+      'genomics data analysis',
+      'full stack developer',
+      'pipeline development',
+      'Martin DAVILA',
+      'biotechnology solutions',
+      'computational biology'
+    ],
+    authors: [{ name: 'Martin DAVILA', url: DOMAIN }],
+    creator: 'Martin DAVILA',
+    publisher: t('siteName'),
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false
+    },
+    openGraph: {
+      type: 'website',
+      url: url(locale),
+      title: t('title'),
+      description: t('ogDescription'),
+      siteName: t('siteName'),
+      locale: OG_LOCALES[locale],
+      alternateLocale: routing.locales
+        .filter((l) => l !== locale)
+        .map((l) => OG_LOCALES[l]),
+      images: [
+        {
+          url: `${DOMAIN}/og-image.jpg`,
+          width: 1200,
+          height: 630,
+          alt: t('ogImageAlt'),
+          type: 'image/jpeg'
+        }
+      ]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('title'),
+      description: t('twitterDescription'),
+      images: [`${DOMAIN}/og-image.jpg`],
+      creator: '@iMartinDav'
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        'index': true,
+        'follow': true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1
+      }
+    },
+    // hreflang alternates so search engines serve the right language
+    alternates: {
+      canonical: url(locale),
+      languages: {
+        ...Object.fromEntries(routing.locales.map((l) => [l, url(l)])),
+        'x-default': url(routing.defaultLocale)
+      }
+    },
+    icons: {
+      icon: '/imartin-logo.ico',
+      other: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '32x32',
+          url: '/favicon-32x32.png'
+        }
+      ]
+    },
+    manifest: '/site.webmanifest',
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
+      yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || ''
+    }
+  };
+}
+
 // JSON-LD Structured Data
-const structuredData = {
+const getStructuredData = (jobTitle: string, description: string) => ({
   '@context': 'https://schema.org',
   '@type': 'Person',
   'name': 'Martin DAVILA',
   'url': DOMAIN,
-  'jobTitle': 'Full Stack Bioinformatics Engineer',
-  'description':
-    'Offering innovative bioinformatics and biotechnology solutions.',
+  'jobTitle': jobTitle,
+  'description': description,
   'sameAs': [
     'https://www.linkedin.com/in/imartindav/',
     'https://github.com/iMartinDav'
@@ -131,16 +163,21 @@ const structuredData = {
     'Pipeline Development',
     'Biotechnology'
   ]
-};
+});
 
-export default function RootLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RootLayout({ children, params }: LayoutProps) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+
+  // Enables static rendering for this locale
+  setRequestLocale(locale);
+  const t = await getTranslations('Metadata');
+  const tCommon = await getTranslations('Common');
+  const structuredData = getStructuredData(t('jobTitle'), t('personDescription'));
+
   return (
     <html
-      lang='en'
+      lang={locale}
       suppressHydrationWarning
       className={inter.className}
       data-scroll-behavior='smooth'>
@@ -205,6 +242,7 @@ export default function RootLayout({
       </head>
       <body>
 
+        <NextIntlClientProvider>
         <ThemeProvider
           attribute='class'
           defaultTheme='dark'
@@ -214,7 +252,7 @@ export default function RootLayout({
           <a
             href='#main-content'
             className='sr-only focus:not-sr-only focus:absolute focus:p-4'>
-            Skip to main content
+            {tCommon('skipToContent')}
           </a>
 
           <Navbar />
@@ -227,6 +265,7 @@ export default function RootLayout({
           <Footer />
         </ThemeProvider>
         <Toaster />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

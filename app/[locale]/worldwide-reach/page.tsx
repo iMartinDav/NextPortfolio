@@ -1,18 +1,29 @@
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
 import BlurIn from '@/components/magicui/blur-in';
 import { FadeIn } from '@/components/magicui/fade-in';
+import { getPageMetadata } from '@/i18n/metadata';
+import { toLocale } from '@/i18n/routing';
 
-export default async function WorldwideReach() {
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props) {
+  const { locale } = await params;
+  return getPageMetadata(locale, 'WorldwideReach', '/worldwide-reach');
+}
+
+export default async function WorldwideReach({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(toLocale(locale));
+  const t = await getTranslations('WorldwideReach');
+
   return (
     <div className='mx-auto mt-10 w-full max-w-2xl px-6'>
       <BlurIn duration={0.5}>
         <FadeIn direction='up'>
           <div className='flex flex-col items-start'>
-            <div className='text-center text-4xl font-bold'>
-              Worldwide Reach
-            </div>
-            <div className='font-thin'>
-              Click on a deployment to see the project.
-            </div>
+            <div className='text-center text-4xl font-bold'>{t('title')}</div>
+            <div className='font-thin'>{t('subtitle')}</div>
           </div>
         </FadeIn>
       </BlurIn>
@@ -20,11 +31,10 @@ export default async function WorldwideReach() {
       <BlurIn duration={0.5}>
         <FadeIn direction='down'>
           <section className='mt-10'>
-            <div className='text-2xl font-bold'>Cloud</div>
+            <div className='text-2xl font-bold'>{t('cloudTitle')}</div>
 
             <div>
-              Cloud deployments are the most common way to deploy a project.
-              include AWS, Google Cloud, and Azure.
+              {t('cloudBody')}
             </div>
 
             <ul className='mt-2 ml-10 list-disc'>
@@ -38,30 +48,18 @@ export default async function WorldwideReach() {
           </section>
 
           <section className='mt-5'>
-            <div className='text-2xl font-bold'>Edge</div>
+            <div className='text-2xl font-bold'>{t('edgeTitle')}</div>
 
             <div>
-              Edge deployments leverage distributed computing to bring data and
-              services closer to users, reducing latency and improving response
-              times. This approach is particularly beneficial for real-time
-              applications and services that require rapid data processing and
-              delivery. By minimizing the distance data travels, edge
-              deployments enhance user experience and can also reduce bandwidth
-              costs.
+              {t('edgeBody')}
             </div>
           </section>
 
           <section className='mt-5'>
-            <div className='text-2xl font-bold'>On-Prem</div>
+            <div className='text-2xl font-bold'>{t('onPremTitle')}</div>
 
             <div>
-              On-premises deployments are hosted locally on a company&apos;s own
-              servers and infrastructure. This approach provides organizations
-              with greater control over their data and applications, enabling
-              them to meet specific security and compliance requirements. While
-              on-premises deployments offer enhanced security and privacy, they
-              require significant resources to maintain and manage, making them
-              less flexible and scalable than cloud or edge deployments.
+              {t('onPremBody')}
             </div>
           </section>
         </FadeIn>

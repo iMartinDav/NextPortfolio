@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/card';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import {
   BarChart as ChartIcon,
   Clock,
@@ -49,17 +50,17 @@ interface ChartData {
 const CHART_METRICS = [
   {
     key: 'pageviews',
-    label: 'Page Views',
+    labelKey: 'pageViews',
     color: 'hsl(var(--chart-1))',
     icon: <ChartIcon className='h-4 w-4' />
   },
   {
     key: 'visitors',
-    label: 'Unique Visitors',
+    labelKey: 'uniqueVisitors',
     color: 'hsl(var(--chart-2))',
     icon: <TrendingUp className='h-4 w-4' />
   }
-];
+] as const;
 
 interface AnalyticsResult {
   chartData: ChartData[];
@@ -235,6 +236,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
   icon,
   format = 'number'
 }) => {
+  const t = useTranslations('Stats');
   const percentChange = prevValue ? ((value - prevValue) / prevValue) * 100 : 0;
   const isPositive = percentChange >= 0;
   const displayValue =
@@ -254,7 +256,9 @@ const MetricCard: React.FC<MetricCardProps> = ({
         <span className='text-2xl font-bold'>{displayValue}</span>
         <span
           className={`flex items-center gap-1 text-sm ${isPositive ? 'text-[#42EFD8]' : 'text-red-500'}`}
-          title={`${isPositive ? 'Increased' : 'Decreased'} by ${Math.abs(percentChange).toFixed(1)}%`}>
+          title={t(isPositive ? 'increased' : 'decreased', {
+            value: Math.abs(percentChange).toFixed(1)
+          })}>
           {isPositive ? (
             <TrendingUp className='h-3.5 w-3.5' />
           ) : (
@@ -269,6 +273,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
 
 // Main StatsChart component
 export const StatsChart: React.FC = () => {
+  const t = useTranslations('Stats');
   const {
     data,
     stats,
@@ -289,11 +294,11 @@ export const StatsChart: React.FC = () => {
     return (
       <Card>
         <CardHeader className='border-b p-6'>
-          <CardTitle>Analytics</CardTitle>
+          <CardTitle>{t('title')}</CardTitle>
           <CardDescription>
             {error
-              ? 'Error loading analytics data'
-              : 'No analytics data available'}
+              ? t('error')
+              : t('empty')}
           </CardDescription>
         </CardHeader>
         <div className='flex flex-col items-center justify-center px-4 py-12 text-center'>
@@ -303,7 +308,7 @@ export const StatsChart: React.FC = () => {
             type='button'
             onClick={resetAndRetry}
             className='bg-primary hover:bg-primary/90 rounded px-4 py-2 text-sm text-white'>
-            Retry
+            {t('retry')}
           </button>
         </div>
       </Card>
@@ -314,9 +319,9 @@ export const StatsChart: React.FC = () => {
     <Card className='overflow-hidden'>
       <CardHeader className='border-b p-6'>
         <div className='flex flex-col gap-2'>
-          <CardTitle>Analytics Dashboard</CardTitle>
+          <CardTitle>{t('dashboardTitle')}</CardTitle>
           <div className='flex items-center justify-between'>
-            <CardDescription>Last 7 days of site traffic</CardDescription>
+            <CardDescription>{t('period')}</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -326,25 +331,25 @@ export const StatsChart: React.FC = () => {
         {stats && (
           <>
             <MetricCard
-              title='Page Views'
+              title={t('pageViews')}
               value={stats.pageviews.value}
               prevValue={stats.pageviews.prev}
               icon={<ChartIcon className='h-4 w-4' />}
             />
             <MetricCard
-              title='Unique Visitors'
+              title={t('uniqueVisitors')}
               value={stats.visitors.value}
               prevValue={stats.visitors.prev}
               icon={<TrendingUp className='h-4 w-4' />}
             />
             <MetricCard
-              title='Total Sessions'
+              title={t('totalSessions')}
               value={stats.visits.value}
               prevValue={stats.visits.prev}
               icon={<TrendingUp className='h-4 w-4 rotate-45' />}
             />
             <MetricCard
-              title='Bounce Rate'
+              title={t('bounceRate')}
               value={Math.round(
                 (stats.bounces.value / stats.visits.value) * 100
               )}
@@ -354,7 +359,7 @@ export const StatsChart: React.FC = () => {
               icon={<TrendingDown className='h-4 w-4' />}
             />
             <MetricCard
-              title='Time on Site'
+              title={t('timeOnSite')}
               value={stats.totaltime.value}
               prevValue={stats.totaltime.prev}
               icon={<Clock className='h-4 w-4' />}
@@ -385,7 +390,7 @@ export const StatsChart: React.FC = () => {
                       className='h-2 w-2 rounded-full'
                       style={{ backgroundColor: metric.color }}
                     />
-                    {metric.label}
+                    {t(metric.labelKey)}
                   </button>
                 ))}
               </div>
@@ -438,7 +443,7 @@ export const StatsChart: React.FC = () => {
                             })}
                           </p>
                           <p className='text-muted-foreground mt-1 text-xs'>
-                            {currentMetric.label}:{' '}
+                            {t(currentMetric.labelKey)}:{' '}
                             <span className='text-foreground font-medium'>
                               {data[activeMetric]}
                             </span>

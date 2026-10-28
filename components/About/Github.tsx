@@ -1,15 +1,20 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import { useMounted } from '@/hooks/use-mounted';
 import { GitHubCalendar } from 'react-github-calendar';
 
 export default function Github() {
   const mounted = useMounted();
+  const t = useTranslations('About');
 
   return (
     <div className='flex flex-col items-center pb-10'>
       <h1 className='mb-5 text-2xl font-bold text-gray-900 dark:text-gray-100'>
-        Days I <span className='text-purple-600'>Code</span>
+        {t.rich('github', {
+          accent: (chunks) => <span className='text-purple-600'>{chunks}</span>
+        })}
       </h1>
       <div className='w-full max-w-3xl rounded-lg bg-white p-4 shadow-lg dark:bg-gray-800'>
         <div className='flex items-center justify-center min-h-[170px]'>

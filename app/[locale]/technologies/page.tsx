@@ -3,8 +3,10 @@
 import Technologies from '@/components/technologies';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 export default function Tech() {
+  const t = useTranslations('Technologies');
   return (
     <div className='flex min-h-screen flex-col'>
       {/* Main content should take full width, centered */}
@@ -14,10 +16,8 @@ export default function Tech() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
           className='text-center'>
-          <h1 className='mb-2 text-4xl font-bold'>Technologies</h1>
-          <p className='font-thin'>
-            Click on an icon to see projects using that technology.
-          </p>
+          <h1 className='mb-2 text-4xl font-bold'>{t('title')}</h1>
+          <p className='font-thin'>{t('subtitle')}</p>
         </motion.div>
 
         <motion.div

@@ -3,6 +3,8 @@
 
 import { useEffect } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { INTRO_STORAGE_KEY } from '@/lib/intro';
 
 // Intro splash: plays once per browser session (first entry to the site).
@@ -16,6 +18,7 @@ const EXIT_DURATION_MS = 300;
 const text = 'iMartinDav';
 
 const PreLoader = () => {
+  const t = useTranslations('Common');
   useEffect(() => {
     const root = document.documentElement;
     if (root.dataset.intro === 'played') return;
@@ -49,7 +52,7 @@ const PreLoader = () => {
     <div
       className='intro-splash fixed inset-0 z-9999 flex items-center justify-center bg-black/95 backdrop-blur-md'
       role='status'
-      aria-label='Loading'
+      aria-label={t('loading')}
       style={{ isolation: 'isolate' }}>
       <div className='absolute inset-0 bg-black/80' />
       <div className='relative z-10 flex flex-col items-center gap-8'>

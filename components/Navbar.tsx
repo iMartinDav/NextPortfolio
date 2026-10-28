@@ -2,10 +2,12 @@
 
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 import { FadeIn } from '@/components/magicui/fade-in';
+import LanguageSwitcher from '@/components/language-switcher';
 import ThemeToggle from '@/components/theme-toggle';
+import { Link } from '@/i18n/navigation';
 import { Logo } from '@/components/Logo';
 
 import type { LucideIcon } from 'lucide-react';
@@ -22,28 +24,29 @@ import { FaGithub } from 'react-icons/fa';
 interface NavItem {
   href: string;
   icon: LucideIcon;
-  label: string;
+  labelKey: 'home' | 'about' | 'projects' | 'resume' | 'blog';
   external?: boolean;
 }
 
 const navItems: NavItem[] = [
-  { href: '/', icon: Home, label: 'Home' },
-  { href: '/about', icon: User, label: 'About' },
+  { href: '/', icon: Home, labelKey: 'home' },
+  { href: '/about', icon: User, labelKey: 'about' },
   {
     href: 'https://projects.imartin.dev/projects',
     icon: FolderKanban,
-    label: 'Projects'
+    labelKey: 'projects'
   },
-  { href: '/resume', icon: FileText, label: 'Resume' },
+  { href: '/resume', icon: FileText, labelKey: 'resume' },
   {
     href: 'https://www.bioinfometrics.com',
     icon: BookOpen,
-    label: 'Blog',
+    labelKey: 'blog',
     external: true
   }
 ];
 
 export default function Navbar() {
+  const t = useTranslations('Nav');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
@@ -128,7 +131,7 @@ export default function Navbar() {
           type='button'
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className={`navbar-toggler ${isMenuOpen ? 'active' : ''}`}
-          aria-label='Toggle navigation menu'
+          aria-label={t('toggleMenu')}
           aria-expanded={isMenuOpen}
           aria-controls={navId}>
           <span className='bar' />
@@ -145,11 +148,17 @@ export default function Navbar() {
               onClick={handleNavItemClick}
             />
           ))}
-          <GithubButton onClick={handleNavItemClick} />
+          <GithubButton
+            onClick={handleNavItemClick}
+            label={t('github')}
+          />
         </div>
         <div className='navbar-extra'>
           <FadeIn direction='down'>
-            <ThemeToggle />
+            <div className='flex items-center gap-1'>
+              <LanguageSwitcher />
+              <ThemeToggle />
+            </div>
           </FadeIn>
         </div>
       </div>
@@ -164,34 +173,55 @@ interface NavItemProps extends NavItem {
 function NavItem({
   href,
   icon: Icon,
-  label,
+  labelKey,
   external = false,
   onClick
 }: NavItemProps) {
-  return (
-    <Link
-      href={href}
-      className='nav-link luxury-text'
-      target={external ? '_blank' : '_self'}
-      rel={external ? 'noopener noreferrer' : ''}
-      onClick={onClick}>
+  const t = useTranslations('Nav');
+  const content = (
+    <>
       <Icon
         size={18}
         className='luxury-icon'
       />
-      {label}
+      {t(labelKey)}
+    </>
+  );
+
+  // Off-site links skip locale handling; internal ones keep the active language
+  if (href.startsWith('http')) {
+    return (
+      <a
+        href={href}
+        className='nav-link luxury-text'
+        target={external ? '_blank' : '_self'}
+        rel={external ? 'noopener noreferrer' : undefined}
+        onClick={onClick}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <Link
+      href={href}
+      className='nav-link luxury-text'
+      onClick={onClick}>
+      {content}
     </Link>
   );
 }
 
 interface GithubButtonProps {
   onClick: () => void;
+  label: string;
 }
 
-function GithubButton({ onClick }: GithubButtonProps) {
+function GithubButton({ onClick, label }: GithubButtonProps) {
   return (
     <a
       href='https://github.com/iMartinDav'
+      aria-label={label}
       className='github-button'
       target='_blank'
       rel='noopener noreferrer'

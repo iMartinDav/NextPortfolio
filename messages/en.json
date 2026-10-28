@@ -1,0 +1,235 @@
+{
+  "Metadata": {
+    "title": "Martin DAVILA | Full Stack Bioinformatics Engineer",
+    "titleTemplate": "%s | Martin DAVILA",
+    "description": "Martin Davila specializes in bioinformatics solutions for advancing biotechnology research...",
+    "ogDescription": "Bioinformatics solutions advancing biotechnology research...",
+    "twitterDescription": "Driving biotech innovation with bioinformatics and full-stack solutions.",
+    "ogImageAlt": "Martin DAVILA - Full Stack Bioinformatics Engineer",
+    "siteName": "Martin DAVILA Portfolio",
+    "jobTitle": "Full Stack Bioinformatics Engineer",
+    "personDescription": "Offering innovative bioinformatics and biotechnology solutions."
+  },
+  "Common": {
+    "skipToContent": "Skip to main content",
+    "loading": "Loading"
+  },
+  "Nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "resume": "Resume",
+    "blog": "Blog",
+    "toggleMenu": "Toggle navigation menu",
+    "github": "GitHub profile"
+  },
+  "LanguageSwitcher": {
+    "label": "Change language",
+    "en": "English",
+    "fr": "Français",
+    "es": "Español"
+  },
+  "Footer": {
+    "builtBy": "Built From Scratch With 💚 by Martin DAVILA",
+    "copyright": "Copyright © {year} All Rights Reserved to Claude Opus 4.7"
+  },
+  "Hero": {
+    "greeting": "Hi There!",
+    "intro": "I'm <name>Martin DAVILA</name>",
+    "tagline": "Decoding Life's Blueprint",
+    "cta": "Explore My Code"
+  },
+  "Typewriter": {
+    "pokemon": "Pokemon Master",
+    "software": "Software Engineer",
+    "compbio": "Computational Biology",
+    "bioinformatics": "Bioinformatics",
+    "research": "Research and Development",
+    "dna": "DNA Sequencing",
+    "protein": "Protein Analysis",
+    "cell": "Cell Biology",
+    "genome": "Genome Editing",
+    "biotech": "Biotechnology",
+    "analysis": "Data Analysis"
+  },
+  "Bento": {
+    "avatarAlt": "avatar image",
+    "intro": {
+      "name": "I'm Martin DAVILA",
+      "description": "Software Sorcerer & Bioinformatics Wizard Specialist Full-stack dev with a genomic twist. Cloud architect who speaks DNA.",
+      "cta": "Explore my digital lab"
+    },
+    "arsenal": {
+      "name": "Tech Arsenal",
+      "description": "From web apps to gene sequencing. Docker to PCR. I've got the tools.",
+      "cta": "View my experiments"
+    },
+    "shenanigans": {
+      "name": "Tech Shenanigans",
+      "description": "I tinker with biotech and code until, somehow, magic happens.",
+      "cta": "View all technologies"
+    },
+    "ai": {
+      "name": "AI Integrations",
+      "description": "From predicting protein structures to optimizing pipelines, I've got AI that would make Watson jealous.",
+      "cta": "Visit AI projects"
+    },
+    "deployments": {
+      "name": "Seamless Deployments",
+      "description": "Push, Build, Deploy, Mutate.",
+      "cta": "Learn more"
+    },
+    "reach": {
+      "name": "Worldwide Reach",
+      "description": "Cloud or lab, my code spans continents. No genome left behind.",
+      "cta": "Learn more"
+    },
+    "stars": {
+      "name": "GitHub Stars",
+      "description": "Star my digital organisms. Help my code evolve.",
+      "cta": "Star repository"
+    },
+    "projects": {
+      "name": "Project Showcase",
+      "description": "Explore my latest creations, from optimized CI/CD pipelines to DNA sequence analysis tools. Where silicon meets cells. Peek into my tech-bio brainstorms.",
+      "cta": "All projects"
+    },
+    "visitors": {
+      "name": "Daily Visitors",
+      "description": "Watch my digital petri dish grow. Watch in real-time as curious minds explore my digital petri dish. Powered by analytics, not ATP. powered by Umami Analytics.",
+      "cta": "Umami"
+    },
+    "incubating": {
+      "cta": "Incubating Innovations"
+    },
+    "contact": {
+      "title": "Connect.",
+      "body": "Ready to collaborate? Whether you're into bits or base pairs, I'm all ears. Your message will be treated with the same care as a rare enzyme.",
+      "privacy": "*Your email is as protected as a patented."
+    }
+  },
+  "Showcase": {
+    "title": "Code Meets Biotech",
+    "subtitle": "Crafting smart, scalable software for science. Less bugs, more breakthroughs."
+  },
+  "EmailForm": {
+    "invalidEmail": "Please enter a valid email address.",
+    "successTitle": "Email submitted successfully!",
+    "successBody": "We'll be in touch soon.",
+    "errorTitle": "Failed to submit email. It may already exist.",
+    "errorBody": "Please try again.",
+    "send": "Send"
+  },
+  "Stats": {
+    "title": "Analytics",
+    "dashboardTitle": "Analytics Dashboard",
+    "period": "Last 7 days of site traffic",
+    "error": "Error loading analytics data",
+    "empty": "No analytics data available",
+    "retry": "Retry",
+    "pageViews": "Page Views",
+    "uniqueVisitors": "Unique Visitors",
+    "totalSessions": "Total Sessions",
+    "bounceRate": "Bounce Rate",
+    "timeOnSite": "Time on Site",
+    "increased": "Increased by {value}%",
+    "decreased": "Decreased by {value}%"
+  },
+  "Contact": {
+    "craftingTitle": "Crafting Tomorrow's Solutions",
+    "craftingBody": "In the ever-evolving world of bioinformatics and biotech, every breakthrough starts with curiosity and innovation. Through years of dedication, transformative technology has been harnessed to decode the complexities of biological data, bridging the gap between raw information and meaningful insights.",
+    "innovativeTitle": "Innovative Solutions",
+    "innovativeBody": "Each project undertaken is a step towards unraveling the mysteries of biological systems. By integrating advanced algorithms and machine learning techniques, the mission has always been to provide actionable insights that propel research and application in the biotech sphere.",
+    "networkTitle": "A Global Network of Innovation",
+    "networkBody": "Collaboration knows no boundaries. From Lyon to every corner of the globe, the focus remains on driving advancements that influence and enhance the biotech industry worldwide.",
+    "pathTitle": "A Path of Discovery",
+    "pathBody": "The journey through the realms of bioinformatics and biotech has been marked by significant contributions to projects and research that shape the future of healthcare and data analysis. Each role undertaken has been a stepping stone in a quest to unlock the next big discovery.",
+    "futureTitle": "Explore the Future Together",
+    "futureBody": "As the world of bioinformatics and biotech continues to evolve, there's always room for new partnerships and collaborative endeavors. Reach out to explore how we can drive innovation and make an impact together."
+  },
+  "Profile": {
+    "heading": "Innovating at the <accent>Intersection</accent> of<br></br><accent>Biology and Code</accent>",
+    "body": "Whether it's wrangling CI/CD pipelines, automating workflows, or making data behave, I somehow manage to get it done. From speeding up biotech breakthroughs to making deployments less of a headache, I try to bring a little innovation and automation into everything I touch. And yeah, sleep? Not much of that, but hey, that's what coffee's for, right? ☕",
+    "expertise": {
+      "bioinformatics": "Bioinformatics",
+      "softwareEngineering": "Software Engineering",
+      "devops": "DevOps & CI/CD",
+      "fullStack": "Full-Stack Development",
+      "cloud": "Cloud Infrastructure",
+      "genomics": "Genomic Data Analysis",
+      "ml": "ML for Bioinformatics",
+      "research": "Research"
+    },
+    "photoAlt": "Profile photo of Martin Davila",
+    "pitch": "Got a tricky biology problem that needs a tech solution? I specialize in turning complex life science challenges into elegant code. From gene sequencing to protein folding, I'm here to help your team make sense of the data and push research forward. Let's build something great together."
+  },
+  "About": {
+    "metaTitle": "About",
+    "heading": "Know Who <accent>I'M</accent>",
+    "skillset": "Professional <accent>Skillset</accent>",
+    "tools": "<accent>Tools</accent> I use",
+    "github": "Days I <accent>Code</accent>",
+    "card": {
+      "intro": "Hello, I am <name>Martin DAVILA</name>, a dedicated Full Stack Bioinformatics Engineer focused on harnessing the power of data to drive innovation in life sciences.",
+      "expertise": "With expertise in computational biology, I work to bridge the gap between technology and biological research, employing advanced algorithms to analyze complex datasets and contribute to groundbreaking discoveries.",
+      "hobbiesIntro": "Outside of my technical pursuits, I enjoy:",
+      "gaming": "Gaming: Exploring the Pokémon universe",
+      "food": "Culinary Adventures: Discovering cultures through food",
+      "travel": "Traveling: Experiencing the wonders of the world",
+      "quote": "\"The true power of coding lies not in its technicality, but in its capacity to uplift and empower. Harness your skills to create positive change and together, we can pave the way for a brighter, more innovative future.\""
+    }
+  },
+  "Technologies": {
+    "metaTitle": "Technologies",
+    "title": "Technologies",
+    "subtitle": "Click on an icon to see projects using that technology.",
+    "loading": "Loading technologies..."
+  },
+  "Deployments": {
+    "metaTitle": "Deployments",
+    "title": "Deployments",
+    "subtitle": "Click on a deployment to see the project.",
+    "cloudTitle": "Cloud",
+    "cloudBody": "Cloud deployments are the most common way to deploy a project. They are easy to set up and maintain, and are generally more secure than other deployment methods. Cloud deployments are also scalable, meaning that you can easily add more resources to your project as it grows. Some popular cloud deployment platforms include AWS, Google Cloud, and Azure.",
+    "edgeTitle": "Edge",
+    "edgeBody": "Lorem sint est ipsum excepteur in Lorem occaecat labore exercitation laboris minim ea. Proident eu consectetur commodo laborum elit voluptate et adipisicing incididunt amet laboris do. Pariatur consectetur dolor aliqua labore. Sunt et exercitation fugiat ullamco non mollit dolor ullamco.",
+    "onPremTitle": "On-Prem",
+    "onPremBody": "Lorem sint est ipsum excepteur in Lorem occaecat labore exercitation laboris minim ea. Proident eu consectetur commodo laborum elit voluptate et adipisicing incididunt amet laboris do. Pariatur consectetur dolor aliqua labore. Sunt et exercitation fugiat ullamco non mollit dolor ullamco."
+  },
+  "WorldwideReach": {
+    "metaTitle": "Worldwide Reach",
+    "title": "Worldwide Reach",
+    "subtitle": "Click on a deployment to see the project.",
+    "cloudTitle": "Cloud",
+    "cloudBody": "Cloud deployments are the most common way to deploy a project. Popular platforms include AWS, Google Cloud, and Azure.",
+    "edgeTitle": "Edge",
+    "edgeBody": "Edge deployments leverage distributed computing to bring data and services closer to users, reducing latency and improving response times. This approach is particularly beneficial for real-time applications and services that require rapid data processing and delivery. By minimizing the distance data travels, edge deployments enhance user experience and can also reduce bandwidth costs.",
+    "onPremTitle": "On-Prem",
+    "onPremBody": "On-premises deployments are hosted locally on a company's own servers and infrastructure. This approach provides organizations with greater control over their data and applications, enabling them to meet specific security and compliance requirements. While on-premises deployments offer enhanced security and privacy, they require significant resources to maintain and manage, making them less flexible and scalable than cloud or edge deployments."
+  },
+  "Resume": {
+    "metaTitle": "Resume",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "rotate": "Rotate",
+    "enterFullscreen": "Enter fullscreen",
+    "exitFullscreen": "Exit fullscreen",
+    "download": "Download",
+    "downloadPdf": "Download PDF",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "loading": "Loading PDF...",
+    "pageError": "Error loading page",
+    "noFile": "No PDF file selected",
+    "success": "Success",
+    "error": "Error",
+    "downloadFailed": "Failed to download PDF. Please try again.",
+    "loadFailed": "Failed to load PDF. Please try again later.",
+    "downloadSuccess": "PDF downloaded successfully!"
+  },
+  "Error": {
+    "title": "Something went wrong!",
+    "body": "We encountered an unexpected error while rendering this page.",
+    "retry": "Try again"
+  }
+}
