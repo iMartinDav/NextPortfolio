@@ -2,8 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState, Suspense } from 'react';
 
-import { Float, Html, OrbitControls, Text } from '@react-three/drei';
+import { OrbitControls, Text } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
+
+import { useMounted } from '@/hooks/use-mounted';
 import { useTheme } from 'next-themes';
 import * as THREE from 'three';
 import { useInView } from 'framer-motion';
@@ -372,23 +374,26 @@ const CHAR_SETS = [
 const LABEL_COLORS = ['#34d399', '#22d3ee', '#a78bfa', '#8b5cf6'];
 const LABEL_COUNT = 12;
 
+// Random label positions; called once per <FloatingLabels> mount
+function generateLabelAnchors() {
+  const list = [];
+  for (let i = 0; i < LABEL_COUNT; i++) {
+    list.push({
+      x: (Math.random() - 0.5) * 8,
+      y: (Math.random() - 0.5) * 8,
+      z: (Math.random() - 0.5) * 4,
+      speed: 0.2 + Math.random() * 0.4,
+      phase: Math.random() * Math.PI * 2,
+      size: 0.15 + Math.random() * 0.15,
+    });
+  }
+  return list;
+}
+
 function FloatingLabels({ shapeIndex }: { shapeIndex: number }) {
   const textRefs = useRef<any[]>([]);
 
-  const anchors = useMemo(() => {
-    const list = [];
-    for (let i = 0; i < LABEL_COUNT; i++) {
-      list.push({
-        x: (Math.random() - 0.5) * 8,
-        y: (Math.random() - 0.5) * 8,
-        z: (Math.random() - 0.5) * 4,
-        speed: 0.2 + Math.random() * 0.4,
-        phase: Math.random() * Math.PI * 2,
-        size: 0.15 + Math.random() * 0.15,
-      });
-    }
-    return list;
-  }, []);
+  const [anchors] = useState(generateLabelAnchors);
 
   useFrame((state: any) => {
     const t = state.clock.elapsedTime;
@@ -439,11 +444,10 @@ const SHAPE_LABELS = [
 
 // ── Main morphing scene ─────────────────────────────────────────────────────
 
-function MorphingScene({ isLight }: { isLight: boolean }) {
+function MorphingScene({ isLight, shapeIndex }: { isLight: boolean; shapeIndex: number }) {
   const pointsRef = useRef<THREE.Points>(null);
   const matRef = useRef<THREE.ShaderMaterial>(null);
   const groupRef = useRef<THREE.Group>(null);
-  const [shapeIndex, setShapeIndex] = useState(0);
 
   const shapes = useMemo(
     () => [generatePetriDish(), generatePlasmid(), generateBitstream(), generateDashboard()],
@@ -452,6 +456,10 @@ function MorphingScene({ isLight }: { isLight: boolean }) {
 
   const currentPos = useRef(new Float32Array(shapes[0].positions));
   const currentCol = useRef(new Float32Array(shapes[0].colors));
+
+  // Initial GPU buffers (copies, so the refs above can be mutated per frame)
+  const initialPos = useMemo(() => new Float32Array(shapes[0].positions), [shapes]);
+  const initialCol = useMemo(() => new Float32Array(shapes[0].colors), [shapes]);
 
   const attrs = useMemo(() => ({
     sizes: shapes[0].sizes,
@@ -469,13 +477,6 @@ function MorphingScene({ isLight }: { isLight: boolean }) {
       matRef.current.uniforms.uIsLight.value = isLight ? 1.0 : 0.0;
     }
   }, [isLight]);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setShapeIndex((p: number) => (p + 1) % 4);
-    }, 5500);
-    return () => clearInterval(id);
-  }, []);
 
   useFrame((state: any) => {
     if (!pointsRef.current || !matRef.current) return;
@@ -547,8 +548,8 @@ function MorphingScene({ isLight }: { isLight: boolean }) {
       <group ref={groupRef}>
         <points ref={pointsRef}>
           <bufferGeometry>
-            <bufferAttribute attach="attributes-position" args={[new Float32Array(currentPos.current), 3]} />
-            <bufferAttribute attach="attributes-aColor" args={[new Float32Array(currentCol.current), 3]} />
+            <bufferAttribute attach="attributes-position" args={[initialPos, 3]} />
+            <bufferAttribute attach="attributes-aColor" args={[initialCol, 3]} />
             <bufferAttribute attach="attributes-aSize" args={[attrs.sizes, 1]} />
             <bufferAttribute attach="attributes-aBright" args={[attrs.brights, 1]} />
             <bufferAttribute attach="attributes-aPhase" args={[attrs.phases, 1]} />
@@ -567,36 +568,25 @@ function MorphingScene({ isLight }: { isLight: boolean }) {
         <FloatingLabels shapeIndex={shapeIndex} />
       </group>
 
-      <Float speed={1} rotationIntensity={0} floatIntensity={0.1}>
-        <Html position={[0, -4.5, 0]} center>
-          <div className={`flex flex-col items-center whitespace-nowrap backdrop-blur-md px-5 py-2 rounded-full shadow-lg transition-all duration-700 border ${
-            isLight
-              ? 'bg-white/70 border-teal-300/50'
-              : 'bg-gray-900/60 border-gray-700/50'
-          }`}>
-            <span className={`font-mono text-xs md:text-sm tracking-widest uppercase font-bold ${
-              isLight ? 'text-teal-700' : 'text-teal-400'
-            }`}>
-              {'>'} {SHAPE_LABELS[shapeIndex]}
-            </span>
-          </div>
-        </Html>
-      </Float>
     </>
   );
 }
 
 export default function BioinformaticsCore() {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { margin: '200px' });
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const isLight = mounted && resolvedTheme === 'light';
+  const [shapeIndex, setShapeIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setShapeIndex((p) => (p + 1) % SHAPE_LABELS.length);
+    }, 5500);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <div ref={containerRef} className="w-full h-[450px] md:h-[520px] lg:h-[600px] relative overflow-visible">
@@ -607,9 +597,24 @@ export default function BioinformaticsCore() {
         gl={{ alpha: true }}
       >
         <Suspense fallback={null}>
-          <MorphingScene isLight={isLight} />
+          <MorphingScene isLight={isLight} shapeIndex={shapeIndex} />
         </Suspense>
       </Canvas>
+      {/* Plain DOM overlay (drei <Html> mounts a nested React root that React 19
+          can't unmount synchronously mid-render) */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-[12%] flex justify-center">
+        <div className={`bio-label-float flex flex-col items-center whitespace-nowrap backdrop-blur-md px-5 py-2 rounded-full shadow-lg transition-all duration-700 border ${
+          isLight
+            ? 'bg-white/70 border-teal-300/50'
+            : 'bg-gray-900/60 border-gray-700/50'
+        }`}>
+          <span className={`font-mono text-xs md:text-sm tracking-widest uppercase font-bold ${
+            isLight ? 'text-teal-700' : 'text-teal-400'
+          }`}>
+            {'>'} {SHAPE_LABELS[shapeIndex]}
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

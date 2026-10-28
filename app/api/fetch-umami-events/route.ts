@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+import { UMAMI_CLOUD_API, umamiAuthHeaders } from '@/lib/umami';
+
 export const revalidate = 3600; // Cache data for 1 hour
 
 export async function GET() {
@@ -9,7 +11,7 @@ export async function GET() {
     const websiteId =
       process.env.UMAMI_WEBSITE_ID || process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
     const apiEndpoint =
-      process.env.UMAMI_API_CLIENT_ENDPOINT || 'https://cloud.umami.is/api';
+      process.env.UMAMI_API_CLIENT_ENDPOINT || UMAMI_CLOUD_API;
 
     if (!apiToken || !websiteId) {
       return NextResponse.json(
@@ -29,11 +31,7 @@ export async function GET() {
 
     const response = await fetch(eventsUrl, {
       method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${apiToken}`,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
+      headers: umamiAuthHeaders(apiEndpoint, apiToken)
     });
 
     if (!response.ok) {

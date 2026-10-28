@@ -13,7 +13,6 @@ import { useInView } from 'framer-motion';
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,
   height: 800,
-  onRender: () => {},
   devicePixelRatio: 1.5,
   phi: 0,
   theta: 0.41,
@@ -85,6 +84,10 @@ const GLOBE_CONFIG: COBEOptions = {
   ]
 };
 
+// cobe v2 draws markers as quads offset by size * 2 in sphere space (radius 0.8),
+// so the 0.03-0.1 sizes tuned for v0.6 render several times larger than before
+const MARKER_SIZE_SCALE = 0.25;
+
 export default function Globe({
   className,
   config = GLOBE_CONFIG
@@ -93,11 +96,13 @@ export default function Globe({
   config?: COBEOptions;
 }) {
   // Start rotated to show continents (Americas/Europe) instead of the Pacific Ocean
-  let phi = 5.0;
-  // Convert width to a ref to track it properly
+  const phiRef = useRef(5.0);
   const widthRef = useRef<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  // React owns only this host <div>; the canvas is created imperatively because
+  // cobe v2 re-parents it into its own wrapper, which would break React's DOM diff
+  const hostRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const isInView = useInView(containerRef, { margin: '200px' });
   const pointerInteracting = useRef<number | null>(null);
   const pointerInteractionMovement = useRef(0);
@@ -113,8 +118,8 @@ export default function Globe({
 
   const updatePointerInteraction = (value: number | null) => {
     pointerInteracting.current = value;
-    if (canvasRef.current) {
-      canvasRef.current.style.cursor = value ? 'grabbing' : 'grab';
+    if (hostRef.current) {
+      hostRef.current.style.cursor = value ? 'grabbing' : 'grab';
     }
   };
 
@@ -126,18 +131,6 @@ export default function Globe({
     }
   };
 
-  // Fix the type and dependencies in onRender
-  const onRender = useCallback(
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    (state: Record<string, any>) => {
-      if (!pointerInteracting.current) phi += 0.0025;
-      state.phi = phi + r.get();
-      state.width = widthRef.current * 2;
-      state.height = widthRef.current * 2;
-    },
-    [phi, r]
-  );
-
   // Update onResize to use the widthRef
   const onResize = useCallback(() => {
     if (canvasRef.current) {
@@ -148,11 +141,18 @@ export default function Globe({
   const { theme } = useTheme();
 
   useEffect(() => {
+    const host = hostRef.current;
+    if (!host || !isInView) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'h-full w-full opacity-0 transition-opacity duration-500';
+    host.appendChild(canvas);
+    canvasRef.current = canvas;
+
     window.addEventListener('resize', onResize);
     onResize();
 
-    if (!canvasRef.current || !isInView) return;
-    
+
     // Dynamic theme configuration for Cobe
     const isDark = theme === 'dark';
     const dynamicConfig = {
@@ -160,24 +160,40 @@ export default function Globe({
       dark: isDark ? 1 : 0,
       baseColor: isDark ? [0.3, 0.3, 0.3] as [number, number, number] : [1, 1, 1] as [number, number, number],
       glowColor: isDark ? [0.1, 0.1, 0.1] as [number, number, number] : [1, 1, 1] as [number, number, number],
+      markers: config.markers?.map((m) => ({ ...m, size: m.size * MARKER_SIZE_SCALE })),
       width: widthRef.current * 2,
-      height: widthRef.current * 2,
-      onRender
+      height: widthRef.current * 2
     };
 
-    const globe = createGlobe(canvasRef.current, dynamicConfig);
+    const globe = createGlobe(canvas, dynamicConfig);
 
-    setTimeout(() => {
-      if (canvasRef.current) {
-        canvasRef.current.style.opacity = '1';
-      }
+    // cobe v2 no longer drives its own loop; push per-frame state via update()
+    let frameId = 0;
+    const tick = () => {
+      if (!pointerInteracting.current) phiRef.current += 0.0025;
+      globe.update({
+        phi: phiRef.current + r.get(),
+        width: widthRef.current * 2,
+        height: widthRef.current * 2
+      });
+      frameId = requestAnimationFrame(tick);
+    };
+    frameId = requestAnimationFrame(tick);
+
+    const fadeIn = setTimeout(() => {
+      canvas.style.opacity = '1';
     });
 
     return () => {
+      clearTimeout(fadeIn);
+      cancelAnimationFrame(frameId);
       window.removeEventListener('resize', onResize);
       globe.destroy();
+      // Removes the canvas together with the wrapper cobe inserted around it
+      host.replaceChildren();
+      canvasRef.current = null;
     };
-  }, [config, onResize, onRender, isInView, theme]);
+  }, [config, onResize, r, isInView, theme]);
 
   return (
     <div
@@ -186,11 +202,9 @@ export default function Globe({
         'absolute inset-0 mx-auto aspect-square w-full max-w-[600px]',
         className
       )}>
-      <canvas
-        className={cn(
-          'h-full w-full opacity-0 transition-opacity duration-500'
-        )}
-        ref={canvasRef}
+      <div
+        ref={hostRef}
+        className='h-full w-full'
         onPointerDown={(e) =>
           updatePointerInteraction(
             e.clientX - pointerInteractionMovement.current

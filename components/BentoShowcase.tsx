@@ -6,9 +6,12 @@ import MeteorShower from '@/components/magicui/meteors';
 import WordPullUp from '@/components/magicui/word-pull-up';
 import { Button } from '@/components/ui/button';
 
-import { Github, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { FaGithub } from 'react-icons/fa';
 
 export default function BentoShowcase() {
+  const t = useTranslations('Showcase');
   return (
     <div className='bg-background relative mx-auto flex h-full w-full items-center justify-center overflow-hidden rounded-lg border md:shadow-xl'>
       {/* Meteor Effect - positioned behind content */}
@@ -17,12 +20,11 @@ export default function BentoShowcase() {
       </div>
 
       <div className='relative z-10 flex h-full flex-col items-start justify-center p-6'>
-        <WordPullUp words='Code Meets Biotech' />
+        <WordPullUp words={t('title')} />
 
         <div className='w-full text-xs text-neutral-500 sm:text-sm md:text-lg lg:px-1 dark:text-neutral-400'>
           <BlurIn className='w-3/4 sm:w-2/3'>
-            Crafting smart, scalable software for science. Less bugs, more
-            breakthroughs.
+            {t('subtitle')}
           </BlurIn>
 
           <FadeIn
@@ -39,7 +41,7 @@ export default function BentoShowcase() {
                   size='sm'
                   className='group/Github flex w-full items-center gap-2'>
                   <div className='text-xs sm:text-sm'>View Code</div>
-                  <Github className='h-3 w-3 transition-all duration-300 lg:group-hover/Github:translate-x-1' />
+                  <FaGithub className='h-3 w-3 transition-all duration-300 lg:group-hover/Github:translate-x-1' />
                 </Button>
               </a>
 

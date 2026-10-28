@@ -1,7 +1,7 @@
 'use client';
 
 import type React from 'react';
-import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { useTheme } from 'next-themes';
 
@@ -10,7 +10,7 @@ import {
   type ISourceOptions,
   MoveDirection
 } from '@tsparticles/engine';
-import Particles, { initParticlesEngine } from '@tsparticles/react';
+import Particles, { ParticlesProvider } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
 
 interface ParticleProps {
@@ -44,25 +44,11 @@ const ParticleBackground: React.FC<ParticleProps> = ({
   lightModeColor = DEFAULT_COLORS.light,
   darkModeColor = DEFAULT_COLORS.dark
 }) => {
-  const [init, setInit] = useState(false);
   const { theme, systemTheme } = useTheme();
 
   const currentTheme = theme === 'system' ? systemTheme : theme;
   const isDark = currentTheme === 'dark';
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const initEngine = async () => {
-      try {
-        await initParticlesEngine(loadSlim);
-        setInit(true);
-      } catch (error) {
-        console.error('Failed to initialize particles engine:', error);
-      }
-    };
-
-    initEngine();
-  }, []);
 
   // Using useEffect for resize handler instead of particlesLoaded
   useEffect(() => {
@@ -123,8 +109,13 @@ const ParticleBackground: React.FC<ParticleProps> = ({
             area: density
           }
         },
-        color: {
-          value: isDark ? darkModeColor : lightModeColor
+        // tsparticles v4: `particles.color` was replaced by `paint.fill.color`
+        // (the old key is silently ignored and particles fall back to white)
+        paint: {
+          fill: {
+            enable: true,
+            color: { value: isDark ? darkModeColor : lightModeColor }
+          }
         },
         size: {
           value: { min: 1.5, max: 4 },
@@ -241,18 +232,17 @@ const ParticleBackground: React.FC<ParticleProps> = ({
     ]
   );
 
-  if (!init) {
-    return null;
-  }
-
   return (
     <div ref={containerRef} className={className}>
-      <Particles
-        id='tsparticles'
-        particlesLoaded={handleParticlesLoaded}
-        options={particleOptions}
-        className="absolute inset-0"
-      />
+      {/* Provider initialises the engine once per app and renders children when ready */}
+      <ParticlesProvider init={loadSlim}>
+        <Particles
+          id='tsparticles'
+          particlesLoaded={handleParticlesLoaded}
+          options={particleOptions}
+          className="absolute inset-0"
+        />
+      </ParticlesProvider>
     </div>
   );
 };

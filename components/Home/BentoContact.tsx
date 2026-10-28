@@ -6,12 +6,15 @@ import { useInView } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
 import { EvervaultCard } from '../ui/evervault-card';
-import { Check, Copy, Github, Linkedin, MapPin } from 'lucide-react';
+import { Check, Copy, MapPin } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 // Dynamically import the Globe component to disable SSR
 const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
 
 const BentoContact = () => {
+  const t = useTranslations('Contact');
   const [hasCopied, setHasCopied] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { margin: '400px' });
@@ -36,16 +39,12 @@ const BentoContact = () => {
         <div className='border-border bg-card bg-opacity-50 col-span-1 rounded-lg border p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:row-span-3'>
           <div className='flex flex-col items-start justify-center'>
             <EvervaultCard
-              text="Crafting Tomorrow's Solutions"
+              text={t('craftingTitle')}
               className='h-48 w-full md:h-72 lg:h-80'
             />
             <div className='mt-4'>
               <p className='text-muted-foreground'>
-                In the ever-evolving world of bioinformatics and biotech, every
-                breakthrough starts with curiosity and innovation. Through years
-                of dedication, transformative technology has been harnessed to
-                decode the complexities of biological data, bridging the gap
-                between raw information and meaningful insights.
+                {t('craftingBody')}
               </p>
             </div>
           </div>
@@ -55,16 +54,12 @@ const BentoContact = () => {
         <div className='border-border bg-card bg-opacity-50 col-span-1 rounded-lg border p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:row-span-3'>
           <div className='flex flex-col items-start justify-center'>
             <EvervaultCard
-              text='Innovative Solutions'
+              text={t('innovativeTitle')}
               className='h-48 w-full md:h-72 lg:h-80'
             />
             <div className='mt-4'>
               <p className='text-muted-foreground'>
-                Each project undertaken is a step towards unraveling the
-                mysteries of biological systems. By integrating advanced
-                algorithms and machine learning techniques, the mission has
-                always been to provide actionable insights that propel research
-                and application in the biotech sphere.
+                {t('innovativeBody')}
               </p>
             </div>
           </div>
@@ -95,12 +90,10 @@ const BentoContact = () => {
             </div>
             <div className='mt-4 text-center'>
               <p className='text-foreground text-2xl font-bold'>
-                A Global Network of Innovation
+                {t('networkTitle')}
               </p>
               <p className='text-muted-foreground mt-2'>
-                Collaboration knows no boundaries. From Lyon to every corner of
-                the globe, the focus remains on driving advancements that
-                influence and enhance the biotech industry worldwide.
+                {t('networkBody')}
               </p>
               <Button
                 variant='outline'
@@ -115,16 +108,12 @@ const BentoContact = () => {
         <div className='border-border bg-card bg-opacity-50 rounded-lg border p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:col-span-2 xl:row-span-3'>
           <div className='flex flex-col items-start justify-center'>
             <EvervaultCard
-              text='A Path of Discovery'
+              text={t('pathTitle')}
               className='h-32 w-full md:h-48 lg:h-56'
             />
             <div className='mt-4'>
               <p className='text-muted-foreground'>
-                The journey through the realms of bioinformatics and biotech has
-                been marked by significant contributions to projects and
-                research that shape the future of healthcare and data analysis.
-                Each role undertaken has been a stepping stone in a quest to
-                unlock the next big discovery.
+                {t('pathBody')}
               </p>
             </div>
           </div>
@@ -134,15 +123,12 @@ const BentoContact = () => {
         <div className='border-border bg-card bg-opacity-50 rounded-lg border p-6 shadow-lg backdrop-blur-lg backdrop-filter xl:col-span-1 xl:row-span-2'>
           <div className='flex flex-col items-center'>
             <EvervaultCard
-              text='Explore the Future Together'
+              text={t('futureTitle')}
               className='h-32 w-full md:h-48 lg:h-56'
             />
             <div className='mt-4 w-full space-y-2'>
               <p className='text-muted-foreground text-center'>
-                As the world of bioinformatics and biotech continues to evolve,
-                there’s always room for new partnerships and collaborative
-                endeavors. Reach out to explore how we can drive innovation and
-                make an impact together.
+                {t('futureBody')}
               </p>
               <Button
                 className='flex w-full items-center justify-center'
@@ -165,7 +151,7 @@ const BentoContact = () => {
                   <Button
                     variant='outline'
                     size='icon'>
-                    <Linkedin size={20} />
+                    <FaLinkedin size={20} />
                   </Button>
                 </a>
                 <a
@@ -175,7 +161,7 @@ const BentoContact = () => {
                   <Button
                     variant='outline'
                     size='icon'>
-                    <Github size={20} />
+                    <FaGithub size={20} />
                   </Button>
                 </a>
               </div>

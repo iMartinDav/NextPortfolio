@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { AlertCircle, RotateCcw } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function GlobalError({
   error,
@@ -12,6 +13,8 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations('Error');
+
   useEffect(() => {
     // Optionally log the error to an error reporting service
     console.error('Global Error Caught:', error);
@@ -26,10 +29,10 @@ export default function GlobalError({
         
         <div className="space-y-2">
           <h2 className="text-2xl font-bold tracking-tight text-red-500 dark:text-red-400">
-            Something went wrong!
+            {t('title')}
           </h2>
           <p className="text-muted-foreground text-sm">
-            We encountered an unexpected error while rendering this page.
+            {t('body')}
           </p>
         </div>
 
@@ -39,7 +42,7 @@ export default function GlobalError({
           className="w-full gap-2 border-red-500/20 hover:bg-red-500/10 hover:text-red-500 transition-colors"
         >
           <RotateCcw className="h-4 w-4" />
-          Try again
+          {t('retry')}
         </Button>
       </div>
     </div>

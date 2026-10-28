@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { useInView } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/utils';
 
@@ -22,26 +23,27 @@ const THEME_GRADIENTS = {
 type GradientKey = keyof typeof THEME_GRADIENTS.primary;
 
 interface TypewriterString {
-  text: string;
+  key: GradientKey;
   gradient: GradientKey;
   emojis: string[];
 }
 
 const typewriterStrings: TypewriterString[] = [
-  { text: 'Pokemon Master', gradient: 'pokemon', emojis: ['🎮', '✨'] },
-  { text: 'Software Engineer', gradient: 'software', emojis: ['👨🏻‍💻', '⌨️', '🚀'] },
-  { text: 'Computational Biology', gradient: 'compbio', emojis: ['🧬', '💻', '🔮'] },
-  { text: 'Bioinformatics', gradient: 'bioinformatics', emojis: ['🧬', '💻', '🔍'] },
-  { text: 'Research and Development', gradient: 'research', emojis: ['🔬', '🧪', '📊'] },
-  { text: 'DNA Sequencing', gradient: 'dna', emojis: ['🧬', '🔄', '🧫'] },
-  { text: 'Protein Analysis', gradient: 'protein', emojis: ['🔬', '🧪', '📈'] },
-  { text: 'Cell Biology', gradient: 'cell', emojis: ['🦠', '🔬', '🧫'] },
-  { text: 'Genome Editing', gradient: 'genome', emojis: ['✂️', '🧬', '🔧'] },
-  { text: 'Biotechnology', gradient: 'biotech', emojis: ['🧪', '⚗️', '🔬'] },
-  { text: 'Data Analysis', gradient: 'analysis', emojis: ['📊', '📈', '💻'] }
+  { key: 'pokemon', gradient: 'pokemon', emojis: ['🎮', '✨'] },
+  { key: 'software', gradient: 'software', emojis: ['👨🏻‍💻', '⌨️', '🚀'] },
+  { key: 'compbio', gradient: 'compbio', emojis: ['🧬', '💻', '🔮'] },
+  { key: 'bioinformatics', gradient: 'bioinformatics', emojis: ['🧬', '💻', '🔍'] },
+  { key: 'research', gradient: 'research', emojis: ['🔬', '🧪', '📊'] },
+  { key: 'dna', gradient: 'dna', emojis: ['🧬', '🔄', '🧫'] },
+  { key: 'protein', gradient: 'protein', emojis: ['🔬', '🧪', '📈'] },
+  { key: 'cell', gradient: 'cell', emojis: ['🦠', '🔬', '🧫'] },
+  { key: 'genome', gradient: 'genome', emojis: ['✂️', '🧬', '🔧'] },
+  { key: 'biotech', gradient: 'biotech', emojis: ['🧪', '⚗️', '🔬'] },
+  { key: 'analysis', gradient: 'analysis', emojis: ['📊', '📈', '💻'] }
 ];
 
 const TypewriterEffect: React.FC = () => {
+  const t = useTranslations('Typewriter');
   const [currentIdx, setCurrentIdx] = useState(0);
   const [frame, setFrame] = useState(0);
 
@@ -73,7 +75,7 @@ const TypewriterEffect: React.FC = () => {
   }, [isInView]);
 
   const item = typewriterStrings[currentIdx];
-  const fullTokens = useMemo(() => [...item.text.split(''), ...item.emojis], [item]);
+  const fullTokens = useMemo(() => [...Array.from(t(item.key)), ...item.emojis], [item, t]);
   
   const charFrames = 2;
   const pauseFrames = 45;
@@ -86,12 +88,12 @@ const TypewriterEffect: React.FC = () => {
   const deleteDuration = fullTokens.length * deleteCharFrames;
   const totalDuration = holdEnd + deleteDuration + pauseAfterFrames;
 
-  useEffect(() => {
-    if (frame >= totalDuration) {
-      setFrame(0);
-      setCurrentIdx((prev) => (prev + 1) % typewriterStrings.length);
-    }
-  }, [frame, totalDuration]);
+  // Advance to the next string during render (React's "adjust state on change"
+  // pattern) instead of an effect that would paint one stale frame first.
+  if (frame >= totalDuration) {
+    setFrame(0);
+    setCurrentIdx((prev) => (prev + 1) % typewriterStrings.length);
+  }
 
   let displayChars = 0;
 

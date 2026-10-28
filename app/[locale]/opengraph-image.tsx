@@ -1,7 +1,4 @@
-import { ImageResponse } from '@vercel/og';
-
-// Route segment config
-export const runtime = 'edge';
+import { ImageResponse } from 'next/og';
 
 // Image metadata
 export const alt = 'Martin DAVILA Portfolio';
