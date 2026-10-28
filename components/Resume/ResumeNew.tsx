@@ -159,7 +159,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'Software_Engineer_Martin_DAVILA.pdf';
+      link.download = pdfUrl.split('/').pop() || 'Software_Engineer_Martin_DAVILA.pdf';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
